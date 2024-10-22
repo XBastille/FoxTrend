@@ -237,19 +237,3 @@
     <script src="Stockspage.js"></script>
 </body>
 </html>
-
-editButton.addEventListener('click', function() {
-    const isEditing = this.textContent === 'Edit Info';
-    profileFields.forEach(field => {
-        field.classList.toggle('editing', isEditing);
-        const input = field.querySelector('input');
-        const span = field.querySelector('span');
-        if (isEditing) {
-            input.value = span ? span.textContent : input.value;
-        } else if (span) {
-            span.textContent = input.type === 'password' ? '••••••••' : input.value;
-        }
-    });
-    document.querySelector('.profile-field.confirm-password').classList.toggle('editing', isEditing);
-    this.textContent = isEditing ? 'Save Edit' : 'Edit Info';
-});
