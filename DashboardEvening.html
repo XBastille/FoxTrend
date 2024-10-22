@@ -1,0 +1,685 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>document</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.3.0/papaparse.min.js"></script>
+    <script src="https://cdn.plot.ly/plotly-2.32.0.min.js"></script>
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <style>
+        table {
+            width: 30%;
+            border-collapse: collapse;
+            margin: 25px 0;
+            font-size: 18px;
+            text-align: left;
+        }
+
+        th, td {
+            background-color: rgb(87, 86, 86);
+            border: 1px solid transparent;
+            cursor: pointer;
+        }
+        .logo{
+            width: 50px;
+            height: 50px;
+        }
+        img{
+           width: 30px; 
+           height: 30px;
+        }
+
+        
+        
+    </style>
+
+</head>
+<body>
+    <ul class="icons open"> 
+        <a href="#" class="fox-icon-link">
+            <img src="media/fox.jpg" alt="Fox Icon" class="logo">
+          </a>
+        <li class="Icon-items" data-name="Home">
+            <img src="media/home.jpg" id="item1"> 
+            <span class="icon-name">Home</span>
+        </li>
+        <li class="Icon-items" data-name="Watch">
+            <img src="media/recent_watch.jpg" id="item2"> 
+            <span class="icon-name">Watch</span>
+        </li>
+        <li class="Icon-items" data-name="Lists">
+            <img src="media/list.jpg" id="item3">
+            <span class="icon-name">Lists</span>
+        </li>
+        <li class="Icon-items" data-name="Donate">
+            <img src="media/donate.jpg" id="item4">
+            <span class="icon-name">Donate</span>
+        </li>
+        <li class="Icon-items" data-name="Profile">
+            <img src="media/account.jpg" id="item5">
+            <span class="icon-name">Profile</span>
+        </li>
+        <li class="Arrow">
+            <img src="media/arrow-right.jpg">
+        </li>
+    </ul>
+
+
+    <div class="search-container">
+        <input type="text" class="search-bar" placeholder="Search">
+        <i class="search-icon fas fa-search"></i>
+        <div class="magnifying-glass">
+            <i class="fa-solid fa-magnifying-glass"></i>
+        </div>
+        <div class="navigationBar">
+            <a href="#" class="serv">
+                Services
+                <svg width="20" height="20" viewBox="0 -4 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M5 7.5L10 12.5L15 7.5" stroke="currentColor" stroke-width="1.67" stroke-linecap="round" stroke-linejoin="round"></path>
+                </svg>
+            </a>
+            <a href="#" class="comp">
+                Company
+                <svg width="20" height="20" viewBox="0 -4 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M5 7.5L10 12.5L15 7.5" stroke="currentColor" stroke-width="1.67" stroke-linecap="round" stroke-linejoin="round"></path>
+                </svg>
+            </a>
+            <a href="#" class="blog">Blog</a>  
+            <a href="#" class="port">Contact Us</a>
+            <div class="services-dropdown">
+                <div class="services-dropdown-content">
+                    <div class="services-label">
+                        <h1>Services</h1>
+                    </div>
+                    <div class="services-dropdown-column">
+                        <div class="primary-section">
+                        <h2>Primary <span class="arrow">→</span></h2>
+                        <div class="primary-elements">
+                            <a href="#">Stock Market Prediction</a>
+                        </div>
+                    </div>
+                    </div>
+                    <div class="services-dropdown-column">
+                        <h3>Secondary <span class="arrow">→</span></h3>
+                        <div class="secondary-section">
+                        <div class="secondary-elements">
+                            <a href="#">Used Car Prediction</a>
+                            <a href="#">Housing Prediction</a>
+                            <a href="#">Loan Approval Prediction</a>
+                        </div>
+                    </div>
+                    </div>
+                    <img src="media/services.jpg" alt="Your Alt Text" class="service-image">
+                </div>
+            </div>
+            <div class="company-dropdown">
+                <div class="company-dropdown-content">
+                    <div class="company-label">
+                        <h1>Company</h1>
+                    </div>
+                    <div class="company-dropdown-column">
+                        <h2>MORE ABOUT US</h2>
+                        <a href="#">About Us</a>
+                        <a href="#">Blog</a>
+                        <a href="#">Privacy Policy</a>
+                        <a href="#">License</a>
+                    </div>
+                    <div class="company-dropdown-column">
+                        <h2>SOCIAL</h2>
+                        <a href="#">LinkedIn</a>
+                        <a href="#">Instagram</a>
+                        <a href="#">X</a>
+                    </div>
+                    <div class="company-dropdown-column">
+                        <h2>CONTACTS</h2>
+                        <a href="#">Book a Call</a>
+                        <a href="#">Mail Us</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="Greeting-Message">
+        <h2>Good Evening, XBastille!</h2>
+          <h3>Review today’s market wrap-up.</h3>   
+    </div>
+
+    <div id="scene" class="w-96 h-96 relative">
+        <div id="moon" class="absolute w-64 h-64 rounded-full left-1/2 top-1/2 transform -translate-x-1/2 -translate-y-1/2">
+            <div class="moon-texture"></div>
+            <div class="moon-craters"></div>
+        </div>
+        <div id="stars">
+            <div class="star-cluster top-4 left-4"></div>
+            <div class="star-cluster top-4 right-4"></div>
+            <div class="star-cluster bottom-4 left-4"></div>
+            <div class="star-cluster bottom-4 right-4"></div>
+        </div>
+    </div>
+
+    <section class="trending">
+        <section class="slider-container">
+            <span class="slider-btn next" onclick="slide(1)">
+                <img src="media/arrow-right.jpg">
+            </span>
+
+            <div class="company-container" id="slider">
+                <div class="company-box">
+                    <b>AMZN</b>
+                    <p>Amazon</p>
+                    <p class="company-price">$519.38</p>
+                    <a class="company-percent">1.29%</a>
+                </div>
+                <div class="company-box">
+                    <b>TSLA</b>
+                    <p>Tesla</p>
+                    <p class="company-price">$412.62 </p>
+                    <a class="company-percent">0.91%</a>
+                </div>
+                <div class="company-box">
+                    <b>GOOG</b>
+                    <p>Alphabet</p>
+                    <p class="company-price">$685.09</p>
+                    <a class="company-percent">0.80%</a>
+                </div>
+                <div class="company-box">
+                    <b>META</b>
+                    <p>Meta Platforms.</p>
+                    <p class="company-price">$179.44</p>
+                    <a class="company-percent">3.53%</a>
+                </div>
+                <div class="company-box">
+                    <b>MSFT</b>
+                    <p>Microsoft</p>
+                    <p class="company-price">$160.28 </p>
+                    <a class="company-percent">1.56%</a>
+                </div>
+                <div class="company-box">
+                    <b>NTFLX</b>
+                    <p>Netflix</p>
+                    <p class="company-price">$233.29</p>
+                    <a class="company-percent">6.33%</a>
+                </div>
+                <div class="company-box">
+                    <b>NVDA</b>
+                    <p>NVIDIA</p>
+                    <p class="company-price">$108.75</p>
+                    <a class="company-percent">2.39%</a>
+                </div>
+                <div class="company-box">
+                    <b>AMD</b>
+                    <p id="micro">Advanced Micro Devices </p>
+                    <p class="company-price">$155.99</p>
+                    <a class="company-percent">7.70%</a>
+                </div>
+                <div class="company-box">
+                    <b>INTL</b>
+                    <p>Intel</p>
+                    <p class="company-price">$21.37</p>
+                    <a class="company-percent">0.60%</a>
+                </div>
+            </div>
+            <span class="slider-btn prev" onclick="slide(-1)">
+                <img src="media/arrow-left.jpg">
+            </span>
+        </section>
+
+    </section>
+
+    <div class="company-dropdown">
+        <div class="company-dropdown-content">
+            <div class="company-label">
+                <h1>Company</h1>
+            </div>
+            <div class="company-dropdown-column">
+                <h2>MORE ABOUT US</h2>
+                <a href="#">About Us</a>
+                <a href="#">Blog</a>
+                <a href="#">Privacy Policy</a>
+                <a href="#">License</a>
+            </div>
+            <div class="company-dropdown-column">
+                <h2>SOCIAL</h2>
+                <a href="#">LinkedIn</a>
+                <a href="#">Instagram</a>
+                <a href="#">X</a>
+            </div>
+            <div class="company-dropdown-column">
+                <h2>CONTACTS</h2>
+                <a href="#">Book a Call</a>
+                <a href="#">Mail Us</a>
+            </div>
+        </div>
+    </div>
+
+    <br><br><br>
+
+    <div class="Graphs">
+        <div class="graph-box" id="box1">
+          <div class="graph-tabs">
+            <div class="tab-slider"></div>
+            <button class="tab-button active" onclick="changeTab(this, 'DSEX', 'box1')">AAPL</button>
+            <button class="tab-button" onclick="changeTab(this, 'DSES', 'box1')">TSLA</button>
+            <button class="tab-button" onclick="changeTab(this, 'DS30', 'box1')">GOOG</button>
+        </div>
+          
+          <div class="graph-content">
+            <div class="graph">
+              <div class="myplot" style="width:100%; height:200px;"></div>
+            </div>
+            
+            <div class="graph-info">
+              <div class="stock-value">
+                <span class="value">$214.77</span>
+                <span class="change positive">$32.13 (+0.52%)</span>
+              </div>
+            </div>
+            
+            <table class="trade-info">
+              <tr>
+                <td>closing price</td>
+                <td>$214.77</td>
+                <td class="highlight">1,12,731</td>
+              </tr>
+              <tr>
+                <td>Total Volume</td>
+                <td>16,02,74,857</td>
+                <td class="negative">-32.13</td>
+              </tr>
+              <tr>
+                <td>Total Volume(mn)</td>
+                <td>5837.698</td>
+                <td class="negative">-0.52%</td>
+              </tr>
+            </table>
+          </div>
+        </div>
+        <div class="graph-box" id="box2">
+            
+            <div class="graph-tabs">
+              <div class="tab-slider"></div>
+              <button class="tab-button active" onclick="changeTab(this, 'DSEX', 'box2')">TSLA</button>
+                <button class="tab-button" onclick="changeTab(this, 'DSES', 'box2')">AAPL</button>
+                <button class="tab-button" onclick="changeTab(this, 'DS30', 'box2')">GOOG</button>
+            </div>
+            
+            <div class="graph-content">
+              <div class="graph">
+                <div class="myplot" style="width:100%; height:200px;"></div>
+              </div>
+              
+              <div class="graph-info">
+                <div class="stock-value">
+                  <span class="value">$214.77</span>
+                  <span class="change positive">$32.13 (+0.52%)</span>
+                </div>
+              </div>
+              
+              <table class="trade-info">
+                <tr>
+                  <td>closing price</td>
+                  <td>$214.77</td>
+                  <td class="highlight">1,12,731</td>
+                </tr>
+                <tr>
+                  <td>Total Volume</td>
+                  <td>16,02,74,857</td>
+                  <td class="negative">-32.13</td>
+                </tr>
+                <tr>
+                  <td>Total Volume(mn)</td>
+                  <td>5837.698</td>
+                  <td class="negative">-0.52%</td>
+                </tr>
+              </table>
+            </div>
+          </div>
+          <div class="graph-box" id="box3">
+            <div class="graph-tabs">
+              <div class="tab-slider"></div>
+              <button class="tab-button active" onclick="changeTab(this, 'DSEX', 'box3')">TSLA</button>
+                <button class="tab-button" onclick="changeTab(this, 'DSES', 'box3')">AAPL</button>
+                <button class="tab-button" onclick="changeTab(this, 'DS30', 'box3')">GOOG</button>
+                </div>
+            
+            <div class="graph-content">
+              <div class="graph">
+                <div class="myplot" style="width:100%; height:200px;"></div>
+              </div>
+              
+              <div class="graph-info">
+                <div class="stock-value">
+                  <span class="value">$214.77</span>
+                  <span class="change positive">$32.13 (+0.52%)</span>
+                </div>
+              </div>
+              
+              <table class="trade-info">
+                <tr>
+                  <td>closing price</td>
+                  <td>$214.77</td>
+                  <td class="highlight">1,12,731</td>
+                </tr>
+                <tr>
+                  <td>Total Volume</td>
+                  <td>16,02,74,857</td>
+                  <td class="negative">-32.13</td>
+                </tr>
+                <tr>
+                  <td>Total Volume(mn)</td>
+                  <td>5837.698</td>
+                  <td class="negative">-0.52%</td>
+                </tr>
+              </table>
+            </div>
+          </div>
+      </div>
+
+        
+      <div class="ticker-container">
+        <div class="header">
+          <h2>All Tickers</h2>
+          <div class="search-container-2">
+            <div class="search-wrapper">
+              <input type="text" class="search-bar-2" placeholder="Search by company name...">
+            </div>
+            <button class="filter-button"><img src="media/filter.jpg" alt="Filter" class="filter-icon"></button>
+          </div>
+        </div>
+        
+        <table class="stock-table">
+            <thead>
+              <tr>
+                <th>COMPANY</th>
+                <th>PRICE</th>
+                <th>CHANGE</th>
+                <th>VOLUME</th>
+                <th>MARKET CAP</th>
+                <th>52W CHANGE</th>
+              </tr>
+            </thead>
+            <tbody id="stockTableBody">
+            </tbody>
+          </table>
+          <div id="loading" style="display: none;">Loading more...</div>
+      </div>   
+        </body>
+            <footer>
+              <div class="footer-links">
+                
+                
+                
+                <img src="media/website_logo.jpg" class="foot-logo">
+                
+                
+                
+                <div class="footer-block">
+                    <div class="footer-title" id="Comp">Company</div>
+            <li><a class="links" id="mail">Mail us</a></li>
+            <li><a class="links" id="SERV">Services</a></li>
+          </div>
+          
+            <div class="footer-block">
+            <div class="footer-title" id="more">More</div>
+                <li><a class="links" id="tandc">Blog</a></li>
+                <li><a class="links" id="career">License</a></li>
+                <li><a class="links" id="privacy">Privacy Policy</a></li>
+              </div>
+        
+              <div class="footer-block">
+                <div class="footer-title" id="social">Social</div>
+                <li><a class="links" id="linkedin">LinkedIn</a></li>
+                <li> <a  class="links" id="yt">Instagram</a></li>
+                <li> <a  class="links" id="tw">X</a></li>
+              </div>
+              
+            </div>
+          </footer> 
+
+
+
+
+    <style>
+        .cloud::before,
+        .cloud::after {
+            content: '';
+            position: absolute;
+            background: inherit;
+            border-radius: 50%;
+            filter: url(#cloud-filter);
+        }
+        .cloud::before {
+            width: 50%;
+            height: 100%;
+            top: -50%;
+            left: 5%;
+        }
+        .cloud::after {
+            width: 30%;
+            height: 60%;
+            top: -30%;
+            right: 15%;
+        }
+
+        .cloud-highlight {
+        position: absolute;
+        width: 30%;
+        height: 20%;
+        background: rgba(255, 255, 255, 0.6);
+        border-radius: 50%;
+        top: 10%;
+        left: 10%;
+        }
+
+        @keyframes floatCloud {
+        0%, 100% { transform: translateY(0); }
+        50% { transform: translateY(10px); }
+        }
+
+        .cloud {
+            animation: floatCloud 2s ease-in-out infinite;
+            background: radial-gradient(circle at 50% 50%, rgba(255, 255, 255, 1) 0%, rgba(255, 255, 255, 0.8) 50%, rgba(255, 255, 255, 0.4) 100%);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+            filter: url(#cloud-filter);
+        }
+
+        .star-cluster {
+        position: absolute;
+        width: 80px;
+        height: 80px;
+    }
+
+    .star {
+        position: absolute;
+        width: 0;
+        height: 0;
+        border-left: 5px solid transparent;
+        border-right: 5px solid transparent;
+        border-bottom: 10px solid #fff;
+        transform: scale(2);
+    }
+    
+    .star:after {
+        content: '';
+        position: absolute;
+        top: 3px;
+        left: -5px;
+        width: 0;
+        height: 0;
+        border-left: 5px solid transparent;
+        border-right: 5px solid transparent;
+        border-top: 10px solid #fff;
+    }
+
+        .star:nth-child(1) { width: 4px; height: 4px; top: 50%; left: 50%; }
+        .star:nth-child(2) { width: 3px; height: 3px; top: 30%; left: 20%; animation-delay: -1s; }
+        .star:nth-child(3) { width: 2px; height: 2px; top: 70%; left: 80%; animation-delay: -2s; }
+
+        @keyframes twinkle {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.3; }
+        }
+
+       @keyframes moonGlow {
+        0%, 100% { box-shadow: 
+            inset -15px -15px 40px rgba(0, 0, 0, 0.3),
+            0 0 20px rgba(255, 255, 255, 0.3),
+            0 0 40px rgba(255, 255, 255, 0.1); 
+        }
+        50% { box-shadow: 
+            inset -15px -15px 40px rgba(0, 0, 0, 0.3),
+            0 0 30px rgba(255, 255, 255, 0.5),
+            0 0 60px rgba(255, 255, 255, 0.2); 
+        }
+    }
+        #moon {
+            background: 
+            radial-gradient(circle at 70% 70%, rgba(0,0,0,0.4) 0%, rgba(0,0,0,0) 25%),
+            radial-gradient(circle at 30% 30%, rgba(0,0,0,0.3) 0%, rgba(0,0,0,0) 20%),
+            radial-gradient(circle at 50% 80%, rgba(0,0,0,0.35) 0%, rgba(0,0,0,0) 30%),
+            radial-gradient(circle at 30% 30%, 
+                #f4f4f4 0%, 
+                #e0e0e0 40%, 
+                #bdbdbd 60%,
+                #000000 80%,
+                #000000 100%
+            );
+        box-shadow: 
+            inset -15px -15px 40px rgba(0, 0, 0, 0.3),
+            0 0 20px rgba(255, 255, 255, 0.3),
+            0 0 40px rgba(255, 255, 255, 0.1);
+    }
+
+        .moon-texture {
+            mix-blend-mode: soft-light;
+        }
+
+        #moon {
+        animation: moonGlow 4s ease-in-out infinite;
+        }
+
+        .moon-craters {
+        width: 100%;
+        height: 100%;
+        background-image: radial-gradient(circle at 20% 20%, rgba(0,0,0,0.2) 0%, rgba(0,0,0,0) 50%),
+                          radial-gradient(circle at 70% 60%, rgba(0,0,0,0.1) 0%, rgba(0,0,0,0) 30%),
+                          radial-gradient(circle at 40% 80%, rgba(0,0,0,0.15) 0%, rgba(0,0,0,0) 40%),
+                          radial-gradient(circle at 60% 30%, rgba(0,0,0,0.1) 0%, rgba(0,0,0,0) 35%),
+                          radial-gradient(circle at 30% 50%, rgba(0,0,0,0.12) 0%, rgba(0,0,0,0) 45%);
+        position: absolute;
+        top: 0;
+        left: 0;
+        }
+
+        @keyframes parallax {
+            0% { transform: translateX(0) translateY(0); }
+            25% { transform: translateX(2px) translateY(-2px); }
+            50% { transform: translateX(0) translateY(-4px); }
+            75% { transform: translateX(-2px) translateY(-2px); }
+            100% { transform: translateX(0) translateY(0); }
+        }
+
+        .moon-texture, .moon-craters {
+            animation: parallax 10s ease-in-out infinite;
+        }
+
+
+    </style>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+
+            const moon = document.getElementById('moon');
+            const texture = moon.querySelector('.moon-texture');
+            const craters = moon.querySelector('.moon-craters');
+            const starClusters = document.querySelectorAll('.star-cluster');
+
+            function updateStarSize(scale) {
+            document.querySelectorAll('.star').forEach(star => {
+                star.style.transform = `scale(${scale}) rotate(${Math.random() * 360}deg)`;
+            });
+        }
+        
+            starClusters.forEach(cluster => {
+            for (let i = 0; i < 3; i++) {
+                const star = document.createElement('div');
+                star.className = 'star';
+                star.style.left = Math.random() * 60 + 'px';
+                star.style.top = Math.random() * 60 + 'px';
+                star.style.transform = `scale(${0.5 + Math.random() * 0.5}) rotate(${Math.random() * 360}deg)`;
+                star.style.animation = `twinkle ${2 + Math.random() * 2}s infinite ease-in-out ${Math.random() * 2}s`;
+                cluster.appendChild(star);
+            }
+        });
+            moon.addEventListener('mousemove', (e) => {
+                const rect = moon.getBoundingClientRect();
+                const x = (e.clientX - rect.left) / rect.width - 0.5;
+                const y = (e.clientY - rect.top) / rect.height - 0.5;
+
+                texture.style.transform = `translateX(${x * 10}px) translateY(${y * 10}px)`;
+                craters.style.transform = `translateX(${x * 15}px) translateY(${y * 15}px)`;
+            });
+        });
+
+        updateStarSize(7);
+    </script>
+
+<script>
+    Papa.parse("stock_data_1.csv", {
+        download: true,
+        header: true,
+        complete: function(results) {
+            const xarray = [];
+            const yarray = [];
+            
+            results.data.forEach(row => {
+                xarray.push(row['Date']);
+                yarray.push(parseFloat(row['Close']));
+            });
+            
+            const data = [{
+                x: xarray,
+                y: yarray,
+                mode: "lines",
+                type: "scatter",
+                fill: "tozeroy",
+                fillgradient: {
+                    type: 'vertical',
+                    colorscale: [[0,'rgba(0,0,0,0)'], [1,'rgba(96,0,147,1)']],
+                },
+                line: {
+                    width: 2
+                }
+            }];
+            
+            const layout = {
+                xaxis: {
+                    range: [xarray[0], xarray[xarray.length-1]],
+                    showticklabels: false,
+                    showgrid: false,
+                    zeroline: false
+                },
+                yaxis: {
+                    range: [Math.min(...yarray) * 0.98, Math.max(...yarray) * 1.02],
+                    showticklabels: false,
+                    showgrid: false,
+                    zeroline: false
+                },
+                colorway: ['#7834a8'],
+                plot_bgcolor: "1e1e1e",
+                paper_bgcolor: "1e1e1e",
+                margin: {l: 0, r: 0, t: 60, b: 0},
+                autosize: true
+            };
+            
+            document.querySelectorAll('.myplot').forEach((plot) => {
+                Plotly.newPlot(plot, data, layout);
+            });
+        }
+    });
+</script> 
+</body>
+</html>
