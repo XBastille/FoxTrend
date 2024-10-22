@@ -1,8 +1,8 @@
 ---
 
-# FoxTrendAI
+# FoxTrend
 
-FoxTrendAI is a comprehensive platform designed to provide detailed stock price information, predictions, and company insights for every company in existence, including cryptocurrencies. With an emphasis on data-driven decision-making, our platform enables users to track stock prices and forecast future trends with accuracy and ease.
+FoxTrend is a comprehensive platform designed to provide detailed stock price information, predictions, and company insights for every company in existence, including cryptocurrencies. With an emphasis on data-driven decision-making, our platform enables users to track stock prices and forecast future trends with accuracy and ease.
 
 ## Features
 
@@ -18,14 +18,14 @@ These additional tools are available as secondary features:
 
 ## Status
 
-FoxTrendAI is actively being developed, with stock-related features as the core focus. Stay tuned for future updates and enhancements.
+FoxTrend is actively being developed, with stock-related features as the core focus. Stay tuned for future updates and enhancements.
 
 ## Getting Started
 
 Clone the repository to explore the initial codebase:
 
 ```bash
-git clone https://github.com/XBastille/FoxTrendAI.git
+git clone https://github.com/XBastille/FoxTrend.git
 ```
 
 ## License
