@@ -54,7 +54,40 @@ arrowButton.addEventListener('click', () => {
     iconsList.classList.toggle('open');
     iconsList.classList.toggle('closed');
 });
+
+function changeTab(clickedTab, tabName, boxId) {
+    const box = document.getElementById(boxId);
+    const tabs = box.querySelectorAll('.tab-button');
+    const slider = box.querySelector('.tab-slider');
+    
+    tabs.forEach(tab => tab.classList.remove('active'));
+    clickedTab.classList.add('active');
+    
+    const index = Array.from(tabs).indexOf(clickedTab);
+    slider.style.left = `${index * 33 + 1.5}%`;
+    
+    console.log(`Switched to tab: ${tabName} in ${boxId}`);
+    }
   
+document.addEventListener('DOMContentLoaded', function() {
+    const percentageCells = document.querySelectorAll('.Market .row:not(:first-child) .cell:nth-child(3)');
+    
+    percentageCells.forEach(cell => {
+        const percentage = parseFloat(cell.textContent);
+        const indicator = document.createElement('span');
+        indicator.classList.add('trend-indicator');
+        
+        if (percentage > 0) {
+            indicator.textContent = '▲';
+            indicator.classList.add('trend-up');
+        } else if (percentage < 0) {
+            indicator.textContent = '▼';
+            indicator.classList.add('trend-down');
+        }
+        
+        cell.appendChild(indicator);
+    });
+});
 
 document.addEventListener("DOMContentLoaded", function () {
   const primarySection = document.querySelector('.primary-section');
@@ -194,4 +227,123 @@ document.querySelector('.filter-icon').addEventListener('click', function() {
     });
   
     updatePriceRange();
+  });
+
+  const stockData = [
+    {
+      company: 'TSLA',
+      price: 121.2,
+      change: 1.26,
+      changePercent: 2.35,
+      volume: '819.35M',
+      marketCap: '15.2B',
+      yearChange: 120.5
+    },
+    {
+      company: 'GOOG',
+      price: 79.5,
+      change: -0.8,
+      changePercent: -1.25,
+      volume: '551.28M',
+      marketCap: '8.4B',
+      yearChange: -57.2
+    },
+    {
+      company: 'AAPL',
+      price: 74.8,
+      change: 4.97,
+      changePercent: 6.82,
+      volume: '546.65M',
+      marketCap: '6.9B',
+      yearChange: 28.9
+    },
+    {
+      company: 'META',
+      price: 34.5,
+      change: -3.23,
+      changePercent: -4.15,
+      volume: '317.75M',
+      marketCap: '3.2B',
+      yearChange: -151.3
+    },
+    {
+      company: 'NVDA',
+      price: 62.3,
+      change: 0.65,
+      changePercent: 1.05,
+      volume: '288.38M',
+      marketCap: '5.1B',
+      yearChange: 222.4
+    },
+
+{
+company: 'AMZN',
+price: 102.5,
+change: 2.3,
+changePercent: 2.29,
+volume: '450.12M',
+marketCap: '9.8B',
+yearChange: 15.7
+},
+{
+company: 'MSFT',
+price: 258.7,
+change: -1.5,
+changePercent: -0.58,
+volume: '320.45M',
+marketCap: '18.5B',
+yearChange: 32.1
+},
+
+
+    
+  ];
+
+  function getCompanyInitials(name) {
+    return name.split(/\s+/).map(word => word[0]).join('').slice(0, 2);
+  }
+
+  function formatChangeValue(value, percent) {
+    const sign = value >= 0 ? '+' : '';
+    return `${sign}${value.toFixed(2)} (${sign}${percent.toFixed(2)}%)`;
+  }
+
+  function renderStockRow(stock) {
+    const changeClass = stock.change >= 0 ? 'positive' : 'negative';
+    const yearChangeClass = stock.yearChange >= 0 ? 'positive' : 'negative';
+    
+    return `
+      <tr onclick="handleRowClick('${stock.company}')">
+        <td>
+          <div class="company-cell">
+            <div class="company-icon">${getCompanyInitials(stock.company)}</div>
+            ${stock.company}
+          </div>
+        </td>
+        <td>${stock.price.toFixed(2)}</td>
+        <td>
+          <div class="change-wrapper ${changeClass}">
+            <span class="change-value">${formatChangeValue(stock.change, stock.changePercent)}</span>
+            <span class="arrow">${stock.change >= 0 ? '↑' : '↓'}</span>
+          </div>
+        </td>
+        <td class="volume">${stock.volume}</td>
+        <td class="market-cap">${stock.marketCap}</td>
+        <td class="${yearChangeClass}">
+          ${stock.yearChange >= 0 ? '+' : ''}${stock.yearChange.toFixed(1)}%
+        </td>
+      </tr>
+    `;
+  }
+
+  document.getElementById('stockTableBody').innerHTML = 
+    stockData.map(stock => renderStockRow(stock)).join('');
+
+  document.querySelector('.search-bar').addEventListener('input', (e) => {
+    const searchTerm = e.target.value.toLowerCase();
+    const filteredData = stockData.filter(stock => 
+      stock.company.toLowerCase().includes(searchTerm)
+    );
+    document.getElementById('stockTableBody').innerHTML = 
+      filteredData.map(stock => renderStockRow(stock)).join('');
   });

@@ -1,7 +1,7 @@
 body {
-    background-color: black;
-    color: white;
-    font-family: 'Gilroy', 'sans-serif';
+    background-color: #000000;
+    color: #ffffff;
+    font-family: 'Gilroy', sans-serif;
   }
   
   .Greeting-Message {
@@ -181,6 +181,195 @@ body {
     margin: 80px 220px 0 180px;
   }
   
+  .tabs {
+    display: flex;
+    justify-content: space-around;
+    margin-bottom: 10px;
+}
+
+.tab {
+    cursor: pointer;
+    padding: 10px 20px;
+    background-color: #333;
+    color: #fff;
+    border-radius: 5px;
+    transition: background-color 0.3s ease;
+}
+
+.tab:hover {
+    background-color: #555;
+}
+
+.Graphs {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    height: 100vh;
+    padding: 0 20px;
+  }
+  
+  .graph-box {
+    background-color: #1e1e1e;
+    border-radius: 15px;
+    padding: 20px;
+    width: 30%;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+  
+  .graph-tabs {
+    display: flex;
+    background-color: #000000;
+    border-radius: 20px;
+    padding: 5px;
+    position: relative;
+    margin-bottom: 20px;
+    width: 60%;
+
+
+  }
+
+  .myplot {
+    border-radius: 10px;
+  }
+  
+  .tab-button {
+    background-color: transparent;
+    color: #ffffff;
+    border: none;
+    padding: 8px 0;
+    cursor: pointer;
+    font-size: 12px;
+    z-index: 1;
+    flex: 1;
+    transition: color 0.3s ease;
+  }
+  
+  .tab-button.active {
+    color: #1a1a1a;
+  }
+  
+  .tab-slider {
+    position: absolute;
+    height: 85%;
+    top: 7.5%;
+    left: 1.5%;
+    width: 32%;
+    background-color: #ffffff;
+    border-radius: 15px;
+    transition: 0.3s ease-out;
+  }
+  
+  .graph {
+    margin-bottom: 20px;
+  }
+  
+  
+  .graph-info {
+    margin-bottom: 20px;
+  }
+  
+  .stock-value {
+    display: flex;
+    align-items: baseline;
+    margin-bottom: 5px;
+  }
+  
+  .stock-value .value {
+    font-size: 24px;
+    font-weight: bold;
+    margin-right: 10px;
+  }
+  
+  .stock-value .change {
+    font-size: 16px;
+  }
+  
+  .positive {
+    color: #00ff00;
+  }
+  
+  .negative {
+    color: #ff0000;
+  }
+
+  .timestamp {
+    font-size: 12px;
+    color: #888888;
+    margin: 0;
+  }
+  
+  .trade-info {
+    width: 100%;
+    border-collapse: separate;
+    border-spacing: 0 8px;
+  }
+  
+  .trade-info tr {
+    background-color: #1a1a1a;
+    transition: background-color 0.3s ease, transform 0.3s ease;
+  }
+  
+  .trade-info td {
+    padding: 12px 10px;
+    transition: color 0.3s ease;
+  }
+  
+  .trade-info td:first-child {
+    color: #a9a9a9;
+    border-radius: 5px 0 0 5px;
+    background-color: #2c2c2c; 
+    font-weight: bold;
+  }
+
+  
+    .trade-info td:nth-child(2),
+    .trade-info td:last-child {
+    color: #ffffff;  
+    font-weight: normal;
+    }
+  
+  
+  .trade-info td:last-child {
+    text-align: right;
+    border-radius: 0 5px 5px 0;
+  }
+
+  
+    .trade-info tr:hover {
+    background-color: #2c2c2c;
+    transform: scale(1.02);
+    }
+
+    .trade-info tr:hover td {
+        color: #ffffff;
+    }
+
+    .trade-info tr:hover td:first-child {
+    color: #ffffff;
+    background-color: #3a3a3a;
+    }
+
+
+  
+  .trade-info .highlight {
+    color: #8a2be2;
+  }
+
+.graph {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.graphsection table {
+    margin-top: 10px;
+}
+
+.myplot {
+    /* Example graph styling */
+    background: #1a1a1a;
+}
+
   
   .company-container {
     display: flex;
@@ -666,124 +855,142 @@ body {
     border-right: 1px solid wheat;
     top: 25px; 
     height: 100vh; 
+    z-index: 1000;
   }
 
   .icons::before {
-    content: '';
-    position: absolute;
-    top: -25px;  
-    left: 0;
-    width: 100%;
-    height: 30px;  
-    border-right: 1px solid wheat;
-  }
-  
-  .icons.closed {
-    width: 80px;
-    transition: width 0.3s ease;
-  }
-  
-  .icons.open {
-    width: 155px;
-    transition: width 0.3s ease;
-  }
-  
-  .icons.closed .Icon-items:hover {
+  content: '';
+  position: absolute;
+  top: -25px;  
+  left: 0;
+  width: 100%;
+  height: 30px;  
+  border-right: 1px solid wheat;
+}
+
+.icons.closed {
+  width: 80px;
+  transition: width 0.3s ease;
+}
+
+.icons.open {
+  width: 155px;
+  transition: width 0.3s ease;
+}
+
+.icons.closed .Icon-items:hover {
+  background-color: transparent;
+  position: relative;
+}
+
+.icons .Icon-items img {
+  width: 25px;
+  height: 25px;
+  transition: all 0.2s ease;
+}
+
+.icons.closed .Icon-items:hover img {
+  padding: 15px;
+  background-color: rgb(78, 0, 78);
+  border-radius: 50%;
+}
+
+.icons.closed .Icon-items::after {
+  content: attr(data-name);
+  font-family: 'Gilroy', sans-serif;
+  color: black;
+  background-color: white;
+  padding: 5px;
+  border-radius: 4px;
+  position: absolute;
+  left: 40px;
+  white-space: nowrap;
+  z-index: 999;
+  font-size: 15px;
+  opacity: 0;
+  visibility: hidden;
+  transition: all 0.4s ease-in-out;
+}
+
+.icons .Icon-items:hover img {
+  background-color: rgb(78, 0, 78);
+  border-radius: 50%;
+  padding: 2px;
+  position: relative;
+  transition: background-color 0.3s ease, padding 0.3s ease;
+}
+
+.icons.closed .Icon-items:hover::after {
+  left: 80px;
+  opacity: 1;
+  visibility: visible;
+}
+
+.icons.closed .Icon-items::after {
+  transition: all 0.4s ease-in-out;
+}
+
+.icons.open .Icon-items:hover {
+  background-color: rgb(78, 0, 78);
+  border-radius: 25px;
+  padding: 10px 30px;
+  transition: all 0.3s ease-in-out;
+}
+
+.icons.open .Icon-items:hover img,
+.icons.open .Icon-items:hover .icon-name {
     background-color: transparent;
-    position: relative;
-  }
-  
-  .icons .Icon-items img {
-    width: 25px;
-    height: 25px;
-    transition: all 0.2s ease;
-  }
-  
-  .icons.closed .Icon-items:hover img {
-    padding: 15px;
-    background-color: rgb(78, 0, 78);
-    border-radius: 50%;
-  }
+}
 
-  .icons.closed .Icon-items::after {
-    content: attr(data-name);
-    font-family: 'Gilroy', sans-serif;
-    color: black;
-    background-color: white;
-    padding: 5px;
-    border-radius: 4px;
-    position: absolute;
-    left: 40px;
-    white-space: nowrap;
-    z-index: 999;
-    font-size: 15px;
-    opacity: 0;
-    visibility: hidden;
-    transition: all 0.4s ease-in-out;
-  }
+ul{
+  display: flex;
+  flex-direction: column;
+  border-right: 2px solid transparent;
+  cursor: pointer;
+}
 
-  .icons .Icon-items:hover img {
-    background-color: rgb(78, 0, 78);
-    border-radius: 50%;
-    padding: 2px;
-    position: relative;
-    transition: background-color 0.3s ease, padding 0.3s ease;
-  }
-  
-  .icons.closed .Icon-items:hover::after {
-    left: 80px;
-    opacity: 1;
-    visibility: visible;
-  }
+.Icon-items {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  margin-left: 15px;
+  margin-bottom: 45px;
+}
 
-  .icons.closed .Icon-items::after {
-    transition: all 0.4s ease-in-out;
-  }
-  
-  .icons.open .Icon-items:hover {
-    background-color: rgb(78, 0, 78);
-    border-radius: 25px;
-    padding: 10px 30px;
-    transition: all 0.3s ease-in-out;
-  }
-  
-  .icons.open .Icon-items:hover img,
-  .icons.open .Icon-items:hover .icon-name {
-      background-color: transparent;
-  }
+.icons.closed .Icon-items .icon-name {
+  display: none;
+}
 
-  ul{
-    display: flex;
-    flex-direction: column;
-    border-right: 2px solid transparent;
-    cursor: pointer;
-  }
+.icons.open .Icon-items:hover img,
+.icons.open .Icon-items:hover .icon-name {
+  padding-left: 0px;
+}
+ /*.Icon-items:hover{
+  text-align: center;
+  background-color: blueviolet;
+  border: 4px solid blueviolet;
+ }*/
+ 
+ .icon-name {
+  font-family: 'Gilroy', sans-serif;
+  margin-left: 20px;
+  font-size: 16px;
+  color: #fffefe;
+}
 
-  .Icon-items {
-    display: flex;
-    align-items: center;
-    justify-content: flex-start;
-    margin-left: 15px;
-    margin-bottom: 45px;
-  }
-  
-  .icons.closed .Icon-items .icon-name {
-    display: none;
-  }
-  
-  .icons.open .Icon-items:hover img,
-  .icons.open .Icon-items:hover .icon-name {
-    padding-left: 0px;
-  }
 
-  .icon-name {
-    font-family: 'Gilroy', sans-serif;
-    margin-left: 20px;
-    font-size: 16px;
-    color: #fffefe;
-  }
-  
-  
+ 
+ .Arrow{
+  cursor: pointer;
+  margin-top: 110px;
+  margin-left: 10px;
+  transition: transform 0.3s ease;
+}
+
+.show .Arrow{
+  transform: rotate(180deg);
+
+ }
    
    .Arrow{
     cursor: pointer;
@@ -830,15 +1037,20 @@ body {
     border-radius: 5px;
     height: 450px;
   }
+
+  
   
   .graphsection{
     padding-left: 60px;
     justify-self:center;
   }
-  
-  
-  
-  
+
+  .graph1, .graph2, .graph3 {
+    background: linear-gradient(to bottom, #474647, #000000);
+    border-radius: 10px;
+    padding: 20px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
   
   
   /* Filter section */
@@ -849,7 +1061,6 @@ body {
     margin-top: 80px;
     margin-right:220px ;
     margin-left: 280px;
-    border-top: 1px solid wheat;
   }
   
   
@@ -878,9 +1089,9 @@ body {
   .recently-watched-header::after {
       content: '';
       position: absolute;
-      bottom: 0;
-      left: 20px;
-      right: 20px; 
+      bottom: -10px;
+      left: -2px;
+      right: 10px; 
       border-bottom: 1px solid #ffffff;
   }
   
@@ -1053,6 +1264,262 @@ body {
   .market{
     margin-left: 180px;
   }
+
+  .Market {
+    display: grid;
+    grid-template-columns: repeat(6, 1fr);
+    gap: 1px;
+    background-color: #1a1a1a;
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+}
+
+.Market .row {
+    display: contents;
+}
+
+.Market .cell {
+    padding: 15px;
+    text-align: left;
+    transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
+}
+
+.Market .row.header .cell {
+    background-color: #2c2c2c;
+    font-weight: bold;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    font-size: 0.9em;
+}
+
+.Market .row:nth-child(even) .cell {
+    background-color: #2a2a2a;
+}
+
+.Market .row:nth-child(odd) .cell {
+    background-color: #222222;
+}
+
+.Market .row:not(.header):nth-child(even) .cell {
+    background-color: #222222;
+}
+
+.Market .row:not(.header):nth-child(odd) .cell {
+    background-color: #1e1e1e;
+}
+
+.Market .row:hover .cell {
+    background-color: #3a3a3a;
+    box-shadow: 0 0 10px rgba(255, 255, 255, 0.1);
+}
+
+.Market .row:not(.header):hover .cell {
+    background-color: #3a3a3a;
+    box-shadow: 0 0 10px rgba(255, 255, 255, 0.1);
+}
+
+.Market .row:not(.header):hover .cell::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, rgba(255,255,255,0) 70%);
+    pointer-events: none;
+}
+
+.trend-indicator {
+    display: inline-block;
+    margin-left: 5px;
+    font-size: 12px;
+}
+
+.trend-up {
+    color: #4caf50;
+    font-size: large;
+}
+
+.trend-down {
+    color: #f44336;
+    font-size: large;
+}
+
+    .ticker-container {
+      max-width: 1200px;
+      margin: 0 auto;
+      background-color: #1a1b1e;
+      border-radius: 12px;
+      overflow: hidden;
+    }
+
+    .header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 20px 24px;
+      border-bottom: 2px solid rgba(255, 255, 255);
+    }
+
+    .header h2 {
+      color: #e5e5e5;
+      font-size: 50px;
+      font-weight: bold;
+      background: -webkit-linear-gradient(rgb(96, 0, 147), rgb(255, 255, 255));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    }
+
+    .search-container-2 {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+    
+    .search-wrapper {
+      position: relative;
+    }
+
+    .search-wrapper::before {
+      content: "🔍";
+      position: absolute;
+      left: 12px;
+      top: 50%;
+      transform: translateY(-50%);
+      font-size: 14px;
+      opacity: 0.5;
+    }
+
+    .search-bar-2 {
+      background-color: #141518;
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      padding: 8px 16px 8px 35px;
+      border-radius: 25px;
+      color: #fff;
+      border-color: wheat;
+      width: 300px;
+      font-size: 13px;
+      transition: all 0.2s ease;
+    }
+
+    .search-bar-2:focus {
+      outline: none;
+      border-color: rgba(255, 255, 255, 0.15);
+      background-color: #1c1d21;
+    }
+
+    .search-bar-2::placeholder {
+      color: rgba(255, 255, 255, 0.3);
+    }
+
+    .filter-button {
+      background: none;
+      border: none;
+      color: rgba(255, 255, 255, 0.4);
+      cursor: pointer;
+      font-size: 16px;
+      padding: 8px;
+      transition: color 0.2s ease;
+    }
+
+    .filter-button:hover {
+      color: rgba(255, 255, 255, 0.6);
+    }
+
+    .stock-table {
+      width: 100%;
+      border-collapse: collapse;
+    }
+
+    .stock-table th {
+      text-align: right;
+      padding: 16px 24px;
+      color: rgba(255, 255, 255, 0.4);
+      font-weight: 500;
+      font-size: 12px;
+      letter-spacing: 0.5px;
+      background-color: #1a1b1e;
+      border-bottom: 1px solid rgb(214, 214, 214);
+    }
+
+    .stock-table th:first-child {
+      text-align: left;
+    }
+
+    .filter-icon {
+        width: 30px;
+        height: 30px;
+        cursor: pointer;
+        margin-left: 10px;
+    }
+
+    .stock-table td {
+      padding: 16px 24px;
+      color: rgba(255, 255, 255, 0.85);
+      font-size: 13px;
+      text-align: right;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.03);
+    }
+
+    .stock-table td:first-child {
+      text-align: left;
+      font-weight: 500;
+    }
+
+    .stock-table tbody tr {
+      cursor: pointer;
+      transition: all 0.2s ease;
+      background-color: #1a1b1e;
+    }
+
+    .stock-table tbody tr:hover {
+      background-color: #212226;
+    }
+
+    .positive {
+      color: #4CD964 !important;
+    }
+
+    .negative {
+      color: #FF3B30 !important;
+    }
+
+    .arrow-wrapper {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+    }
+
+    .arrow {
+      display: inline-block;
+      font-size: 12px;
+    }
+
+    .volume {
+      color: rgba(255, 255, 255, 0.7);
+    }
+
+    .company-cell {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .company-icon {
+      width: 24px;
+      height: 24px;
+      background-color: rgba(255, 255, 255, 0.05);
+      border-radius: 4px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 12px;
+      color: rgba(255, 255, 255, 0.7);
+    }
+
   
   
   
