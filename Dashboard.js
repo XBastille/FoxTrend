@@ -339,7 +339,7 @@ yearChange: 32.1
   document.getElementById('stockTableBody').innerHTML = 
     stockData.map(stock => renderStockRow(stock)).join('');
 
-  document.querySelector('.search-bar').addEventListener('input', (e) => {
+  document.querySelector('.search-bar-2').addEventListener('input', (e) => {
     const searchTerm = e.target.value.toLowerCase();
     const filteredData = stockData.filter(stock => 
       stock.company.toLowerCase().includes(searchTerm)
