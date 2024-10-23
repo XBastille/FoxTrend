@@ -17,10 +17,11 @@
             text-align: left;
         }
 
-        th, td {
+        th {
             background-color: rgb(87, 86, 86);
             border: 1px solid transparent;
             cursor: pointer;
+            padding: 20px;
         }
         .logo{
             width: 50px;
@@ -282,7 +283,7 @@
           
           <div class="graph-content">
             <div class="graph">
-              <div class="myplot" style="width:100%; height:200px;"></div>
+              <div class="myplot" id="stp" style="width:100%; height:200px;"></div>
             </div>
             
             <div class="graph-info">
@@ -322,7 +323,7 @@
             
             <div class="graph-content">
               <div class="graph">
-                <div class="myplot" style="width:100%; height:200px;"></div>
+                <div class="myplot" id="stp" style="width:100%; height:200px;"></div>
               </div>
               
               <div class="graph-info">
@@ -361,7 +362,7 @@
             
             <div class="graph-content">
               <div class="graph">
-                <div class="myplot" style="width:100%; height:200px;"></div>
+                <div class="myplot" id="stp" style="width:100%; height:200px;"></div>
               </div>
               
               <div class="graph-info">
@@ -401,6 +402,58 @@
               <input type="text" class="search-bar-2" placeholder="Search by company name...">
             </div>
             <button class="filter-button"><img src="media/filter.jpg" alt="Filter" class="filter-icon"></button>
+            <div class="filter-box" id="filterBox">
+              <h3>Filter Options</h3>
+              
+              <div class="filter-section">
+                  <label>Price Range:</label>
+                  <input type="range" id="minPrice" min="0" max="1000" value="0">
+                  <input type="range" id="maxPrice" min="0" max="1000" value="1000">
+                  <span id="priceRange">$0 - $1000</span>
+              </div>
+              
+              <div class="filter-section">
+                  <label>Percentage Change:</label>
+                  <select id="percentageChange">
+                      <option value="">All</option>
+                      <option value="positive1">> 1%</option>
+                      <option value="positive5">> 5%</option>
+                      <option value="negative1">< -1%</option>
+                      <option value="negative5">< -5%</option>
+                      <option value="neutral">0% to 1%</option>
+                  </select>
+              </div>
+              
+              <div class="filter-section">
+                  <label>Custom Range:</label>
+                  <input type="number" id="customMin" placeholder="Min %">
+                  <input type="number" id="customMax" placeholder="Max %">
+                  <span id="customRangeError" class="error-message"></span>
+              </div>
+              
+              <div class="filter-section">
+                  <label>Sort by:</label>
+                  <select id="sortBy">
+                      <option value="priceAsc">Price (Low to High)</option>
+                      <option value="priceDesc">Price (High to Low)</option>
+                      <option value="changeAsc">% Change (Low to High)</option>
+                      <option value="changeDesc">% Change (High to Low)</option>
+                  </select>
+              </div>
+              
+              <div class="filter-section">
+                  <label>Quick Filters:</label>
+                  <button class="quick-filter" data-filter="gainers">Gainers</button>
+                  <button class="quick-filter" data-filter="losers">Losers</button>
+                  <button class="quick-filter" data-filter="stable">Stable</button>
+
+              </div>
+              
+              <div class="filter-actions">
+                  <button id="clearFilters">Clear Filters</button>
+                  <button id="applyFilters">Apply Filters</button>
+              </div>
+          </div>       
           </div>
         </div>
         
@@ -637,6 +690,8 @@
                 line: {
                     width: 2
                 }
+
+                
             }];
             
             const layout = {
@@ -653,8 +708,8 @@
                     zeroline: false
                 },
                 colorway: ['#7834a8'],
-                plot_bgcolor: "1e1e1e",
-                paper_bgcolor: "1e1e1e",
+                plot_bgcolor: "#1e1e1e",
+                paper_bgcolor: "#1e1e1e",
                 margin: {l: 0, r: 0, t: 60, b: 0},
                 autosize: true
             };
