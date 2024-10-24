@@ -207,6 +207,7 @@ li {
   height: 100vh;
   padding: 0 20px;
   margin-left: 150px;
+  
 }
 
 
@@ -464,7 +465,8 @@ li {
   width: 1250px;
   margin: 0 auto;
   border-top: 1px solid wheat;
-  padding-top: 40px;
+  padding-top: 50px;
+  top: 50px;
   overflow: hidden;
   position: relative;
   margin-left: 205px;
@@ -1134,19 +1136,48 @@ border-bottom: 1px solid #ffffff;
 padding-bottom: 10px;
 margin-bottom: 15px;
 width: 100%;
+cursor: move;
+user-select: none;
 }
 
 .filter-box {
 position: absolute;
-top: 255%;
+top: 260%;
+resize: both;
 right: 60px;
+overflow: auto;
 background: black;
 border: 1px solid #ffffff;
 border-radius: 8px;
 padding: 20px;
+cursor: move;
 z-index: 1000;
+user-select: none;
 display: none;
+  width: 330px;
+  min-width: 250px;
+  min-height: 300px;
+}
 
+
+.filter-box::after {
+  content: '';
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  width: 20px;
+  height: 20px;
+  cursor: se-resize;
+}
+
+.filter-box.dragging {
+  cursor: move;
+  opacity: 0.8;
+}
+
+.filter-box.resizing {
+  cursor: se-resize;
+  opacity: 0.8;
 }
 
 @keyframes slideDown {
