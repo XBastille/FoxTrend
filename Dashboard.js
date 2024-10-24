@@ -229,6 +229,69 @@ document.querySelector('.filter-icon').addEventListener('click', function() {
     updatePriceRange();
   });
 
+  function makeDraggableAndResizable() {
+    const filterBox = document.getElementById('filterBox');
+    const filterHeader = filterBox.querySelector('h3'); 
+    let isDragging = false;
+    let isResizing = false;
+    let currentX;
+    let currentY;
+    let initialX;
+    let initialY;
+    let initialWidth;
+    let initialHeight;
+    filterHeader.addEventListener('mousedown', startDrag);
+    filterBox.addEventListener('mousedown', startResize);
+    document.addEventListener('mousemove', handleAction);
+    document.addEventListener('mouseup', stopAction);
+    function startDrag(e) {
+        isDragging = true;
+        initialX = e.clientX - filterBox.offsetLeft;
+        initialY = e.clientY - filterBox.offsetTop;
+        filterBox.classList.add('dragging');
+    }
+
+    function startResize(e) {
+        const rect = filterBox.getBoundingClientRect();
+        const isClickNearEdge = 
+            e.clientX > rect.right - 20 && 
+            e.clientY > rect.bottom - 20;
+
+        if (isClickNearEdge) {
+            isResizing = true;
+            initialWidth = filterBox.offsetWidth;
+            initialHeight = filterBox.offsetHeight;
+            filterBox.classList.add('resizing');
+        }
+    }
+    
+function handleAction(e) {
+        if (isDragging) {
+            e.preventDefault();
+            currentX = e.clientX - initialX;
+            currentY = e.clientY - initialY;
+            
+            filterBox.style.left = `${currentX}px`;
+            filterBox.style.top = `${currentY}px`;
+        }
+        else if (isResizing) {
+            e.preventDefault();
+            const width = initialWidth + (e.clientX - (initialX + initialWidth));
+            const height = initialHeight + (e.clientY - (initialY + initialHeight));
+            
+            filterBox.style.width = `${Math.max(250, width)}px`;
+            filterBox.style.height = `${Math.max(300, height)}px`;
+        }
+    }
+  
+    function stopAction() {
+        isDragging = false;
+        isResizing = false;
+        filterBox.classList.remove('dragging', 'resizing');
+    }
+}
+  document.addEventListener('DOMContentLoaded', makeDraggableAndResizable);
+
   const stockData = [
     {
       company: 'TSLA',
