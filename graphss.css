@@ -935,7 +935,7 @@ ul{
     display: none;
   }
   .show-more-btn {
-    color:green;
+    color:rgb(148, 2, 226);
     cursor: pointer;
   }
 
