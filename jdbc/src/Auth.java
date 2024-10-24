@@ -15,7 +15,7 @@ public class Auth {
         createDbStatement.executeUpdate(createDatabaseQuery);
         createDbStatement.close();
         con.close();
-        con = DriverManager.getConnection("jdbc:mysql://db:3306/UserAuthentication", "root", "letitfeel36");
+        con = DriverManager.getConnection("jdbc:mysql://db:3306/UserAuthentication", "root", "");
         String createTableQuery = "CREATE TABLE IF NOT EXISTS user_database ("
                 + "id INT AUTO_INCREMENT PRIMARY KEY, "
                 + "name VARCHAR(255) UNIQUE NOT NULL, "
