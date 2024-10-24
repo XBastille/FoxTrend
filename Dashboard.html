@@ -173,7 +173,7 @@
         </div>
     </div>
 
-
+     <h2 style="font-size: 32px; color: white;  margin-left: 220px; ;">Trending</h2>
     <section class="trending">
         <section class="slider-container">
             <span class="slider-btn next" onclick="slide(1)">
@@ -402,7 +402,7 @@
               <input type="text" class="search-bar-2" placeholder="Search by company name...">
             </div>
             <button class="filter-button"><img src="media/filter.jpg" alt="Filter" class="filter-icon"></button>
-            <div class="filter-box" id="filterBox">
+            <div class="filter-box" id="filterBox" style="resize: both; overflow: auto;">
               <h3>Filter Options</h3>
               
               <div class="filter-section">
@@ -666,59 +666,71 @@
 
 <script>
     Papa.parse("stock_data_1.csv", {
-        download: true,
-        header: true,
-        complete: function(results) {
-            const xarray = [];
-            const yarray = [];
-            
-            results.data.forEach(row => {
-                xarray.push(row['Date']);
-                yarray.push(parseFloat(row['Close']));
-            });
-            
-            const data = [{
-                x: xarray,
-                y: yarray,
-                mode: "lines",
-                type: "scatter",
-                fill: "tozeroy",
-                fillgradient: {
-                    type: 'vertical',
-                    colorscale: [[0,'rgba(0,0,0,0)'], [1,'rgba(96,0,147,1)']],
-                },
-                line: {
-                    width: 2
+    download: true,
+    header: true,
+    complete: function(results) {
+        const xarray = [];
+        const yarray = [];
+        
+        results.data.forEach(row => {
+            xarray.push(row['Date']);
+            yarray.push(parseFloat(row['Close']));
+        });
+        
+        const data = [{
+            x: xarray,
+            y: yarray,
+            mode: "lines",
+            type: "scatter",
+            fill: "tozeroy",
+            fillgradient: {
+                type: 'vertical',
+                colorscale: [[0,'rgba(0,0,0,0)'], [1,'rgba(96,0,147,1)']]
+            },
+            line: {
+                width: 2
+            },
+            hovertemplate: '%{x}<extra></extra>'
+        }];
+        
+        const layout = {
+            xaxis: {
+                range: [xarray[0], xarray[xarray.length-1]],
+                showticklabels: false,
+                showgrid: false,
+                zeroline: false,
+                spikedash: "solid",
+                spikemode: "toaxis",
+                spikecolor: "white",
+                spikethickness: 1
+            },
+            yaxis: {
+                range: [Math.min(...yarray) * 0.98, Math.max(...yarray) * 1.02],
+                showticklabels: false,
+                showgrid: false,
+                zeroline: false
+            },
+            colorway: ['#7834a8'],
+            plot_bgcolor: "#1e1e1e",
+            paper_bgcolor: "#1e1e1e",
+            margin: {l: 0, r: 0, t: 60, b: 0},
+            autosize: true,
+            hoverlabel: {
+                bgcolor: "black",
+                bordercolor: "black",
+                font: {
+                    color: "white",
+                    size: 15
                 }
-
-                
-            }];
-            
-            const layout = {
-                xaxis: {
-                    range: [xarray[0], xarray[xarray.length-1]],
-                    showticklabels: false,
-                    showgrid: false,
-                    zeroline: false
-                },
-                yaxis: {
-                    range: [Math.min(...yarray) * 0.98, Math.max(...yarray) * 1.02],
-                    showticklabels: false,
-                    showgrid: false,
-                    zeroline: false
-                },
-                colorway: ['#7834a8'],
-                plot_bgcolor: "#1e1e1e",
-                paper_bgcolor: "#1e1e1e",
-                margin: {l: 0, r: 0, t: 60, b: 0},
-                autosize: true
-            };
-            
-            document.querySelectorAll('.myplot').forEach((plot) => {
-                Plotly.newPlot(plot, data, layout);
-            });
-        }
-    });
+            },
+            hovermode: "x"
+        };
+        
+        document.querySelectorAll('.myplot').forEach((plot) => {
+            Plotly.newPlot(plot, data, layout);
+        });
+    }
+});
 </script> 
 <script src="Dashboard.js"></script>
 </body>
