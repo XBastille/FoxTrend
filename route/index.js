@@ -64,14 +64,47 @@ router.get('/userprofile', ensureAuthentication, (req, res) => {
 router.post('/userprofile', async (req, res) => {
     const Password = req.body.password
     const email = req.body.email
-    const {emails}=req.body
-    const name=req.body.name
-    const username=req.body.username
-    const{usernames}=req.body
-    const confirm_password=req.body.confirm_password
-    console.log(email)
-    console.log(emails) 
-    return;
+    const { emails } = req.body
+    const name = req.body.name
+    const usernamess = req.body.username
+    const { usernames } = req.body
+    const confirm_password = req.body.confirm_password
+    let c=0;
+    let oldemail=""
+    let sets = ""
+    try {
+        if(emails!==undefined){
+            oldemail=emails
+        }
+        console.log(oldemail)
+        const findemail = await User.findOne({ email: oldemail })
+        if (findemail !== undefined) {
+            sets = "true"
+        }
+        console.log(sets)
+        if (sets === "true") {
+            // console.log(username)
+            if (usernamess !== undefined) {
+                // console.log(username)
+                const updateusername = await User.findOneAndUpdate({ email: oldemail }, { $set: { username: usernamess } })
+                console.log(updateusername)
+                if (updateusername) {
+                    console.log("username updated sucessfully", updateusername)
+                }
+                else {
+                    console.log('cannot update the username')
+                }
+            }
+            else {
+                console.log("username is undefined")
+            }
+        }
+        else {
+            console.log("email not found")
+        }
+    } catch (error) {
+        console.log(error);
+    }
 })
 
 module.exports = router;
