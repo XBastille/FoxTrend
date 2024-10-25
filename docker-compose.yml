@@ -3,7 +3,7 @@ services:
   db:
     image: mysql:8.0
     environment:
-      MYSQL_ROOT_PASSWORD: Abhinab@2004
+      MYSQL_ROOT_PASSWORD: nice
     ports:
       - "3307:3306"
     healthcheck:
