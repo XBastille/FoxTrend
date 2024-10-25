@@ -35,7 +35,7 @@ services:
       - 4000:3000
     environment:
       PORT: 3000
-      MONGODB_URI: mongodb+srv://login:Login@cluster0.nxy8ujt.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0
+      MONGODB_URI:very_nice
       DB_NAME: sample-db
     depends_on: 
       - mongo_db
