@@ -19,7 +19,8 @@ mongoose.connect(db, { useNewUrlParser: true })
 app.use(session({
     secret: 'secret',
     saveUninitialized: true,
-    resave:true
+    resave:false,
+    // cookie: { secure: process.env.ENV === 'PRODUCTION' }  production mai jab daalenge tab comment out kar denge
 }));
 
 app.use(passport.initialize());

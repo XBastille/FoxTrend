@@ -122,8 +122,8 @@ document.addEventListener('DOMContentLoaded', function () {
         })
         .catch(error => console.error('Error:', error));
     }
-    if (c % 2 == 0) {
-      profileForm.method = "POST"
+    else {
+      profileForm.method='POST'
       profileForm.action = "/userprofile"
       profileForm.submit();
       console.log("submitted")

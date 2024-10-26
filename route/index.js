@@ -37,7 +37,7 @@ router.get('/profilePage', ensureAuthentication, (req, res) => {
 
 })
 
-router.get('/statsPage', ensureAuthentication, (req, res) => {
+router.get('/statsPage', ensureAuthentication, async (req, res) => {
     res.render("statsPage", {
         name: req.user.name
     })
@@ -56,11 +56,16 @@ router.get('/yourList', ensureAuthentication, (req, res) => {
 })
 
 
-
-router.get('/userprofile', ensureAuthentication, (req, res) => {
-    res.render("userprofile")
+router.get('/userprofile', ensureAuthentication, async (req, res) => {
+    console.log(req.user._id)
+    res.render("userprofile", {
+        name: req.user.name,
+        username:req.user.username,
+        email:req.user.email,
+        password:req.user.password
+    })
 })
-
+let oldemail = ""
 router.post('/userprofile', async (req, res) => {
     const Password = req.body.password
     const email = req.body.email
@@ -69,12 +74,11 @@ router.post('/userprofile', async (req, res) => {
     const usernamess = req.body.username
     const { usernames } = req.body
     const confirm_password = req.body.confirm_password
-    let c=0;
-    let oldemail=""
+    let c = 0;
     let sets = ""
     try {
-        if(emails!==undefined){
-            oldemail=emails
+        if (emails !== undefined) {
+            oldemail = emails
         }
         console.log(oldemail)
         const findemail = await User.findOne({ email: oldemail })
@@ -83,25 +87,46 @@ router.post('/userprofile', async (req, res) => {
         }
         console.log(sets)
         if (sets === "true") {
-            // console.log(username)
             if (usernamess !== undefined) {
-                // console.log(username)
                 const updateusername = await User.findOneAndUpdate({ email: oldemail }, { $set: { username: usernamess } })
-                console.log(updateusername)
                 if (updateusername) {
                     console.log("username updated sucessfully", updateusername)
                 }
-                else {
-                    console.log('cannot update the username')
-                }
-            }
-            else {
-                console.log("username is undefined")
             }
         }
+        if (sets === 'true') {
+            if (email !== undefined) {
+                const updatemail = await User.findOneAndUpdate({ email: oldemail }, { $set: { email: email } })
+                if (updatemail) {
+                    console.log("email updated")
+                }
+            }
+        }
+
+        if (sets === 'true') {
+            if (name !== undefined) {
+                const updatname = await User.findOneAndUpdate({ email: oldemail }, { $set: { name: name } })
+                if (updatname) {
+                    console.log("name updated")
+                }
+            }
+        }
+
+        if (sets === 'true') {
+            if (Password !== undefined) {
+                const salt = await bcrypt.genSalt(10);
+                const hash = await bcrypt.hash(Password, salt);
+                const updatepassword = await User.findOneAndUpdate({ email: oldemail }, { $set: { password: hash } })
+                if (updatepassword) {
+                    console.log("password updated")
+                }
+            }
+        }
+
         else {
             console.log("email not found")
         }
+        res.redirect('/userprofile')
     } catch (error) {
         console.log(error);
     }
