@@ -15,7 +15,7 @@ body{
   background-color: #000000;
   color: white;
   font-weight: bolder;
-  height: 3850px;
+  height: 6550px;
   width: 1510px;
   animation: bganimated 15s infinite linear;
 }
@@ -784,6 +784,160 @@ img{
   font-weight: 400;
 }
 
+.githubSection{
+  border-bottom: 1px solid rgb(69, 69, 69);
+  padding: 56px;
+  display: flex;
+  z-index: 3;
+  overflow: visible;
+  margin-left: 80px;
+  margin-right: 80px;
+}
+
+.sidedheader{
+  clear: left;
+  margin-top: 5em;
+  margin-bottom: 4em;
+  margin-left: 100px;
+  padding-top: 4em;
+  padding-bottom: 0;
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+  justify-content: space-between;
+}
+
+.smallheading {
+  opacity: 0;
+  transition: opacity 1s ease-out, transform 1s ease-out;
+  transform: translateX(-100%)
+  
+}
+
+.smallheading.visible{
+  opacity: 1;
+  transform: translateX(0);
+}
+
+.smallheading span{
+  margin-top: 2%;
+ margin-bottom: .5em;
+ font-weight: 700;
+ font-size: 20px;
+}
+
+.bigheading {
+  opacity: 0;
+  transition: opacity 1s ease-out, transform 1s ease-out;
+  transform: translateX(100%)
+  
+}
+
+.bigheading.visible{
+  opacity: 1;
+  transform: translateX(0);
+  
+}
+
+.bigheading span{
+  font-size: 64px;
+  width: 70%;
+  margin-top: 2%;
+  font-size: 3.5rem;
+  line-height: 105%;
+  margin-left: 70px;
+}
+
+.codebase{
+  display: flex;
+  margin-left: 90px;
+}
+
+.usersstars{
+  display: flex;
+  flex-direction: column;
+  align-self: flex-end;
+  width: 30%;
+  grid-column-gap: 4em;
+  grid-row-gap: 4em;
+}
+
+.downloads{
+  opacity: 0;
+  transform: translateX(-100%);
+  transition : opacity 1s ease-out, transform 1s ease-out
+}
+
+.downloads.visible{
+  opacity: 1;
+  transform: translateX(0);
+  transition-delay: 0.6s;
+}
+
+.gitstars{
+  opacity: 0;
+  transform: translateX(-100%);
+  transition : opacity 1s ease-out, transform 1s ease-out
+}
+
+.gitstars.visible{
+  opacity: 1;
+  transform: translateX(0);
+  transition-delay: 0.4s;
+}
+
+.downloads span{
+  font-size: 42px;
+
+}
+
+.downloads p{
+  font-size: 20px;
+}
+
+.gitstars span{
+  font-size: 42px;
+}
+
+.gitstars p{
+  font-size: 20px;
+}
+
+
+.codebox{
+  border: 150px solid rgb(67, 66, 66);
+  border-width: 1px;
+  height: 510px;
+  width: 800px;
+  background: radial-gradient(circle, rgb(42, 41, 43) 0%, rgba(0, 0, 0, 1) 100%);
+  border-radius: 3em;
+  padding: 4em;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  justify-content: space-between;
+  opacity: 0;
+  transform : translatex(100%) ; 
+  transition : transform 1s ease, opacity 1s ease;
+}
+
+.codebox.visible{
+  opacity: 1;
+  transform: translateX(0);
+}
+
+.codebox p{
+  width: 92%;
+  font-size: 2rem;
+  font-weight: 400;
+  overflow-wrap: normal;
+  line-height: 140%;
+}
+
+
+
+
+
 .about-us-cont{
 height: 1100px;   
 background: radial-gradient(circle, rgb(96, 0, 147) 0%, rgb(0, 0, 0) 70% );
@@ -838,6 +992,11 @@ margin-right: 110px;
   margin-top: 60px;
   overflow-wrap: normal;
 }
+
+footer{
+  margin-top: 1080px;
+}
+
 .footer-links{
   display: flex;
   justify-content: space-evenly;
@@ -895,4 +1054,70 @@ margin-right: 110px;
 .footer-button.show{
   opacity: 1;
   transform: translateX(0);
+}
+
+/*faq*/
+
+.faqcontainer {
+  z-index: 100;
+  height: 800px;
+  margin-left: 150px;
+  margin-right: 100px;
+}
+
+.faqcontainer h2{
+  font-size: 42px;
+
+}
+.faq {
+   margin-top: 40px;
+   transition: border-bottom-color 0.3s ease;
+   border-bottom: 1px solid grey;
+}
+
+.faq.open {
+  
+}
+
+.faqquestion {
+  padding: 15px;
+  margin-bottom: 60px;
+  cursor: pointer;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  transition: background-color 0.3s ease;
+ 
+}
+
+.faqquestion span{
+   color: white;
+   font-size: 35.2px;
+   font-weight: 400;
+}
+
+.faqanswer {
+  padding: 0 15px;
+  max-height: 0px;
+  overflow: hidden;
+  transition: max-height 0.5s ease, padding 0.5s ease;
+}
+
+.faqanswer p{
+  font-size: 1.3rem;
+}
+
+.faq.open .faqanswer {
+  height: 200px;
+  padding: 35px;
+}
+
+.plus {
+  font-size: 1.3rem;
+  transition: transform 0.3s ease;
+  cursor: pointer;
+}
+
+.faq.open .plus {
+  transform: rotate(45deg);
 }
