@@ -57,12 +57,11 @@ router.get('/yourList', ensureAuthentication, (req, res) => {
 
 
 router.get('/userprofile', ensureAuthentication, async (req, res) => {
-    console.log(req.user._id)
     res.render("userprofile", {
         name: req.user.name,
-        username:req.user.username,
-        email:req.user.email,
-        password:req.user.password
+        username: req.user.username,
+        email: req.user.email,
+        password: req.user.password
     })
 })
 let oldemail = ""
@@ -113,20 +112,33 @@ router.post('/userprofile', async (req, res) => {
         }
 
         if (sets === 'true') {
-            if (Password !== undefined) {
+            // if (Password !== undefined) {
+            //     const salt = await bcrypt.genSalt(10);
+            //     const hash = await bcrypt.hash(Password, salt);
+            //     const updatepassword = await User.findOneAndUpdate({ email: oldemail }, { $set: { password: hash } })
+            //     if (updatepassword) {
+            //         console.log("password updated")
+            //     }
+            // }
+
+            if (Password !== undefined && confirm_password !== undefined) {
                 const salt = await bcrypt.genSalt(10);
-                const hash = await bcrypt.hash(Password, salt);
-                const updatepassword = await User.findOneAndUpdate({ email: oldemail }, { $set: { password: hash } })
-                if (updatepassword) {
-                    console.log("password updated")
+                const hash1 = await bcrypt.hash(Password, salt);
+                const hash2 = await bcrypt.hash(confirm_password, salt)
+                if (hash1 === (hash2)) {
+                    const updatepassword = await User.findOneAndUpdate({ email: oldemail }, { $set: { password: hash1 } })
+                    if (updatepassword) {
+                        res.redirect('/userprofile')
+                    }
+                }
+                else {
+                    
                 }
             }
         }
-
         else {
             console.log("email not found")
         }
-        res.redirect('/userprofile')
     } catch (error) {
         console.log(error);
     }

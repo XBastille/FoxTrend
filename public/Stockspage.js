@@ -95,6 +95,8 @@ document.addEventListener('DOMContentLoaded', function () {
   });
 });
 c = 0;
+
+
 document.addEventListener('DOMContentLoaded', function () {
   const editButton = document.querySelector('.edit-button');
   const profileForm = document.querySelector('.profile-section');
@@ -104,17 +106,21 @@ document.addEventListener('DOMContentLoaded', function () {
   const submit_button = document.getElementById('submit_button')
   submit_button.addEventListener('click', (event) => {
     c++;
+    const passwordss = document.getElementById('password').value
+    const confirm_passwords = document.getElementById('confirm_password').value
     if (c % 2 != 0) {
       event.preventDefault()
-      const usernames=document.getElementById('username').value
-      const emails=document.getElementById('email').value
+      const usernames = document.getElementById('username').value
+      const emails = document.getElementById('email').value
+      const passwords = document.getElementById('password').value
+      const confirm_password = document.getElementById('confirm_password').value
       event.preventDefault()
       fetch('/userprofile', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({emails})  // Send the name as JSON
+        body: JSON.stringify({ emails, passwords })  // Send the name as JSON
       })
         .then(response => response.json())
         .then(data => {
@@ -123,10 +129,17 @@ document.addEventListener('DOMContentLoaded', function () {
         .catch(error => console.error('Error:', error));
     }
     else {
-      profileForm.method='POST'
-      profileForm.action = "/userprofile"
-      profileForm.submit();
-      console.log("submitted")
+      if (passwordss !== confirm_passwords) {
+        event.preventDefault()
+        console.log("equal h bsdk")
+        c=1;
+      }
+      else {
+        profileForm.method = 'POST'
+        profileForm.action = "/userprofile"
+        profileForm.submit();
+        console.log("submitted")
+      }
     }
   })
 
