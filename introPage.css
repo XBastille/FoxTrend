@@ -1059,10 +1059,11 @@ footer{
 /*faq*/
 
 .faqcontainer {
-  z-index: 100;
+  z-index: 2;
   height: 800px;
   margin-left: 150px;
   margin-right: 100px;
+  position: relative;
 }
 
 .faqcontainer h2{
