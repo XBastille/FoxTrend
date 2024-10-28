@@ -108,6 +108,7 @@ document.addEventListener('DOMContentLoaded', function () {
     c++;
     const passwordss = document.getElementById('password').value
     const confirm_passwords = document.getElementById('confirm_password').value
+    const emailss = document.getElementById('email').value
     if (c % 2 != 0) {
       event.preventDefault()
       const usernames = document.getElementById('username').value
@@ -131,7 +132,12 @@ document.addEventListener('DOMContentLoaded', function () {
     else {
       if (passwordss !== confirm_passwords) {
         event.preventDefault()
-        console.log("equal h bsdk")
+        console.log("equal nhi bsdk")
+        c=1;
+      }
+      if(!emailss.endsWith("@gmail.com")){
+        event.preventDefault()
+        console.log("equal nhi bsdk")
         c=1;
       }
       else {
