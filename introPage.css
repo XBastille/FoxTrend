@@ -839,11 +839,10 @@ img{
   
 }
 
-.bigheading span{
-  font-size: 64px;
+.bigheading span {
+  font-size: 54.4px;
   width: 70%;
   margin-top: 2%;
-  font-size: 3.5rem;
   line-height: 105%;
   margin-left: 70px;
 }
