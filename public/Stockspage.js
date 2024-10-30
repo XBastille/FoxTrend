@@ -96,6 +96,33 @@ document.addEventListener('DOMContentLoaded', function () {
 });
 c = 0;
 
+let formdata = {
+  username: "",
+}
+
+const nhi = "false"
+async function handle() {
+  try {
+    const response = await fetch('/userprofile', {
+      method: 'POST',
+      headers: {
+        'Content-type': 'application/json'
+      },
+      body: JSON.stringify({formdata})
+    })
+    const datas = await response.json()
+    console.log(datas)
+    if (datas.sucess === 'false') {
+      return nhi;
+    }
+  } catch (error) {
+    console.log(error)
+  }
+}
+
+function formdatas() {
+  formdata.username = document.getElementById("username").value.trim()
+}
 
 document.addEventListener('DOMContentLoaded', function () {
   const editButton = document.querySelector('.edit-button');
@@ -104,7 +131,8 @@ document.addEventListener('DOMContentLoaded', function () {
   const avatarUsername = document.querySelector('.profile-header h1');
   const confirmPasswordField = document.querySelector('.confirm-password');
   const submit_button = document.getElementById('submit_button')
-  submit_button.addEventListener('click', (event) => {
+  submit_button.addEventListener('click', async (event) => {
+
     c++;
     const passwordss = document.getElementById('password').value
     const confirm_passwords = document.getElementById('confirm_password').value
@@ -130,21 +158,30 @@ document.addEventListener('DOMContentLoaded', function () {
         .catch(error => console.error('Error:', error));
     }
     else {
+      event.preventDefault()
+      const result = await handle()
+      console.log(result)
+      if (result === 'false') {
+        event.preventDefault
+        console.log("usernames already exists")
+        c = 1;
+      }
       if (passwordss !== confirm_passwords) {
         event.preventDefault()
         console.log("equal nhi bsdk")
-        c=1;
+        c = 1;
       }
-      if(!emailss.endsWith("@gmail.com")){
+      if (!emailss.endsWith("@gmail.com")) {
         event.preventDefault()
         console.log("equal nhi bsdk")
-        c=1;
+        c = 1;
       }
       else {
         profileForm.method = 'POST'
         profileForm.action = "/userprofile"
         profileForm.submit();
         console.log("submitted")
+        window.location.href = '/userprofile';  
       }
     }
   })
@@ -871,3 +908,19 @@ const profile = document.getElementById('profile')
 profile.addEventListener('click', () => {
   window.location.href = '/userprofile'
 })
+
+
+function formdatas() {
+  if (currentStep === 1) {
+    userprof.name = document.getElementById("name").value.trim();
+    userprof.username = document.getElementById("username").value.trim()
+  }
+  if (currentStep === 2) {
+    userprof.email = document.getElementById('email').value.trim()
+  }
+  if (currentStep === 3) {
+    userprof.password = document.getElementById('password').value.trim()
+    userprof.password2 = document.getElementById('confirm_password').value.trim();
+  }
+
+}

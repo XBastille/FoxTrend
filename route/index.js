@@ -87,9 +87,20 @@ router.post('/userprofile', async (req, res) => {
         console.log(sets)
         if (sets === "true") {
             if (usernamess !== undefined) {
-                const updateusername = await User.findOneAndUpdate({ email: oldemail }, { $set: { username: usernamess } })
-                if (updateusername) {
-                    console.log("username updated sucessfully", updateusername)
+                console.log(usernamess)
+                const usernameexist = await User.findOne({ username: usernamess })
+                console.log(usernameexist)
+                
+                if (!usernameexist) {
+                    const updateusername = await User.findOneAndUpdate({ email: oldemail }, { $set: { username: usernamess } })
+                    if (updateusername) {
+                        console.log("username updated sucessfully", updateusername)
+                        return res.json({sucess:"true"})
+                    }
+                }
+                else {
+                    console.log("username already exixts")
+                     return res.json({sucess:"false"})
                 }
             }
         }
@@ -112,15 +123,6 @@ router.post('/userprofile', async (req, res) => {
         }
 
         if (sets === 'true') {
-            // if (Password !== undefined) {
-            //     const salt = await bcrypt.genSalt(10);
-            //     const hash = await bcrypt.hash(Password, salt);
-            //     const updatepassword = await User.findOneAndUpdate({ email: oldemail }, { $set: { password: hash } })
-            //     if (updatepassword) {
-            //         console.log("password updated")
-            //     }
-            // }
-
             if (Password !== undefined && confirm_password !== undefined) {
                 const salt = await bcrypt.genSalt(10);
                 const hash1 = await bcrypt.hash(Password, salt);
@@ -128,11 +130,8 @@ router.post('/userprofile', async (req, res) => {
                 if (hash1 === (hash2)) {
                     const updatepassword = await User.findOneAndUpdate({ email: oldemail }, { $set: { password: hash1 } })
                     if (updatepassword) {
-                        res.redirect('/userprofile')
+                        console.log("password updated")
                     }
-                }
-                else {
-
                 }
             }
         }

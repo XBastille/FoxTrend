@@ -44,7 +44,7 @@ const runjava = (className, args) => {
 
 let c = 0;
 router.post('/register', async (req, res) => {
-  const name=req.body.name
+  const name = req.body.name
   const username = req.body.username;
   const email = req.body.email;
   const password = req.body.password;
@@ -79,7 +79,7 @@ router.post('/register', async (req, res) => {
     if (counts === 3) {
       const existuser = await User.findOne({ email: email });
       if (!existuser) {
-        const newUser = new User({ username, email,name, password });
+        const newUser = new User({ username, email, name, password });
         const salt = await bcrypt.genSalt(10);
         const hash = await bcrypt.hash(newUser.password, salt);
         newUser.password = hash;
