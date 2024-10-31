@@ -28,10 +28,6 @@ Clone the repository to explore the initial codebase:
 git clone https://github.com/XBastille/FoxTrend.git
 ```
 
-## License
-
-This project is licensed under the Attribution-NonCommercial 4.0 International - see the [LICENSE](LICENSE) file for details.
-
 ## Contact
 
 For questions or inquiries, please contact me at [eziopuhan825@gmail.com](mailto:eziopuhan825@gmail.com).
