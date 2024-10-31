@@ -30,7 +30,7 @@ git clone https://github.com/XBastille/FoxTrend.git
 
 ## License
 
-This project is licensed under the LGPL-2.1 License - see the [LICENSE](LICENSE) file for details.
+This project is licensed under the Attribution-NonCommercial 4.0 International - see the [LICENSE](LICENSE) file for details.
 
 ## Contact
 
