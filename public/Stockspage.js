@@ -101,20 +101,18 @@ let formdata = {
 }
 
 const nhi = "false"
-async function handle() {
+async function handless() {
   try {
     const response = await fetch('/userprofile', {
       method: 'POST',
       headers: {
         'Content-type': 'application/json'
       },
-      body: JSON.stringify({formdata})
+      body: JSON.stringify(formdata)
     })
     const datas = await response.json()
     console.log(datas)
-    if (datas.sucess === 'false') {
-      return nhi;
-    }
+    return datas.success === 'false' ? 'false' : 'true';
   } catch (error) {
     console.log(error)
   }
@@ -122,7 +120,10 @@ async function handle() {
 
 function formdatas() {
   formdata.username = document.getElementById("username").value.trim()
+  console.log(formdata)
 }
+
+
 
 document.addEventListener('DOMContentLoaded', function () {
   const editButton = document.querySelector('.edit-button');
@@ -132,7 +133,6 @@ document.addEventListener('DOMContentLoaded', function () {
   const confirmPasswordField = document.querySelector('.confirm-password');
   const submit_button = document.getElementById('submit_button')
   submit_button.addEventListener('click', async (event) => {
-
     c++;
     const passwordss = document.getElementById('password').value
     const confirm_passwords = document.getElementById('confirm_password').value
@@ -143,46 +143,48 @@ document.addEventListener('DOMContentLoaded', function () {
       const emails = document.getElementById('email').value
       const passwords = document.getElementById('password').value
       const confirm_password = document.getElementById('confirm_password').value
-      event.preventDefault()
-      fetch('/userprofile', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ emails, passwords })  // Send the name as JSON
-      })
-        .then(response => response.json())
-        .then(data => {
-          console.log('Response from server:', data);  // Log server response
-        })
-        .catch(error => console.error('Error:', error));
+      try {
+        const response = await fetch('/userprofile', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({ emails, passwords })
+        });
+        const data = await response.json();
+        console.log('Response from server:', data);
+      } catch (error) {
+        console.error('Error:', error);
+      }
     }
     else {
-      event.preventDefault()
-      const result = await handle()
+      // event.preventDefault()
+      formdatas();
+      const result = await handless()
       console.log(result)
       if (result === 'false') {
-        event.preventDefault
+        event.preventDefault()
         console.log("usernames already exists")
         c = 1;
+        return
       }
       if (passwordss !== confirm_passwords) {
         event.preventDefault()
         console.log("equal nhi bsdk")
         c = 1;
+        return
       }
       if (!emailss.endsWith("@gmail.com")) {
         event.preventDefault()
         console.log("equal nhi bsdk")
         c = 1;
+        return
       }
-      else {
-        profileForm.method = 'POST'
-        profileForm.action = "/userprofile"
-        profileForm.submit();
-        console.log("submitted")
-        window.location.href = '/userprofile';  
-      }
+      profileForm.method = 'POST'
+      profileForm.action = "/userprofile"
+      profileForm.submit();
+      // window.location.reload();
+      console.log("submitted")
     }
   })
 
@@ -657,7 +659,7 @@ const d = new Date(exdividenddate * 1000);
 const ceoname = document.getElementById("ceoname");
 const city_state = document.getElementById("city_state");
 function fetchjson() {
-  fetch("public/AAPL_info.json")
+  fetch("/public/graph.json")
     .then((res) => {
       if (!res.ok) {
         console.log(res.status);
@@ -894,6 +896,7 @@ Papa.parse("/public/stock_data_1.csv", {
 
 });
 
+
 const watch = document.getElementById('watch')
 watch.addEventListener('click', () => {
   window.location.href = '/watch'
@@ -910,17 +913,109 @@ profile.addEventListener('click', () => {
 })
 
 
-function formdatas() {
-  if (currentStep === 1) {
-    userprof.name = document.getElementById("name").value.trim();
-    userprof.username = document.getElementById("username").value.trim()
-  }
-  if (currentStep === 2) {
-    userprof.email = document.getElementById('email').value.trim()
-  }
-  if (currentStep === 3) {
-    userprof.password = document.getElementById('password').value.trim()
-    userprof.password2 = document.getElementById('confirm_password').value.trim();
-  }
+//graph setting 1day,1month extra
 
-}
+
+//oneday
+// const oneday=document.getElementById('oneday')
+
+// if (day === 1) {
+//   if (month === 1 || month === 3 || month === 5 || month === 8 || month === 7 || month === 10) {
+//     day = 31;
+//   }
+//   if (month === 0) {
+//     day = 31;
+//     year = year - 1;
+//   }
+//   else if (month === 1) {
+//     if (year % 4 === 0) {
+//       day = 29;
+//     }
+//     else {
+//       day = 28;
+//     }
+//   }
+//   else {
+//     day = 30;
+//   }
+// }
+
+
+
+//onemonth
+
+const onemonth = document.getElementById('onemonth')
+onemonth.addEventListener('click', () => {
+  const dates = new Date()
+  const month = dates.getMonth()
+  const months = dates.getMonth() + 1
+  let day = dates.getDate()
+  let year = dates.getFullYear()
+  if (month === 0) {
+    year = year - 1;
+  }
+  console.log(day + "-" + month + "-" + year)
+  console.log(day + "-" + months + "-" + year)
+})
+
+//three month
+const threemonth = document.getElementById('threemonth')
+threemonth.addEventListener('click', () => {
+  const dates = new Date()
+  let month = dates.getMonth()
+  let months = dates.getMonth() + 1
+  let day = dates.getDate()
+  let year = dates.getFullYear()
+  if (month === 0) {
+    year = year - 1;
+  }
+  month-=2;
+  console.log(day + "-" + month + "-" + year)
+  console.log(day + "-" + months + "-" + year)
+})
+
+//year to date
+const yeartodate =document.getElementById('yeartodate')
+yeartodate.addEventListener('click',()=>{
+  const dates=new Date();
+  let day=dates.getDate();
+  let months = dates.getMonth() + 1
+  let year=dates.getFullYear();
+  console.log(1 + "-" + 1 + "-" + year)
+  console.log(day + "-" + months + "-" + year)
+})
+
+//oneyear
+const oneyear=document.getElementById('oneyear')
+oneyear.addEventListener('click',()=>{
+  const dates=new Date();
+  let months = dates.getMonth() + 1
+  let day = dates.getDate()
+  let year = dates.getFullYear()-1
+  let years = dates.getFullYear()
+  console.log(day + "-" + months + "-" + year)
+  console.log(day + "-" + months + "-" + years)
+})
+
+//threeyear
+const fiveyear=document.getElementById('fiveyear')
+fiveyear.addEventListener('click',()=>{
+  const dates=new Date();
+  let months = dates.getMonth() + 1
+  let day = dates.getDate()
+  let year = dates.getFullYear()-5
+  let years = dates.getFullYear()
+  console.log(day + "-" + months + "-" + year)
+  console.log(day + "-" + months + "-" + years)
+})
+
+const maxdate=document.getElementById('maxdate')
+maxdate.addEventListener('click',()=>{
+  const dates=new Date();
+  let months = dates.getMonth() + 1
+  let day = dates.getDate()
+  let year = dates.getFullYear()-5
+  let years = dates.getFullYear()
+  console.log(day + "-" + months + "-" + 1950)
+  console.log(day + "-" + months + "-" + years)
+})

@@ -2,6 +2,7 @@ const express = require('express');
 const { ensureAuthentication } = require('../config/off');
 const bcrypt = require('bcryptjs')
 const router = express.Router();
+const { spawn } = require('child_process');
 
 const User = require('../models/Users');
 
@@ -9,11 +10,62 @@ router.get('/', (req, res) => {
     res.render("wel")
 })
 
+router.get('/summary', ensureAuthentication, (req, res) => {
+    res.render("summary")
+})
+
 router.get('/dashboard', ensureAuthentication, (req, res) => {
     res.render("dashboard", {
-        name: req.user.name
+        name: req.user.name,
+        username: req.user.username,
     })
 
+})
+
+router.get('/loading', ensureAuthentication, (req, res) => {
+    res.render("loading")
+})
+let valss;
+router.post('/loading', (req, res) => {
+    let data1 = '';
+    let vals;
+    const { numCompanies, val, start, end } = req.body
+    const args = [numCompanies, val, start, end];
+
+    console.log("Arguments :" + args)
+
+    const pyone = spawn('python', ['./main.py', ...args]);
+    pyone.stdout.on('data', function (data) {
+        data1 += data.toString();
+        console.log(data1)
+    });
+
+    pyone.on('close', (code) => {
+        console.log(`child process close all stdio with code ${code}`);
+        if (code === 0) {
+            console.log("bsdk")
+            return res.json({sucess:"true"})
+        }
+        else {
+            //flash message dalana h idhar ki ticker not correct type ka
+            console.log("eror message")
+            return res.json({ success: "false" })
+        }
+    });
+})
+
+
+
+router.post('/dashboard', (req, res) => {
+    const numCompanies = 1;
+    const { val } = req.body
+    const { start } = req.body
+    const { end } = req.body
+    console.log(val)
+    console.log(start)
+    console.log(end)
+    const loadinganimation = { numCompanies, val, start, end }
+    return res.json({ sucess: 'true', loadinganimation })
 })
 
 router.get('/chartPage', ensureAuthentication, (req, res) => {
@@ -22,6 +74,7 @@ router.get('/chartPage', ensureAuthentication, (req, res) => {
     })
 
 })
+
 
 router.get('/historicdata', ensureAuthentication, (req, res) => {
     res.render("historicdata", {
@@ -90,17 +143,17 @@ router.post('/userprofile', async (req, res) => {
                 console.log(usernamess)
                 const usernameexist = await User.findOne({ username: usernamess })
                 console.log(usernameexist)
-                
+
                 if (!usernameexist) {
                     const updateusername = await User.findOneAndUpdate({ email: oldemail }, { $set: { username: usernamess } })
                     if (updateusername) {
                         console.log("username updated sucessfully", updateusername)
-                        return res.json({sucess:"true"})
+                        return res.redirect('/userprofile')
                     }
                 }
                 else {
                     console.log("username already exixts")
-                     return res.json({sucess:"false"})
+                    return res.json({ sucess: "false" })
                 }
             }
         }
@@ -138,9 +191,13 @@ router.post('/userprofile', async (req, res) => {
         else {
             console.log("email not found")
         }
+        // return res.redirect('/userprofile')
     } catch (error) {
         console.log(error);
     }
 })
 
 module.exports = router;
+
+
+

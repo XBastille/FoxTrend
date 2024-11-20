@@ -1,4 +1,4 @@
-<!doctype html>
+hom<!doctype html>
 <html lang="en">
 
 <head>
@@ -21,7 +21,7 @@
         </a>
         <li class="Icon-items" data-name="Home">
             <img src="media/home.jpg" id="item1" />
-            <button><span class="icon-name">Home</span></button>
+            <button id="hom"><span class="icon-name">Home</span></button>
         </li>
         <li class="Icon-items" data-name="Watch">
             <img src="media/recent_watch.jpg" id="item2" />
@@ -124,7 +124,7 @@
         <ul>
             <button id="aapl">Predict AAPL</button><br />
             <div class="data">
-                <a class="sum" href="dashboard">Summary</a><br /><br />
+                <a class="sum" href="summary">Summary</a><br /><br />
                 <a class="cha"> Chart</a><br /><br />
                 <a class="histo" href="historicdata"> Historical Data</a><br /><br />
                 <a class="stat" href="statsPage">Statistics</a><br /><br />
@@ -444,6 +444,11 @@
             },
 
         });
+        
+        const hom = document.getElementById('hom')
+        hom.addEventListener('click', () => {
+            window.location.href = '/watch'
+        })
 
         const watchs = document.getElementById('watchs')
         watchs.addEventListener('click', () => {
