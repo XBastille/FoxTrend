@@ -14,6 +14,23 @@ router.get('/summary', ensureAuthentication, (req, res) => {
     res.render("summary")
 })
 
+router.post('/summary', async(req, res) => {
+    const numCompanies = 1;
+    const { val } = req.body
+    const { start } = req.body
+    const { end } = req.body
+    console.log(val)
+    console.log(start)
+    console.log(end)
+    const summaryanimation = { numCompanies, val, start, end }
+    const args = [numCompanies, val, start, end];
+    const dashboard = await runpython(args)
+    if (dashboard) {
+        return res.json({ sucess: "true" })
+    }
+    return res.json({ sucess: 'true', summaryanimation })
+})
+
 router.get('/dashboard', ensureAuthentication, (req, res) => {
     res.render("dashboard", {
         name: req.user.name,
@@ -22,38 +39,55 @@ router.get('/dashboard', ensureAuthentication, (req, res) => {
 
 })
 
+const runpython = (args) => {
+    return new Promise((resolve, reject) => {
+        let data1 = '';
+
+
+        console.log("Arguments :" + args)
+
+        const pyone = spawn('python', ['./main.py', ...args]);
+        pyone.stdout.on('data', function (data) {
+            data1 += data.toString();
+            console.log(data1)
+        });
+
+        pyone.on('close', (code) => {
+            console.log(`child process close all stdio with code ${code}`);
+            if (code === 0) {
+                resolve(data1.trim());
+
+            }
+            else {
+                //flash message dalana h idhar ki ticker not correct type ka
+                console.log("eror message")
+                reject(`code rejects with ${code}`)
+            }
+        });
+    })
+}
+
 router.get('/loading', ensureAuthentication, (req, res) => {
     res.render("loading")
 })
-let valss;
-router.post('/loading', (req, res) => {
-    let data1 = '';
-    let vals;
-    const { numCompanies, val, start, end } = req.body
+router.post('/loading', async (req, res) => {
+    // const { numCompanies, val, start, end } = req.body
+    const { numCompanies, val, start, end } = req.body;
     const args = [numCompanies, val, start, end];
-
-    console.log("Arguments :" + args)
-
-    const pyone = spawn('python', ['./main.py', ...args]);
-    pyone.stdout.on('data', function (data) {
-        data1 += data.toString();
-        console.log(data1)
-    });
-
-    pyone.on('close', (code) => {
-        console.log(`child process close all stdio with code ${code}`);
-        if (code === 0) {
-            console.log("bsdk")
-            return res.json({sucess:"true"})
-        }
-        else {
-            //flash message dalana h idhar ki ticker not correct type ka
-            console.log("eror message")
-            return res.json({ success: "false" })
-        }
-    });
+    console.log(args)
+    const dashboard = await runpython(args)
+    if (dashboard) {
+        return res.json({ sucess: "true" })
+    }
+    // console.log(req.body)
+    // const { Companies, nameofcomp, begdate, enddate } = req.body
+    // const args1 = [Companies, nameofcomp, begdate, enddate]
+    // console.log(args1)
+    // const threemonth = await runpython(args1)
+    // if (threemonth) {
+    //     return res.json({ sucess: "true" })
+    // }
 })
-
 
 
 router.post('/dashboard', (req, res) => {

@@ -638,7 +638,7 @@
 
 <script>
 
- 
+
 
   async function calss(numCompanies, val, start, end) {
     try {
@@ -667,22 +667,21 @@
     if (e.key === 'Enter') {
       val = searchcomp.value
       searchcomp.value = "";
-      console.log(val)
-      const date = new Date()
-      const startdate = date.getDate()
-      const startmonth = date.getMonth();
-      const startyear = date.getFullYear()
-      const start = startdate + "-" + startmonth + "-" + startyear
-      const enddate = date.getDate()
-      const endmonth = date.getMonth() + 1;
-      const endyear = date.getFullYear()
-      const end = enddate + "-" + endmonth + "-" + endyear
-      console.log(start)
-      console.log(end)
-      if (endmonth === 1) {
-        startmonth = 12;
-        startyear = startyear - 1;
+      const dates = new Date()
+      const month = dates.getMonth()
+      const months = dates.getMonth() + 1
+      let day = dates.getDate()
+      let year = dates.getFullYear()
+      if (month === 0) {
+        year = year - 1;
+        month = 12
+        months = 1;
       }
+      console.log(day + "-" + month + "-" + year)
+      console.log(day + "-" + months + "-" + year)
+      const start = day + "-" + month + "-" + year
+      const end = day + "-" + months + "-" + year
+
       try {
         const response = await fetch('/dashboard', {
           method: 'POST',
@@ -692,17 +691,11 @@
           body: JSON.stringify({ val, start, end })
         });
         const data = await response.json();
-        console.log('Response from server:', data);
-        if (data.sucess === 'true') {
-          console.log(data.loadinganimation.numCompanies, data.loadinganimation.val, data.loadinganimation.start, data.loadinganimation.end)
-           calss(data.loadinganimation.numCompanies, data.loadinganimation.val, data.loadinganimation.start, data.loadinganimation.end)
-           window.location.href='/loading'
-        }
-        
-        else {
-          console.log("loading response fail")
-        }
 
+        if (data.sucess === 'true') {
+          sessionStorage.setItem('loadingData', JSON.stringify(data.loadinganimation));
+          window.location.href = '/loading';
+        }
       } catch (error) {
         console.error('Error:', error);
       }

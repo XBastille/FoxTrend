@@ -551,7 +551,8 @@ document.addEventListener("click", function (event) {
 let currentMonth = currentDate.getMonth();
 let currentYear = currentDate.getFullYear();
 const months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
-
+let calender_from = null;
+const calendarUpdatedEvent = new Event('calendarUpdated');
 function updateCalendar() {
   const daysContainer = document.querySelector(".calendar-days");
   daysContainer.innerHTML = "";
@@ -593,9 +594,13 @@ function updateCalendar() {
       }
 
       calendarContainer.style.display = "none";
+      // console.log(selectedDate)
+      calender_from = selectedDate
+      document.dispatchEvent(calendarUpdatedEvent);
     });
 
     daysContainer.appendChild(dayButton);
+
   }
 }
 
@@ -658,6 +663,7 @@ let exdividenddate = "";
 const d = new Date(exdividenddate * 1000);
 const ceoname = document.getElementById("ceoname");
 const city_state = document.getElementById("city_state");
+let val = ''
 function fetchjson() {
   fetch("/public/graph.json")
     .then((res) => {
@@ -667,6 +673,7 @@ function fetchjson() {
       return res.json();
     })
     .then((data) => {
+      val = data.symbol
       Company_title.innerText = data.shortName;
       console.log(Company_title)
       Company_price.innerText = "$" + data.currentPrice;
@@ -940,12 +947,22 @@ profile.addEventListener('click', () => {
 //   }
 // }
 
+//ONE-WEEK
+// const oneweek = document.getElementById('oneweek')
+// oneweek.addEventListener('click', () => {
+//   var curr = new Date;
+//   // var firstday = new Date(curr.setDate(curr.getDate() - curr.getDay()));
+//   // var lastday = new Date(curr.setDate(curr.getDate() - curr.getDay() - 6));
 
+//   var currentDate = new Date();
+//   var firstday = new Date(currentDate.setDate(currentDate.getDate() - currentDate.getDay())).toUTCString();
+//   var lastday = new Date(currentDate.setDate(currentDate.getDate() - currentDate.getDay() - 7)).toUTCString();
+//   console.log(firstday, lastday)
+// })
 
-//onemonth
-
+//onemonth(DONE)--------------------------------------------------------------------------------
 const onemonth = document.getElementById('onemonth')
-onemonth.addEventListener('click', () => {
+onemonth.addEventListener('click', async () => {
   const dates = new Date()
   const month = dates.getMonth()
   const months = dates.getMonth() + 1
@@ -953,14 +970,38 @@ onemonth.addEventListener('click', () => {
   let year = dates.getFullYear()
   if (month === 0) {
     year = year - 1;
+    month = 12
+    months = 1;
   }
   console.log(day + "-" + month + "-" + year)
   console.log(day + "-" + months + "-" + year)
+  const start = day + "-" + month + "-" + year
+  const end = day + "-" + months + "-" + year
+  try {
+    const response = await fetch('/summary', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ val, start, end })
+    });
+    const data = await response.json();
+    console.log(data)
+    if (data.sucess === 'true') {
+      sessionStorage.setItem('summaryData', JSON.stringify(data.summaryanimation));
+      console.log(data.summaryanimation)
+      window.location.href = '/loading';
+    }
+  } catch (error) {
+    console.error('Error:', error);
+  }
 })
+//--------------------------------------------------------------------------------------
 
-//three month
+//three month(DONE)---------------------------------------------------------------------
 const threemonth = document.getElementById('threemonth')
-threemonth.addEventListener('click', () => {
+threemonth.addEventListener('click', async () => {
+
   const dates = new Date()
   let month = dates.getMonth()
   let months = dates.getMonth() + 1
@@ -969,53 +1010,199 @@ threemonth.addEventListener('click', () => {
   if (month === 0) {
     year = year - 1;
   }
-  month-=2;
+  month -= 2;
   console.log(day + "-" + month + "-" + year)
   console.log(day + "-" + months + "-" + year)
-})
+  const start = day + "-" + month + "-" + year
+  const end = day + "-" + months + "-" + year
 
-//year to date
-const yeartodate =document.getElementById('yeartodate')
-yeartodate.addEventListener('click',()=>{
-  const dates=new Date();
-  let day=dates.getDate();
+  try {
+    const response = await fetch('/summary', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ val, start, end })
+    });
+    const data = await response.json();
+    if (data.sucess === 'true') {
+      // sessionStorage.setItem('summaryData', JSON.stringify(data.summaryanimation));
+      // console.log(data.summaryanimation)
+      window.location.reload();
+    }
+  } catch (error) {
+    console.error('Error:', error);
+  }
+})
+//----------------------------------------------------------------------------------------------
+
+//year to date(DONE)------------------------------------------------------
+const yeartodate = document.getElementById('yeartodate')
+yeartodate.addEventListener('click', async () => {
+  const dates = new Date();
+  let day = dates.getDate();
   let months = dates.getMonth() + 1
-  let year=dates.getFullYear();
+  let year = dates.getFullYear();
   console.log(1 + "-" + 1 + "-" + year)
   console.log(day + "-" + months + "-" + year)
+  const start = 1 + "-" + 1 + "-" + year
+  const end = day + "-" + months + "-" + year
+  try {
+    const response = await fetch('/summary', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ val, start, end })
+    });
+    const data = await response.json();
+    if (data.sucess === 'true') {
+      // sessionStorage.setItem('summaryData', JSON.stringify(data.summaryanimation));
+      // console.log(data.summaryanimation)
+      window.location.reload();
+    }
+  } catch (error) {
+    console.error('Error:', error);
+  }
 })
+//----------------------------------------------------------------------------------------------------
 
-//oneyear
-const oneyear=document.getElementById('oneyear')
-oneyear.addEventListener('click',()=>{
-  const dates=new Date();
+//oneyear(DONE)-----------------------------------------------------------------------------------------
+const oneyear = document.getElementById('oneyear')
+oneyear.addEventListener('click', async () => {
+  const dates = new Date();
   let months = dates.getMonth() + 1
   let day = dates.getDate()
-  let year = dates.getFullYear()-1
+  let year = dates.getFullYear() - 1
   let years = dates.getFullYear()
   console.log(day + "-" + months + "-" + year)
   console.log(day + "-" + months + "-" + years)
+  const start = day + "-" + months + "-" + year
+  const end = day + "-" + months + "-" + years
+  try {
+    const response = await fetch('/summary', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ val, start, end })
+    });
+    const data = await response.json();
+    if (data.sucess === 'true') {
+      // sessionStorage.setItem('summaryData', JSON.stringify(data.summaryanimation));
+      // console.log(data.summaryanimation)
+      window.location.reload();
+    }
+  } catch (error) {
+    console.error('Error:', error);
+  }
 })
+//-------------------------------------------------------------------------------------
 
-//threeyear
-const fiveyear=document.getElementById('fiveyear')
-fiveyear.addEventListener('click',()=>{
-  const dates=new Date();
+//FIVE-YEAR(DONE)-------------------------------------------------------------------------
+const fiveyear = document.getElementById('fiveyear')
+fiveyear.addEventListener('click', async () => {
+  const dates = new Date();
   let months = dates.getMonth() + 1
   let day = dates.getDate()
-  let year = dates.getFullYear()-5
+  let year = dates.getFullYear() - 5
   let years = dates.getFullYear()
   console.log(day + "-" + months + "-" + year)
   console.log(day + "-" + months + "-" + years)
+  const start = day + "-" + months + "-" + year
+  const end = day + "-" + months + "-" + years
+   try {
+    const response = await fetch('/summary', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ val, start, end })
+    });
+    const data = await response.json();
+    if (data.sucess === 'true') {
+      // sessionStorage.setItem('summaryData', JSON.stringify(data.summaryanimation));
+      // console.log(data.summaryanimation)
+      window.location.reload();
+    }
+  } catch (error) {
+    console.error('Error:', error);
+  }
 })
-
-const maxdate=document.getElementById('maxdate')
-maxdate.addEventListener('click',()=>{
-  const dates=new Date();
+//----------------------------------------------------------------------------------------------
+//MAX-DATE(DONE)---------------------------------------------------------------------------------
+const maxdate = document.getElementById('maxdate')
+maxdate.addEventListener('click', async () => {
+  const dates = new Date();
   let months = dates.getMonth() + 1
   let day = dates.getDate()
-  let year = dates.getFullYear()-5
+  let year = dates.getFullYear() - 5
   let years = dates.getFullYear()
   console.log(day + "-" + months + "-" + 1950)
   console.log(day + "-" + months + "-" + years)
+  const start = day + "-" + months + "-" + 1950
+  const end = day + "-" + months + "-" + years
+  try {
+    const response = await fetch('/summary', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ val, start, end })
+    });
+    const data = await response.json();
+    if (data.sucess === 'true') {
+      // sessionStorage.setItem('summaryData', JSON.stringify(data.summaryanimation));
+      // console.log(data.summaryanimation)
+      window.location.reload();
+    }
+  } catch (error) {
+    console.error('Error:', error);
+  }
 })
+//--------------------------------------------------------------------------------------------------
+//checking from calender
+// const frombtn = document.getElementById('from-btn')
+let start, end;
+let startingmonth;
+document.addEventListener('calendarUpdated', () => {
+  const startmonth = calender_from.substring(4, 7)
+  const startdate = calender_from.substring(8, 10)
+  const startyear = calender_from.substring(11);
+  const mahina = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+  for (let i = 0; i < mahina.length; i++) {
+    if (startmonth === mahina[i]) {
+      console.log(i + 1);
+      startingmonth = i + 1;
+    }
+
+  }
+  start = startdate + "-" + startingmonth + "-" + startyear
+  end = startdate + "-" + startingmonth + "-" + startyear
+  console.log(start)
+  console.log(end)
+
+})
+
+const tobtn = document.getElementById('to-btn')
+ 
+
+
+// try {
+//   const response = await fetch('/summary', {
+//     method: 'POST',
+//     headers: {
+//       'Content-Type': 'application/json',
+//     },
+//     body: JSON.stringify({ val, start, end })
+//   });
+//   const data = await response.json();
+//   console.log(data)
+//   if (data.sucess === 'true') {
+//     sessionStorage.setItem('summaryData', JSON.stringify(data.summaryanimation));
+//     console.log(data.summaryanimation)
+//     window.location.href = '/loading';
+//   }
+// } catch (error) {
+//   console.error('Error:', error);
+// }
