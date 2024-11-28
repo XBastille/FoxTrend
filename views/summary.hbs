@@ -160,24 +160,6 @@
         margin-left: 160px;
         margin-bottom: 0px;
       ">
-    <div class="calendar-container" style="display: none">
-      <div class="calendar-header">
-        <button class="calendar-btn prev-month">←</button>
-        <span class="current-month">September 2024</span>
-        <button class="calendar-btn next-month">→</button>
-        <span class="current-year">
-          <button class="calendar-btn prev-year">←</button>
-          <span class="year">2024</span>
-          <button class="calendar-btn next-year">→</button>
-        </span>
-      </div>
-      <div class="calendar-body">
-        <div class="calendar-weekdays">
-          <span>Sun</span><span>Mon</span><span>Tue</span><span>Wed</span><span>Thu</span><span>Fri</span><span>Sat</span>
-        </div>
-        <div class="calendar-days"></div>
-      </div>
-    </div>
 
     <div class="calender">
       <button id="stp">Show Full Graph</button>
@@ -192,9 +174,52 @@
         <button class="date-range-button" id="maxdate">MAX</button>
       </div>
       <div class="date-selection">
-        <button id="from-btn" name="startdate" class="date-btn" id="from">From</button>
-        <button id="to-btn" class="date-btn" id="to">To</button>
+        <button id="date-range-btn" class="date-btn">Select Date Range</button>
+        <div id="calendar-popup" class="calendar-popup">
+            <div class="calendar-container">
+                <div class="from-calendar">
+                    <h3>From</h3>
+                    <div class="calendar-header">
+                    <select class="month-select"></select>
+                    <select class="year-select"></select>
+                  </div>
+                  <div class="weekdays">
+                    <span>Sun</span>
+                    <span>Mon</span>
+                    <span>Tue</span>
+                    <span>Wed</span>
+                    <span>Thu</span>
+                    <span>Fri</span>
+                    <span>Sat</span>
+                  </div>
+                  <div class="calendar-body"></div>
+                </div>
+                <div class="to-calendar">
+                    <h3>To</h3>
+                  <div class="calendar-header">
+                    <select class="month-select"></select>
+                    <select class="year-select"></select>
+                  </div>
+                  <div class="weekdays">
+                    <span>Sun</span>
+                    <span>Mon</span>
+                    <span>Tue</span>
+                    <span>Wed</span>
+                    <span>Thu</span>
+                    <span>Fri</span>
+                    <span>Sat</span>
+                  </div>
+                  <div class="calendar-body"></div>
+                </div>
+              </div>
+              <div class="calendar-footer">
+                <button class="apply-btn">Apply</button>
+                <button class="cancel-btn">Cancel</button>
+              </div>              
+          </div>
+        </div>
       </div>
+      
     </div>
   </div>
 
