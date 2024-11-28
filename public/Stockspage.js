@@ -506,137 +506,143 @@ function slide(direction) {
   slider.style.transform = `translateX(${-currentSlide * slideWidth}px)`;
 }
 
+document.addEventListener('DOMContentLoaded', function() {
+  const dateRangeBtn = document.getElementById('date-range-btn');
+  const calendarPopup = document.getElementById('calendar-popup');
+  
+  const months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
+  const currentYear = new Date().getFullYear();
+  const yearRange = Array.from({length: currentYear - 1979}, (_, i) => 1980 + i);
 
-let selectedFrom = null;
-let selectedTo = null;
-let activeInput = null;
-
-const fromBtn = document.getElementById("from-btn");
-const toBtn = document.getElementById("to-btn");
-const calendarContainer = document.querySelector(".calendar-container");
-
-const currentDate = new Date();
-const tomorrow = new Date();
-tomorrow.setDate(currentDate.getDate() + 1);
-
-fromBtn.textContent = `${currentDate.toDateString()}`;
-toBtn.textContent = `${tomorrow.toDateString()}`;
-
-selectedFrom = currentDate;
-selectedTo = tomorrow;
-
-function showCalendar(targetBtn) {
-  const btnRect = targetBtn.getBoundingClientRect();
-  calendarContainer.style.top = `${btnRect.bottom + window.scrollY}px`;
-  calendarContainer.style.left = `${btnRect.left}px`;
-  calendarContainer.style.display = "block";
-}
-
-fromBtn.addEventListener("click", function () {
-  activeInput = "from";
-  showCalendar(fromBtn);
-});
-
-toBtn.addEventListener("click", function () {
-  activeInput = "to";
-  showCalendar(toBtn);
-});
-
-document.addEventListener("click", function (event) {
-  if (!calendarContainer.contains(event.target) && event.target !== fromBtn && event.target !== toBtn) {
-    calendarContainer.style.display = "none";
-  }
-});
-
-let currentMonth = currentDate.getMonth();
-let currentYear = currentDate.getFullYear();
-const months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
-let calender_from = null;
-const calendarUpdatedEvent = new Event('calendarUpdated');
-function updateCalendar() {
-  const daysContainer = document.querySelector(".calendar-days");
-  daysContainer.innerHTML = "";
-
-  document.querySelector(".current-month").textContent = `${months[currentMonth]} ${currentYear}`;
-  document.querySelector(".year").textContent = currentYear;
-
-  const firstDayOfMonth = new Date(currentYear, currentMonth, 1).getDay();
-  const numDaysInMonth = new Date(currentYear, currentMonth + 1, 0).getDate();
-
-  const now = new Date();
-
-  for (let i = 0; i < firstDayOfMonth; i++) {
-    const emptyDay = document.createElement("span");
-    emptyDay.classList.add("calendar-day", "empty-day");
-    daysContainer.appendChild(emptyDay);
-  }
-
-  for (let i = 1; i <= numDaysInMonth; i++) {
-    const dayButton = document.createElement("button");
-    dayButton.classList.add("calendar-day");
-    dayButton.textContent = i;
-
-    const thisDate = new Date(currentYear, currentMonth, i);
-    if (thisDate > now) {
-      dayButton.disabled = true;
-      dayButton.style.opacity = 0.5;
-    }
-
-    dayButton.addEventListener("click", () => {
-      const selectedDate = new Date(currentYear, currentMonth, i).toDateString();
-
-      if (activeInput === "from") {
-        selectedFrom = new Date(currentYear, currentMonth, i);
-        fromBtn.textContent = `${selectedDate}`;
-      } else if (activeInput === "to") {
-        selectedTo = new Date(currentYear, currentMonth, i);
-        toBtn.textContent = `${selectedDate}`;
-      }
-
-      calendarContainer.style.display = "none";
-      // console.log(selectedDate)
-      calender_from = selectedDate
-      document.dispatchEvent(calendarUpdatedEvent);
+  function initializeCalendar(calendar) {
+    const monthSelect = calendar.querySelector('.month-select');
+    const yearSelect = calendar.querySelector('.year-select');
+    
+    months.forEach((month, i) => {
+      const option = document.createElement('option');
+      option.value = i;
+      option.textContent = month;
+      monthSelect.appendChild(option);
     });
 
-    daysContainer.appendChild(dayButton);
+    yearRange.forEach(year => {
+      const option = document.createElement('option');
+      option.value = year;
+      option.textContent = year;
+      yearSelect.appendChild(option);
+    });
+  }
 
+  initializeCalendar(document.querySelector('.from-calendar'));
+  initializeCalendar(document.querySelector('.to-calendar'));
+
+  dateRangeBtn.addEventListener('click', () => {
+    calendarPopup.style.display = calendarPopup.style.display === 'none' ? 'block' : 'none';
+  });
+
+  document.querySelector('.apply-btn').addEventListener('click', () => {
+    const fromMonth = document.querySelector('.from-calendar .month-select').value;
+    const fromYear = document.querySelector('.from-calendar .year-select').value;
+    const fromDay = document.querySelector('.from-calendar .calendar-body .selected')?.textContent;
+    
+    const toMonth = document.querySelector('.to-calendar .month-select').value;
+    const toYear = document.querySelector('.to-calendar .year-select').value;
+    const toDay = document.querySelector('.to-calendar .calendar-body .selected')?.textContent;
+    
+    if (fromDay && toDay) {
+        const fromDate = new Date(fromYear, fromMonth, fromDay);
+        const toDate = new Date(toYear, toMonth, toDay);
+        
+        if (fromDate <= toDate) {
+            dateRangeBtn.textContent = `${fromDay}/${Number(fromMonth) + 1}/${fromYear} - ${toDay}/${Number(toMonth) + 1}/${toYear}`;
+            calendarPopup.style.display = 'none';
+            
+            updateGraph(fromDate, toDate);
+        }
+    }
+});
+
+  document.querySelector('.cancel-btn').addEventListener('click', () => {
+    calendarPopup.style.display = 'none';
+  });
+});
+
+document.querySelector('.apply-btn').addEventListener('click', () => {
+  const fromMonth = document.querySelector('.from-calendar .month-select').value;
+  const fromYear = document.querySelector('.from-calendar .year-select').value;
+  const fromDay = document.querySelector('.from-calendar .calendar-body .selected')?.textContent;
+  
+  const toMonth = document.querySelector('.to-calendar .month-select').value;
+  const toYear = document.querySelector('.to-calendar .year-select').value;
+  const toDay = document.querySelector('.to-calendar .calendar-body .selected')?.textContent;
+  
+  if (fromDay && toDay) {
+      const fromDate = new Date(fromYear, fromMonth, fromDay);
+      const toDate = new Date(toYear, toMonth, toDay);
+      
+      if (fromDate <= toDate) {
+          dateRangeBtn.textContent = `${fromDay}/${Number(fromMonth) + 1}/${fromYear} - ${toDay}/${Number(toMonth) + 1}/${toYear}`;
+          calendarPopup.style.display = 'none';
+          
+          updateGraph(fromDate, toDate);
+      }
+  }
+});
+
+function updateCalendarBody(calendar, month, year) {
+  const calendarBody = calendar.querySelector('.calendar-body');
+  calendarBody.innerHTML = '';
+  
+  const firstDay = new Date(year, month, 1).getDay();
+  const daysInMonth = new Date(year, month + 1, 0).getDate();
+  const today = new Date();
+  
+  for (let i = 0; i < firstDay; i++) {
+      const emptyCell = document.createElement('button');
+      emptyCell.disabled = true;
+      calendarBody.appendChild(emptyCell);
+  }
+  
+  for (let day = 1; day <= daysInMonth; day++) {
+      const dayButton = document.createElement('button');
+      dayButton.textContent = day;
+      
+      const currentDate = new Date(year, month, day);
+      if (currentDate > today) {
+          dayButton.disabled = true;
+          dayButton.style.opacity = "0.3";
+      } else {
+          dayButton.addEventListener('click', (e) => {
+              calendar.querySelectorAll('.calendar-body button').forEach(btn => btn.classList.remove('selected'));
+              e.target.classList.add('selected');
+          });
+      }
+      
+      calendarBody.appendChild(dayButton);
   }
 }
 
-document.querySelector(".prev-month").addEventListener("click", () => {
-  if (currentMonth === 0) {
-    currentMonth = 11;
-    currentYear--;
-  } else {
-    currentMonth--;
-  }
-  updateCalendar();
+
+document.querySelectorAll('.month-select, .year-select').forEach(select => {
+  select.addEventListener('change', (e) => {
+      const calendar = e.target.closest('.from-calendar, .to-calendar');
+      const month = calendar.querySelector('.month-select').value;
+      const year = calendar.querySelector('.year-select').value;
+      updateCalendarBody(calendar, parseInt(month), parseInt(year));
+  });
 });
 
-document.querySelector(".next-month").addEventListener("click", () => {
-  if (currentYear === currentDate.getFullYear() && currentMonth === currentDate.getMonth()) return;
-  if (currentMonth === 11) {
-    currentMonth = 0;
-    currentYear++;
-  } else {
-    currentMonth++;
-  }
-  updateCalendar();
+const now = new Date();
+document.querySelectorAll('.from-calendar, .to-calendar').forEach(calendar => {
+  calendar.querySelector('.month-select').value = now.getMonth();
+  calendar.querySelector('.year-select').value = now.getFullYear();
+  updateCalendarBody(calendar, now.getMonth(), now.getFullYear());
 });
 
-document.querySelector(".prev-year").addEventListener("click", () => {
-  currentYear--;
-  updateCalendar();
-});
 
-document.querySelector(".next-year").addEventListener("click", () => {
-  if (currentYear === currentDate.getFullYear()) return;
-  currentYear++;
-  updateCalendar();
-});
 
-updateCalendar();
+
+
 
 
 
