@@ -910,6 +910,159 @@ Papa.parse("/public/stock_data_1.csv", {
 });
 
 
+function graphing() {
+  Papa.parse("/public/stock_data_1.csv", {
+    download: true,
+    header: true,
+    complete: function (results) {
+      const xarray = [];
+      const yarray = [];
+
+      results.data.forEach((row) => {
+        xarray.push(row["Date"]);
+        yarray.push(parseFloat(row["Close"]));
+      });
+
+      const data = [
+        {
+          x: xarray,
+          y: [],
+          mode: "lines",
+          type: "scatter",
+          fill: "tozeroy",
+          fillgradient: {
+            type: "vertical",
+            colorscale: [
+              [0, "rgba(0,0,0,0)"],
+              [1, "rgba(96,0,147,1)"],
+            ],
+          },
+          line: {
+            width: 2,
+          },
+          hovertemplate:
+            '%{x}' +
+            '<extra></extra>',
+        },
+      ];
+      const layout = {
+        xaxis: {
+          range: [xarray[0], xarray[xarray.length - 1]],
+          title: {
+            font: {
+              color: "white",
+            },
+          },
+          tickfont: {
+            color: "white",
+          },
+          spikedash: "solid",
+          spikemode: "toaxis",
+          spikecolor: "white",
+          spikethickness: 1,
+
+        },
+        yaxis: {
+          range: [0, Math.max(...yarray) + 20],
+          title: {
+            font: {
+              color: "black",
+            },
+          },
+          tickfont: {
+            color: "black",
+          },
+          tickvals: []
+        },
+        colorway: ["#7834a8"],
+        plot_bgcolor: "black",
+        paper_bgcolor: "black",
+        hoverlabel: {
+          bgcolor: "black",
+          bordercolor: "black",
+          font: {
+            color: "white",
+            size: 15,
+            lineposition: "closest",
+            align: "right"
+          },
+          hovermode: "x",
+          newshape: {
+            line: {
+              dash: "solid",
+              color: "white"
+            },
+            showlegend: "true"
+          },
+
+        }
+      };
+
+      Plotly.newPlot("myplot", data, layout);
+      let i = 0;
+      let id;
+      function animate() {
+        if (i < xarray.length) {
+          Plotly.extendTraces(
+            "myplot",
+            {
+              x: [[xarray[i]]],
+              y: [[yarray[i]]],
+            },
+            [0],
+          );
+          i++;
+          id = requestAnimationFrame(animate);
+        }
+      }
+      animate();
+
+      myplot.on('plotly_hover', (data) => {
+        const xvalue = data.points[0].y
+        Company_price.innerText = "$" + (xvalue).toFixed(2)
+      })
+
+      myplot.on('plotly_unhover', () => {
+        Company_price.innerText = cp;
+      })
+
+
+      const stp = document.getElementById("stp");
+      stp.addEventListener("click", () => {
+        Plotly.react(
+          "myplot",
+          [
+            {
+              x: xarray,
+              y: yarray,
+              mode: "lines",
+              type: "scatter",
+              fill: "tozeroy",
+              fillgradient: {
+                type: "vertical",
+                colorscale: [
+                  [0, "rgba(0,0,0,0)"],
+                  [1, "rgba(96,0,147,1)"],
+                ],
+              },
+              line: {
+                width: 2,
+              },
+              hovertemplate:
+                '%{x}' +
+                '<extra></extra>',
+            },
+          ],
+          layout,
+        );
+        cancelAnimationFrame(id);
+      });
+    },
+
+  });
+
+}
+
 const watch = document.getElementById('watch')
 watch.addEventListener('click', () => {
   window.location.href = '/watch'
@@ -994,9 +1147,9 @@ onemonth.addEventListener('click', async () => {
     const data = await response.json();
     console.log(data)
     if (data.sucess === 'true') {
-      sessionStorage.setItem('summaryData', JSON.stringify(data.summaryanimation));
-      console.log(data.summaryanimation)
-      window.location.href = '/loading';
+      // sessionStorage.setItem('summaryData', JSON.stringify(data.summaryanimation));
+      // console.log(data.summaryanimation)
+      graphing();
     }
   } catch (error) {
     console.error('Error:', error);
@@ -1034,7 +1187,8 @@ threemonth.addEventListener('click', async () => {
     if (data.sucess === 'true') {
       // sessionStorage.setItem('summaryData', JSON.stringify(data.summaryanimation));
       // console.log(data.summaryanimation)
-      window.location.reload();
+      // window.location.reload();
+      graphing();
     }
   } catch (error) {
     console.error('Error:', error);
@@ -1065,7 +1219,7 @@ yeartodate.addEventListener('click', async () => {
     if (data.sucess === 'true') {
       // sessionStorage.setItem('summaryData', JSON.stringify(data.summaryanimation));
       // console.log(data.summaryanimation)
-      window.location.reload();
+      graphing();
     }
   } catch (error) {
     console.error('Error:', error);
@@ -1097,7 +1251,7 @@ oneyear.addEventListener('click', async () => {
     if (data.sucess === 'true') {
       // sessionStorage.setItem('summaryData', JSON.stringify(data.summaryanimation));
       // console.log(data.summaryanimation)
-      window.location.reload();
+      graphing();
     }
   } catch (error) {
     console.error('Error:', error);
@@ -1117,7 +1271,7 @@ fiveyear.addEventListener('click', async () => {
   console.log(day + "-" + months + "-" + years)
   const start = day + "-" + months + "-" + year
   const end = day + "-" + months + "-" + years
-   try {
+  try {
     const response = await fetch('/summary', {
       method: 'POST',
       headers: {
@@ -1129,7 +1283,7 @@ fiveyear.addEventListener('click', async () => {
     if (data.sucess === 'true') {
       // sessionStorage.setItem('summaryData', JSON.stringify(data.summaryanimation));
       // console.log(data.summaryanimation)
-      window.location.reload();
+      graphing();
     }
   } catch (error) {
     console.error('Error:', error);
@@ -1160,7 +1314,7 @@ maxdate.addEventListener('click', async () => {
     if (data.sucess === 'true') {
       // sessionStorage.setItem('summaryData', JSON.stringify(data.summaryanimation));
       // console.log(data.summaryanimation)
-      window.location.reload();
+      graphing();
     }
   } catch (error) {
     console.error('Error:', error);
@@ -1191,7 +1345,7 @@ document.addEventListener('calendarUpdated', () => {
 })
 
 const tobtn = document.getElementById('to-btn')
- 
+
 
 
 // try {
