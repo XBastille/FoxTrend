@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src='https://cdn.plot.ly/plotly-2.32.0.min.js'></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.3.0/papaparse.min.js"></script>
+    <link rel="stylesheet" href="Advance.css">
+</head>
+<body>
+    <header>
+        <h1 style="margin-top: 29px">AAPL $234.39 (-$2.07)</h1>
+        <section class="searchAndPredictButton">
+            <input style="margin-right: 120px; width: 354px; height: 34px; border-radius: 5px; text-align: center;" type="text" placeholder="Comapny Search">
+            <a  class="Disclosure" href="#">View Disclosure</a>
+            <div class="view-cont">
+
+                <h3>FoxTrend Financial Chart Disclosure</h3>
+
+                <p>The RHF Indicator Charts are provided by FoxTrend Financial LLC (“RHF”) for informational purposes only and are not and should not be construed as an offer to sell or a solicitation of an offer to buy any security. In addition, RHF Indicator Charts are not intended to serve as a recommendation to buy or sell any security in a self-directed RHF account or any other account. RHF Indicator Charts are not individualized, do not constitute research reports, and are not intended to serve as the basis for any investment decision.
+
+                    The RHF Indicator Charts do not reflect the views of RHF or any of its affiliates and do not constitute or purport to provide legal, tax, or accounting or investment advice. Before making decisions with legal, tax, or accounting ramifications, you should consult appropriate professionals and/or investment adviser for advice that is specific to your situation. The advanced chart allows you to select different time spans ranging from 1 day to 5 years, each time span plots a time interval. The 1 day span, 5 minute interval has additional logic to only show the interval, when trades occur. This allows you to see when trading volume occurs during periods of slower activity like extended hours or thinly traded equities.
+                    
+                    The RHF Indicator Charts do not contain or purport to constitute forward-looking statements and do not reflect any expectation, belief, plan or prediction with respect to any security or index. The RHF Indicator Charts solely reflect past results of certain securities and indices. All investments involve risk and the past performance of a security, index or financial product does not guarantee future results or returns. Keep in mind that while diversification may help spread risk, it does not assure a profit or protect against loss. There is always the potential of losing money when you invest in securities or other financial products. Customers should consider their investment objectives and risks carefully before investing. The price of a given security may increase or decrease based on market conditions and customers may lose money, including their original investment. In addition, the information contained in the RHF Indicator Charts do not purport to present a complete picture of the financial position, activities, results, actions or future performance of any index or security. Neither RHF nor any of its data or content providers shall be liable for any errors or delays in the content, or for any actions taken in reliance thereon. In addition, as markets change continuously, previously published information and data may not be current and should not be relied upon.
+                    
+                    The information used to populate the RHF Indicator Charts is based upon information reasonably available to RHF as of the date of publication (“Market Data”). Specifically, most Market Data underlying the RHF Indicator Charts has been provided to RHF by Xignite, Inc. (“Xignite”) and/or the NASDAQ OMX Group, Inc. and its subsidiaries and affiliates (collectively, “NASDAQ OMX”) and/or FactSet Research Systems Inc., each of which is a source that RHF believes to be reliable (the “Market Data Provider”); however, these sources, and the Market Data itself, cannot be guaranteed as to its accuracy or completeness. Market Data is the exclusive property of its respective owners. Consistent with the terms of the FoxTrend Financial LLC & Robinhood Securities, LLC Customer Agreement, any redistribution of Market Data is strictly prohibited. The owners of the Market Data and the Market Data Providers reserve all rights to the Market Data distributed to RHF and which RHF makes available to you. You understand and acknowledge that such Market Data does not constitute investment advice, and that any reference to a particular investment or security is not a recommendation to buy, sell or hold any investment or security or to make any other investment decision. Past performance is not a guarantee of future results.
+                    
+                    Charts, including charts relating to your historic portfolio valuations or performance, or relating to past prices of specific securities, are provided for informational purposes only and should not be relied upon as an accurate or complete presentation of your portfolio value, gains or losses, or the value or financial position of any security. Charts are based on various data sources, which may include market data and other information provided by third party information providers. Robinhood does not make any representation or guarantee relating to the accuracy, timeliness, or completeness of charts or any information or data on which they are based. Without limitation, charts may not accurately take into account the impact of events relating to a specific security, for example corporate actions such as stock splits, dividends, mergers and acquisitions, or events relating to your account or portfolio such as charges, deposits, or withdrawals, and may in certain circumstances overstate or understate gains or losses. In the case of any securities transferred into your Robinhood account from a third party broker, any performance including charts will be calculated based on their market value as of the date Robinhood receives the securities from the other broker and may be different from the historical performance. Past performance is no guarantee of future results. With respect to your portfolio, please refer to your account statements for the relevant period that you receive on a regular basis from Robinhood.
+                    
+                    By using the RHF platform, you understand and acknowledge that neither RHF, its affiliates and its and their employees, nor any Market Data Provider guarantees or makes any warranty of any kind, express or implied, regarding the timeliness, sequence, accuracy, or completeness of the Market Data. You further acknowledge that RHF, its affiliates and its and their employees, are not liable for any losses arising out of or relating to: (1) any inaccuracy, defect, or omission of Market Data; (2) any error or delay in the transmission or presentation of Market Data; or (3) any interruption in Market Data due to any cause beyond the control of RHF.
+                    
+                    RHF’s use of Market Data and distribution of the RHF Indicator Charts shall not be construed as an endorsement by or affiliation with the Market Data Providers or its services. Market Data does not reflect the views of RHF, its affiliates or any of its or their employees. Market Data may be protected by United States or international copyrights. All trademarks and service marks identifying the Market Data Provider are property of the Market Data Providers.
+                    
+                    RHF-RHS Customer Agreement</p>
+            </div>
+
+            <button style="margin-left: 60px;" id="aapl">Predict AAPL</button>
+            <br>
+        </section>
+    </header>
+    
+    <div id="myplot" style="width:100%; height:100%;"></div>
+    <button id="stp">Show Full Graph</button>
+    <button id="second">add graph</button>
+    <button id="boilenger">Boilenger Bands</button>
+    <button id="macd">MACD</button>
+    <button id="rsi">RSI</button>
+    <div id="rsigraph"></div>
+
+
+    <div class="indicators">
+        <ul>
+            <li>Price <img src="" alt="eye"><img src="" alt="settings"></li>
+            <li>MA(10) <img src="" alt="eye"><img src="" alt="settings"></li>
+            <li>MA(50) <img src="" alt="eye"><img src="" alt="settings"></li>
+            <li>MA(200) <img src="" alt="eye"><img src="" alt="settings"></li>
+            <li>RSI(14) <img src="" alt="eye"><img src="" alt="settings"></li>
+            <li>MACD(12,26,9) <img src="" alt="eye"><img src="" alt="settings"></li>
+            <li>BOLL(20) <img src="" alt="eye"><img src="" alt="settings"></li>
+            <li>EMA(12) <img src="" alt="eye"><img src="" alt="settings"></li>
+            <li>EMA(24) <img src="" alt="eye"><img src="" alt="settings"></li>
+                <section class="addSection">
+                    <button onclick="dropdown()" class="addBtn">ADD</button>
+                    <ul type="none" class="dropdown">
+                        <li>Add Indicators</li>
+                        <li>Moving Average</li>
+                        <li>Exponential Moving Average</li>
+                        <li>Bollinger Bands</li>
+                        <li>VWAP</li>
+                        <li>Relative strength index</li>
+                        <li>MACD</li>
+                    </ul>
+                </section>
+            </li>
+        </ul>
+    </div>
+
+    <div class="calender">
+        <div class="date-range-container">
+          <button class="date-range-button active">1D</button>
+          <button class="date-range-button">1W</button>
+          <button class="date-range-button">1M</button>
+          <button class="date-range-button">3M</button>
+          <button class="date-range-button">YTD</button>
+          <button class="date-range-button">1Y</button>
+          <button class="date-range-button">5Y</button>
+          <button class="date-range-button">MAX</button>
+        </div>
+        <div class="date-selection">
+          <button id="from-btn" class="date-btn">From</button>
+          <button id="to-btn" class="date-btn">To</button>
+        </div>
+      </div>
+
+    
+
+
+
+    <div id="myplot" style="width:100%; height:100%;"></div>
+    <button id="stp">Show Full Graph</button>
+    <button id="second">add graph</button>
+    <button id="boilenger">Boilenger Bands</button>
+    <button id="macd">MACD</button>
+    <button id="rsi">RSI</button>
+    <div id="rsigraph"></div>
+        
+
+    <script src="Advance.js"></script>
+</body>
+</html>
