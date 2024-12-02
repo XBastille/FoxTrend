@@ -422,3 +422,8 @@ macd.addEventListener('click', () => {
         }
     })
 })
+
+
+document.querySelector(".Disclosure").addEventListener('click' , () => {
+    document.querySelector(".view-cont").style.display = "block";
+})
