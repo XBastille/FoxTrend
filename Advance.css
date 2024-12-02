@@ -1,0 +1,43 @@
+*{
+    background-color: rgb(0, 0, 0);
+    color: rgb(255, 255, 255);
+    font-family: 'Gilroy', sans-serif;
+}
+header{
+   display: flex;
+   justify-content: space-around;
+   flex-direction: row;
+}
+
+
+section{
+    margin: 30.44px;
+}
+
+#aapl{
+    border-radius: 4px;
+    min-width: 160px;
+    min-height: 48px;
+    padding: 0 48px;
+    white-space: nowrap;
+    cursor: pointer;
+    border: 1px solid transparent;
+    background :  rgb(96, 0, 147);
+    color: white;
+    border: rgb(134, 2, 205);
+ }
+
+ #aapl:hover{
+   background: rgb(134, 2, 205 , 1);
+ }
+
+ .view-cont{
+    display: none;
+    overflow: scroll;
+    height: 360px;
+    width: 402px;
+    padding-top: 16px;
+    padding:24px;
+ }
+
+
