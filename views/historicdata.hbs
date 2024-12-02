@@ -1,0 +1,1064 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Historical Data</title>
+    <script src='https://cdn.plot.ly/plotly-2.32.0.min.js'></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.3.0/papaparse.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.4.1/papaparse.min.js"
+        integrity="sha512-dfX5uYVXzyU8+KHqj8bjo7UkOdg18PaOtpa48djpNbZHwExddghZ+ZmzWT06R5v6NSk3ZUfsH6FNEDepLx9hPQ=="
+        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css"></script>
+    <link rel="stylesheet" href="/public/graphhistss.css">
+    <style>
+        :root {
+            --accent-color: #9f1c7e;
+            --cube-edge-color: #FFFFFF;
+            --cube-dotted-color: rgba(255, 255, 255, 0.5);
+        }
+
+        .loading-container {
+            width: 70vw;
+            height: 75vh;
+            position: absolute;
+            overflow: hidden;
+            display: none;
+            justify-content: center;
+            align-items: center;
+            margin-left: 200px;
+            margin-top: 120px;
+        }
+
+        .center-image {
+            width: 80%;
+            height: 80%;
+            object-fit: cover;
+            position: relative;
+        }
+
+        .center-element {
+            position: relative;
+            width: 330px;
+            height: 330px;
+            border-radius: 50%;
+            background: linear-gradient(to right, #600093, #000000);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: white;
+            animation: heartbeat 1.5s ease-in-out infinite;
+        }
+
+        .cube {
+            position: absolute;
+            width: 300px;
+            height: 300px;
+            transform-style: preserve-3d;
+            transform: rotateX(45deg) rotateY(45deg);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .right {
+            transform: rotateY(90deg) translateZ(150px);
+        }
+
+        .left {
+            transform: rotateY(-180deg) translateZ(150px);
+        }
+
+        .top {
+            transform: rotateX(90deg) translateZ(150px);
+        }
+
+        .cube-edge {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            box-sizing: border-box;
+        }
+
+        @keyframes drawDottedLine {
+            0% {
+                opacity: 0;
+                clip-path: polygon(0% 0%, 0% 0%, 0% 0%, 0% 0%);
+            }
+
+            100% {
+                opacity: 1;
+                clip-path: polygon(0% 0%, 100% 0%, 100% 100%, 0% 100%);
+            }
+        }
+
+        @keyframes drawSolidLine {
+            0% {
+                opacity: 0;
+                border: 2px solid var(--cube-edge-color);
+                clip-path: polygon(0% 0%, 0% 0%, 0% 0%, 0% 0%);
+            }
+
+            100% {
+                opacity: 1;
+                border: 2px solid var(--cube-edge-color);
+                clip-path: polygon(0% 0%, 100% 0%, 100% 100%, 0% 100%);
+            }
+        }
+
+        @keyframes disappearSolidLine {
+            0% {
+                opacity: 1;
+                clip-path: polygon(0% 0%, 100% 0%, 100% 100%, 0% 100%);
+            }
+
+            100% {
+                opacity: 0;
+                clip-path: polygon(100% 0%, 100% 100%, 0% 100%, 0% 0%);
+            }
+        }
+
+        @keyframes disappearDottedLine {
+            0% {
+                opacity: 1;
+                clip-path: polygon(0% 0%, 100% 0%, 100% 100%, 0% 100%);
+            }
+
+            100% {
+                opacity: 0;
+                clip-path: polygon(100% 0%, 100% 100%, 0% 100%, 0% 0%);
+            }
+        }
+
+        .cube-edge::before,
+        .cube-edge::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            box-sizing: border-box;
+        }
+
+        .cube-edge::before {
+            border: 2px dotted var(--cube-dotted-color);
+            opacity: 0;
+            animation:
+                drawDottedLine 2s ease-in-out forwards,
+                disappearDottedLine 2s 8s ease-in-out forwards;
+        }
+
+        .cube-edge::after {
+            border: 2px solid var(--cube-edge-color);
+            opacity: 0;
+            animation:
+                drawSolidLine 2s 2s ease-in-out forwards,
+                disappearSolidLine 2s 6s ease-in-out forwards;
+        }
+
+        @keyframes heartbeat {
+
+            0%,
+            100% {
+                transform: scale(1);
+            }
+
+            50% {
+                transform: scale(1.1);
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <ul class="icons open">
+        <a href="#" class="fox-icon-link">
+            <img src="media/fox.jpg" alt="Fox Icon" class="logo">
+        </a>
+        <li class="Icon-items" data-name="Home">
+            <img src="media/home.jpg" id="item1">
+            <button id="ho"><span class="icon-name">Home</span></button>
+        </li>
+        <li class="Icon-items" data-name="Watch">
+            <img src="media/recent_watch.jpg" id="item2">
+            <button id="wat"><span class="icon-name">Watch</span></button>
+        </li>
+        <li class="Icon-items" data-name="Lists">
+            <img src="media/list.jpg" id="item3">
+            <button id="lis"><span class="icon-name">Lists</span></button>
+        </li>
+        <li class="Icon-items" data-name="Donate">
+            <img src="media/donate.jpg" id="item4">
+            <button><span class="icon-name">Donate</span></button>
+        </li>
+        <li class="Icon-items" data-name="Profile">
+            <img src="media/account.jpg" id="item5">
+            <button id="pro"><span class="icon-name">Profile</span></button>
+        </li>
+        <li class="Arrow">
+            <img src="media/arrow-right.jpg">
+        </li>
+    </ul>
+
+
+    <div class="search-container">
+        <input type="text" class="search-bar" placeholder="Search">
+        <i class="search-icon fas fa-search"></i>
+        <div class="magnifying-glass">
+            <i class="fa-solid fa-magnifying-glass"></i>
+        </div>
+        <div class="navigationBar">
+            <a href="#" class="serv">
+                Services
+                <svg width="20" height="20" viewBox="0 -4 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M5 7.5L10 12.5L15 7.5" stroke="currentColor" stroke-width="1.67" stroke-linecap="round"
+                        stroke-linejoin="round"></path>
+                </svg>
+            </a>
+            <a href="#" class="comp">
+                Company
+                <svg width="20" height="20" viewBox="0 -4 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M5 7.5L10 12.5L15 7.5" stroke="currentColor" stroke-width="1.67" stroke-linecap="round"
+                        stroke-linejoin="round"></path>
+                </svg>
+            </a>
+            <a href="#" class="blog">Blog</a>
+            <a href="#" class="port">Contact Us</a>
+            <div class="services-dropdown">
+                <div class="services-dropdown-content">
+                    <div class="services-label">
+                        <h1>Services</h1>
+                    </div>
+                    <div class="services-dropdown-column">
+                        <div class="primary-section">
+                            <h2>Primary <span class="arrow">→</span></h2>
+                            <div class="primary-elements">
+                                <a href="#">Stock Market Prediction</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="services-dropdown-column">
+                        <h3>Secondary <span class="arrow">→</span></h3>
+                        <div class="secondary-section">
+                            <div class="secondary-elements">
+                                <a href="#">Used Car Prediction</a>
+                                <a href="#">Housing Prediction</a>
+                                <a href="#">Loan Approval Prediction</a>
+                            </div>
+                        </div>
+                    </div>
+                    <img src="media/services.jpg" alt="Your Alt Text" class="service-image">
+                </div>
+            </div>
+            <div class="company-dropdown">
+                <div class="company-dropdown-content">
+                    <div class="company-label">
+                        <h1>Company</h1>
+                    </div>
+                    <div class="company-dropdown-column">
+                        <h2>MORE ABOUT US</h2>
+                        <a href="#">About Us</a>
+                        <a href="#">Blog</a>
+                        <a href="#">Privacy Policy</a>
+                        <a href="#">License</a>
+                    </div>
+                    <div class="company-dropdown-column">
+                        <h2>SOCIAL</h2>
+                        <a href="#">LinkedIn</a>
+                        <a href="#">Instagram</a>
+                        <a href="#">X</a>
+                    </div>
+                    <div class="company-dropdown-column">
+                        <h2>CONTACTS</h2>
+                        <a href="#">Book a Call</a>
+                        <a href="#">Mail Us</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    </div>
+
+
+
+
+    <div class="rightBox" style="float: right;">
+        <ul>
+            <button id="aapl">Predict AAPL</button><br>
+            <div class="data">
+                <a class="sum" href="summary">Summary</a><br><br>
+                <a class="cha" href="chartPage"> Chart</a><br><br>
+                <a class="histo"> Historical Data</a><br><br>
+                <a class="stat" href="statsPage">Statistics</a><br><br>
+                <a class="pro" href="profilePage">Profile</a><br><br>
+            </div>
+            <button id="Add"> Add To Lists</button>
+        </ul>
+    </div>
+
+
+
+
+
+
+    <div class="desc">
+        <h1 id="Company_title"></h1>
+        <h1 id="Company_price"></h1>
+        <h5>-$2.51(-1.13%) Pre-market</h5>
+        <h4>24 Hour Market</h4>
+    </div>
+
+    <style>
+        ul {
+            list-style-type: none;
+            padding-inline-start: 0;
+        }
+    </style>
+
+    <div class="loading-container" id="loading">
+        <div class="grid"></div>
+        <div class="snake snake-horizontal"></div>
+        <div class="snake snake-horizontal"></div>
+        <div class="snake snake-vertical"></div>
+        <div class="snake snake-vertical"></div>
+        <div class="snake snake-horizontal"></div>
+        <div class="snake snake-vertical"></div>
+        <div class="snake snake-top"></div>
+        <div class="snake snake-diagonal-right"></div>
+        <div class="center-element">
+            <img src="https://github.com/XBastille/FoxTrend/blob/NSA/media/fox.jpg?raw=true" alt="Your Image"
+                class="center-image">
+        </div>
+        <div class="cube">
+            <div class="cube-edge top"></div>
+            <div class="cube-edge right"></div>
+            <div class="cube-edge left"></div>
+        </div>
+    </div>
+
+
+    <div class="Advance" style=" padding: 20px; width: 50px;">
+        <button style="transform: translateX(1800%); border: none; background: transparent; ;">Advance</button>
+    </div>
+
+    <div class="calender">
+        <button id="stp">Show Full Graph</button>
+        <div class="date-range-container">
+            <button class="date-range-button" id="oneday">1D</button>
+            <button class="date-range-button" id="oneweek">1W</button>
+            <button class="date-range-button active" id="onemonth">1M</button>
+            <button class="date-range-button" id="threemonth">3M</button>
+            <button class="date-range-button" id="yeartodate">YTD</button>
+            <button class="date-range-button" id="oneyear">1Y</button>
+            <button class="date-range-button" id="fiveyear">5Y</button>
+            <button class="date-range-button" id="maxdate">MAX</button>
+        </div>
+        <div class="date-selection">
+            <button id="date-range-btn" class="date-btn">Select Date Range</button>
+            <div id="calendar-popup" class="calendar-popup">
+                <div class="calendar-container">
+                    <div class="from-calendar">
+                        <h3>From</h3>
+                        <div class="calendar-header">
+                            <select class="month-select"></select>
+                            <select class="year-select"></select>
+                        </div>
+                        <div class="weekdays">
+                            <span>Sun</span>
+                            <span>Mon</span>
+                            <span>Tue</span>
+                            <span>Wed</span>
+                            <span>Thu</span>
+                            <span>Fri</span>
+                            <span>Sat</span>
+                        </div>
+                        <div class="calendar-body"></div>
+                    </div>
+                    <div class="to-calendar">
+                        <h3>To</h3>
+                        <div class="calendar-header">
+                            <select class="month-select"></select>
+                            <select class="year-select"></select>
+                        </div>
+                        <div class="weekdays">
+                            <span>Sun</span>
+                            <span>Mon</span>
+                            <span>Tue</span>
+                            <span>Wed</span>
+                            <span>Thu</span>
+                            <span>Fri</span>
+                            <span>Sat</span>
+                        </div>
+                        <div class="calendar-body"></div>
+                    </div>
+                </div>
+                <div class="calendar-footer">
+                    <button class="apply-btn">Apply</button>
+                    <button class="cancel-btn">Cancel</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    </div>
+    </div>
+
+
+    <table id="demo"></table>
+
+
+    <div class="PeopleAlsoWatch">
+        <h2 id="people">People Also Watch</h2>
+
+        <div class="slider-container">
+
+            <div class="company-container" id="slider">
+                <div class="company-box">
+                    <b>AMZN</b>
+                    <p>Amazon</p>
+                    <p class="company-price">$519.38</p>
+                    <a class="company-percent">1.29%</a>
+                </div>
+                <div class="company-box">
+                    <b>TSLA</b>
+                    <p>Tesla</p>
+                    <p class="company-price">$412.62 </p>
+                    <a class="company-percent">0.91%</a>
+                </div>
+                <div class="company-box">
+                    <b>GOOG</b>
+                    <p>Alphabet</p>
+                    <p class="company-price">$685.09</p>
+                    <a class="company-percent">0.80%</a>
+                </div>
+                <div class="company-box">
+                    <b>META</b>
+                    <p>Meta Platforms.</p>
+                    <p class="company-price">$179.44</p>
+                    <a class="company-percent">3.53%</a>
+                </div>
+                <div class="company-box">
+                    <b>MSFT</b>
+                    <p>Microsoft</p>
+                    <p class="company-price">$160.28 </p>
+                    <a class="company-percent">1.56%</a>
+                </div>
+                <div class="company-box">
+                    <b>NTFLX</b>
+                    <p>Netflix</p>
+                    <p class="company-price">$233.29</p>
+                    <a class="company-percent">6.33%</a>
+                </div>
+                <div class="company-box">
+                    <b>NVDA</b>
+                    <p>NVIDIA</p>
+                    <p class="company-price">$108.75</p>
+                    <a class="company-percent">2.39%</a>
+                </div>
+                <div class="company-box">
+                    <b>AMD</b>
+                    <p id="micro">Advanced Micro Devices </p>
+                    <p class="company-price">$155.99</p>
+                    <a class="company-percent">7.70%</a>
+                </div>
+                <div class="company-box">
+                    <b>INTL</b>
+                    <p>Intel</p>
+                    <p class="company-price">$21.37</p>
+                    <a class="company-percent">0.60%</a>
+                </div>
+            </div>
+
+            <div id="SliderBtns">
+
+                <span class="slider-btn next" onclick="slide(1)">
+                    <img src="media/arrow-right.jpg">
+                </span>
+
+
+                <span class="slider-btn prev" onclick="slide(-1)">
+                    <img src="media/arrow-left.jpg">
+                </span>
+
+            </div>
+
+        </div>
+    </div>
+    <footer>
+        <div class="footer-links">
+
+            <img src="media/website_logo.jpg" class="foot-logo">
+
+
+
+            <div class="footer-block">
+                <div class="footer-title" id="Comp">Company</div>
+                <li><a class="links" id="mail">Mail us</a></li>
+                <li><a class="links" id="SERV">Services</a></li>
+            </div>
+
+            <div class="footer-block">
+                <div class="footer-title" id="more">More</div>
+                <li><a class="links" id="tandc">Terms & Conditions</a></li>
+                <li><a class="links" id="career">Careers</a></li>
+                <li><a class="links" id="privacy">Privacy Policy</a></li>
+            </div>
+
+            <div class="footer-block">
+                <div class="footer-title" id="social">Social</div>
+                <li><a class="links" id="linkedin">LinkedIn</a></li>
+                <li> <a class="links" id="yt">Instagram</a></li>
+            </div>
+
+
+        </div>
+    </footer>
+    <script src="public/Stockspage.js"></script>
+    <script>
+
+
+        Papa.parse("/public/stock_data_1.csv", {
+            download: true,
+            skipEmptyLines: true,
+            //Draw from csv file
+            complete: (csv) => {
+                var table = document.getElementById("demo");
+                table.innerHTML = "";
+
+                for (let row of csv.data) {
+                    let tr = table.insertRow();
+                    for (let cell of row) {
+                        let td = tr.insertCell();
+                        td.innerHTML = cell;
+                    }
+                }
+            },
+        });
+
+        //enabling the function
+
+        function csving() {
+            Papa.parse("/public/stock_data_1.csv", {
+                download: true,
+                skipEmptyLines: true,
+                //Draw from csv file
+                complete: (csv) => {
+                    var table = document.getElementById("demo");
+                    table.innerHTML = "";
+
+                    for (let row of csv.data) {
+                        let tr = table.insertRow();
+                        for (let cell of row) {
+                            let td = tr.insertCell();
+                            td.innerHTML = cell;
+                        }
+                    }
+                },
+            });
+        }
+
+        const ho = document.getElementById('ho')
+        ho.addEventListener('click', () => {
+            window.location.href = '/watch'
+        })
+
+        const wat = document.getElementById('wat')
+        wat.addEventListener('click', () => {
+            window.location.href = '/watch'
+        })
+
+        const lis = document.getElementById('lis')
+        lis.addEventListener('click', () => {
+            window.location.href = '/yourList'
+        })
+
+        const pro = document.getElementById('pro')
+        pro.addEventListener('click', () => {
+            window.location.href = '/userprofile'
+        })
+
+        //cube animation
+
+        function restartCubeAnimation() {
+            const cube = document.querySelector('.cube');
+            const cubeEdges = cube.querySelectorAll('.cube-edge');
+            cubeEdges.forEach(edge => {
+                const clone = edge.cloneNode(true);
+                edge.parentNode.replaceChild(clone, edge);
+            });
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            setInterval(restartCubeAnimation, 11600);
+        });
+
+        //ONE-WEEK
+        const oneweeks = document.getElementById('oneweek')
+        oneweeks.addEventListener('click', async () => {
+            ;
+            //starting Date----------------------------------------------------------------------------------
+            var endsmonth;
+            var currentDate = new Date();
+            var last = new Date(currentDate.setDate(currentDate.getDate() - currentDate.getDay())).toUTCString();
+            var first = new Date(currentDate.setDate(currentDate.getDate() - currentDate.getDay() - 6)).toUTCString();
+            const monthly = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
+            var firstsday = first.substring(5, 7)
+            var month = first.substring(8, 11)
+            for (let i = 0; i < monthly.length; i++) {
+                if (monthly[i] === month) {
+                    firstsmonth = (i + 1);
+                }
+            }
+            var firstsyear = first.substring(12, 16)
+            const start = (firstsday + '-' + firstsmonth + '-' + firstsyear);
+            console.log(start)
+            //ending Date----------------------------------------------------------------------------------------
+            var endsday = last.substring(5, 7)
+            var enmonth = last.substring(8, 11)
+            for (let i = 0; i < monthly.length; i++) {
+                if (monthly[i] === enmonth) {
+                    endsmonth = (i + 1);
+                }
+            }
+            var endsyear = first.substring(12, 16)
+            const end = (endsday + '-' + endsmonth + '-' + endsyear);
+            console.log(end)
+            loadings.style.display = 'flex'
+            loadings.style.zIndex = '999'
+            myplots.style.zIndex = '-999'
+            myplots.style.filter = 'blur(30px)'
+            try {
+                const response = await fetch('/historicdata', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({ val, start, end })
+                });
+                const data = await response.json();
+                console.log(data)
+                if (data.sucess === 'true') {
+                    loadings.style.display = 'none'
+                    loadings.style.zIndex = '-999'
+                    myplots.style.zIndex = '999'
+                    myplots.style.filter = 'none'
+                    csving();
+                }
+            } catch (error) {
+                console.error('Error:', error);
+            }
+
+        })
+
+        //---------------------------------------------------------------------------
+        //one month
+        const onemonths = document.getElementById('onemonth')
+        onemonths.addEventListener('click', async () => {
+            const dates = new Date()
+            const month = dates.getMonth()
+            const months = dates.getMonth() + 1
+            let day = dates.getDate()
+            let year = dates.getFullYear()
+            if (month === 0) {
+                year = year - 1;
+                month = 12
+                months = 1;
+            }
+            console.log(day + "-" + month + "-" + year)
+            console.log(day + "-" + months + "-" + year)
+            const start = day + "-" + month + "-" + year
+            const end = day + "-" + months + "-" + year
+            loadings.style.display = 'flex'
+            loadings.style.zIndex = '999'
+            myplots.style.zIndex = '-999'
+            myplots.style.filter = 'blur(30px)'
+            try {
+                const response = await fetch('/historicdata', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({ val, start, end })
+                });
+                const data = await response.json();
+                console.log(data)
+                if (data.sucess === 'true') {
+                    loadings.style.display = 'none'
+                    loadings.style.zIndex = '-999'
+                    myplots.style.zIndex = '999'
+                    myplots.style.filter = 'none'
+                    csving();
+                }
+            } catch (error) {
+                console.error('Error:', error);
+            }
+
+        })
+
+        //----------------------------------------------------------------
+        //three month
+        const loadings = document.getElementById('loading')
+        const myplots = document.getElementById('demo')
+        const threemonths = document.getElementById('threemonth')
+        threemonths.addEventListener('click', async () => {
+            const dates = new Date()
+            let month = dates.getMonth()
+            let months = dates.getMonth() + 1
+            let day = dates.getDate()
+            let year = dates.getFullYear()
+            if (month === 0) {
+                year = year - 1;
+            }
+            month -= 2;
+            console.log(day + "-" + month + "-" + year)
+            console.log(day + "-" + months + "-" + year)
+            const start = day + "-" + month + "-" + year
+            const end = day + "-" + months + "-" + year
+            loadings.style.display = 'flex'
+            loadings.style.zIndex = '999'
+            myplots.style.zIndex = '-999'
+            myplots.style.filter = 'blur(30px)'
+            try {
+                const response = await fetch('/historicdata', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({ val, start, end })
+                });
+                const data = await response.json();
+                if (data.sucess === 'true') {
+                    loadings.style.display = 'none'
+                    loadings.style.zIndex = '-999'
+                    myplots.style.zIndex = '999'
+                    myplots.style.filter = 'none'
+                    csving();
+                }
+            } catch (error) {
+                console.error('Error:', error);
+            }
+
+        })
+
+
+        //year to date(DONE)------------------------------------------------------
+        const yeartodates = document.getElementById('yeartodate')
+        yeartodates.addEventListener('click', async () => {
+            const dates = new Date();
+            let day = dates.getDate();
+            let months = dates.getMonth() + 1
+            let year = dates.getFullYear();
+            console.log(1 + "-" + 1 + "-" + year)
+            console.log(day + "-" + months + "-" + year)
+            const start = 1 + "-" + 1 + "-" + year
+            const end = day + "-" + months + "-" + year
+            loadings.style.display = 'flex'
+            loadings.style.zIndex = '999'
+            myplots.style.zIndex = '-999'
+            myplots.style.filter = 'blur(30px)'
+            try {
+                const response = await fetch('/historicdata', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({ val, start, end })
+                });
+                const data = await response.json();
+                if (data.sucess === 'true') {
+                    loadings.style.display = 'none'
+                    loadings.style.zIndex = '-999'
+                    myplots.style.zIndex = '999'
+                    myplots.style.filter = 'none'
+                    csving();
+                }
+            } catch (error) {
+                console.error('Error:', error);
+            }
+        })
+        //----------------------------------------------------------------------------------------------------
+
+        //oneyear(DONE)-----------------------------------------------------------------------------------------
+        const oneyears = document.getElementById('oneyear')
+        oneyears.addEventListener('click', async () => {
+            const dates = new Date();
+            let months = dates.getMonth() + 1
+            let day = dates.getDate()
+            let year = dates.getFullYear() - 1
+            let years = dates.getFullYear()
+            console.log(day + "-" + months + "-" + year)
+            console.log(day + "-" + months + "-" + years)
+            const start = day + "-" + months + "-" + year
+            const end = day + "-" + months + "-" + years
+            loadings.style.display = 'flex'
+            loadings.style.zIndex = '999'
+            myplots.style.zIndex = '-999'
+            myplots.style.filter = 'blur(30px)'
+            try {
+                const response = await fetch('/historicdata', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({ val, start, end })
+                });
+                const data = await response.json();
+                if (data.sucess === 'true') {
+                    loadings.style.display = 'none'
+                    loadings.style.zIndex = '-999'
+                    myplots.style.zIndex = '999'
+                    myplots.style.filter = 'none'
+                    csving();
+                }
+            } catch (error) {
+                console.error('Error:', error);
+            }
+        })
+        //-------------------------------------------------------------------------------------
+
+        //FIVE-YEAR(DONE)-------------------------------------------------------------------------
+        const fiveyears = document.getElementById('fiveyear')
+        fiveyears.addEventListener('click', async () => {
+            const dates = new Date();
+            let months = dates.getMonth() + 1
+            let day = dates.getDate()
+            let year = dates.getFullYear() - 5
+            let years = dates.getFullYear()
+            console.log(day + "-" + months + "-" + year)
+            console.log(day + "-" + months + "-" + years)
+            const start = day + "-" + months + "-" + year
+            const end = day + "-" + months + "-" + years
+            loadings.style.display = 'flex'
+            loadings.style.zIndex = '999'
+            myplots.style.zIndex = '-999'
+            myplots.style.filter = 'blur(30px)'
+            try {
+                const response = await fetch('/historicdata', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({ val, start, end })
+                });
+                const data = await response.json();
+                if (data.sucess === 'true') {
+                    loadings.style.display = 'none'
+                    loadings.style.zIndex = '-999'
+                    myplots.style.zIndex = '999'
+                    myplots.style.filter = 'none'
+                    csving();
+                }
+            } catch (error) {
+                console.error('Error:', error);
+            }
+        })
+        //----------------------------------------------------------------------------------------------
+
+        //MAX-DATE(DONE)---------------------------------------------------------------------------------
+        const maxdates = document.getElementById('maxdate')
+        maxdates.addEventListener('click', async () => {
+            const dates = new Date();
+            let months = dates.getMonth() + 1
+            let day = dates.getDate()
+            let years = dates.getFullYear()
+            console.log(day + "-" + months + "-" + 1950)
+            console.log(day + "-" + months + "-" + years)
+            const start = day + "-" + months + "-" + 1950
+            const end = day + "-" + months + "-" + years
+            loadings.style.display = 'flex'
+            loadings.style.zIndex = '999'
+            myplots.style.zIndex = '-999'
+            myplots.style.filter = 'blur(30px)'
+            try {
+                const response = await fetch('/historicdata', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({ val, start, end })
+                });
+                const data = await response.json();
+                if (data.sucess === 'true') {
+                    loadings.style.display = 'none'
+                    loadings.style.zIndex = '-999'
+                    myplots.style.zIndex = '999'
+                    myplots.style.filter = 'none'
+                    csving();
+                }
+            } catch (error) {
+                console.error('Error:', error);
+            }
+        })
+        //-------------------------------------------------------------------------
+
+
+        //calender opening
+        document.addEventListener('DOMContentLoaded', function () {
+            const dateRangeBtn = document.getElementById('date-range-btn');
+            const calendarPopup = document.getElementById('calendar-popup');
+
+            const months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
+            const currentYear = new Date().getFullYear();
+            const yearRange = Array.from({ length: currentYear - 1979 }, (_, i) => 1980 + i);
+
+            function initializeCalendar(calendar) {
+                const monthSelect = calendar.querySelector('.month-select');
+                const yearSelect = calendar.querySelector('.year-select');
+
+                months.forEach((month, i) => {
+                    const option = document.createElement('option');
+                    option.value = i;
+                    option.textContent = month;
+                    monthSelect.appendChild(option);
+                });
+
+                yearRange.forEach(year => {
+                    const option = document.createElement('option');
+                    option.value = year;
+                    option.textContent = year;
+                    yearSelect.appendChild(option);
+                });
+            }
+
+            initializeCalendar(document.querySelector('.from-calendar'));
+            initializeCalendar(document.querySelector('.to-calendar'));
+
+            dateRangeBtn.addEventListener('click', () => {
+                calendarPopup.style.display = calendarPopup.style.display === 'none' ? 'block' : 'none';
+            });
+
+            document.querySelector('.apply-btn').addEventListener('click', async () => {
+                const fromMonth = document.querySelector('.from-calendar .month-select').value;
+                const fromYear = document.querySelector('.from-calendar .year-select').value;
+                const fromDay = document.querySelector('.from-calendar .calendar-body .selected')?.textContent;
+
+                const toMonth = document.querySelector('.to-calendar .month-select').value;
+                const toYear = document.querySelector('.to-calendar .year-select').value;
+                const toDay = document.querySelector('.to-calendar .calendar-body .selected')?.textContent;
+
+                if (fromDay && toDay) {
+                    const fromDate = new Date(fromYear, fromMonth, fromDay);
+                    const toDate = new Date(toYear, toMonth, toDay);
+
+                    if (fromDate <= toDate) {
+                        dateRangeBtn.textContent = `${fromDay}/${Number(fromMonth) + 1}/${fromYear} - ${toDay}/${Number(toMonth) + 1}/${toYear}`;
+                        calendarPopup.style.display = 'none';
+                        //calender code
+                        const startingmonth = fromMonth + 1;
+                        const endingmonth = toMonth + 1;
+                        const start = fromDay + '-' + startingmonth + '-' + fromYear
+                        const end = toDay + '-' + endingmonth + '-' + toYear
+                        console.log(start, end)
+                        loadings.style.display = 'flex'
+                        loadings.style.zIndex = '999'
+                        myplots.style.zIndex = '-999'
+                        myplots.style.filter = 'blur(30px)'
+                        try {
+                            const response = await fetch('/historicdata', {
+                                method: 'POST',
+                                headers: {
+                                    'Content-Type': 'application/json',
+                                },
+                                body: JSON.stringify({ val, start, end })
+                            });
+                            const data = await response.json();
+                            console.log(data)
+                            if (data.sucess === 'true') {
+                                loadings.style.display = 'none'
+                                loadings.style.zIndex = '-999'
+                                myplots.style.zIndex = '999'
+                                myplots.style.filter = 'none'
+                                csving();
+                            }
+                        } catch (error) {
+                            console.error('Error:', error);
+                        }
+                        updateGraph(fromDate, toDate);
+                    }
+                }
+            });
+
+            document.querySelector('.cancel-btn').addEventListener('click', () => {
+                calendarPopup.style.display = 'none';
+            });
+        });
+
+        document.querySelector('.apply-btn').addEventListener('click', () => {
+            const fromMonth = document.querySelector('.from-calendar .month-select').value;
+            const fromYear = document.querySelector('.from-calendar .year-select').value;
+            const fromDay = document.querySelector('.from-calendar .calendar-body .selected')?.textContent;
+
+            const toMonth = document.querySelector('.to-calendar .month-select').value;
+            const toYear = document.querySelector('.to-calendar .year-select').value;
+            const toDay = document.querySelector('.to-calendar .calendar-body .selected')?.textContent;
+
+            if (fromDay && toDay) {
+                const fromDate = new Date(fromYear, fromMonth, fromDay);
+                const toDate = new Date(toYear, toMonth, toDay);
+
+                if (fromDate <= toDate) {
+                    dateRangeBtn.textContent = `${fromDay}/${Number(fromMonth) + 1}/${fromYear} - ${toDay}/${Number(toMonth) + 1}/${toYear}`;
+                    calendarPopup.style.display = 'none';
+
+                    updateGraph(fromDate, toDate);
+                }
+            }
+        });
+
+        function updateCalendarBody(calendar, month, year) {
+            const calendarBody = calendar.querySelector('.calendar-body');
+            calendarBody.innerHTML = '';
+
+            const firstDay = new Date(year, month, 1).getDay();
+            const daysInMonth = new Date(year, month + 1, 0).getDate();
+            const today = new Date();
+
+            for (let i = 0; i < firstDay; i++) {
+                const emptyCell = document.createElement('button');
+                emptyCell.disabled = true;
+                calendarBody.appendChild(emptyCell);
+            }
+
+            for (let day = 1; day <= daysInMonth; day++) {
+                const dayButton = document.createElement('button');
+                dayButton.textContent = day;
+
+                const currentDate = new Date(year, month, day);
+                if (currentDate > today) {
+                    dayButton.disabled = true;
+                    dayButton.style.opacity = "0.3";
+                } else {
+                    dayButton.addEventListener('click', (e) => {
+                        calendar.querySelectorAll('.calendar-body button').forEach(btn => btn.classList.remove('selected'));
+                        e.target.classList.add('selected');
+                    });
+                }
+
+                calendarBody.appendChild(dayButton);
+            }
+        }
+
+
+        document.querySelectorAll('.month-select, .year-select').forEach(select => {
+            select.addEventListener('change', (e) => {
+                const calendar = e.target.closest('.from-calendar, .to-calendar');
+                const month = calendar.querySelector('.month-select').value;
+                const year = calendar.querySelector('.year-select').value;
+                updateCalendarBody(calendar, parseInt(month), parseInt(year));
+            });
+        });
+
+        const nows = new Date();
+        document.querySelectorAll('.from-calendar, .to-calendar').forEach(calendar => {
+            calendar.querySelector('.month-select').value = nows.getMonth();
+            calendar.querySelector('.year-select').value = nows.getFullYear();
+            updateCalendarBody(calendar, nows.getMonth(), nows.getFullYear());
+        });
+    </script>
+</body>
+
+</html>
