@@ -423,7 +423,136 @@ macd.addEventListener('click', () => {
     })
 })
 
-
-document.querySelector(".Disclosure").addEventListener('click' , () => {
-    document.querySelector(".view-cont").style.display = "block";
-})
+document.addEventListener('DOMContentLoaded', function() {
+    const dateRangeBtn = document.getElementById('date-range-btn');
+    const calendarPopup = document.getElementById('calendar-popup');
+    
+    const months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
+    const currentYear = new Date().getFullYear();
+    const yearRange = Array.from({length: currentYear - 1979}, (_, i) => 1980 + i);
+  
+    function initializeCalendar(calendar) {
+      const monthSelect = calendar.querySelector('.month-select');
+      const yearSelect = calendar.querySelector('.year-select');
+      
+      months.forEach((month, i) => {
+        const option = document.createElement('option');
+        option.value = i;
+        option.textContent = month;
+        monthSelect.appendChild(option);
+      });
+  
+      yearRange.forEach(year => {
+        const option = document.createElement('option');
+        option.value = year;
+        option.textContent = year;
+        yearSelect.appendChild(option);
+      });
+    }
+  
+    initializeCalendar(document.querySelector('.from-calendar'));
+    initializeCalendar(document.querySelector('.to-calendar'));
+  
+    dateRangeBtn.addEventListener('click', () => {
+      calendarPopup.style.display = calendarPopup.style.display === 'none' ? 'block' : 'none';
+    });
+  
+    document.querySelector('.apply-btn').addEventListener('click', () => {
+      const fromMonth = document.querySelector('.from-calendar .month-select').value;
+      const fromYear = document.querySelector('.from-calendar .year-select').value;
+      const fromDay = document.querySelector('.from-calendar .calendar-body .selected')?.textContent;
+      
+      const toMonth = document.querySelector('.to-calendar .month-select').value;
+      const toYear = document.querySelector('.to-calendar .year-select').value;
+      const toDay = document.querySelector('.to-calendar .calendar-body .selected')?.textContent;
+      
+      if (fromDay && toDay) {
+          const fromDate = new Date(fromYear, fromMonth, fromDay);
+          const toDate = new Date(toYear, toMonth, toDay);
+          
+          if (fromDate <= toDate) {
+              dateRangeBtn.textContent = `${fromDay}/${Number(fromMonth) + 1}/${fromYear} - ${toDay}/${Number(toMonth) + 1}/${toYear}`;
+              calendarPopup.style.display = 'none';
+              
+              updateGraph(fromDate, toDate);
+          }
+      }
+  });
+  
+    document.querySelector('.cancel-btn').addEventListener('click', () => {
+      calendarPopup.style.display = 'none';
+    });
+  });
+  
+  document.querySelector('.apply-btn').addEventListener('click', () => {
+    const fromMonth = document.querySelector('.from-calendar .month-select').value;
+    const fromYear = document.querySelector('.from-calendar .year-select').value;
+    const fromDay = document.querySelector('.from-calendar .calendar-body .selected')?.textContent;
+    
+    const toMonth = document.querySelector('.to-calendar .month-select').value;
+    const toYear = document.querySelector('.to-calendar .year-select').value;
+    const toDay = document.querySelector('.to-calendar .calendar-body .selected')?.textContent;
+    
+    if (fromDay && toDay) {
+        const fromDate = new Date(fromYear, fromMonth, fromDay);
+        const toDate = new Date(toYear, toMonth, toDay);
+        
+        if (fromDate <= toDate) {
+            dateRangeBtn.textContent = `${fromDay}/${Number(fromMonth) + 1}/${fromYear} - ${toDay}/${Number(toMonth) + 1}/${toYear}`;
+            calendarPopup.style.display = 'none';
+            
+            updateGraph(fromDate, toDate);
+        }
+    }
+  });
+  
+  function updateCalendarBody(calendar, month, year) {
+    const calendarBody = calendar.querySelector('.calendar-body');
+    calendarBody.innerHTML = '';
+    
+    const firstDay = new Date(year, month, 1).getDay();
+    const daysInMonth = new Date(year, month + 1, 0).getDate();
+    const today = new Date();
+    
+    for (let i = 0; i < firstDay; i++) {
+        const emptyCell = document.createElement('button');
+        emptyCell.disabled = true;
+        calendarBody.appendChild(emptyCell);
+    }
+    
+    for (let day = 1; day <= daysInMonth; day++) {
+        const dayButton = document.createElement('button');
+        dayButton.textContent = day;
+        
+        const currentDate = new Date(year, month, day);
+        if (currentDate > today) {
+            dayButton.disabled = true;
+            dayButton.style.opacity = "0.3";
+        } else {
+            dayButton.addEventListener('click', (e) => {
+                calendar.querySelectorAll('.calendar-body button').forEach(btn => btn.classList.remove('selected'));
+                e.target.classList.add('selected');
+            });
+        }
+        
+        calendarBody.appendChild(dayButton);
+    }
+  }
+  
+  
+  document.querySelectorAll('.month-select, .year-select').forEach(select => {
+    select.addEventListener('change', (e) => {
+        const calendar = e.target.closest('.from-calendar, .to-calendar');
+        const month = calendar.querySelector('.month-select').value;
+        const year = calendar.querySelector('.year-select').value;
+        updateCalendarBody(calendar, parseInt(month), parseInt(year));
+    });
+  });
+  
+  const now = new Date();
+  document.querySelectorAll('.from-calendar, .to-calendar').forEach(calendar => {
+    calendar.querySelector('.month-select').value = now.getMonth();
+    calendar.querySelector('.year-select').value = now.getFullYear();
+    updateCalendarBody(calendar, now.getMonth(), now.getFullYear());
+  });
+  
