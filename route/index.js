@@ -28,7 +28,6 @@ router.post('/summary', async (req, res) => {
     if (dashboard) {
         return res.json({ sucess: "true" })
     }
-    return res.json({ sucess: 'true', summaryanimation })
 })
 
 router.get('/dashboard', ensureAuthentication, (req, res) => {
@@ -153,6 +152,22 @@ router.get('/statsPage', ensureAuthentication, async (req, res) => {
     res.render("statsPage", {
         name: req.user.name
     })
+})
+router.post('/statsPage', async (req, res) => {
+    const numCompanies = 1;
+    const { val } = req.body
+    const { start } = req.body
+    const { end } = req.body
+    console.log(val)
+    console.log(start)
+    console.log(end)
+    const summaryanimation = { numCompanies, val, start, end }
+    const args = [numCompanies, val, start, end];
+    const dashboard = await runpython(args)
+    if (dashboard) {
+        return res.json({ sucess: "true" })
+    }
+    return res.json({ sucess: 'true', summaryanimation })
 })
 
 router.get('/watch', ensureAuthentication, (req, res) => {

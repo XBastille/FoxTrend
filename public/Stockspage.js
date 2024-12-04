@@ -1190,8 +1190,6 @@ onemonth.addEventListener('click', async () => {
     month = 12
     months = 1;
   }
-  console.log(day + "-" + month + "-" + year)
-  console.log(day + "-" + months + "-" + year)
   const start = day + "-" + month + "-" + year
   const end = day + "-" + months + "-" + year
   loading.style.display = 'flex'
@@ -1414,6 +1412,56 @@ maxdate.addEventListener('click', async () => {
     }
   } catch (error) {
     console.error('Error:', error);
+  }
+})
+
+
+//search bar to change the company from summary page
+const searching = document.getElementById('searching')
+const background=document.getElementById('background')
+searching.addEventListener('keypress', async (e) => {
+  if (e.key === 'Enter') {
+    val = searching.value
+    searching.value = '';
+    const dates = new Date()
+    const month = dates.getMonth()
+    const months = dates.getMonth() + 1
+    let day = dates.getDate()
+    let year = dates.getFullYear()
+    if (month === 0) {
+      year = year - 1;
+      month = 12
+      months = 1;
+    }
+    const start = day + "-" + month + "-" + year
+    const end = day + "-" + months + "-" + year
+    loading.style.display = 'flex'
+    loading.style.zIndex = '9999'
+    background.style.zIndex = '-999'
+    background.style.filter = 'blur(20px)'
+     
+    try {
+      const response = await fetch('/summary', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ val, start, end })
+      });
+      const data = await response.json();
+      console.log(data)
+      if (data.sucess === 'true') {
+        loading.style.display = 'none'
+        loading.style.zIndex = '-999'
+        background.style.zIndex = '999'
+        background.style.filter = 'none'
+        document.body.style.filter = 'none';
+        document.body.style.pointerEvents = 'auto'; // Re-enable interaction
+        window.location.reload();
+      }
+    } catch (error) {
+      console.error('Error:', error);
+    }
   }
 })
 

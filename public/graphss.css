@@ -317,6 +317,7 @@ body {
   justify-content: center;
   text-align: center;
   margin-right: 80px;
+  
 }
 
 @media (max-width: 768px) {
@@ -358,10 +359,12 @@ body {
   padding-left: 20px;
   background-color: black;
   border: 1px solid rgb(160, 160, 160);
+  color: #ddd;
 }
 
 .search-bar:hover {
   background-color: rgb(158, 172, 180, 1);
+  color: #000000;
 }
 
 .navigationBar {
