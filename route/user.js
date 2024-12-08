@@ -19,7 +19,7 @@ router.get('/forgot', (req, res) => {
 })
 
 
-const User = require('../models/Users');
+const { User } = require('../models/Users');
 require('../config/passport')(passport)
 
 const runjava = (className, args) => {

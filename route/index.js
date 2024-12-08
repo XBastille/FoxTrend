@@ -4,7 +4,7 @@ const bcrypt = require('bcryptjs')
 const router = express.Router();
 const { spawn } = require('child_process');
 
-const User = require('../models/Users');
+const { User, CompanyDetails } = require('../models/Users');
 
 router.get('/', (req, res) => {
     res.render("wel")
@@ -30,12 +30,24 @@ router.post('/summary', async (req, res) => {
     }
 })
 
-router.get('/dashboard', ensureAuthentication, (req, res) => {
-    res.render("dashboard", {
-        name: req.user.name,
-        username: req.user.username,
-    })
+router.get('/dashboard', ensureAuthentication, async (req, res) => {
 
+    // const { page = 0, limit = 8 } = req.query
+    // try {
+    //     const comp = await CompanyDetails.find()
+    //         .skip(page * limit)
+    //         .limit(limit)
+    //     const total = await CompanyDetails.countDocuments();
+    //     return res.json({
+    //         data: comp,
+    //         total,
+    //         totalPages: Math.ceil(total / limit),
+    //         currentpage: page
+    //     })
+    // } catch (error) {
+    //     console.log(error)
+    // }
+    res.render("dashboard")
 })
 
 const runpython = (args) => {

@@ -187,59 +187,96 @@
 
       <div class="company-container" id="slider">
         <div class="company-box">
-          <b>AMZN</b>
-          <p>Amazon</p>
-          <p class="company-price">$519.38</p>
-          <a class="company-percent">1.29%</a>
+          <b id="ticker1"></b>
+          <p id="company1"></p>
+          <p class="company-price" id="companyprice1"></p>
+          <a class="company-percent" id="companypercent1"></a>
         </div>
         <div class="company-box">
-          <b>TSLA</b>
-          <p>Tesla</p>
-          <p class="company-price">$412.62 </p>
-          <a class="company-percent">0.91%</a>
+          <b id="ticker2"></b>
+          <p id="company2"></p>
+          <p class="company-price" id="companyprice2"></p>
+          <a class="company-percent" id="companypercent2"></a>
         </div>
         <div class="company-box">
-          <b>GOOG</b>
-          <p>Alphabet</p>
-          <p class="company-price">$685.09</p>
-          <a class="company-percent">0.80%</a>
+          <b id="ticker3"></b>
+          <p id="company3"></p>
+          <p class="company-price" id="companyprice3"></p>
+          <a class="company-percent" id="companypercent3"></a>
         </div>
         <div class="company-box">
-          <b>META</b>
-          <p>Meta Platforms.</p>
-          <p class="company-price">$179.44</p>
-          <a class="company-percent">3.53%</a>
+          <b id="ticker4"></b>
+          <p id="company4"></p>
+          <p class="company-price" id="companyprice4"></p>
+          <a class="company-percent" id="companypercent4"></a>
         </div>
         <div class="company-box">
-          <b>MSFT</b>
-          <p>Microsoft</p>
-          <p class="company-price">$160.28 </p>
-          <a class="company-percent">1.56%</a>
+          <b id="ticker5"></b>
+          <p id="company5"></p>
+          <p class="company-price" id="companyprice5"></p>
+          <a class="company-percent" id="companypercent5"></a>
         </div>
         <div class="company-box">
-          <b>NTFLX</b>
-          <p>Netflix</p>
-          <p class="company-price">$233.29</p>
-          <a class="company-percent">6.33%</a>
+          <b id="ticker6"></b>
+          <p id="company6"></p>
+          <p class="company-price" id="companyprice6"></p>
+          <a class="company-percent" id="companypercent6"></a>
         </div>
         <div class="company-box">
-          <b>NVDA</b>
-          <p>NVIDIA</p>
-          <p class="company-price">$108.75</p>
-          <a class="company-percent">2.39%</a>
+          <b id="ticker7"></b>
+          <p id="company7"></p>
+          <p class="company-price" id="companyprice7"></p>
+          <a class="company-percent" id="companypercent7"></a>
         </div>
         <div class="company-box">
-          <b>AMD</b>
-          <p id="micro">Advanced Micro Devices </p>
-          <p class="company-price">$155.99</p>
-          <a class="company-percent">7.70%</a>
+          <b id="ticker8"></b>
+          <p id="company8"></p>
+          <p class="company-price" id="companyprice8"></p>
+          <a class="company-percent" id="companypercent8"></a>
         </div>
         <div class="company-box">
-          <b>INTL</b>
-          <p>Intel</p>
-          <p class="company-price">$21.37</p>
-          <a class="company-percent">0.60%</a>
+          <b id="ticker9"></b>
+          <p id="company9"></p>
+          <p class="company-price" id="companyprice9"></p>
+          <a class="company-percent" id="companypercent9"></a>
         </div>
+        <div class="company-box">
+          <b id="ticker10"></b>
+          <p id="company10"></p>
+          <p class="company-price" id="companyprice10"></p>
+          <a class="company-percent" id="companypercent10"></a>
+        </div>
+        <div class="company-box">
+          <b id="ticker11"></b>
+          <p id="company11"></p>
+          <p class="company-price" id="companyprice11"></p>
+          <a class="company-percent" id="companypercent11"></a>
+        </div>
+        <div class="company-box">
+          <b id="ticker12"></b>
+          <p id="company12"></p>
+          <p class="company-price" id="companyprice12"></p>
+          <a class="company-percent" id="companypercent12"></a>
+        </div>
+        <div class="company-box">
+          <b id="ticker13"></b>
+          <p id="company13"></p>
+          <p class="company-price" id="companyprice13"></p>
+          <a class="company-percent" id="companypercent13"></a>
+        </div>
+        <div class="company-box">
+          <b id="ticker14"></b>
+          <p id="company14"></p>
+          <p class="company-price" id="companyprice14"></p>
+          <a class="company-percent" id="companypercent14"></a>
+        </div>
+        <div class="company-box">
+          <b id="ticker15"></b>
+          <p id="company15"></p>
+          <p class="company-price" id="companyprice15"></p>
+          <a class="company-percent" id="companypercent15"></a>
+        </div>
+
       </div>
       <span class="slider-btn prev" onclick="slide(-1)">
         <img src="media/arrow-left.jpg">
@@ -280,10 +317,10 @@
   <div class="Graphs">
     <div class="graph-box" id="box1">
       <div class="graph-tabs">
-        <div class="tab-slider"></div>
-        <button class="tab-button active" onclick="changeTab(this, 'DSEX', 'box1')">AAPL</button>
-        <button class="tab-button" onclick="changeTab(this, 'DSES', 'box1')">TSLA</button>
-        <button class="tab-button" onclick="changeTab(this, 'DS30', 'box1')">GOOG</button>
+        <div class="tab-slider" id="tabsliders"></div>
+        <button class="tab-button active" id="graph1comp1" onclick="changeTab(this, 'DSEX', 'box1')"></button>
+        <button class="tab-button" id="graph1comp2" onclick="changeTab(this, 'DSES', 'box1')"></button>
+        <button class="tab-button" id="graph1comp3" onclick="changeTab(this, 'DS30', 'box1')"></button>
       </div>
 
       <div class="graph-content">
@@ -293,25 +330,25 @@
 
         <div class="graph-info">
           <div class="stock-value">
-            <span class="value">$214.77</span>
+            <span class="value" id="cprice"></span>
             <span class="change positive">$32.13 (+0.52%)</span>
           </div>
         </div>
 
         <table class="trade-info">
           <tr>
-            <td>closing price</td>
-            <td>$214.77</td>
+            <td>PE Ratio</td>
+            <td id="perati"></td>
             <td class="highlight">1,12,731</td>
           </tr>
           <tr>
             <td>Total Volume</td>
-            <td>16,02,74,857</td>
+            <td id="volumess"></td>
             <td class="negative">-32.13</td>
           </tr>
           <tr>
-            <td>Total Volume(mn)</td>
-            <td>5837.698</td>
+            <td>Beta</td>
+            <td id="beta"></td>
             <td class="negative">-0.52%</td>
           </tr>
         </table>
@@ -321,9 +358,9 @@
 
       <div class="graph-tabs">
         <div class="tab-slider"></div>
-        <button class="tab-button active" onclick="changeTab(this, 'DSEX', 'box2')">TSLA</button>
-        <button class="tab-button" onclick="changeTab(this, 'DSES', 'box2')">AAPL</button>
-        <button class="tab-button" onclick="changeTab(this, 'DS30', 'box2')">GOOG</button>
+        <button class="tab-button active" id="graph2comp1" onclick="changeTab(this, 'DSEX', 'box2')"></button>
+        <button class="tab-button" id="graph2comp2" onclick="changeTab(this, 'DSES', 'box2')"></button>
+        <button class="tab-button" id="graph2comp3" onclick="changeTab(this, 'DS30', 'box2')"></button>
       </div>
 
       <div class="graph-content">
@@ -333,25 +370,25 @@
 
         <div class="graph-info">
           <div class="stock-value">
-            <span class="value">$214.77</span>
+            <span class="value" id="clprice"></span>
             <span class="change positive">$32.13 (+0.52%)</span>
           </div>
         </div>
 
         <table class="trade-info">
           <tr>
-            <td>closing price</td>
-            <td>$214.77</td>
+            <td>PE Ratio</td>
+            <td id="peratii"></td>
             <td class="highlight">1,12,731</td>
           </tr>
           <tr>
             <td>Total Volume</td>
-            <td>16,02,74,857</td>
+            <td id="volumeess"></td>
             <td class="negative">-32.13</td>
           </tr>
           <tr>
-            <td>Total Volume(mn)</td>
-            <td>5837.698</td>
+            <td>Beta</td>
+            <td id="betaa"></td>
             <td class="negative">-0.52%</td>
           </tr>
         </table>
@@ -360,9 +397,9 @@
     <div class="graph-box" id="box3">
       <div class="graph-tabs">
         <div class="tab-slider"></div>
-        <button class="tab-button active" onclick="changeTab(this, 'DSEX', 'box3')">TSLA</button>
-        <button class="tab-button" onclick="changeTab(this, 'DSES', 'box3')">AAPL</button>
-        <button class="tab-button" onclick="changeTab(this, 'DS30', 'box3')">GOOG</button>
+        <button class="tab-button active" id="graph3comp1" onclick="changeTab(this, 'DSEX', 'box3')"></button>
+        <button class="tab-button" id="graph3comp2" onclick="changeTab(this, 'DSES', 'box3')"></button>
+        <button class="tab-button" id="graph3comp3" onclick="changeTab(this, 'DS30', 'box3')"></button>
       </div>
 
       <div class="graph-content">
@@ -372,25 +409,25 @@
 
         <div class="graph-info">
           <div class="stock-value">
-            <span class="value">$214.77</span>
+            <span class="value" id="cloprice"></span>
             <span class="change positive">$32.13 (+0.52%)</span>
           </div>
         </div>
 
         <table class="trade-info">
           <tr>
-            <td>closing price</td>
-            <td>$214.77</td>
+            <td>PE Ratio</td>
+            <td id="pera"></td>
             <td class="highlight">1,12,731</td>
           </tr>
           <tr>
             <td>Total Volume</td>
-            <td>16,02,74,857</td>
+            <td id="vomes"></td>
             <td class="negative">-32.13</td>
           </tr>
           <tr>
-            <td>Total Volume(mn)</td>
-            <td>5837.698</td>
+            <td>Beta</td>
+            <td id="betaaa"></td>
             <td class="negative">-0.52%</td>
           </tr>
         </table>
@@ -752,8 +789,8 @@
   });
 </script>
 
-
 <script>
+  //graph-------------------------------------------
   Papa.parse("/public/stock_data_1.csv", {
     download: true,
     header: true,
@@ -820,6 +857,7 @@
       });
     }
   });
+
 </script>
 <script src="/public/Dashboard.js"></script>
 </body>

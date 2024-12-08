@@ -21,6 +21,46 @@ const UserSchema = new mongoose.Schema({
     }
 })
 
-const user = mongoose.model('foxtrend', UserSchema)
+const UserSchema1 = new mongoose.Schema({
+    company: {
+        type: String,
+    }
+})
 
-module.exports = user;
+const UserSchema2 = new mongoose.Schema({
+    Ticker: {
+        type: String
+    },
+    Price: {
+        type: Number
+    },
+    Change: {
+        type: Number
+    },
+    ChangePercentage: {
+        type: Number
+    },
+    Volume: {
+        type: Number
+    },
+    MarketCap: {
+        type: Number,
+    },
+    YearChange: {
+        type: Number
+    },
+    beta:{
+        type:Number
+    }
+
+})
+
+const user1 = mongoose.model('CompanyStore', UserSchema1)
+const user = mongoose.model('foxtrend', UserSchema)
+const user2 = mongoose.model('CompanyDetails', UserSchema2)
+
+module.exports = {
+    User: user,
+    CompanyStore: user1,
+    CompanyDetails: user2
+};

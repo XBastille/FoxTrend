@@ -397,6 +397,7 @@ body {
     transition: background-color 0.3s ease, opacity 0.3s ease;
   }
   
+
   .company-box:hover {
     background-color: rgb(88, 88, 88);
     color: inherit;
@@ -409,7 +410,7 @@ body {
   
   .company-price {
     color: rgb(4, 184, 4);
-    margin-top: 50px;
+    margin-top: 28px;
     margin-right: 4px;
     transform: scale(1.5);
   }
@@ -1392,7 +1393,8 @@ body {
       margin-left: 200px;
       background-color: #1a1b1e;
       border-radius: 12px;
-      overflow: hidden;
+      overflow: scroll;
+      max-height: 720px;
     }
   
     .header {
