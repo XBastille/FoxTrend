@@ -5,6 +5,7 @@
 body{
     background-color: black;
     color: white;
+    min-height: 880px;
 }
 header{
    display: flex;
@@ -245,4 +246,62 @@ section{
   #date-range-btn:hover {
     color: rgb(121, 2, 185);
   }
+
+  .graph-stats{
+    display:flex;
+    flex-direction: row;
+  }
+
+  li i{
+    height: 50px;
+    width: 50px;
+  }
+  /* add button*/
+  .addBtn{
+      color: #fff;
+      background-color: #000000;
+      border-radius: 20px;
+      cursor: pointer;
+      width: 100px;
+      padding: 8px 16px;
+      display: flex;
+      justify-content: center;
+      border: 1px solid rgba(48, 54, 58, 1);
+      box-sizing: border-box;
+  }
+
+  /*add button dropdown*/
+
+  .addSection {
+    position: relative;
+    display: inline-block;
+}
+
+.dropdown {
+    position: absolute;
+    top: -80px;
+    right: -350px;
+    background-color: black;
+    border: 1px solid gray;
+    color: white;
+    padding: 10px;
+    border-radius: 5px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    list-style-type: none;
+    display: none;
+    z-index: 10;
+}
+
+.dropdown li {
+    padding: 8px 15px;
+    cursor: pointer;
+}
+
+.dropdown li:last-child {
+    border-bottom: none;
+}
+
+
+
+
 
