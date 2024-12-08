@@ -555,4 +555,24 @@ document.addEventListener('DOMContentLoaded', function() {
     calendar.querySelector('.year-select').value = now.getFullYear();
     updateCalendarBody(calendar, now.getMonth(), now.getFullYear());
   });
+
   
+  document.getElementById('rsi').addEventListener('click',(e) => {
+    const graphUrl = 'rsigraph'; 
+    window.open(graphUrl, '_blank');
+    })
+
+    /*dropdown menu*/
+
+    const addButton = document.getElementById("addButton");
+    const dropdownMenu = document.getElementById("dropdownMenu")
+
+    addButton.addEventListener('click' , () => {
+        dropdownMenu.style.display = dropdownMenu.style.display === 'block' ? 'none' : 'block';
+    })
+
+    document.addEventListener('click', (event) => {
+        if (!addButton.contains(event.target) && !dropdownMenu.contains(event.target)) {
+            dropdownMenu.style.display = 'none';
+        }
+    });
