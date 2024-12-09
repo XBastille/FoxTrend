@@ -114,7 +114,7 @@ router.post('/forgot', async (req, res) => {
 
 router.post('/login', (req, res, next) => {
   passport.authenticate('local', {
-    successRedirect: "/dashboard",
+    successRedirect: "/loading",
     failureRedirect: "/user/login",
   })(req, res, next)
 })

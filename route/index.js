@@ -23,8 +23,9 @@ router.post('/summary', async (req, res) => {
     console.log(start)
     console.log(end)
     const summaryanimation = { numCompanies, val, start, end }
+    const filenaming = './main.py'
     const args = [numCompanies, val, start, end];
-    const dashboard = await runpython(args)
+    const dashboard = await runpython(args, filenaming)
     if (dashboard) {
         return res.json({ sucess: "true" })
     }
@@ -50,14 +51,14 @@ router.get('/dashboard', ensureAuthentication, async (req, res) => {
     res.render("dashboard")
 })
 
-const runpython = (args) => {
+const runpython = (args, filename) => {
     return new Promise((resolve, reject) => {
         let data1 = '';
 
 
         console.log("Arguments :" + args)
-
-        const pyone = spawn('python', ['./main.py', ...args]);
+        console.log(filename)
+        const pyone = spawn('python', [filename, ...args]);
         pyone.stdout.on('data', function (data) {
             data1 += data.toString();
             console.log(data1)
@@ -85,22 +86,32 @@ router.post('/loading', async (req, res) => {
     const { numCompanies, val, start, end } = req.body;
     const args = [numCompanies, val, start, end];
     console.log(args)
-    const dashboard = await runpython(args)
+    const filenaming = './main.py'
+    const dashboard = await runpython(args, filenaming)
     if (dashboard) {
         return res.json({ sucess: "true" })
     }
 })
 
 
-router.post('/dashboard', (req, res) => {
+router.post('/dashboard', async (req, res) => {
     const numCompanies = 1;
     const { val } = req.body
     const { start } = req.body
     const { end } = req.body
+    const { graphsignal } = req.body
     console.log(val)
     console.log(start)
     console.log(end)
     const loadinganimation = { numCompanies, val, start, end }
+    if (graphsignal === 'doit') {
+        const args = [numCompanies, val, start, end]
+        const filenaming = './python_files/main_2.py'
+        const graph_animation = await runpython(args, filenaming)
+        if (graph_animation) {
+            return res.json({ sucess: 'true' })
+        }
+    }
     return res.json({ sucess: 'true', loadinganimation })
 })
 
@@ -120,7 +131,8 @@ router.post('/chartPage', async (req, res) => {
     console.log(end)
     const summaryanimation = { numCompanies, val, start, end }
     const args = [numCompanies, val, start, end];
-    const dashboard = await runpython(args)
+    const filenaming = './main.py'
+    const dashboard = await runpython(args, filenaming)
     if (dashboard) {
         return res.json({ sucess: "true" })
     }
@@ -145,7 +157,8 @@ router.post('/historicdata', async (req, res) => {
     console.log(end)
     const summaryanimation = { numCompanies, val, start, end }
     const args = [numCompanies, val, start, end];
-    const dashboard = await runpython(args)
+    const filenaming = './main.py'
+    const dashboard = await runpython(args, filenaming)
     if (dashboard) {
         return res.json({ sucess: "true" })
     }
@@ -175,7 +188,8 @@ router.post('/statsPage', async (req, res) => {
     console.log(end)
     const summaryanimation = { numCompanies, val, start, end }
     const args = [numCompanies, val, start, end];
-    const dashboard = await runpython(args)
+    const filenaming = './main.py'
+    const dashboard = await runpython(args, filenaming)
     if (dashboard) {
         return res.json({ sucess: "true" })
     }

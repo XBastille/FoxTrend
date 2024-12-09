@@ -65,27 +65,11 @@ document.addEventListener('DOMContentLoaded', async () => {
         }
     }
 
-    // const summaryDataRaw = sessionStorage.getItem('summaryData');
-    // console.log(summaryDataRaw)
-    // if (summaryDataRaw) {
-    //     const summaryData = JSON.parse(sessionStorage.getItem('summaryData'));
-    //     console.log(summaryData)
-    //     if (summaryData) {
-    //         const response = await fetch('/loading', {
-    //             method: 'POST',
-    //             headers: {
-    //                 'Content-Type': 'application/json',
-    //             },
-    //             body: JSON.stringify(summaryData)
-    //         });
+    var timing=setTimeout(helling,5000);
+    function helling(){
+      window.location.href='/dashboard'
 
-    //         const data = await response.json();
-    //         if (data.sucess === 'true') {
-    //             sessionStorage.clear()
-    //             window.location.href = '/summary';
-    //         }
-    //     }
-    // }
+    }
 });
 
 

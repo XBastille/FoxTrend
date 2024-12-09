@@ -1418,7 +1418,7 @@ maxdate.addEventListener('click', async () => {
 
 //search bar to change the company from summary page
 const searching = document.getElementById('searching')
-const background=document.getElementById('background')
+const background = document.getElementById('background')
 searching.addEventListener('keypress', async (e) => {
   if (e.key === 'Enter') {
     val = searching.value
@@ -1439,7 +1439,7 @@ searching.addEventListener('keypress', async (e) => {
     loading.style.zIndex = '9999'
     background.style.zIndex = '-999'
     background.style.filter = 'blur(20px)'
-     
+
     try {
       const response = await fetch('/summary', {
         method: 'POST',

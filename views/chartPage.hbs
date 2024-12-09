@@ -174,7 +174,27 @@
 </head>
 
 <body>
-   
+    <div class="loading-container" id="loading">
+
+        <div class="grid"></div>
+        <div class="snake snake-horizontal"></div>
+        <div class="snake snake-horizontal"></div>
+        <div class="snake snake-vertical"></div>
+        <div class="snake snake-vertical"></div>
+        <div class="snake snake-horizontal"></div>
+        <div class="snake snake-vertical"></div>
+        <div class="snake snake-top"></div>
+        <div class="snake snake-diagonal-right"></div>
+        <div class="center-element">
+            <img src="https://github.com/XBastille/FoxTrend/blob/NSA/media/fox.jpg?raw=true" alt="Your Image"
+                class="center-image">
+        </div>
+        <div class="cube">
+            <div class="cube-edge top"></div>
+            <div class="cube-edge right"></div>
+            <div class="cube-edge left"></div>
+        </div>
+    </div>
     <div id="background">
         <ul class="icons open">
             <a href="#" class="fox-icon-link">
@@ -499,7 +519,6 @@
         //ONE-WEEK
         const oneweek = document.getElementById('oneweek')
         oneweek.addEventListener('click', async () => {
-            ;
             //starting Date----------------------------------------------------------------------------------
             var endsmonth;
             var currentDate = new Date();
@@ -649,6 +668,7 @@
         //year to date(DONE)------------------------------------------------------
         const yeartodate = document.getElementById('yeartodate')
         yeartodate.addEventListener('click', async () => {
+            console.log("chud gaye guru")
             const dates = new Date();
             let day = dates.getDate();
             let months = dates.getMonth() + 1

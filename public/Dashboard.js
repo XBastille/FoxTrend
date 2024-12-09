@@ -427,6 +427,7 @@ document.querySelector('.search-bar-2').addEventListener('input', (e) => {
 let i0;
 let i1;
 let i2;
+
 do {
   i0 = Math.floor(Math.random() * 14);
   i1 = Math.floor(Math.random() * 14);
@@ -533,274 +534,345 @@ const ticker15 = document.getElementById('ticker15')
 const company15 = document.getElementById('company15')
 const companyprice15 = document.getElementById('companyprice15')
 const companypercent15 = document.getElementById('companypercent15')
+let randomcomp;
+let another_alt
+async function fetchingjson() {
+  try {
+    const res = await fetch('./public/json/sorted_stock_data.json')
+    if (!res.ok) {
+      console.log(res.status)
+      return;
+    }
+    const data = await res.json();
+    randomcomp = data[i0].Ticker
+    ticker1.innerText = data[0].Ticker
+    company1.innerText = data[0].Company_Name || data[0].Ticker
+    companyprice1.innerText = "$" + data[0].Price
+    const vals = String(data[0]['Change %'])
+    if (vals.substring(0, 1) === '-') {
+      companypercent1.style.color = 'red'
+    }
+    companypercent1.innerText = data[0]['Change %'].toFixed(2) + "%"
 
-function fetchingjson() {
-  fetch("./public/json/sorted_stock_data.json")
-    .then((res) => {
-      if (!res.ok) {
-        console.log(res.status)
-      }
-      return res.json();
-    })
-    .then((data) => {
-      console.log(data[0].Price)
-      ticker1.innerText = data[0].Ticker
-      company1.innerText = data[0].Company_Name || data[0].Ticker
-      companyprice1.innerText = "$" + data[0].Price
-      const vals = String(data[0]['Change %'])
-      if (vals.substring(0, 1) === '-') {
-        companypercent1.style.color = 'red'
-      }
-      companypercent1.innerText = data[0]['Change %'].toFixed(2) + "%"
+    ticker2.innerText = data[1].Ticker
+    company2.innerText = data[1].Company_Name || data[1].Ticker
+    companyprice2.innerText = "$" + data[1].Price
+    const vall = String(data[1]['Change %'])
+    if (vall.substring(0, 1) === '-') {
+      companypercent2.style.color = 'red'
+    }
+    companypercent2.innerText = data[1]['Change %'].toFixed(2) + "%"
 
-      ticker2.innerText = data[1].Ticker
-      company2.innerText = data[1].Company_Name || data[1].Ticker
-      companyprice2.innerText = "$" + data[1].Price
-      const val = String(data[1]['Change %'])
-      if (val.substring(0, 1) === '-') {
-        companypercent2.style.color = 'red'
-      }
-      companypercent2.innerText = data[1]['Change %'].toFixed(2) + "%"
+    ticker3.innerText = data[2].Ticker
+    company3.innerText = data[2].Company_Name || data[2].Ticker
+    companyprice3.innerText = "$" + data[2].Price
+    const va = String(data[2]['Change %'])
+    if (va.substring(0, 1) === '-') {
+      companypercent3.style.color = 'red'
+    }
+    companypercent3.innerText = data[2]['Change %'].toFixed(2) + "%"
 
-      ticker3.innerText = data[2].Ticker
-      company3.innerText = data[2].Company_Name || data[2].Ticker
-      companyprice3.innerText = "$" + data[2].Price
-      const va = String(data[2]['Change %'])
-      if (va.substring(0, 1) === '-') {
-        companypercent3.style.color = 'red'
-      }
-      companypercent3.innerText = data[2]['Change %'].toFixed(2) + "%"
+    ticker4.innerText = data[3].Ticker
+    company4.innerText = data[3].Company_Name || data[3].Ticker
+    companyprice4.innerText = "$" + data[3].Price
+    const v = String(data[3]['Change %'])
+    if (v.substring(0, 1) === '-') {
+      companypercent4.style.color = 'red'
+    }
+    companypercent4.innerText = data[3]['Change %'].toFixed(2) + "%"
 
-      ticker4.innerText = data[3].Ticker
-      company4.innerText = data[3].Company_Name || data[3].Ticker
-      companyprice4.innerText = "$" + data[3].Price
-      const v = String(data[3]['Change %'])
-      if (v.substring(0, 1) === '-') {
-        companypercent4.style.color = 'red'
-      }
-      companypercent4.innerText = data[3]['Change %'].toFixed(2) + "%"
+    ticker5.innerText = data[4].Ticker
+    company5.innerText = data[4].Company_Name || data[4].Ticker
+    companyprice5.innerText = "$" + data[4].Price
+    const vs = String(data[4]['Change %'])
+    if (vs.substring(0, 1) === '-') {
+      companypercent5.style.color = 'red'
+    }
+    companypercent5.innerText = data[4]['Change %'].toFixed(2) + "%"
 
-      ticker5.innerText = data[4].Ticker
-      company5.innerText = data[4].Company_Name || data[4].Ticker
-      companyprice5.innerText = "$" + data[4].Price
-      const vs = String(data[4]['Change %'])
-      if (vs.substring(0, 1) === '-') {
-        companypercent5.style.color = 'red'
-      }
-      companypercent5.innerText = data[4]['Change %'].toFixed(2) + "%"
+    ticker6.innerText = data[5].Ticker
+    company6.innerText = data[5].Company_Name || data[5].Ticker
+    companyprice6.innerText = "$" + data[5].Price
+    const vsi = String(data[5]['Change %'])
+    if (vsi.substring(0, 1) === '-') {
+      companypercent6.style.color = 'red'
+    }
+    companypercent6.innerText = data[5]['Change %'].toFixed(2) + "%"
 
-      ticker6.innerText = data[5].Ticker
-      company6.innerText = data[5].Company_Name || data[5].Ticker
-      companyprice6.innerText = "$" + data[5].Price
-      const vsi = String(data[5]['Change %'])
-      if (vsi.substring(0, 1) === '-') {
-        companypercent6.style.color = 'red'
-      }
-      companypercent6.innerText = data[5]['Change %'].toFixed(2) + "%"
+    ticker7.innerText = data[6].Ticker
+    company7.innerText = data[6].Company_Name || data[6].Ticker
+    companyprice7.innerText = "$" + data[6].Price
+    const vsii = String(data[6]['Change %'])
+    if (vsii.substring(0, 1) === '-') {
+      companypercent7.style.color = 'red'
+    }
+    companypercent7.innerText = data[6]['Change %'].toFixed(2) + "%"
 
-      ticker7.innerText = data[6].Ticker
-      company7.innerText = data[6].Company_Name || data[6].Ticker
-      companyprice7.innerText = "$" + data[6].Price
-      const vsii = String(data[6]['Change %'])
-      if (vsii.substring(0, 1) === '-') {
-        companypercent7.style.color = 'red'
-      }
-      companypercent7.innerText = data[6]['Change %'].toFixed(2) + "%"
+    ticker8.innerText = data[7].Ticker
+    company8.innerText = data[7].Company_Name || data[7].Ticker
+    companyprice8.innerText = "$" + data[7].Price
+    const vsiii = String(data[7]['Change %'])
+    if (vsiii.substring(0, 1) === '-') {
+      companypercent8.style.color = 'red'
+    }
+    companypercent8.innerText = data[7]['Change %'].toFixed(2) + "%"
 
-      ticker8.innerText = data[7].Ticker
-      company8.innerText = data[7].Company_Name || data[7].Ticker
-      companyprice8.innerText = "$" + data[7].Price
-      const vsiii = String(data[7]['Change %'])
-      if (vsiii.substring(0, 1) === '-') {
-        companypercent8.style.color = 'red'
-      }
-      companypercent8.innerText = data[7]['Change %'].toFixed(2) + "%"
+    ticker9.innerText = data[8].Ticker
+    company9.innerText = data[8].Company_Name || data[8].Ticker
+    companyprice9.innerText = "$" + data[8].Price
+    const vu = String(data[8]['Change %'])
+    if (vu.substring(0, 1) === '-') {
+      companypercent9.style.color = 'red'
+    }
+    companypercent9.innerText = data[8]['Change %'].toFixed(2) + "%"
 
-      ticker9.innerText = data[8].Ticker
-      company9.innerText = data[8].Company_Name || data[8].Ticker
-      companyprice9.innerText = "$" + data[8].Price
-      const vu = String(data[8]['Change %'])
-      if (vu.substring(0, 1) === '-') {
-        companypercent9.style.color = 'red'
-      }
-      companypercent9.innerText = data[8]['Change %'].toFixed(2) + "%"
+    ticker10.innerText = data[9].Ticker
+    company10.innerText = data[9].Company_Name || data[9].Ticker
+    companyprice10.innerText = "$" + data[9].Price
+    const vuu = String(data[9]['Change %'])
+    if (vuu.substring(0, 1) === '-') {
+      companypercent10.style.color = 'red'
+    }
+    companypercent10.innerText = data[9]['Change %'].toFixed(2) + "%"
 
-      ticker10.innerText = data[9].Ticker
-      company10.innerText = data[9].Company_Name || data[9].Ticker
-      companyprice10.innerText = "$" + data[9].Price
-      const vuu = String(data[9]['Change %'])
-      if (vuu.substring(0, 1) === '-') {
-        companypercent10.style.color = 'red'
-      }
-      companypercent10.innerText = data[9]['Change %'].toFixed(2) + "%"
+    ticker11.innerText = data[10].Ticker
+    company11.innerText = data[10].Company_Name || data[10].Ticker
+    companyprice11.innerText = "$" + data[10].Price
+    const vuus = String(data[10]['Change %'])
+    if (vuus.substring(0, 1) === '-') {
+      companypercent11.style.color = 'red'
+    }
+    companypercent11.innerText = data[10]['Change %'].toFixed(2) + "%"
 
-      ticker11.innerText = data[10].Ticker
-      company11.innerText = data[10].Company_Name || data[10].Ticker
-      companyprice11.innerText = "$" + data[10].Price
-      const vuus = String(data[10]['Change %'])
-      if (vuus.substring(0, 1) === '-') {
-        companypercent11.style.color = 'red'
-      }
-      companypercent11.innerText = data[10]['Change %'].toFixed(2) + "%"
+    ticker12.innerText = data[11].Ticker
+    company12.innerText = data[11].Company_Name || data[11].Ticker
+    companyprice12.innerText = "$" + data[11].Price
+    const vuuss = String(data[11]['Change %'])
+    if (vuuss.substring(0, 1) === '-') {
+      companypercent12.style.color = 'red'
+    }
+    companypercent12.innerText = data[11]['Change %'].toFixed(2) + "%"
 
-      ticker12.innerText = data[11].Ticker
-      company12.innerText = data[11].Company_Name || data[11].Ticker
-      companyprice12.innerText = "$" + data[11].Price
-      const vuuss = String(data[11]['Change %'])
-      if (vuuss.substring(0, 1) === '-') {
-        companypercent12.style.color = 'red'
-      }
-      companypercent12.innerText = data[11]['Change %'].toFixed(2) + "%"
+    ticker13.innerText = data[12].Ticker
+    company13.innerText = data[12].Company_Name || data[12].Ticker
+    companyprice13.innerText = "$" + data[12].Price
+    const vuss = String(data[12]['Change %'])
+    if (vuss.substring(0, 1) === '-') {
+      companypercent13.style.color = 'red'
+    }
+    companypercent13.innerText = data[12]['Change %'].toFixed(2) + "%"
 
-      ticker13.innerText = data[12].Ticker
-      company13.innerText = data[12].Company_Name || data[12].Ticker
-      companyprice13.innerText = "$" + data[12].Price
-      const vuss = String(data[12]['Change %'])
-      if (vuss.substring(0, 1) === '-') {
-        companypercent13.style.color = 'red'
-      }
-      companypercent13.innerText = data[12]['Change %'].toFixed(2) + "%"
+    ticker14.innerText = data[13].Ticker
+    company14.innerText = data[13].Company_Name || data[13].Ticker
+    companyprice14.innerText = "$" + data[13].Price
+    const vss = String(data[13]['Change %'])
+    if (vss.substring(0, 1) === '-') {
+      companypercent14.style.color = 'red'
+    }
+    companypercent14.innerText = data[13]['Change %'].toFixed(2) + "%"
 
-      ticker14.innerText = data[13].Ticker
-      company14.innerText = data[13].Company_Name || data[13].Ticker
-      companyprice14.innerText = "$" + data[13].Price
-      const vss = String(data[13]['Change %'])
-      if (vss.substring(0, 1) === '-') {
-        companypercent14.style.color = 'red'
-      }
-      companypercent14.innerText = data[13]['Change %'].toFixed(2) + "%"
+    ticker15.innerText = data[14].Ticker
+    company15.innerText = data[14].Company_Name || data[14].Ticker
+    companyprice15.innerText = "$" + data[14].Price
+    const vussi = String(data[14]['Change %'])
+    if (vussi.substring(0, 1) === '-') {
+      companypercent15.style.color = 'red'
+    }
+    companypercent15.innerText = data[14]['Change %'].toFixed(2) + "%"
+    //-------setting values on graph1------------------------------------------
+    graph1comp1.innerText = data[i0].Ticker
+    graph1comp2.innerText = data[i1].Ticker
+    graph1comp3.innerText = data[i2].Ticker
 
-      ticker15.innerText = data[14].Ticker
-      company15.innerText = data[14].Company_Name || data[14].Ticker
-      companyprice15.innerText = "$" + data[14].Price
-      const vussi = String(data[14]['Change %'])
-      if (vussi.substring(0, 1) === '-') {
-        companypercent15.style.color = 'red'
-      }
-      companypercent15.innerText = data[14]['Change %'].toFixed(2) + "%"
-      //-------setting values on graph1------------------------------------------
-      graph1comp1.innerText = data[i0].Ticker
-      graph1comp2.innerText = data[i1].Ticker
-      graph1comp3.innerText = data[i2].Ticker
+    //initial rendering-----------------------------------------
+    perati.innerText = data[i0].PE_Ratio != null ? ("$" + (data[i0].PE_Ratio).toFixed(2)) : "undefined";
+    var nums = data[i0].Volume;
+    volumess.innerText = nums != null ? nums.toLocaleString() : "undefined";
+    beta.innerText = data[i0].Beta != null ? data[i0].Beta : "undefined"
+    cprice.innerText = data[i0].Price != null ? "$" + data[i0].Price : "undefined"
 
-      //initial rendering-----------------------------------------
+    //clicking of first button from any of the button
+    graph1comp1.addEventListener('click', () => {
       perati.innerText = data[i0].PE_Ratio != null ? ("$" + (data[i0].PE_Ratio).toFixed(2)) : "undefined";
       var nums = data[i0].Volume;
       volumess.innerText = nums != null ? nums.toLocaleString() : "undefined";
       beta.innerText = data[i0].Beta != null ? data[i0].Beta : "undefined"
       cprice.innerText = data[i0].Price != null ? "$" + data[i0].Price : "undefined"
+    })
 
-      //clicking of first button from any of the button
-      graph1comp1.addEventListener('click', () => {
-        perati.innerText = data[i0].PE_Ratio != null ? ("$" + (data[i0].PE_Ratio).toFixed(2)) : "undefined";
-        var nums = data[i0].Volume;
-        volumess.innerText = nums != null ? nums.toLocaleString() : "undefined";
-        beta.innerText = data[i0].Beta != null ? data[i0].Beta : "undefined"
-        cprice.innerText = data[i0].Price != null ? "$" + data[i0].Price : "undefined"
-      })
+    //clicking of second button data rendering-----------------
+    graph1comp2.addEventListener('click', () => {
+      perati.innerText = data[i1].PE_Ratio != null ? ("$" + (data[i1].PE_Ratio).toFixed(2)) : "undefined";
+      var nums = data[i1].Volume;
+      volumess.innerText = nums != null ? nums.toLocaleString() : "undefined";
+      beta.innerText = data[i1].Beta != null ? data[i1].Beta : "undefined"
+      cprice.innerText = data[i1].Price != null ? "$" + data[i1].Price : "undefined"
+    })
 
-      //clicking of second button data rendering-----------------
-      graph1comp2.addEventListener('click', () => {
-        perati.innerText = data[i1].PE_Ratio != null ? ("$" + (data[i1].PE_Ratio).toFixed(2)) : "undefined";
-        var nums = data[i1].Volume;
-        volumess.innerText = nums != null ? nums.toLocaleString() : "undefined";
-        beta.innerText = data[i1].Beta != null ? data[i1].Beta : "undefined"
-        cprice.innerText = data[i1].Price != null ? "$" + data[i1].Price : "undefined"
-      })
+    //clicking of third button data rendering------------------------------
+    graph1comp3.addEventListener('click', () => {
+      perati.innerText = data[i2].PE_Ratio != null ? ("$" + (data[i2].PE_Ratio).toFixed(2)) : "undefined";
+      var nums = data[i2].Volume;
+      volumess.innerText = nums != null ? nums.toLocaleString() : "undefined";
+      beta.innerText = data[i2].Beta != null ? data[i2].Beta : "undefined"
+      cprice.innerText = data[i2].Price != null ? "$" + data[i2].Price : "undefined"
+    })
+    //-------setting values on graph2------------------------------------------
+    graph2comp1.innerText = data[i0].Ticker
+    graph2comp2.innerText = data[i1].Ticker
+    graph2comp3.innerText = data[i2].Ticker
 
-      //clicking of third button data rendering------------------------------
-      graph1comp3.addEventListener('click', () => {
-        perati.innerText = data[i2].PE_Ratio != null ? ("$" + (data[i2].PE_Ratio).toFixed(2)) : "undefined";
-        var nums = data[i2].Volume;
-        volumess.innerText = nums != null ? nums.toLocaleString() : "undefined";
-        beta.innerText = data[i2].Beta != null ? data[i2].Beta : "undefined"
-        cprice.innerText = data[i2].Price != null ? "$" + data[i2].Price : "undefined"
-      })
-      //-------setting values on graph2------------------------------------------
-      graph2comp1.innerText = data[i0].Ticker
-      graph2comp2.innerText = data[i1].Ticker
-      graph2comp3.innerText = data[i2].Ticker
+    //initial rendering-----------------------------------------
+    peratii.innerText = data[i0].PE_Ratio != null ? ("$" + (data[i0].PE_Ratio).toFixed(2)) : "undefined";
+    var nums = data[i0].Volume;
+    volumeess.innerText = nums != null ? nums.toLocaleString() : "undefined";
+    betaa.innerText = data[i0].Beta != null ? data[i0].Beta : "undefined"
+    clprice.innerText = data[i0].Price != null ? "$" + data[i0].Price : "undefined"
 
-      //initial rendering-----------------------------------------
+    //clicking of first button from any of the button
+    graph2comp1.addEventListener('click', () => {
       peratii.innerText = data[i0].PE_Ratio != null ? ("$" + (data[i0].PE_Ratio).toFixed(2)) : "undefined";
       var nums = data[i0].Volume;
       volumeess.innerText = nums != null ? nums.toLocaleString() : "undefined";
       betaa.innerText = data[i0].Beta != null ? data[i0].Beta : "undefined"
       clprice.innerText = data[i0].Price != null ? "$" + data[i0].Price : "undefined"
+    })
 
-      //clicking of first button from any of the button
-      graph2comp1.addEventListener('click', () => {
-        peratii.innerText = data[i0].PE_Ratio != null ? ("$" + (data[i0].PE_Ratio).toFixed(2)) : "undefined";
-        var nums = data[i0].Volume;
-        volumeess.innerText = nums != null ? nums.toLocaleString() : "undefined";
-        betaa.innerText = data[i0].Beta != null ? data[i0].Beta : "undefined"
-        clprice.innerText = data[i0].Price != null ? "$" + data[i0].Price : "undefined"
-      })
+    //clicking of second button from any of the button
+    graph2comp2.addEventListener('click', () => {
+      peratii.innerText = data[i1].PE_Ratio != null ? ("$" + (data[i1].PE_Ratio).toFixed(2)) : "undefined";
+      var nums = data[i1].Volume;
+      volumeess.innerText = nums != null ? nums.toLocaleString() : "undefined";
+      betaa.innerText = data[i1].Beta != null ? data[i1].Beta : "undefined"
+      clprice.innerText = data[i1].Price != null ? "$" + data[i1].Price : "undefined"
+    })
 
-      //clicking of second button from any of the button
-      graph2comp2.addEventListener('click', () => {
-        peratii.innerText = data[i1].PE_Ratio != null ? ("$" + (data[i1].PE_Ratio).toFixed(2)) : "undefined";
-        var nums = data[i1].Volume;
-        volumeess.innerText = nums != null ? nums.toLocaleString() : "undefined";
-        betaa.innerText = data[i1].Beta != null ? data[i1].Beta : "undefined"
-        clprice.innerText = data[i1].Price != null ? "$" + data[i1].Price : "undefined"
-      })
+    //clicking of third button from any of the button
+    graph2comp3.addEventListener('click', () => {
+      peratii.innerText = data[i2].PE_Ratio != null ? ("$" + (data[i2].PE_Ratio).toFixed(2)) : "undefined";
+      var nums = data[i2].Volume;
+      volumeess.innerText = nums != null ? nums.toLocaleString() : "undefined";
+      betaa.innerText = data[i2].Beta != null ? data[i2].Beta : "undefined"
+      clprice.innerText = data[i2].Price != null ? "$" + data[i2].Price : "undefined"
+    })
 
-      //clicking of third button from any of the button
-      graph2comp3.addEventListener('click', () => {
-        peratii.innerText = data[i2].PE_Ratio != null ? ("$" + (data[i2].PE_Ratio).toFixed(2)) : "undefined";
-        var nums = data[i2].Volume;
-        volumeess.innerText = nums != null ? nums.toLocaleString() : "undefined";
-        betaa.innerText = data[i2].Beta != null ? data[i2].Beta : "undefined"
-        clprice.innerText = data[i2].Price != null ? "$" + data[i2].Price : "undefined"
-      })
+    //-------setting values on graph2------------------------------------------
+    graph3comp1.innerText = data[i0].Ticker
+    graph3comp2.innerText = data[i1].Ticker
+    graph3comp3.innerText = data[i2].Ticker
 
-      //-------setting values on graph2------------------------------------------
-      graph3comp1.innerText = data[i0].Ticker
-      graph3comp2.innerText = data[i1].Ticker
-      graph3comp3.innerText = data[i2].Ticker
+    //initial rendering-----------------------------------------
+    pera.innerText = data[i0].PE_Ratio != null ? ("$" + (data[i0].PE_Ratio).toFixed(2)) : "undefined";
+    var nums = data[i0].Volume;
+    vomes.innerText = nums != null ? nums.toLocaleString() : "undefined";
+    betaaa.innerText = data[i0].Beta != null ? data[i0].Beta : "undefined"
+    cloprice.innerText = data[i0].Price != null ? "$" + data[i0].Price : "undefined"
 
-      //initial rendering-----------------------------------------
+    //clicking of first button from any of the button
+    graph3comp1.addEventListener('click', () => {
       pera.innerText = data[i0].PE_Ratio != null ? ("$" + (data[i0].PE_Ratio).toFixed(2)) : "undefined";
       var nums = data[i0].Volume;
       vomes.innerText = nums != null ? nums.toLocaleString() : "undefined";
       betaaa.innerText = data[i0].Beta != null ? data[i0].Beta : "undefined"
       cloprice.innerText = data[i0].Price != null ? "$" + data[i0].Price : "undefined"
-
-      //clicking of first button from any of the button
-      graph3comp1.addEventListener('click', () => {
-        pera.innerText = data[i0].PE_Ratio != null ? ("$" + (data[i0].PE_Ratio).toFixed(2)) : "undefined";
-        var nums = data[i0].Volume;
-        vomes.innerText = nums != null ? nums.toLocaleString() : "undefined";
-        betaaa.innerText = data[i0].Beta != null ? data[i0].Beta : "undefined"
-        cloprice.innerText = data[i0].Price != null ? "$" + data[i0].Price : "undefined"
-      })
-
-      //clicking of second button from any of the button
-      graph3comp2.addEventListener('click', () => {
-        pera.innerText = data[i1].PE_Ratio != null ? ("$" + (data[i1].PE_Ratio).toFixed(2)) : "undefined";
-        var nums = data[i1].Volume;
-        vomes.innerText = nums != null ? nums.toLocaleString() : "undefined";
-        betaaa.innerText = data[i1].Beta != null ? data[i1].Beta : "undefined"
-        cloprice.innerText = data[i1].Price != null ? "$" + data[i1].Price : "undefined"
-      })
-
-      //clicking of second button from any of the button
-      graph3comp3.addEventListener('click', () => {
-        pera.innerText = data[i2].PE_Ratio != null ? ("$" + (data[i2].PE_Ratio).toFixed(2)) : "undefined";
-        var nums = data[i2].Volume;
-        vomes.innerText = nums != null ? nums.toLocaleString() : "undefined";
-        betaaa.innerText = data[i2].Beta != null ? data[i2].Beta : "undefined"
-        cloprice.innerText = data[i2].Price != null ? "$" + data[i2].Price : "undefined"
-      })
     })
-    .catch((err) => {
-      console.log(err)
+
+    //clicking of second button from any of the button
+    graph3comp2.addEventListener('click', () => {
+      pera.innerText = data[i1].PE_Ratio != null ? ("$" + (data[i1].PE_Ratio).toFixed(2)) : "undefined";
+      var nums = data[i1].Volume;
+      vomes.innerText = nums != null ? nums.toLocaleString() : "undefined";
+      betaaa.innerText = data[i1].Beta != null ? data[i1].Beta : "undefined"
+      cloprice.innerText = data[i1].Price != null ? "$" + data[i1].Price : "undefined"
     })
+
+    //clicking of second button from any of the button
+    graph3comp3.addEventListener('click', () => {
+      pera.innerText = data[i2].PE_Ratio != null ? ("$" + (data[i2].PE_Ratio).toFixed(2)) : "undefined";
+      var nums = data[i2].Volume;
+      vomes.innerText = nums != null ? nums.toLocaleString() : "undefined";
+      betaaa.innerText = data[i2].Beta != null ? data[i2].Beta : "undefined"
+      cloprice.innerText = data[i2].Price != null ? "$" + data[i2].Price : "undefined"
+    })
+    return randomcomp;
+  } catch (error) {
+    console.log(error)
+  }
 }
-
-document.addEventListener("DOMContentLoaded", function () {
-  fetchingjson();
+let acp;
+document.addEventListener("DOMContentLoaded", async function () {
+  acp = await fetchingjson()
 });
 //-----------------------------------------------------------
+function restartCubeAnimation() {
+  const cube = document.querySelector('.cube');
+  const cubeEdges = cube.querySelectorAll('.cube-edge');
+  cubeEdges.forEach(edge => {
+    const clone = edge.cloneNode(true);
+    edge.parentNode.replaceChild(clone, edge);
+  });
+}
 
+document.addEventListener('DOMContentLoaded', () => {
+  setInterval(restartCubeAnimation, 11600);
+});
+
+
+
+// setTimeout(() => {
+//   console.log("Outside DOMContentLoaded (using setTimeout):", acp);
+
+//   //-------------------------------------------------------------------
+//   //loading animation for three graphs
+
+//   //graph1,graph2, graph3 of comp1 will render after 3 secs
+
+//   const rendercomp = setTimeout(renderingcomp, 3000)
+
+// }, 1000);
+// const background1 = document.getElementById('background')
+// const loading1 = document.getElementById('loading')
+// async function renderingcomp() {
+//   const val = acp;
+//   console.log(val);
+//   const dates = new Date()
+//   const month = dates.getMonth()
+//   const months = dates.getMonth() + 1
+//   let day = dates.getDate()
+//   let year = dates.getFullYear()
+//   if (month === 0) {
+//     year = year - 1;
+//     month = 12
+//     months = 1;
+//   }
+//   const start = day + "-" + month + "-" + year
+//   const end = day + "-" + months + "-" + year
+//   const graphsignal = "doit"
+
+
+//   loading1.style.display = 'flex'
+//   loading1.style.zIndex = '9999'
+//   background1.style.zIndex = '-999'
+//   background1.style.filter = 'blur(25px)'
+//   try {
+//     const response = await fetch('/dashboard', {
+//       method: 'POST',
+//       headers: {
+//         'Content-Type': 'application/json',
+//       },
+//       body: JSON.stringify({ val, start, end, graphsignal })
+//     });
+//     const data = await response.json();
+//     console.log(data)
+//     if (data.sucess === 'true') {
+//       loading1.style.display = 'none'
+//       loading1.style.zIndex = '-999'
+//       background1.style.zIndex = '999'
+//       background1.style.filter = 'none'
+//       document.body.style.filter = 'none';
+//       document.body.style.pointerEvents = 'auto'; // Re-enable interaction
+//     }
+//   } catch (error) {
+//     console.error('Error:', error);
+//   }
+// }
