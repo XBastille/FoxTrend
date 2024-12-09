@@ -4,7 +4,7 @@ const mongoose = require('mongoose')
 const LocalStrategy = require('passport-local')
 
 
-const User = require('../models/Users')
+const { User } = require('../models/Users')
 
 module.exports = function (passport) {
     passport.use(
@@ -34,7 +34,7 @@ module.exports = function (passport) {
 
     passport.deserializeUser(async function (id, done) {
         try {
-            const user =await User.findById(id)
+            const user = await User.findById(id)
             done(null, user)
         } catch (error) {
             console.log(error)
