@@ -35,7 +35,6 @@ class Dropdown {
           container.classList.remove('active');
       });
       
-      // Add active class to current container
         dropdownContainer.classList.add('active');
         dropdownMenu.classList.add('active');
         searchInput.focus();
