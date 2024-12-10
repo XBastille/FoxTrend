@@ -2,34 +2,27 @@ class Dropdown {
   constructor(inputId, options) {
     this.input = document.getElementById(inputId);
     this.options = options;
-    // Set placeholder based on input id
     this.input.placeholder = inputId.charAt(0).toUpperCase() + inputId.slice(1);
     this.setupDropdown();
   }
 
   setupDropdown() {
-      // Make input readonly
       this.input.readOnly = true;
 
-      // Create dropdown container
       const dropdownContainer = document.createElement('div');
       dropdownContainer.className = 'dropdown-container';
       this.input.parentNode.appendChild(dropdownContainer);
 
-      // Move input into container
       dropdownContainer.appendChild(this.input);
 
-      // Create dropdown menu
       const dropdownMenu = document.createElement('div');
       dropdownMenu.className = 'dropdown-menu';
 
-      // Create search input
       const searchInput = document.createElement('input');
       searchInput.type = 'text';
       searchInput.className = 'dropdown-search';
       searchInput.placeholder = 'Search...';
 
-      // Create options container
       const optionsContainer = document.createElement('div');
       optionsContainer.className = 'dropdown-options';
 
@@ -37,7 +30,6 @@ class Dropdown {
       dropdownMenu.appendChild(optionsContainer);
       dropdownContainer.appendChild(dropdownMenu);
 
-      // Event listeners
       this.input.addEventListener('click', () => {
           dropdownMenu.classList.add('active');
           searchInput.focus();
@@ -54,7 +46,6 @@ class Dropdown {
           this.filterOptions(searchTerm, optionsContainer);
       });
 
-      // Initial render of options
       this.filterOptions('', optionsContainer);
   }
 
@@ -77,7 +68,6 @@ class Dropdown {
   }
 }
 
-// Initialize dropdowns when document is loaded
 document.addEventListener('DOMContentLoaded', async () => {
   try {
       const stateResponse = await fetch('options/house_US_state_values.txt');
@@ -109,7 +99,6 @@ document.getElementById('prediction-form').addEventListener('submit', function(e
     result.style.animation = 'fadeInUp 0.5s ease forwards';
 });
 
-// Add floating label effect
 document.querySelectorAll('.input-group input').forEach(input => {
     input.addEventListener('focus', function() {
         this.parentElement.classList.add('focused');
