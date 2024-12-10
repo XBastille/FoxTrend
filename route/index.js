@@ -10,6 +10,27 @@ router.get('/', (req, res) => {
     res.render("wel")
 })
 
+router.get('/Advance', ensureAuthentication, (req, res) => {
+    res.render("Advance")
+})
+
+router.post('/Advance', async (req, res) => {
+    const numCompanies = 1;
+    const { val } = req.body
+    const { start } = req.body
+    const { end } = req.body
+    console.log(val)
+    console.log(start)
+    console.log(end)
+    const summaryanimation = { numCompanies, val, start, end }
+    const filenaming = './main.py'
+    const args = [numCompanies, val, start, end];
+    const dashboard = await runpython(args, filenaming)
+    if (dashboard) {
+        return res.json({ sucess: "true" })
+    }
+})
+
 router.get('/summary', ensureAuthentication, (req, res) => {
     res.render("summary")
 })

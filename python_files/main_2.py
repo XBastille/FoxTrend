@@ -75,7 +75,7 @@ class StockDataVisualizer:
         df["Bollinger_hband"]=bollinger.bollinger_hband()
         df["Bollinger_lband"]=bollinger.bollinger_lband()
         csv_filename = f"technical_indicators_{self.index}.csv"
-        df[["SMA50", "SMA200", "RSI", "MACD", "MACD_signal", "MACD_histogram", "Bollinger_hband", "Bollinger_lband"]].to_csv(csv_filename)
+        # df[["SMA50", "SMA200", "RSI", "MACD", "MACD_signal", "MACD_histogram", "Bollinger_hband", "Bollinger_lband"]].to_csv(csv_filename)
         logging.info(f"Created technical indicators CSV file: {csv_filename}")
         '''plt.figure(figsize=(14,7))
         plt.plot(df["Close"], label="Close Price")

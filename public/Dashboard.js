@@ -535,7 +535,6 @@ const company15 = document.getElementById('company15')
 const companyprice15 = document.getElementById('companyprice15')
 const companypercent15 = document.getElementById('companypercent15')
 let randomcomp;
-let another_alt
 async function fetchingjson() {
   try {
     const res = await fetch('./public/json/sorted_stock_data.json')
@@ -693,29 +692,41 @@ async function fetchingjson() {
 
     //clicking of first button from any of the button
     graph1comp1.addEventListener('click', () => {
+      const randomcomp1 = data[i0].Ticker
+      const tickercomp = 1;
+      const boxing = 1
       perati.innerText = data[i0].PE_Ratio != null ? ("$" + (data[i0].PE_Ratio).toFixed(2)) : "undefined";
       var nums = data[i0].Volume;
       volumess.innerText = nums != null ? nums.toLocaleString() : "undefined";
       beta.innerText = data[i0].Beta != null ? data[i0].Beta : "undefined"
       cprice.innerText = data[i0].Price != null ? "$" + data[i0].Price : "undefined"
+      duplicating(randomcomp1, tickercomp, boxing);
     })
 
     //clicking of second button data rendering-----------------
     graph1comp2.addEventListener('click', () => {
+      const randomcomp2 = data[i1].Ticker;
+      const tickercomp = 2;
+      const boxing = 1
       perati.innerText = data[i1].PE_Ratio != null ? ("$" + (data[i1].PE_Ratio).toFixed(2)) : "undefined";
       var nums = data[i1].Volume;
       volumess.innerText = nums != null ? nums.toLocaleString() : "undefined";
       beta.innerText = data[i1].Beta != null ? data[i1].Beta : "undefined"
       cprice.innerText = data[i1].Price != null ? "$" + data[i1].Price : "undefined"
+      duplicating(randomcomp2, tickercomp, boxing);
     })
 
     //clicking of third button data rendering------------------------------
     graph1comp3.addEventListener('click', () => {
+      const randomcomp3 = data[i2].Ticker
+      const tickercomp = 3;
+      const boxing = 1;
       perati.innerText = data[i2].PE_Ratio != null ? ("$" + (data[i2].PE_Ratio).toFixed(2)) : "undefined";
       var nums = data[i2].Volume;
       volumess.innerText = nums != null ? nums.toLocaleString() : "undefined";
       beta.innerText = data[i2].Beta != null ? data[i2].Beta : "undefined"
       cprice.innerText = data[i2].Price != null ? "$" + data[i2].Price : "undefined"
+      duplicating(randomcomp3, tickercomp, boxing);
     })
     //-------setting values on graph2------------------------------------------
     graph2comp1.innerText = data[i0].Ticker
@@ -731,29 +742,41 @@ async function fetchingjson() {
 
     //clicking of first button from any of the button
     graph2comp1.addEventListener('click', () => {
+      const randomcomp1 = data[i0].Ticker
+      const tickercomp = 1;
+      const boxing = 2;
       peratii.innerText = data[i0].PE_Ratio != null ? ("$" + (data[i0].PE_Ratio).toFixed(2)) : "undefined";
       var nums = data[i0].Volume;
       volumeess.innerText = nums != null ? nums.toLocaleString() : "undefined";
       betaa.innerText = data[i0].Beta != null ? data[i0].Beta : "undefined"
       clprice.innerText = data[i0].Price != null ? "$" + data[i0].Price : "undefined"
+      duplicating(randomcomp1, tickercomp, boxing);
     })
 
     //clicking of second button from any of the button
     graph2comp2.addEventListener('click', () => {
+      const randomcomp2 = data[i1].Ticker
+      const tickercomp = 2;
+      const boxing = 2
       peratii.innerText = data[i1].PE_Ratio != null ? ("$" + (data[i1].PE_Ratio).toFixed(2)) : "undefined";
       var nums = data[i1].Volume;
       volumeess.innerText = nums != null ? nums.toLocaleString() : "undefined";
       betaa.innerText = data[i1].Beta != null ? data[i1].Beta : "undefined"
       clprice.innerText = data[i1].Price != null ? "$" + data[i1].Price : "undefined"
+      duplicating(randomcomp2, tickercomp, boxing);
     })
 
     //clicking of third button from any of the button
     graph2comp3.addEventListener('click', () => {
+      const randomcomp3 = data[i2].Ticker
+      const tickercomp = 3;
+      const boxing = 2;
       peratii.innerText = data[i2].PE_Ratio != null ? ("$" + (data[i2].PE_Ratio).toFixed(2)) : "undefined";
       var nums = data[i2].Volume;
       volumeess.innerText = nums != null ? nums.toLocaleString() : "undefined";
       betaa.innerText = data[i2].Beta != null ? data[i2].Beta : "undefined"
       clprice.innerText = data[i2].Price != null ? "$" + data[i2].Price : "undefined"
+      duplicating(randomcomp3, tickercomp, boxing);
     })
 
     //-------setting values on graph2------------------------------------------
@@ -770,31 +793,43 @@ async function fetchingjson() {
 
     //clicking of first button from any of the button
     graph3comp1.addEventListener('click', () => {
+      const randomcomp1 = data[i0].Ticker
+      const tickercomp = 1;
+      const boxing = 3
       pera.innerText = data[i0].PE_Ratio != null ? ("$" + (data[i0].PE_Ratio).toFixed(2)) : "undefined";
       var nums = data[i0].Volume;
       vomes.innerText = nums != null ? nums.toLocaleString() : "undefined";
       betaaa.innerText = data[i0].Beta != null ? data[i0].Beta : "undefined"
       cloprice.innerText = data[i0].Price != null ? "$" + data[i0].Price : "undefined"
+      duplicating(randomcomp1, tickercomp, boxing);
     })
 
     //clicking of second button from any of the button
     graph3comp2.addEventListener('click', () => {
+      const randomcomp2 = data[i1].Ticker
+      const tickercomp = 2
+      const boxing = 3;
       pera.innerText = data[i1].PE_Ratio != null ? ("$" + (data[i1].PE_Ratio).toFixed(2)) : "undefined";
       var nums = data[i1].Volume;
       vomes.innerText = nums != null ? nums.toLocaleString() : "undefined";
       betaaa.innerText = data[i1].Beta != null ? data[i1].Beta : "undefined"
       cloprice.innerText = data[i1].Price != null ? "$" + data[i1].Price : "undefined"
+      duplicating(randomcomp2, tickercomp, boxing);
     })
 
     //clicking of second button from any of the button
     graph3comp3.addEventListener('click', () => {
+      const randomcomp3 = data[i2].Ticker
+      const tickercomp = 3
+      const boxing = 3
       pera.innerText = data[i2].PE_Ratio != null ? ("$" + (data[i2].PE_Ratio).toFixed(2)) : "undefined";
       var nums = data[i2].Volume;
       vomes.innerText = nums != null ? nums.toLocaleString() : "undefined";
       betaaa.innerText = data[i2].Beta != null ? data[i2].Beta : "undefined"
       cloprice.innerText = data[i2].Price != null ? "$" + data[i2].Price : "undefined"
+      duplicating(randomcomp3, tickercomp, boxing);
     })
-    return randomcomp;
+    return randomcomp
   } catch (error) {
     console.log(error)
   }
@@ -817,62 +852,351 @@ document.addEventListener('DOMContentLoaded', () => {
   setInterval(restartCubeAnimation, 11600);
 });
 
+//graph things
+
+function graphings() {
+  Papa.parse("/public/csv/trending1.csv", {
+    download: true,
+    header: true,
+    complete: function (results) {
+      const xarray = [];
+      const yarray = [];
+
+      results.data.forEach(row => {
+        xarray.push(row['Date']);
+        yarray.push(parseFloat(row['Close']));
+      });
+
+      // Graph ek
+      const plot1 = document.querySelector('#box1 .myplot');
+      createAnimatedGraph(plot1, xarray, yarray);
+
+      // Graph do 
+      const plot2 = document.querySelector('#box2 .myplot');
+      createAnimatedGraph(plot2, xarray, yarray);
+
+      // Graph tin
+      const plot3 = document.querySelector('#box3 .myplot');
+      createAnimatedGraph(plot3, xarray, yarray);
+    }
+  });
+
+  function createAnimatedGraph(plot, xarray, yarray) {
+    const data = [{
+      x: [],
+      y: [],
+      mode: "lines",
+      type: "scatter",
+      fill: "tozeroy",
+      fillgradient: {
+        type: 'vertical',
+        colorscale: [[0, 'rgba(0,0,0,0)'], [1, 'rgba(96,0,147,1)']]
+      },
+      line: {
+        width: 2
+      },
+      hovertemplate: '%{x}<extra></extra>'
+    }];
+
+    const layout = {
+      xaxis: {
+        range: [xarray[0], xarray[xarray.length - 1]],
+        showticklabels: false,
+        showgrid: false,
+        zeroline: false,
+        spikedash: "solid",
+        spikemode: "toaxis",
+        spikecolor: "white",
+        spikethickness: 1
+      },
+      yaxis: {
+        range: [Math.min(...yarray) * 0.98, Math.max(...yarray) * 1.02],
+        showticklabels: false,
+        showgrid: false,
+        zeroline: false
+      },
+      colorway: ['#7834a8'],
+      plot_bgcolor: "#1e1e1e",
+      paper_bgcolor: "#1e1e1e",
+      margin: { l: 0, r: 0, t: 60, b: 0 },
+      autosize: true,
+      hoverlabel: {
+        bgcolor: "black",
+        bordercolor: "black",
+        font: {
+          color: "white",
+          size: 15
+        }
+      },
+      hovermode: "x"
+    };
+
+    Plotly.newPlot(plot, data, layout);
+    let i = 0;
+    let id;
+
+    function animate() {
+      if (i < xarray.length) {
+        Plotly.extendTraces(plot, {
+          x: [[xarray[i]]],
+          y: [[yarray[i]]]
+        }, [0]);
+        i++;
+        id = requestAnimationFrame(animate);
+      }
+    }
+    animate();
+
+    plot.addEventListener('click', () => {
+      Plotly.react(plot, [{
+        x: xarray,
+        y: yarray,
+        mode: "lines",
+        type: "scatter",
+        fill: "tozeroy",
+        fillgradient: {
+          type: 'vertical',
+          colorscale: [[0, 'rgba(0,0,0,0)'], [1, 'rgba(96,0,147,1)']]
+        },
+        line: {
+          width: 2
+        }
+      }], layout);
+      cancelAnimationFrame(id);
+    });
+  }
+
+}
 
 
-// setTimeout(() => {
-//   console.log("Outside DOMContentLoaded (using setTimeout):", acp);
+setTimeout(() => {
+  console.log("Outside DOMContentLoaded (using setTimeout):", acp);
 
-//   //-------------------------------------------------------------------
-//   //loading animation for three graphs
+  //-------------------------------------------------------------------
+  //loading animation for three graphs
 
-//   //graph1,graph2, graph3 of comp1 will render after 3 secs
+  //graph1,graph2, graph3 of comp1 will render after 3 secs
 
-//   const rendercomp = setTimeout(renderingcomp, 3000)
+  const rendercomp = setTimeout(renderingcomp, 1000)
 
-// }, 1000);
-// const background1 = document.getElementById('background')
-// const loading1 = document.getElementById('loading')
-// async function renderingcomp() {
-//   const val = acp;
-//   console.log(val);
-//   const dates = new Date()
-//   const month = dates.getMonth()
-//   const months = dates.getMonth() + 1
-//   let day = dates.getDate()
-//   let year = dates.getFullYear()
-//   if (month === 0) {
-//     year = year - 1;
-//     month = 12
-//     months = 1;
-//   }
-//   const start = day + "-" + month + "-" + year
-//   const end = day + "-" + months + "-" + year
-//   const graphsignal = "doit"
+}, 1000);
+const background1 = document.getElementById('background')
+const loading1 = document.getElementById('loading')
+async function renderingcomp() {
+  const val = acp;
+  console.log(val);
+  const dates = new Date()
+  const month = dates.getMonth()
+  const months = dates.getMonth() + 1
+  let day = dates.getDate()
+  let year = dates.getFullYear()
+  if (month === 0) {
+    year = year - 1;
+    month = 12
+    months = 1;
+  }
+  const start = day + "-" + month + "-" + year
+  const end = day + "-" + months + "-" + year
+  const graphsignal = "doit"
 
 
-//   loading1.style.display = 'flex'
-//   loading1.style.zIndex = '9999'
-//   background1.style.zIndex = '-999'
-//   background1.style.filter = 'blur(25px)'
-//   try {
-//     const response = await fetch('/dashboard', {
-//       method: 'POST',
-//       headers: {
-//         'Content-Type': 'application/json',
-//       },
-//       body: JSON.stringify({ val, start, end, graphsignal })
-//     });
-//     const data = await response.json();
-//     console.log(data)
-//     if (data.sucess === 'true') {
-//       loading1.style.display = 'none'
-//       loading1.style.zIndex = '-999'
-//       background1.style.zIndex = '999'
-//       background1.style.filter = 'none'
-//       document.body.style.filter = 'none';
-//       document.body.style.pointerEvents = 'auto'; // Re-enable interaction
-//     }
-//   } catch (error) {
-//     console.error('Error:', error);
-//   }
-// }
+  loading1.style.display = 'flex'
+  loading1.style.zIndex = '9999'
+  background1.style.zIndex = '-999'
+  background1.style.filter = 'blur(25px)'
+  try {
+    const response = await fetch('/dashboard', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ val, start, end, graphsignal })
+    });
+    const data = await response.json();
+    console.log(data)
+    if (data.sucess === 'true') {
+      loading1.style.display = 'none'
+      loading1.style.zIndex = '-999'
+      background1.style.zIndex = '999'
+      background1.style.filter = 'none'
+      document.body.style.filter = 'none';
+      document.body.style.pointerEvents = 'auto'; // Re-enable interaction
+      graphings();
+    }
+  } catch (error) {
+    console.error('Error:', error);
+  }
+}
+
+
+//function for creating csv file for clicking of any company--------------------
+async function duplicating(company_naming, number, boxing) {
+  const val = company_naming;
+  console.log(val);
+  const dates = new Date()
+  const month = dates.getMonth()
+  const months = dates.getMonth() + 1
+  let day = dates.getDate()
+  let year = dates.getFullYear()
+  if (month === 0) {
+    year = year - 1;
+    month = 12
+    months = 1;
+  }
+  const start = day + "-" + month + "-" + year
+  const end = day + "-" + months + "-" + year
+  const graphsignal = "doit"
+
+  loading1.style.marginTop = '1180px'
+  loading1.style.marginLeft='240px'
+  loading1.style.display = 'flex'
+  loading1.style.zIndex = '9999'
+  background1.style.zIndex = '-999'
+  background1.style.filter = 'blur(25px)'
+  try {
+    const response = await fetch('/dashboard', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ val, start, end, graphsignal })
+    });
+    const data = await response.json();
+    console.log(data)
+    if (data.sucess === 'true') {
+      loading1.style.display = 'none'
+      loading1.style.zIndex = '-999'
+      background1.style.zIndex = '999'
+      background1.style.filter = 'none'
+      document.body.style.filter = 'none';
+      document.body.style.pointerEvents = 'auto'; // Re-enable interaction
+      graphiings(number, boxing);
+    }
+  } catch (error) {
+    console.error('Error:', error);
+  }
+}
+
+
+
+
+//calling function for making duplicate graphs
+function graphiings(number, boxing) {
+  Papa.parse(`/public/csv/trending${number}.csv`, {
+    download: true,
+    header: true,
+    complete: function (results) {
+      const xarray = [];
+      const yarray = [];
+
+      results.data.forEach(row => {
+        xarray.push(row['Date']);
+        yarray.push(parseFloat(row['Close']));
+      });
+
+      // Graph ek
+      if (boxing === 1) {
+        const plot1 = document.querySelector('#box1 .myplot');
+        createAnimatedGraph(plot1, xarray, yarray);
+      }
+
+      // Graph do 
+      if (boxing === 2) {
+        const plot2 = document.querySelector('#box2 .myplot');
+        createAnimatedGraph(plot2, xarray, yarray);
+      }
+
+      // // Graph tin
+      if (boxing === 3) {
+        const plot3 = document.querySelector('#box3 .myplot');
+        createAnimatedGraph(plot3, xarray, yarray);
+      }
+    }
+  });
+
+  function createAnimatedGraph(plot, xarray, yarray) {
+    const data = [{
+      x: [],
+      y: [],
+      mode: "lines",
+      type: "scatter",
+      fill: "tozeroy",
+      fillgradient: {
+        type: 'vertical',
+        colorscale: [[0, 'rgba(0,0,0,0)'], [1, 'rgba(96,0,147,1)']]
+      },
+      line: {
+        width: 2
+      },
+      hovertemplate: '%{x}<extra></extra>'
+    }];
+
+    const layout = {
+      xaxis: {
+        range: [xarray[0], xarray[xarray.length - 1]],
+        showticklabels: false,
+        showgrid: false,
+        zeroline: false,
+        spikedash: "solid",
+        spikemode: "toaxis",
+        spikecolor: "white",
+        spikethickness: 1
+      },
+      yaxis: {
+        range: [Math.min(...yarray) * 0.98, Math.max(...yarray) * 1.02],
+        showticklabels: false,
+        showgrid: false,
+        zeroline: false
+      },
+      colorway: ['#7834a8'],
+      plot_bgcolor: "#1e1e1e",
+      paper_bgcolor: "#1e1e1e",
+      margin: { l: 0, r: 0, t: 60, b: 0 },
+      autosize: true,
+      hoverlabel: {
+        bgcolor: "black",
+        bordercolor: "black",
+        font: {
+          color: "white",
+          size: 15
+        }
+      },
+      hovermode: "x"
+    };
+
+    Plotly.newPlot(plot, data, layout);
+    let i = 0;
+    let id;
+
+    function animate() {
+      if (i < xarray.length) {
+        Plotly.extendTraces(plot, {
+          x: [[xarray[i]]],
+          y: [[yarray[i]]]
+        }, [0]);
+        i++;
+        id = requestAnimationFrame(animate);
+      }
+    }
+    animate();
+
+    plot.addEventListener('click', () => {
+      Plotly.react(plot, [{
+        x: xarray,
+        y: yarray,
+        mode: "lines",
+        type: "scatter",
+        fill: "tozeroy",
+        fillgradient: {
+          type: 'vertical',
+          colorscale: [[0, 'rgba(0,0,0,0)'], [1, 'rgba(96,0,147,1)']]
+        },
+        line: {
+          width: 2
+        }
+      }], layout);
+      cancelAnimationFrame(id);
+    });
+  }
+
+}
