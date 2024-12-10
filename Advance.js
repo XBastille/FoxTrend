@@ -6,6 +6,7 @@ Papa.parse("stock_data_1.csv", {
         const yarray = [];
         const customdata = [];
 
+
         results.data.forEach(row => {
             xarray.push(row['Date']);
             yarray.push(parseFloat(row['Close']));
@@ -17,7 +18,9 @@ Papa.parse("stock_data_1.csv", {
             })
         });
 
+
         //DATA ONLOAD
+
 
         const tarce1 = [{
             x: xarray,
@@ -43,7 +46,9 @@ Papa.parse("stock_data_1.csv", {
                 '<extra></extra>',
         }];
 
+
         //LAYOUT ONLOAD
+
 
 
         const layout = {
@@ -74,7 +79,9 @@ Papa.parse("stock_data_1.csv", {
             paper_bgcolor: "black",
         };
 
+
         //PLOTLING THE GRAPH AND ANIMATING IT WITH REQUEST ANIMATION FRAME
+
 
 
         Plotly.newPlot("myplot", tarce1, layout);
@@ -90,6 +97,7 @@ Papa.parse("stock_data_1.csv", {
             }
         }
         animate();
+
 
         const stp = document.getElementById("stp");
         stp.addEventListener("click", func);
@@ -122,7 +130,9 @@ Papa.parse("stock_data_1.csv", {
     }
 });
 
+
 //ONCLICK SECOND GRAPH ADDED ON THE SCREEN
+
 
 
 const second = document.getElementById("second")
@@ -137,6 +147,7 @@ function fus() {
             const ya = [];
             const customdata = [];
 
+
             results.data.forEach(row => {
                 xa.push(row['Date']);
                 ya.push(parseFloat(row['Close']));
@@ -147,6 +158,7 @@ function fus() {
                     Volume: parseInt(row['Volume']),
                 })
             });
+
 
             const tarce2 = [{
                 x: xa,
@@ -167,13 +179,19 @@ function fus() {
                     '<extra></extra>',
             }];
 
+
             Plotly.addTraces("myplot", tarce2);
             i++;
         }
 
+
     });
 
+
 }
+
+
+
 
 //BOILENGER BAND GRAPH
 Papa.parse("stock_data_1.csv", {
@@ -182,6 +200,7 @@ Papa.parse("stock_data_1.csv", {
     complete: function (results) {
         const xarray = [];
         const yarray = [];
+
 
         results.data.forEach(row => {
             xarray.push(row['Date']);
@@ -203,42 +222,55 @@ Papa.parse("stock_data_1.csv", {
             }
             return { middle, lower, upper };
         }
+
+
+        const indicatorState = {
+            bollinger: false,
+            macd: false,
+            rsi: false
+        };
         const boilenger = document.getElementById("boilenger");
+        let bollingerTraces = [];
+        
         boilenger.addEventListener('click', () => {
-            const { upper, lower, middle } = calculate(yarray);
-            Plotly.addTraces("myplot", {
-                x: xarray,
-                y: upper,
-                mode: "lines",
-                type: "scatter",
-                line: {
-                    width: 3,
-                    color: "blue"
-                }
-            })
-            Plotly.addTraces("myplot", {
-                x: xarray,
-                y: lower,
-                mode: "lines",
-                type: "scatter",
-                line: {
-                    width: 3,
-                    color: "blue"
-                }
-            })
-            Plotly.addTraces("myplot", {
-                x: xarray,
-                y: middle,
-                mode: "lines",
-                type: "scatter",
-                line: {
-                    width: 3,
-                    color: "blue"
-                }
-            })
-        })
+            if (!indicatorState.bollinger) {
+                const { upper, lower, middle } = calculate(yarray);
+                
+                Plotly.addTraces("myplot", [{
+                    x: xarray,
+                    y: upper,
+                    name: 'Upper Band',
+                    mode: "lines",
+                    type: "scatter",
+                    line: { width: 3, color: "blue" }
+                }, {
+                    x: xarray,
+                    y: lower,
+                    name: 'Lower Band',
+                    mode: "lines",
+                    type: "scatter",
+                    line: { width: 3, color: "blue" }
+                }, {
+                    x: xarray,
+                    y: middle,
+                    name: 'Middle Band',
+                    mode: "lines",
+                    type: "scatter",
+                    line: { width: 3, color: "blue" }
+                }]);
+                
+                bollingerTraces = [myplot.data.length - 3, myplot.data.length - 2, myplot.data.length - 1];
+                boilenger.textContent = "Remove Bollinger Bands";
+                indicatorState.bollinger = true;
+            } else {
+                Plotly.deleteTraces("myplot", bollingerTraces);
+                boilenger.textContent = "Add Bollinger Bands";
+                indicatorState.bollinger = false;
+            }
+        });
     }
 })
+
 
 //RSI MARK
 // --------------------------------------------------------------------------------------------------------------------------------------
@@ -250,11 +282,13 @@ Papa.parse("stock_data_1.csv", {
         const yarray = [];
         const customdata = [];
 
+
         results.data.forEach(row => {
             xarray.push(row['Date']);
             yarray.push(parseFloat(row['Close']));
-
         });
+
+
         function changes(yarray, period = 14) {
             let gain = [];
             let losses = [];
@@ -263,8 +297,7 @@ Papa.parse("stock_data_1.csv", {
                 if (change > 0) {
                     gain.push(change);
                     losses.push(0);
-                }
-                else {
+                } else {
                     gain.push(0);
                     losses.push(Math.abs(change));
                 }
@@ -273,155 +306,167 @@ Papa.parse("stock_data_1.csv", {
             for (let i = period; i < yarray.length; i++) {
                 const avggain = gain.slice(i - period, i).reduce((a, b) => a + b, 0) / period;
                 const avgloss = losses.slice(i - period, i).reduce((a, b) => a + b, 0) / period;
-
                 let rs = avggain / avgloss;
                 rsi.push(100 - (100 / (1 + rs)));
             }
             rsi = new Array(period).fill(null).concat(rsi);
             return rsi;
         }
+
+
         const rsii = document.getElementById("rsi");
+        let rsiVisible = false;
+
+
         rsii.addEventListener('click', () => {
-            const value = changes(yarray);
-
-            const rsilayout = {
-                xaxis: {
-                    range: [xarray[0], xarray[xarray.length - 1]], title: {
-                        text: "Date",
-                        font: {
-                            color: "white"
-                        }
+            if (!rsiVisible) {
+                const value = changes(yarray);
+                const rsilayout = {
+                    xaxis: {
+                        range: [xarray[0], xarray[xarray.length - 1]],
+                        title: {
+                            text: "Date",
+                            font: { color: "white" }
+                        },
+                        tickfont: { color: "white" }
                     },
-                    tickfont: {
-                        color: "white"
-                    }
-                },
-                yaxis: {
-                    range: [0, 100], title: {
-                        text: "Prices",
-                        font: {
-                            color: "white"
-                        }
+                    yaxis: {
+                        range: [0, 100],
+                        title: {
+                            text: "RSI",
+                            font: { color: "white" }
+                        },
+                        tickfont: { color: "white" }
                     },
-                    tickfont: {
-                        color: "white"
-                    }
-                },
-                colorway: ['#7834a8'],
-                plot_bgcolor: "black",
-                paper_bgcolor: "black",
-            };
-            const rsitrace = [{
-                x: xarray,
-                y: value,
-                customdata: customdata,
-                mode: "lines",
-                type: "scatter",
-                line: {
-                    width: 2
-                }
-            }];
-            Plotly.newPlot("rsigraph", rsitrace, rsilayout,)
-            const ys = new Array(xarray.length).fill(70)
-            const ysi = new Array(xarray.length).fill(30)
-            Plotly.addTraces("rsigraph", {
-                x: xarray,
-                y: ys,
-                mode: "lines",
-                type: "scatter",
-                name: "overbought (70)",
-                line: {
-                    color: "red",
-                    width: 2
-                }
-            })
-            Plotly.addTraces("rsigraph", {
-                x: xarray,
-                y: ysi,
-                mode: "lines",
-                type: "scatter",
-                name: "oversold (30)",
-                line: {
-                    color: "red",
-                    width: 2
-                }
-            })
+                    colorway: ['#7834a8'],
+                    plot_bgcolor: "black",
+                    paper_bgcolor: "black",
+                };
 
-        })
+
+                const rsitrace = [{
+                    x: xarray,
+                    y: value,
+                    mode: "lines",
+                    type: "scatter",
+                    line: { width: 2 }
+                }];
+
+
+                Plotly.newPlot("rsigraph", rsitrace, rsilayout);
+
+
+                const ys = new Array(xarray.length).fill(70);
+                const ysi = new Array(xarray.length).fill(30);
+
+
+                Plotly.addTraces("rsigraph", [{
+                    x: xarray,
+                    y: ys,
+                    mode: "lines",
+                    type: "scatter",
+                    name: "overbought (70)",
+                    line: { color: "red", width: 2 }
+                }, {
+                    x: xarray,
+                    y: ysi,
+                    mode: "lines",
+                    type: "scatter",
+                    name: "oversold (30)",
+                    line: { color: "red", width: 2 }
+                }]);
+
+
+                document.getElementById("rsigraph").style.display = "block";
+                rsii.textContent = "Remove RSI";
+                rsiVisible = true;
+            } else {
+                document.getElementById("rsigraph").style.display = "none";
+                rsii.textContent = "Add RSI";
+                rsiVisible = false;
+            }
+        });
     }
-})
+});
 
 
-
-
-//MACD MARK
+// MACD Implementation
 const macd = document.getElementById('macd');
-macd.addEventListener('click', () => {
-    Papa.parse("technical_indicators_1.csv", {
-        download: true,
-        header: true,
-        complete: function (results) {
-            const xarray = [];
-            const MACD = [];
-            const MACDsignal = [];
-            const MACDhistogramabove = new Array(results.data.length).fill(null);
-            const MACDhistogrambelow = new Array(results.data.length).fill(null);
+let macdTraces = [];
+let macdVisible = false;
 
-            results.data.forEach((row, index) => {
-                xarray.push(row['Date'])
-                MACD.push(row['MACD']);
-                MACDsignal.push(row['MACD_signal']);
-                const histo_value = row['MACD_histogram'];
-                if (histo_value > 0) {
-                    MACDhistogramabove[index] = (histo_value);
-                }
-                else {
-                    MACDhistogrambelow[index] = (histo_value);
-                }
-            });
-            Plotly.addTraces("myplot", {
-                x: xarray,
-                y: MACD,
-                mode: "lines",
-                type: "scatter",
-                name: "MACD",
-                line: {
-                    width: 2,
-                    color: "yellow"
-                }
-            })
-            Plotly.addTraces("myplot", {
-                x: xarray,
-                y: MACDsignal,
-                mode: "lines",
-                type: "scatter",
-                name: "MACDsignals",
-                line: {
-                    width: 2,
-                    color: "blue"
-                }
-            })
-            Plotly.addTraces("myplot", {
-                x: xarray,
-                y: MACDhistogramabove,
-                type: "bar",
-                name: "MACDhistogramabove",
-                marker: {
-                    color: "green"
-                }
-            })
-            Plotly.addTraces("myplot", {
-                x: xarray,
-                y: MACDhistogrambelow,
-                type: "bar",
-                name: "MACDhistogrambelow",
-                marker: {
-                    color: "red"
-                }
-            })
-        }
-    })
-})
+
+macd.addEventListener('click', () => {
+    if (!macdVisible) {
+        Papa.parse("technical_indicators_1.csv", {
+            download: true,
+            header: true,
+            complete: function (results) {
+                const xarray = [];
+                const MACD = [];
+                const MACDsignal = [];
+                const MACDhistogramabove = new Array(results.data.length).fill(null);
+                const MACDhistogrambelow = new Array(results.data.length).fill(null);
+
+
+                results.data.forEach((row, index) => {
+                    xarray.push(row['Date']);
+                    MACD.push(row['MACD']);
+                    MACDsignal.push(row['MACD_signal']);
+                    const histo_value = row['MACD_histogram'];
+                    if (histo_value > 0) {
+                        MACDhistogramabove[index] = (histo_value);
+                    } else {
+                        MACDhistogrambelow[index] = (histo_value);
+                    }
+                });
+
+
+                Plotly.addTraces("myplot", [{
+                    x: xarray,
+                    y: MACD,
+                    mode: "lines",
+                    type: "scatter",
+                    name: "MACD",
+                    line: { width: 2, color: "yellow" }
+                }, {
+                    x: xarray,
+                    y: MACDsignal,
+                    mode: "lines",
+                    type: "scatter",
+                    name: "MACDsignals",
+                    line: { width: 2, color: "blue" }
+                }, {
+                    x: xarray,
+                    y: MACDhistogramabove,
+                    type: "bar",
+                    name: "MACDhistogramabove",
+                    marker: { color: "green" }
+                }, {
+                    x: xarray,
+                    y: MACDhistogrambelow,
+                    type: "bar",
+                    name: "MACDhistogrambelow",
+                    marker: { color: "red" }
+                }]);
+
+
+                macdTraces = [
+                    myplot.data.length - 4,
+                    myplot.data.length - 3,
+                    myplot.data.length - 2,
+                    myplot.data.length - 1
+                ];
+                macd.textContent = "Remove MACD";
+                macdVisible = true;
+            }
+        });
+    } else {
+        Plotly.deleteTraces("myplot", macdTraces);
+        macd.textContent = "Add MACD";
+        macdVisible = false;
+    }
+});
 
 document.addEventListener('DOMContentLoaded', function() {
     const dateRangeBtn = document.getElementById('date-range-btn');
@@ -556,11 +601,17 @@ document.addEventListener('DOMContentLoaded', function() {
     updateCalendarBody(calendar, now.getMonth(), now.getFullYear());
   });
 
+  /*close rsi graph */ 
+
+   const RSIGRAPH = document.getElementById('rsigraph');
+   const cross = document.getElementById('cross');
+
+   cross.addEventListener('click' , () => {
+    RSIGRAPH.style.display = 'block';
+   })
+
   
-  document.getElementById('rsi').addEventListener('click',(e) => {
-    const graphUrl = 'rsigraph'; 
-    window.open(graphUrl, '_blank');
-    })
+
 
     /*dropdown menu*/
 
@@ -576,3 +627,121 @@ document.addEventListener('DOMContentLoaded', function() {
             dropdownMenu.style.display = 'none';
         }
     });
+
+    /*adding indicators*/
+
+    const RSI = document.getElementById("RSI");
+    const MACD = document.getElementById("MACD");
+    const BOLL = document.getElementById("boll");
+
+    const  BAND =  document.getElementById("band");
+    const IND = document.getElementById("ind");
+    const STRN = document.getElementById("strn");
+
+    IND.addEventListener('click' , () =>{
+        RSI.style.display = 'block';
+        RSI.style.display = 'flex';
+        IND.style.color = 'white';
+    })
+
+    BAND.addEventListener('click' , () =>{
+        BOLL.style.display = 'block';
+        BOLL.style.display = 'flex';
+        BAND.style.color = 'white';
+    })
+
+    STRN.addEventListener('click' , () =>{
+        MACD.style.display = 'block';
+        MACD.style.display = 'flex';
+        STRN.style.color = 'white';
+    })
+
+
+/*dustbin implementation */
+
+const imgboll = document.getElementById("imgboll");
+const imgrsi = document.getElementById("imgrsi");
+const imgmacd = document.getElementById("imgmacd");
+
+imgboll.addEventListener("click" , () =>{
+    BOLL.style.display = 'none';
+    BAND.style.color = 'gray';
+})
+
+imgrsi.addEventListener("click" , () =>{
+    RSI.style.display = 'none';
+    IND.style.color = 'gray';
+})
+
+
+imgmacd.addEventListener("click" , () =>{
+    MACD.style.display = 'none';
+    STRN.style.color = 'gray';
+})
+
+/*icon dropdown hover */
+
+const infodropdown = document.getElementById('infodropdown');
+const infodropdown1 = document.getElementById('infodropdown1');
+const infodropdown2 = document.getElementById('infodropdown2');
+const infodropdown3 = document.getElementById('infodropdown3');
+
+const Price = document.getElementById('price');
+const boll = document.getElementById('boll');
+const rsi = document.getElementById('RSI');
+const Macd = document.getElementById('MACD');
+
+Price.addEventListener('mouseover' , () => {
+    infodropdown.style.display = 'block';
+})
+
+Price.addEventListener('mouseout' , () =>{
+    infodropdown.style.display = 'none';
+})
+
+boll.addEventListener('mouseover' , () => {
+    infodropdown1.style.display = 'block';
+})
+
+boll.addEventListener('mouseout' , () =>{
+    infodropdown1.style.display = 'none';
+})
+
+rsi.addEventListener('mouseover' , () => {
+    infodropdown2.style.display = 'block';
+})
+
+rsi.addEventListener('mouseout' , () =>{
+    infodropdown2.style.display = 'none';
+})
+
+Macd.addEventListener('mouseover' , () => {
+    infodropdown3.style.display = 'block';
+})
+
+Macd.addEventListener('mouseout' , () =>{
+    infodropdown3.style.display = 'none';
+})
+
+/*view continer of disclousre*/
+
+const Viewcont = document.querySelector('.viewcont');
+const disclosure = document.querySelector('.Disclosure');
+const closeDisclosure = document.getElementById('closeDisclosure');
+
+
+disclosure.addEventListener('click' , () =>{
+    Viewcont.style.display = 'block';
+  /*  body.classList.add('blurred'); */
+})
+
+closeDisclosure.addEventListener('click' , () =>{
+    Viewcont.style.display = 'none';
+  /*  body.classList.remove('blurred'); */
+})
+
+
+
+
+
+    
