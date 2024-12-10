@@ -1147,7 +1147,7 @@
     transition: 0.5s;
   }
 
-  /* Style for Historical Data table */
+  
 table {
     width: 70%;
     border-collapse: collapse;
@@ -1155,27 +1155,24 @@ table {
     margin-left: 160px;
     margin-right: 60px;
     background-color: #000000;
-    color: #FFFFFF; /* White text */
+    color: #FFFFFF; 
 }
 
 table th, table td {
     padding: 10px;
     text-align: left;
-    border-bottom: 1px solid #ffffff; /* White borders */
-}
+    border-bottom: 1px solid #ffffff; 
 
 table tr:nth-child(even) {
-    background-color: #000000; /* Slightly lighter background for even rows */
+    background-color: #000000; 
 }
 
-/* Hover animation for table rows */
 table tr:hover {
-    background-color: #444444; /* Change background on hover */
-    transform: scale(1.01); /* Slight zoom effect */
-    transition: 0.3s ease-in-out; /* Smooth transition */
+    background-color: #444444; 
+    transform: scale(1.01); 
+    transition: 0.3s ease-in-out; 
 }
 
-/* Animation for the table */
 @keyframes fadeInUp {
     0% {
         opacity: 0;
