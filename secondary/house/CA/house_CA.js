@@ -100,7 +100,6 @@ document.addEventListener('DOMContentLoaded', async () => {
       result.style.animation = 'fadeInUp 0.5s ease forwards';
   });
   
-  // Add floating label effect
   document.querySelectorAll('.input-group input').forEach(input => {
       input.addEventListener('focus', function() {
           this.parentElement.classList.add('focused');
