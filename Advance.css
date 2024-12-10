@@ -1,12 +1,19 @@
 *{
    
     font-family: 'Gilroy', sans-serif;
+    
 }
 body{
     background-color: black;
     color: white;
-    min-height: 880px;
+    height: 400px;
 }
+
+body.blurred{
+  filter: blur(5px); 
+  pointer-events: none;
+}
+
 header{
    display: flex;
    justify-content: space-around;
@@ -259,6 +266,7 @@ section{
   /* add button*/
   .addBtn{
       color: #fff;
+      position: relative;
       background-color: #000000;
       border-radius: 20px;
       cursor: pointer;
@@ -266,7 +274,7 @@ section{
       padding: 8px 16px;
       display: flex;
       justify-content: center;
-      border: 1px solid rgba(48, 54, 58, 1);
+      border: 1px solid rgb(255, 255, 255);
       box-sizing: border-box;
   }
 
@@ -281,6 +289,7 @@ section{
     position: absolute;
     top: -80px;
     right: -350px;
+    width: 330px;  
     background-color: black;
     border: 1px solid gray;
     color: white;
@@ -300,6 +309,101 @@ section{
 .dropdown li:last-child {
     border-bottom: none;
 }
+
+#second{
+  color: #fff;
+  font-weight: bolder;
+ background-color: #000000;
+ border-radius: 20px;
+  cursor: pointer;
+  width: 100px;
+ padding: 8px 16px;
+display: flex;
+justify-content: center;
+border: 1px solid rgb(255, 255, 255);
+box-sizing: border-box;
+}
+
+#boilenger{
+  color: #fff;
+  background-color: #000000;
+  border-radius: 20px;
+  font-weight: bolder;
+  cursor: pointer;
+  width: 100px;
+  padding: 8px 16px;
+  display: flex;
+  justify-content: center;
+  border: 1px solid rgb(255, 255, 255);
+  box-sizing: border-box;
+}
+
+#macd{
+  color: #fff;
+  background-color: #000000;
+  border-radius: 20px;
+  font-weight: bolder;
+  cursor: pointer;
+  width: 100px;
+  padding: 8px 16px;
+  text-align: center;
+  display: flex;
+  justify-content: center;
+  border: 1px solid rgb(255, 255, 255);
+  box-sizing: border-box;
+}
+
+#rsi{
+  color: #fff;
+  background-color: #000000;
+  border-radius: 20px;
+  font-weight: bolder;
+  cursor: pointer;
+  width: 100px;
+  padding: 8px 16px;
+  display: flex;
+  justify-content: center;
+  border: 1px solid rgb(255, 255, 255);
+  box-sizing: border-box;
+ 
+}
+
+/*dropdown of info*/
+
+.dropdownmenuinfo{
+  
+  position: absolute;
+  top: -80px;
+  right: -350px;
+  background-color: black;
+  border: 1px solid gray;
+  color: white;
+  padding: 10px;
+  border-radius: 5px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  list-style-type: none;
+  display: none;
+  z-index: 10;
+}
+
+/*view disclousre */
+
+.viewcont{
+  position: fixed; /* Fixed position to center the container */
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  height: 402px;
+  width: 360px;
+  overflow-y: scroll;
+  border: 1px solid gray;
+  padding: 16px 24px;
+  background-color: #000;
+  color: #fff;
+  z-index: 1000;
+}
+
+
 
 
 
