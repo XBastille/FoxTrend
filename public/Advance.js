@@ -907,148 +907,84 @@ function graphing() {
         complete: function (results) {
             const xarray = [];
             const yarray = [];
+            const customdata = [];
 
-            results.data.forEach((row) => {
-                xarray.push(row["Date"]);
-                yarray.push(parseFloat(row["Close"]));
+
+            results.data.forEach(row => {
+                xarray.push(row['Date']);
+                yarray.push(parseFloat(row['Close']));
+                customdata.push({
+                    Open: parseFloat(row['Open']).toFixed(2),
+                    High: parseFloat(row['High']).toFixed(2),
+                    Low: parseFloat(row['Low']).toFixed(2),
+                    Volume: parseInt(row['Volume']),
+                })
             });
 
-            const data = [
-                {
-                    x: xarray,
-                    y: [],
-                    mode: "lines",
-                    type: "scatter",
-                    fill: "tozeroy",
-                    fillgradient: {
-                        type: "vertical",
-                        colorscale: [
-                            [0, "rgba(0,0,0,0)"],
-                            [1, "rgba(96,0,147,1)"],
-                        ],
-                    },
-                    line: {
-                        width: 2,
-                    },
-                    hovertemplate:
-                        '%{x}' +
-                        '<extra></extra>',
+
+            //DATA ONLOAD
+
+
+            const tarce1 = [{
+                x: xarray,
+                y: [],
+                customdata: customdata,
+                mode: "lines",
+                type: "scatter",
+                fill: "tozeroy",
+                fillgradient: {
+                    type: 'vertical',
+                    colorscale: [[0, 'rgba(0,0,0,0)'], [1, 'rgba(96,0,147,1)']],
                 },
-            ];
+                line: {
+                    width: 2
+                },
+                hovertemplate:
+                    'Date: %{x}<br>' +
+                    'Close: %{y}<br>' +
+                    `Open: %{customdata.Open}<br>` +
+                    `High: %{customdata.High}<br>` +
+                    `Low: %{customdata.Low}<br>` +
+                    `Volume: %{customdata.Volume}<br>` +
+                    '<extra></extra>',
+            }];
+
+
+            //LAYOUT ONLOAD
+
+
+
             const layout = {
                 xaxis: {
-                    range: [xarray[0], xarray[xarray.length - 1]],
-                    title: {
+                    range: [xarray[0], xarray[xarray.length - 1]], title: {
+                        text: "Date",
                         font: {
-                            color: "white",
-                        },
+                            color: "white"
+                        }
                     },
                     tickfont: {
-                        color: "white",
-                    },
-                    spikedash: "solid",
-                    spikemode: "toaxis",
-                    spikecolor: "white",
-                    spikethickness: 1,
-
+                        color: "white"
+                    }
                 },
                 yaxis: {
-                    range: [0, Math.max(...yarray) + 20],
-                    title: {
+                    range: [0, Math.max(...yarray) + 20], title: {
                         font: {
-                            color: "black",
-                        },
+                            color: "white"
+                        }
                     },
                     tickfont: {
-                        color: "black",
-                    },
-                    tickvals: []
+                        color: "white"
+                    }
                 },
-                colorway: ["#7834a8"],
+                colorway: ['#7834a8'],
                 plot_bgcolor: "black",
                 paper_bgcolor: "black",
                 hoverlabel: {
-                    bgcolor: "black",
-                    bordercolor: "black",
-                    font: {
-                        color: "white",
-                        size: 15,
-                        lineposition: "closest",
-                        align: "right"
-                    },
-                    hovermode: "x",
-                    newshape: {
-                        line: {
-                            dash: "solid",
-                            color: "white"
-                        },
-                        showlegend: "true"
-                    },
-
+                    bgcolor: "black"
                 }
             };
 
-            Plotly.newPlot("myplot", data, layout);
-            let i = 0;
-            let id;
-            function animate() {
-                if (i < xarray.length) {
-                    Plotly.extendTraces(
-                        "myplot",
-                        {
-                            x: [[xarray[i]]],
-                            y: [[yarray[i]]],
-                        },
-                        [0],
-                    );
-                    i++;
-                    id = requestAnimationFrame(animate);
-                }
-            }
-            animate();
-
-            myplot.on('plotly_hover', (data) => {
-                const xvalue = data.points[0].y
-                Company_price.innerText = "$" + (xvalue).toFixed(2)
-            })
-
-            myplot.on('plotly_unhover', () => {
-                Company_price.innerText = cp;
-            })
-
-
-            const stp = document.getElementById("stp");
-            stp.addEventListener("click", () => {
-                Plotly.react(
-                    "myplot",
-                    [
-                        {
-                            x: xarray,
-                            y: yarray,
-                            mode: "lines",
-                            type: "scatter",
-                            fill: "tozeroy",
-                            fillgradient: {
-                                type: "vertical",
-                                colorscale: [
-                                    [0, "rgba(0,0,0,0)"],
-                                    [1, "rgba(96,0,147,1)"],
-                                ],
-                            },
-                            line: {
-                                width: 2,
-                            },
-                            hovertemplate:
-                                '%{x}' +
-                                '<extra></extra>',
-                        },
-                    ],
-                    layout,
-                );
-                cancelAnimationFrame(id);
-            });
-        },
-
+        }
     });
 
 }

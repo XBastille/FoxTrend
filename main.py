@@ -38,6 +38,7 @@ class StockDataVisualizer:
         else:
             print(f"{price_change:.2f}  ({percentage_change:.2f}%)")
         df.to_csv(f"public/stock_data_{self.index}.csv")
+        df.to_csv(f"public/csv_1/stock_data_{self.index}.csv")
         '''plt.figure(figsize=(14,7))
         plt.plot(df["Close"], label="Historical Close Prices")
         plt.title(f"Historical Close Prices for {self.company_name}")
