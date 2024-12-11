@@ -13,19 +13,26 @@ router.get('/', (req, res) => {
 router.get('/Advance', ensureAuthentication, (req, res) => {
     res.render("Advance")
 })
-
+let filesnaming;
 router.post('/Advance', async (req, res) => {
     const numCompanies = 1;
     const { val } = req.body
     const { start } = req.body
     const { end } = req.body
+    const { searchbar } = req.body
+    const { calender } = req.body;
     console.log(val)
     console.log(start)
     console.log(end)
+    if (searchbar === 'searchbar') {
+        filesnaming = './python_files/main_3.py'
+    }
     const summaryanimation = { numCompanies, val, start, end }
-    const filenaming = './main.py'
+    if (calender === 'true') {
+        filesnaming = './python_files/main_4.py'
+    }
     const args = [numCompanies, val, start, end];
-    const dashboard = await runpython(args, filenaming)
+    const dashboard = await runpython(args, filesnaming)
     if (dashboard) {
         return res.json({ sucess: "true" })
     }

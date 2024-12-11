@@ -1,4 +1,4 @@
-Papa.parse("/public/stock_data_1.csv", {
+Papa.parse("/public/csv_1/stock_data_1.csv", {
     download: true,
     header: true,
     complete: function (results) {
@@ -134,20 +134,116 @@ Papa.parse("/public/stock_data_1.csv", {
 
 
 //ONCLICK SECOND GRAPH ADDED ON THE SCREEN
+let start, end;
+const add_multiple_graph = document.getElementById('add_multiple_graph');
+add_multiple_graph.addEventListener('keypress', async (e) => {
+    if (e.key === 'Enter') {
+        const val = (add_multiple_graph.value)
+        add_multiple_graph.value = ''
+        const dates = new Date();
+        if (find_button === 'onemonth') {
+            const month = dates.getMonth()
+            const months = dates.getMonth() + 1
+            let day = dates.getDate()
+            let year = dates.getFullYear()
+            if (month === 0) {
+                year = year - 1;
+                month = 12
+                months = 1;
+            }
+            start = day + "-" + month + "-" + year
+            end = day + "-" + months + "-" + year
+        }
+        if (find_button === 'threemonth') {
+            let month = dates.getMonth()
+            let months = dates.getMonth() + 1
+            let day = dates.getDate()
+            let year = dates.getFullYear()
+            if (month === 0) {
+                year = year - 1;
+            }
+            month -= 2;
+            console.log(day + "-" + month + "-" + year)
+            console.log(day + "-" + months + "-" + year)
+            start = day + "-" + month + "-" + year
+            end = day + "-" + months + "-" + year
+        }
 
-const add_multiple_graph=document.getElementById('add_multiple_graph');
-add_multiple_graph.addEventListener('keypress',(e)=>{
-   if(e.key === 'Enter'){
-    console.log(add_multiple_graph.value)
-    add_multiple_graph.value=''
-   }
+        if (find_button === 'ytd') {
+            let day = dates.getDate();
+            let months = dates.getMonth() + 1
+            let year = dates.getFullYear();
+            console.log(1 + "-" + 1 + "-" + year)
+            console.log(day + "-" + months + "-" + year)
+            start = 1 + "-" + 1 + "-" + year
+            end = day + "-" + months + "-" + year
+        }
+
+        if (find_button === 'oneyear') {
+            let months = dates.getMonth() + 1
+            let day = dates.getDate()
+            let year = dates.getFullYear() - 1
+            let years = dates.getFullYear()
+            console.log(day + "-" + months + "-" + year)
+            console.log(day + "-" + months + "-" + years)
+            start = day + "-" + months + "-" + year
+            end = day + "-" + months + "-" + years
+        }
+        if (find_button === 'fiveyear') {
+            let months = dates.getMonth() + 1
+            let day = dates.getDate()
+            let year = dates.getFullYear() - 5
+            let years = dates.getFullYear()
+            console.log(day + "-" + months + "-" + year)
+            console.log(day + "-" + months + "-" + years)
+            start = day + "-" + months + "-" + year
+            end = day + "-" + months + "-" + years
+        }
+        if (find_button === 'max') {
+            let months = dates.getMonth() + 1
+            let day = dates.getDate()
+            let year = dates.getFullYear() - 5
+            let years = dates.getFullYear()
+            console.log(day + "-" + months + "-" + 1950)
+            console.log(day + "-" + months + "-" + years)
+            start = day + "-" + months + "-" + 1950
+            end = day + "-" + months + "-" + years
+        }
+        loading.style.display = 'flex'
+        loading.style.zIndex = '999'
+        myplot.style.zIndex = '-999'
+        myplot.style.filter = 'blur(30px)'
+        const searchbar = 'searchbar'
+        const calender = 'false'
+        try {
+            const response = await fetch('/Advance', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ val, start, end, searchbar, calender })
+            });
+            const data = await response.json();
+            console.log(data)
+            if (data.sucess === 'true') {
+                loading.style.display = 'none'
+                loading.style.zIndex = '-999'
+                myplot.style.zIndex = '999'
+                myplot.style.filter = 'none'
+                fus();
+            }
+        } catch (error) {
+            console.error('Error:', error);
+        }
+    }
 })
 
-const second = document.getElementById("second")
-second.addEventListener("click", fus);
+// const second = document.getElementById("second")
+// second.addEventListener("click", fus);
 let i = 2;
 function fus() {
-    Papa.parse("stock_data_" + `${i}` + ".csv", {
+    console.log('fus is called')
+    Papa.parse("/public/csv_1/stock_data_" + `${i}` + ".csv", {
         download: true,
         header: true,
         complete: function (results) {
@@ -201,8 +297,8 @@ function fus() {
 
 
 
-//BOILENGER BAND GRAPH
-Papa.parse("/public/stock_data_1.csv", {
+//BOILENGER BAND GRAPH--------------------------------------
+Papa.parse("/public/csv_1/stock_data_1.csv", {
     download: true,
     header: true,
     complete: function (results) {
@@ -282,7 +378,7 @@ Papa.parse("/public/stock_data_1.csv", {
 
 //RSI MARK
 // --------------------------------------------------------------------------------------------------------------------------------------
-Papa.parse("/public/stock_data_1.csv", {
+Papa.parse("/public/csv_1/stock_data_1.csv", {
     download: true,
     header: true,
     complete: function (results) {
@@ -406,7 +502,7 @@ let macdVisible = false;
 
 macd.addEventListener('click', () => {
     if (!macdVisible) {
-        Papa.parse("/public/technical_indicators_1.csv", {
+        Papa.parse("/public/csv_1/technical_indicators_1.csv", {
             download: true,
             header: true,
             complete: function (results) {
@@ -475,6 +571,7 @@ macd.addEventListener('click', () => {
         macdVisible = false;
     }
 });
+//----------------------------------------------------------------------------------------------------------------------
 
 document.addEventListener('DOMContentLoaded', function () {
     const dateRangeBtn = document.getElementById('date-range-btn');
@@ -537,7 +634,7 @@ document.addEventListener('DOMContentLoaded', function () {
                 myplot.style.zIndex = '-999'
                 myplot.style.filter = 'blur(30px)'
                 try {
-                    const response = await fetch('/summary', {
+                    const response = await fetch('/Advance', {
                         method: 'POST',
                         headers: {
                             'Content-Type': 'application/json',
@@ -804,7 +901,7 @@ document.addEventListener("DOMContentLoaded", function () {
 });
 
 function graphing() {
-    Papa.parse("/public/stock_data_1.csv", {
+    Papa.parse("/public/csv_1/stock_data_1.csv", {
         download: true,
         header: true,
         complete: function (results) {
@@ -956,6 +1053,8 @@ function graphing() {
 
 }
 
+let find_button = 'onemonth';
+
 //ONE-WEEK
 const oneweek = document.getElementById('oneweek')
 oneweek.addEventListener('click', async () => {
@@ -986,7 +1085,9 @@ oneweek.addEventListener('click', async () => {
     }
     var endsyear = first.substring(12, 16)
     const end = (endsday + '-' + endsmonth + '-' + endsyear);
-    console.log(end)
+    find_button = 'oneweek'
+    const calender = 'true'
+    const searchbar = 'nosearch'
     loading.style.display = 'flex'
     loading.style.zIndex = '999'
     myplot.style.zIndex = '-999'
@@ -997,7 +1098,7 @@ oneweek.addEventListener('click', async () => {
             headers: {
                 'Content-Type': 'application/json',
             },
-            body: JSON.stringify({ val, start, end })
+            body: JSON.stringify({ val, start, end, calender, searchbar })
         });
         const data = await response.json();
         console.log(data)
@@ -1029,6 +1130,9 @@ onemonth.addEventListener('click', async () => {
     }
     const start = day + "-" + month + "-" + year
     const end = day + "-" + months + "-" + year
+    find_button = 'onemonth'
+    const calender = 'true'
+    const searchbar = 'nosearch'
     loading.style.display = 'flex'
     loading.style.zIndex = '999'
     myplot.style.zIndex = '-999'
@@ -1039,7 +1143,7 @@ onemonth.addEventListener('click', async () => {
             headers: {
                 'Content-Type': 'application/json',
             },
-            body: JSON.stringify({ val, start, end })
+            body: JSON.stringify({ val, start, end, calender, searchbar })
         });
         const data = await response.json();
         console.log(data)
@@ -1076,6 +1180,9 @@ threemonth.addEventListener('click', async () => {
     console.log(day + "-" + months + "-" + year)
     const start = day + "-" + month + "-" + year
     const end = day + "-" + months + "-" + year
+    find_button = 'threemonth';
+    const calender = 'true';
+    const searchbar = 'nosearch'
     loading.style.display = 'flex'
     loading.style.zIndex = '999'
     myplot.style.zIndex = '-999'
@@ -1086,7 +1193,7 @@ threemonth.addEventListener('click', async () => {
             headers: {
                 'Content-Type': 'application/json',
             },
-            body: JSON.stringify({ val, start, end })
+            body: JSON.stringify({ val, start, end, calender, searchbar })
 
         });
 
@@ -1116,6 +1223,9 @@ yeartodate.addEventListener('click', async () => {
     console.log(day + "-" + months + "-" + year)
     const start = 1 + "-" + 1 + "-" + year
     const end = day + "-" + months + "-" + year
+    find_button = 'ytd'
+    const calender = 'true'
+    const searchbar = 'nosearch'
     loading.style.display = 'flex'
     loading.style.zIndex = '999'
     myplot.style.zIndex = '-999'
@@ -1126,7 +1236,7 @@ yeartodate.addEventListener('click', async () => {
             headers: {
                 'Content-Type': 'application/json',
             },
-            body: JSON.stringify({ val, start, end })
+            body: JSON.stringify({ val, start, end, calender, searchbar })
         });
         const data = await response.json();
         if (data.sucess === 'true') {
@@ -1153,6 +1263,9 @@ oneyear.addEventListener('click', async () => {
     console.log(day + "-" + months + "-" + years)
     const start = day + "-" + months + "-" + year
     const end = day + "-" + months + "-" + years
+    find_button = 'oneyear';
+    const searchbar = 'nosearch'
+    const calender = 'true'
     loading.style.display = 'flex'
     loading.style.zIndex = '999'
     myplot.style.zIndex = '-999'
@@ -1163,7 +1276,7 @@ oneyear.addEventListener('click', async () => {
             headers: {
                 'Content-Type': 'application/json',
             },
-            body: JSON.stringify({ val, start, end })
+            body: JSON.stringify({ val, start, end, calender, searchbar })
         });
         const data = await response.json();
         if (data.sucess === 'true') {
@@ -1191,6 +1304,9 @@ fiveyear.addEventListener('click', async () => {
     console.log(day + "-" + months + "-" + years)
     const start = day + "-" + months + "-" + year
     const end = day + "-" + months + "-" + years
+    find_button = 'fiveyear'
+    const calender = 'true'
+    const searchbar = 'nosearch'
     loading.style.display = 'flex'
     loading.style.zIndex = '999'
     myplot.style.zIndex = '-999'
@@ -1201,7 +1317,7 @@ fiveyear.addEventListener('click', async () => {
             headers: {
                 'Content-Type': 'application/json',
             },
-            body: JSON.stringify({ val, start, end })
+            body: JSON.stringify({ val, start, end, calender, searchbar })
         });
         const data = await response.json();
         if (data.sucess === 'true') {
@@ -1228,6 +1344,9 @@ maxdate.addEventListener('click', async () => {
     console.log(day + "-" + months + "-" + years)
     const start = day + "-" + months + "-" + 1950
     const end = day + "-" + months + "-" + years
+    find_button = 'max'
+    const calender = "true"
+    const searchbar = 'nosearch'
     loading.style.display = 'flex'
     loading.style.zIndex = '999'
     myplot.style.zIndex = '-999'
@@ -1238,7 +1357,7 @@ maxdate.addEventListener('click', async () => {
             headers: {
                 'Content-Type': 'application/json',
             },
-            body: JSON.stringify({ val, start, end })
+            body: JSON.stringify({ val, start, end, calender, searchbar })
         });
         const data = await response.json();
         if (data.sucess === 'true') {
