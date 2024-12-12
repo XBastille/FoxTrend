@@ -209,6 +209,20 @@ add_multiple_graph.addEventListener('keypress', async (e) => {
             start = day + "-" + months + "-" + 1950
             end = day + "-" + months + "-" + years
         }
+        if (find_button === 'customcalender') {
+            const fromMonth = document.querySelector('.from-calendar .month-select').value;
+            const fromYear = document.querySelector('.from-calendar .year-select').value;
+            const fromDay = document.querySelector('.from-calendar .calendar-body .selected')?.textContent;
+
+            const toMonth = document.querySelector('.to-calendar .month-select').value;
+            const toYear = document.querySelector('.to-calendar .year-select').value;
+            const toDay = document.querySelector('.to-calendar .calendar-body .selected')?.textContent;
+            const startingmonth = Number(fromMonth) + 1;
+            const endingmonth = Number(toMonth) + 1;
+            start = fromDay + '-' + startingmonth + '-' + fromYear
+            end = toDay + '-' + endingmonth + '-' + toYear
+        }
+
         loading.style.display = 'flex'
         loading.style.zIndex = '999'
         myplot.style.zIndex = '-999'
@@ -231,71 +245,17 @@ add_multiple_graph.addEventListener('keypress', async (e) => {
                 myplot.style.zIndex = '999'
                 myplot.style.filter = 'none'
                 fus();
-                fuss();
             }
         } catch (error) {
             console.error('Error:', error);
         }
     }
 })
-let i = 3;
-function fuss() {
-
-    Papa.parse("/public/csv_1/stock_data_" + `${i}` + ".csv", {
-        download: true,
-        header: true,
-        complete: function (results) {
-            const xa = [];
-            const ya = [];
-            const customdata = [];
-
-
-            results.data.forEach(row => {
-                xa.push(row['Date']);
-                ya.push(parseFloat(row['Close']));
-                customdata.push({
-                    Open: parseFloat(row['Open']).toFixed(2),
-                    High: parseFloat(row['High']).toFixed(2),
-                    Low: parseFloat(row['Low']).toFixed(2),
-                    Volume: parseInt(row['Volume']),
-                })
-            });
-
-
-            const tarce2 = [{
-                x: xa,
-                y: ya,
-                customdata: customdata,
-                mode: "lines",
-                type: "scatter",
-                line: {
-                    width: 2
-                },
-                hovertemplate:
-                    'Date: %{x}<br>' +
-                    'Close: %{y}<br>' +
-                    `Open: %{customdata.Open}<br>` +
-                    `High: %{customdata.High}<br>` +
-                    `Low: %{customdata.Low}<br>` +
-                    `Volume: %{customdata.Volume}<br>` +
-                    '<extra></extra>',
-            }];
-
-
-            Plotly.addTraces("myplot", tarce2);
-            i++;
-        }
-
-
-    });
-}
-
 
 // const second = document.getElementById("second")
 // second.addEventListener("click", fus);
-
+let i = 2;
 function fus() {
-    let i = 2;
     Papa.parse("/public/csv_1/stock_data_" + `${i}` + ".csv", {
         download: true,
         header: true,
@@ -681,6 +641,9 @@ document.addEventListener('DOMContentLoaded', function () {
                 const endingmonth = Number(toMonth) + 1;
                 const start = fromDay + '-' + startingmonth + '-' + fromYear
                 const end = toDay + '-' + endingmonth + '-' + toYear
+                find_button = 'customcalender'
+                const calendar = 'true'
+                const searchbar = 'nosearch'
                 console.log(start, end)
                 loading.style.display = 'flex'
                 loading.style.zIndex = '999'
@@ -692,7 +655,7 @@ document.addEventListener('DOMContentLoaded', function () {
                         headers: {
                             'Content-Type': 'application/json',
                         },
-                        body: JSON.stringify({ val, start, end })
+                        body: JSON.stringify({ val, start, end, calendar, searchbar })
                     });
                     const data = await response.json();
                     console.log(data)
@@ -702,6 +665,7 @@ document.addEventListener('DOMContentLoaded', function () {
                         myplot.style.zIndex = '999'
                         myplot.style.filter = 'none'
                         graphing();
+                        i = 2;
                     }
                 } catch (error) {
                     console.error('Error:', error);
@@ -1145,6 +1109,7 @@ oneweek.addEventListener('click', async () => {
             myplot.style.zIndex = '999'
             myplot.style.filter = 'none'
             graphing();
+            i = 2;
         }
     } catch (error) {
         console.error('Error:', error);
@@ -1190,6 +1155,7 @@ onemonth.addEventListener('click', async () => {
             myplot.style.zIndex = '999'
             myplot.style.filter = 'none'
             graphing();
+            i = 2;
         }
     } catch (error) {
         console.error('Error:', error);
@@ -1242,6 +1208,7 @@ threemonth.addEventListener('click', async () => {
             myplot.style.zIndex = '999'
             myplot.style.filter = 'none'
             graphing();
+            i = 2;
         }
     } catch (error) {
         console.error('Error:', error);
@@ -1282,6 +1249,7 @@ yeartodate.addEventListener('click', async () => {
             myplot.style.zIndex = '999'
             myplot.style.filter = 'none'
             graphing();
+            i = 2
         }
     } catch (error) {
         console.error('Error:', error);
@@ -1322,6 +1290,7 @@ oneyear.addEventListener('click', async () => {
             myplot.style.zIndex = '999'
             myplot.style.filter = 'none'
             graphing();
+            i = 2;
         }
     } catch (error) {
         console.error('Error:', error);
@@ -1363,6 +1332,7 @@ fiveyear.addEventListener('click', async () => {
             myplot.style.zIndex = '999'
             myplot.style.filter = 'none'
             graphing();
+            i = 2;
         }
     } catch (error) {
         console.error('Error:', error);
@@ -1403,6 +1373,7 @@ maxdate.addEventListener('click', async () => {
             myplot.style.zIndex = '999'
             myplot.style.filter = 'none'
             graphing();
+            i = 2;
         }
     } catch (error) {
         console.error('Error:', error);
