@@ -1,3 +1,74 @@
+class SearchDropdown {
+    constructor(inputId) {
+        this.input = document.getElementById(inputId);
+        this.dropdownMenu = document.createElement('div');
+        this.dropdownMenu.className = 'search-dropdown-menu';
+        this.optionsContainer = document.createElement('div');
+        this.optionsContainer.className = 'search-dropdown-options';
+        this.dropdownMenu.appendChild(this.optionsContainer);
+        this.input.parentElement.appendChild(this.dropdownMenu);
+        this.setupDropdown();
+    }
+
+    setupDropdown() {
+        this.input.addEventListener('click', () => {
+            this.dropdownMenu.classList.add('active');
+            this.loadOptions('');
+        });
+
+        document.addEventListener('click', (e) => {
+            if (!this.input.contains(e.target) && !this.dropdownMenu.contains(e.target)) {
+                this.dropdownMenu.classList.remove('active');
+            }
+        });
+
+        this.input.addEventListener('input', (e) => {
+            const searchTerm = e.target.value.toLowerCase();
+            this.loadOptions(searchTerm);
+        });
+    }
+
+    async loadOptions(searchTerm) {
+        try {
+            const response = await fetch('/public/textfile/all_ticker.txt');
+            const text = await response.text();
+            const options = text.split('\n').filter(option => option.trim());
+            
+            const filteredOptions = options
+                .filter(option => option.toLowerCase().startsWith(searchTerm.toLowerCase()))
+                .slice(0, 6);
+        
+            this.optionsContainer.innerHTML = '';
+            filteredOptions.forEach(option => {
+                const optionElement = document.createElement('div');
+                optionElement.className = 'search-dropdown-option';
+                optionElement.textContent = option;
+                optionElement.addEventListener('click', () => {
+                    this.input.value = option;
+                    this.dropdownMenu.classList.remove('active');
+                    const enterEvent = new KeyboardEvent('keypress', {
+                        key: 'Enter',
+                        code: 'Enter',
+                        keyCode: 13,
+                        which: 13,
+                        bubbles: true
+                    });
+                    this.input.dispatchEvent(enterEvent);                
+                });
+                this.optionsContainer.appendChild(optionElement);
+            });
+        } catch (error) {
+            console.error('Error loading options:', error);
+        }
+    }    
+    
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+    new SearchDropdown('add_multiple_graph');
+});
+
+
 Papa.parse("/public/csv_1/stock_data_1.csv", {
     download: true,
     header: true,
