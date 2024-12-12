@@ -33,11 +33,11 @@ class SearchDropdown {
             const response = await fetch('/public/textfile/all_ticker.txt');
             const text = await response.text();
             const options = text.split('\n').filter(option => option.trim());
-            
+
             const filteredOptions = options
                 .filter(option => option.toLowerCase().startsWith(searchTerm.toLowerCase()))
                 .slice(0, 6);
-        
+
             this.optionsContainer.innerHTML = '';
             filteredOptions.forEach(option => {
                 const optionElement = document.createElement('div');
@@ -53,15 +53,15 @@ class SearchDropdown {
                         which: 13,
                         bubbles: true
                     });
-                    this.input.dispatchEvent(enterEvent);                
+                    this.input.dispatchEvent(enterEvent);
                 });
                 this.optionsContainer.appendChild(optionElement);
             });
         } catch (error) {
             console.error('Error loading options:', error);
         }
-    }    
-    
+    }
+
 }
 
 document.addEventListener('DOMContentLoaded', () => {
@@ -206,10 +206,12 @@ Papa.parse("/public/csv_1/stock_data_1.csv", {
 
 //ONCLICK SECOND GRAPH ADDED ON THE SCREEN
 let start, end;
+let addmulti = ''
 const add_multiple_graph = document.getElementById('add_multiple_graph');
 add_multiple_graph.addEventListener('keypress', async (e) => {
     if (e.key === 'Enter') {
         const val = (add_multiple_graph.value)
+        addmulti = val;
         add_multiple_graph.value = ''
         const dates = new Date();
         if (find_button === 'onemonth') {
@@ -353,6 +355,7 @@ function fus() {
                 y: ya,
                 customdata: customdata,
                 mode: "lines",
+                name: addmulti,
                 type: "scatter",
                 line: {
                     width: 2
@@ -1019,6 +1022,7 @@ function graphing() {
                 customdata: customdata,
                 mode: "lines",
                 type: "scatter",
+                name: val,
                 fill: "tozeroy",
                 fillgradient: {
                     type: 'vertical',
@@ -1100,6 +1104,7 @@ function graphing() {
                     y: yarray,
                     customdata: customdata,
                     mode: "lines",
+                    name: val,
                     type: "scatter",
                     fill: "tozeroy",
                     fillgradient: {
