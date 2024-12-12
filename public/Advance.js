@@ -231,18 +231,71 @@ add_multiple_graph.addEventListener('keypress', async (e) => {
                 myplot.style.zIndex = '999'
                 myplot.style.filter = 'none'
                 fus();
+                fuss();
             }
         } catch (error) {
             console.error('Error:', error);
         }
     }
 })
+let i = 3;
+function fuss() {
+
+    Papa.parse("/public/csv_1/stock_data_" + `${i}` + ".csv", {
+        download: true,
+        header: true,
+        complete: function (results) {
+            const xa = [];
+            const ya = [];
+            const customdata = [];
+
+
+            results.data.forEach(row => {
+                xa.push(row['Date']);
+                ya.push(parseFloat(row['Close']));
+                customdata.push({
+                    Open: parseFloat(row['Open']).toFixed(2),
+                    High: parseFloat(row['High']).toFixed(2),
+                    Low: parseFloat(row['Low']).toFixed(2),
+                    Volume: parseInt(row['Volume']),
+                })
+            });
+
+
+            const tarce2 = [{
+                x: xa,
+                y: ya,
+                customdata: customdata,
+                mode: "lines",
+                type: "scatter",
+                line: {
+                    width: 2
+                },
+                hovertemplate:
+                    'Date: %{x}<br>' +
+                    'Close: %{y}<br>' +
+                    `Open: %{customdata.Open}<br>` +
+                    `High: %{customdata.High}<br>` +
+                    `Low: %{customdata.Low}<br>` +
+                    `Volume: %{customdata.Volume}<br>` +
+                    '<extra></extra>',
+            }];
+
+
+            Plotly.addTraces("myplot", tarce2);
+            i++;
+        }
+
+
+    });
+}
+
 
 // const second = document.getElementById("second")
 // second.addEventListener("click", fus);
-let i = 2;
+
 function fus() {
-    console.log('fus is called')
+    let i = 2;
     Papa.parse("/public/csv_1/stock_data_" + `${i}` + ".csv", {
         download: true,
         header: true,
@@ -984,6 +1037,54 @@ function graphing() {
                 }
             };
 
+
+            //PLOTLING THE GRAPH AND ANIMATING IT WITH REQUEST ANIMATION FRAME
+
+
+
+            Plotly.newPlot("myplot", tarce1, layout);
+            let i = 0; let id;
+            function animate() {
+                if (i < xarray.length) {
+                    Plotly.extendTraces("myplot", {
+                        x: [[xarray[i]]],
+                        y: [[yarray[i]]]
+                    }, [0])
+                    i++;
+                    id = requestAnimationFrame(animate);
+                }
+            }
+            animate();
+
+
+            const stp = document.getElementById("stp");
+            stp.addEventListener("click", func);
+            function func() {
+                Plotly.react("myplot", [{
+                    x: xarray,
+                    y: yarray,
+                    customdata: customdata,
+                    mode: "lines",
+                    type: "scatter",
+                    fill: "tozeroy",
+                    fillgradient: {
+                        type: 'vertical',
+                        colorscale: [[0, 'rgba(0,0,0,0)'], [1, 'rgba(96,0,147,1)']],
+                    },
+                    line: {
+                        width: 2
+                    },
+                    hovertemplate:    //HOVERING TEMPLATE
+                        'Date: %{x}<br>' +
+                        'Close: %{y}<br>' +
+                        `Open: %{customdata.Open}<br>` +
+                        `High: %{customdata.High}<br>` +
+                        `Low: %{customdata.Low}<br>` +
+                        `Volume: %{customdata.Volume}<br>` +
+                        '<extra></extra>',
+                }], layout)
+                cancelAnimationFrame(id);
+            }
         }
     });
 
