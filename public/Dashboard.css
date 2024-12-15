@@ -1395,6 +1395,38 @@ body {
       border-radius: 12px;
       overflow: scroll;
       max-height: 720px;
+      scrollbar-width: none; /* Firefox */
+      -ms-overflow-style: none;
+    }
+
+    .ticker-container::-webkit-scrollbar {
+      display: none;
+    }
+
+    .ticker-container::-webkit-scrollbar-track {
+      background: #1e1e1e;
+      border-radius: 10px;
+    }
+
+    .ticker-container::-webkit-scrollbar-thumb {
+      background: linear-gradient(45deg, #600093, #9f1c7e);
+      border-radius: 10px;
+      border: 3px solid #1e1e1e;
+    }
+
+    .loading-indicator {
+      text-align: center;
+      padding: 20px;
+      color: #ffffff;
+      font-family: 'Gilroy', sans-serif;
+      background: linear-gradient(45deg, #600093, #9f1c7e);
+      border-radius: 0 0 12px 12px;
+      opacity: 0;
+      transition: opacity 0.3s ease;
+    }
+
+    .loading-indicator.visible {
+      opacity: 1;
     }
   
     .header {

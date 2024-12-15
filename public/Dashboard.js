@@ -1,8 +1,13 @@
 let currentSlide = 0;
+let currentPage = 1;
+const itemsPerPage = 100;
+let isLoading = false;
+let allStockData = [];
 const slideWidth = 210;
 const visibleSlides = 5;
 const totalSlides = document.querySelectorAll('.company-box').length;
 const slider = document.getElementById('slider');
+
 
 function slide(direction) {
   currentSlide += direction;
@@ -16,6 +21,52 @@ function slide(direction) {
   }
   slider.style.transform = `translateX(${-currentSlide * slideWidth}px)`;
 }
+
+function loadStockData(initial = true) {
+  if (initial) {
+    currentPage = 1;
+  }
+  
+  Papa.parse("/public/csv/all_stock_data.csv", {
+    download: true,
+    header: true,
+    complete: function(results) {
+      allStockData = results.data;
+      const start = (currentPage - 1) * itemsPerPage;
+      const end = currentPage * itemsPerPage;
+      
+      const stocksToDisplay = results.data.slice(start, end).map(row => ({
+        company: row.Company_Name || row.Ticker,
+        price: parseFloat(row.Price),
+        change: parseFloat(row.Change),
+        changePercent: parseFloat(row['Change %']),
+        volume: row.Volume,
+        marketCap: row['Market Cap'],
+        yearChange: parseFloat(row['52W Change'])
+      }));
+      
+      if (initial) {
+        document.getElementById('stockTableBody').innerHTML = 
+          stocksToDisplay.map(stock => renderStockRow(stock)).join('');
+      } else {
+        document.getElementById('stockTableBody').innerHTML += 
+          stocksToDisplay.map(stock => renderStockRow(stock)).join('');
+      }
+      
+      isLoading = false;
+    }
+  });
+}
+
+window.addEventListener('scroll', () => {
+  const { scrollTop, scrollHeight, clientHeight } = document.documentElement;
+  
+  if (scrollTop + clientHeight >= scrollHeight - 5 && !isLoading) {
+    isLoading = true;
+    currentPage++;
+    loadStockData(false);
+  }
+});
 
 
 
@@ -968,6 +1019,7 @@ function graphings() {
 
 }
 
+document.addEventListener('DOMContentLoaded', loadStockData);
 
 setTimeout(() => {
   console.log("Outside DOMContentLoaded (using setTimeout):", acp);
