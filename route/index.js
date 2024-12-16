@@ -13,6 +13,242 @@ router.get('/', (req, res) => {
 router.get('/Advance', ensureAuthentication, (req, res) => {
     res.render("Advance")
 })
+
+router.get('/selectcar', ensureAuthentication, (req, res) => {
+    res.render("selectcar")
+})
+
+router.get('/selecthouse', ensureAuthentication, (req, res) => {
+    res.render("selecthouse")
+})
+
+router.get('/selectloan', ensureAuthentication, (req, res) => {
+    res.render("selectloan")
+})
+
+
+//Rendering loan ---------
+router.get('/loan/IN', ensureAuthentication, (req, res) => {
+    res.render("loan/IN/loan_IN")
+})
+
+router.post('/loan/IN', async (req, res) => {
+    const { annual_income } = req.body
+    const { applicant_age } = req.body
+    const { work_experience } = req.body
+    const { years_in_current_work } = req.body
+    const { marital_status } = req.body
+    const { house_ownership } = req.body
+    const { vehical_ownership } = req.body
+    const args = [annual_income, applicant_age, work_experience, years_in_current_work, marital_status, house_ownership, vehical_ownership];
+    filesnaming = './python_files/ML_Models/Loan_Approval_Prediction_Model/Model_India.py'
+    const dashboard = await runpython(args, filesnaming);
+    // Check if the Python script returned the expected result
+    console.log(dashboard);
+    if (dashboard) {
+        return res.json({ sucess: 'true', value: dashboard });
+    }
+})
+
+
+router.get('/loan/UN', ensureAuthentication, (req, res) => {
+    res.render("loan/UN/loan_UN")
+})
+
+router.post('/loan/UN', async (req, res) => {
+    const { age } = req.body
+    const { experience } = req.body
+    const { income } = req.body
+    const { family } = req.body
+    const { ccavg } = req.body
+    const { education } = req.body
+    const { mortgage } = req.body
+    const { cd_account } = req.body
+    const { credit_card } = req.body
+    const args = [age, experience, income, family, ccavg, education, mortgage, cd_account, credit_card];
+    filesnaming = './python_files/ML_Models/Loan_Approval_Prediction_Model/Model_Universal.py'
+    const dashboard = await runpython(args, filesnaming);
+    // Check if the Python script returned the expected result
+    console.log(dashboard);
+    if (dashboard) {
+        return res.json({ sucess: 'true', value: dashboard });
+    }
+})
+
+//Rendering house -------------
+router.get('/house/CA', ensureAuthentication, (req, res) => {
+    res.render("house/CA/house_CA")
+})
+
+
+router.get('/house/US', ensureAuthentication, (req, res) => {
+    res.render("house/US/house_US")
+})
+
+router.post('/house/US', async (req, res) => {
+    const { bedrooms } = req.body
+    const { bathrooms } = req.body
+    const { acre_lot } = req.body
+    const { zipcode } = req.body
+    const { house_size } = req.body
+    const { city } = req.body
+    const { state } = req.body
+    const args = [bedrooms, bathrooms, acre_lot, zipcode, house_size, city, state];
+    filesnaming = './python_files/ML_Models/Housing_price_model/Model_US.py'
+    const dashboard = await runpython(args, filesnaming);
+    // Check if the Python script returned the expected result
+    console.log(dashboard);
+    if (dashboard) {
+        return res.json({ sucess: 'true', value: dashboard });
+    }
+})
+
+router.post('/house/CA', async (req, res) => {
+    const { bedrooms } = req.body
+    const { bathrooms } = req.body
+    const { population } = req.body
+    const { province } = req.body
+    const { city } = req.body
+    const { median_income } = req.body
+    const args = [city, bedrooms, bathrooms, province, population, median_income];
+    filesnaming = './python_files/ML_Models/Housing_price_model/Model_CA.py'
+    const dashboard = await runpython(args, filesnaming);
+    // Check if the Python script returned the expected result
+    console.log(dashboard);
+    if (dashboard) {
+        return res.json({ sucess: 'true', value: dashboard });
+    }
+})
+
+//Rendering car -----------------------
+router.get('/car/AUS', ensureAuthentication, (req, res) => {
+    res.render("car/AUS/car_AUS")
+})
+
+router.get('/car/CA', ensureAuthentication, (req, res) => {
+    res.render("car/CA/car_CA")
+})
+
+router.get('/car/IN', ensureAuthentication, (req, res) => {
+    res.render("car/IN/car_IN")
+})
+
+router.get('/car/UK', ensureAuthentication, (req, res) => {
+    res.render("car/UK/car_UK")
+})
+
+router.get('/car/US', ensureAuthentication, (req, res) => {
+    res.render("car/US/car_US")
+})
+
+//post route of car
+router.post('/car/US', async (req, res) => {
+    const { manufacturer } = req.body
+    const { condition } = req.body
+    const { cylinders } = req.body
+    const { fuel } = req.body
+    const { transmission } = req.body
+    const { drive } = req.body
+    const { type } = req.body
+    const { paint_color } = req.body
+    const { year } = req.body
+    const { odometer } = req.body;
+    console.log(year, manufacturer, condition, cylinders, fuel, odometer, transmission, drive, type, paint_color)
+    const args = [year, manufacturer, condition, cylinders, fuel, odometer, transmission, drive, type, paint_color];
+    filesnaming = './python_files/ML_Models/Used_car_price_prediction/Model_US.py'
+    const dashboard = await runpython(args, filesnaming);
+    // Check if the Python script returned the expected result
+    console.log(dashboard);
+    if (dashboard) {
+        return res.json({ sucess: 'true', value: dashboard });
+    }
+})
+
+router.post('/car/CA', async (req, res) => {
+    const { make } = req.body
+    const { model } = req.body
+    const { body_type } = req.body
+    const { drivetrain } = req.body
+    const { transmission } = req.body
+    const { engine_size } = req.body
+    const { miles } = req.body
+    const { fuel_type } = req.body
+    const { year } = req.body
+    const args = [year, make, model, body_type, drivetrain, transmission, fuel_type, miles, engine_size];
+    filesnaming = './python_files/ML_Models/Used_car_price_prediction/Model_CA.py'
+    const dashboard = await runpython(args, filesnaming);
+    // Check if the Python script returned the expected result
+    console.log(dashboard);
+    if (dashboard) {
+        return res.json({ sucess: 'true', value: dashboard });
+    }
+})
+
+
+router.post('/car/UK', async (req, res) => {
+    const { brand } = req.body
+    const { engine } = req.body
+    const { gearbox } = req.body
+    const { body_type } = req.body
+    const { emission_class } = req.body
+    const { registration_year } = req.body
+    const { mileage } = req.body
+    const args = [registration_year, brand, emission_class, gearbox, mileage, engine, body_type];
+    filesnaming = './python_files/ML_Models/Used_car_price_prediction/Model_UK.py'
+    const dashboard = await runpython(args, filesnaming);
+    // Check if the Python script returned the expected result
+    console.log(dashboard);
+    if (dashboard) {
+        return res.json({ sucess: 'true', value: dashboard });
+    }
+})
+
+router.post('/car/IN', async (req, res) => {
+    const { brand } = req.body
+    const { year } = req.body
+    const { location } = req.body
+    const { kilometers } = req.body
+    const { fuel_type } = req.body
+    const { transmission } = req.body
+    const { owner_type } = req.body
+    const { mileage } = req.body
+    const { engine } = req.body
+    const { power } = req.body
+    const { seats } = req.body
+    const args = [brand, year, kilometers, mileage, engine, power, seats, location, fuel_type, transmission, owner_type];
+    filesnaming = './python_files/ML_Models/Used_car_price_prediction/Model_India.py'
+    const dashboard = await runpython(args, filesnaming);
+    // Check if the Python script returned the expected result
+    console.log(dashboard);
+    if (dashboard) {
+        return res.json({ sucess: 'true', value: dashboard });
+    }
+})
+
+router.post('/car/AUS', async (req, res) => {
+    const { brand } = req.body
+    const { year } = req.body
+    const { engine } = req.body
+    const { fuel_consumption } = req.body
+    const { kilometers } = req.body
+    const { cylinders } = req.body
+    const { doors } = req.body
+    const { seats } = req.body
+    const { transmission } = req.body
+    const { drive_type } = req.body
+    const { fuel_type } = req.body
+    const { body_type } = req.body
+    const args = [brand, year, engine, fuel_consumption, kilometers, cylinders, doors, seats, transmission, drive_type, fuel_type, body_type];
+    filesnaming = './python_files/ML_Models/Used_car_price_prediction/Model_AUS.py'
+    const dashboard = await runpython(args, filesnaming);
+    // Check if the Python script returned the expected result
+    console.log(dashboard);
+    if (dashboard) {
+        return res.json({ sucess: 'true', value: dashboard });
+    }
+})
+
+
 let filesnaming;
 router.post('/Advance', async (req, res) => {
     const numCompanies = 1;

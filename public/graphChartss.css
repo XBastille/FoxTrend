@@ -317,7 +317,6 @@ body {
   justify-content: center;
   text-align: center;
   margin-right: 80px;
-  
 }
 
 @media (max-width: 768px) {
@@ -469,13 +468,12 @@ body {
 }
 
 .data a {
-  color:white;
+  color: white;
   margin-bottom: 10px;
 }
 
-.cha {
+.histo {
   background-color: rgb(96, 0, 147);
-  color: white;
 }
 
 .sum:hover,
@@ -621,11 +619,6 @@ ul {
   color: #fffefe;
 }
 
-button{
-  border: none;
-  background: none;
-}
-
 .Arrow {
   cursor: pointer;
   margin-top: 110px;
@@ -713,16 +706,6 @@ input [type="date"] {
   margin: 5px;
 }
 
-.calender {
-  padding-bottom: 20px;
-  margin-right: 70px;
-  margin-left: 30px;
-  display: flex;
-  align-items: center;
-  justify-content: flex-start;
-  gap: 20px;
-}
-
 .date-range-container {
   display: flex;
   gap: 10px;
@@ -756,22 +739,14 @@ input [type="date"] {
   margin-top: 2px;
 }
 
-.date-selection {
+.calender {
+  padding-bottom: 20px;
+  margin-right: 70px;
+  margin-left: 155px;
   display: flex;
-  gap: 10px;
-}
-
-#stp {
-  background-color: #000000;
-  color: #fffefe;
-  border: 1px solid white;
-  cursor: pointer;
-  padding: 5px 10px;
-  transition: color 0.3s ease;
-}
-
-#stp:hover {
-  color: rgb(121, 2, 185);
+  align-items: center;
+  justify-content: flex-start;
+  gap: 20px;
 }
 
 .calendar-popup {
@@ -885,6 +860,17 @@ input [type="date"] {
   color: #fffefe !important;
 }
 
+#date-range-btn {
+  background: #000;
+  color: #fff;
+  border: 1px solid #fff;
+  padding: 8px 15px;
+}
+
+#date-range-btn:hover {
+  color: rgb(121, 2, 185);
+}
+
 
 
 .calendar-body button.selected {
@@ -897,17 +883,20 @@ input [type="date"] {
   background: rgb(96, 0, 147);
 }
 
-#date-range-btn {
-  background: #000;
-  color: #fff;
-  border: 1px solid #fff;
-  padding: 8px 15px;
+
+
+#stp {
+  background-color: #000000;
+  color: #fffefe;
+  border: 1px solid white;
+  cursor: pointer;
+  padding: 5px 10px;
+  transition: color 0.3s ease;
 }
 
-#date-range-btn:hover {
+#stp:hover {
   color: rgb(121, 2, 185);
 }
-
 
 .Key {
   color: #fffefe;
@@ -927,12 +916,8 @@ input [type="date"] {
   padding-top: 40px;
 }
 
-tr{
-  color:#fff
-}
-
 .about {
-  color: #ffffff;
+  color: #fffefe;
   font-family:
     Capsule Sans Text,
     -apple-system,
@@ -962,13 +947,15 @@ tr{
 }
 
 .PeopleAlsoWatch {
+  position: relative;
   color: #fffefe;
   font-family:
     Capsule Sans Text,
     -apple-system,
     BlinkMacSystemFont,
     sans-serif;
-  margin-top: 80px;
+  margin-top: 10px;
+  margin-bottom: 200px;
   margin-right: 220px;
   margin-left: 180px;
 }
@@ -1100,6 +1087,11 @@ tr{
   font-family: "Gilroy", sans-serif;
 }
 
+button{
+  border: none;
+  background: none;
+}
+
 #Comp {
   color: rgb(81, 80, 80);
   font-size: 32px;
@@ -1166,141 +1158,47 @@ tr{
   transition: 0.5s;
 }
 
-#dollar{
-  font-weight: 400;
+/* Style for Historical Data table */
+table {
+  width: 70%;
+  border-collapse: collapse;
+  margin-bottom: 200px;
+  margin-left: 160px;
+  margin-right: 60px;
+  background-color: #000000;
+  color: #ffffff; /* White text */
 }
 
-#percent{
-  font-weight: 400;
-}
-
-.prediction-popup {
-  display: none;
-  position: fixed;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  background: #000000;
-  border: 2px solid rgb(255, 255, 255);
-  border-radius: 15px;
-  padding: 30px;
-  width: 500px;
-  z-index: 1000;
-  color: white;
-  opacity: 0;
-  transition: all 0.3s ease-in-out;
-  transform: translate(-50%, -50%) !important;
-  font-family: "Gilroy", sans-serif;
-}
-
-.prediction-popup.show {
-  opacity: 1;
-}
-
-.prediction-popup .disclaimer {
-  margin-bottom: 25px;
-  line-height: 1.5;
-  color: #e0e0e0;
-}
-
-.prediction-popup .input-group {
-  margin: 15px 0;
-  flex: 1;
-  position: relative;
-}
-
-.prediction-popup .input-container {
-  display: flex;
-  gap: 20px;
-  margin: 25px 0;
-}
-
-.info-tooltip {
-  position: absolute;
-  right: -10px;
-  top: 100%;
-  width: 200px;
-  background: #1a1a1a;
-  border: 1px solid rgb(255, 255, 255);
-  border-radius: 8px;
+table th,
+table td {
   padding: 10px;
-  font-size: 12px;
-  opacity: 0;
-  visibility: hidden;
-  transition: all 0.3s ease;
-  z-index: 1001;
+  text-align: left;
+  border-bottom: 1px solid #ffffff; /* White borders */
 }
 
-.prediction-popup input,
-.prediction-popup button {
-  transition: all 0.3s ease;
+table tr:nth-child(even) {
+  background-color: #000000; /* Slightly lighter background for even rows */
 }
 
-.prediction-popup input:focus {
-  border-color: rgb(255, 255, 255);
-  box-shadow: 0 0 5px rgba(255, 255, 255);
+/* Hover animation for table rows */
+table tr:hover {
+  background-color: #444444; /* Change background on hover */
+  transform: scale(1.01); /* Slight zoom effect */
+  transition: 0.3s ease-in-out; /* Smooth transition */
 }
 
-
-.prediction-popup .cancel-btn:hover {
-  background: rgba(96, 0, 147, 0.1);
-  color: rgb(0, 0, 0);
-  transform: translateY(-2px);
+/* Animation for the table */
+@keyframes fadeInUp {
+  0% {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
-.info-icon:hover + .info-tooltip {
-  opacity: 1;
-  visibility: visible;
-  transform: translateY(10px);
-}
-
-.info-icon {
-  position: absolute;
-  right: 95px;
-  top: 15%;
-  transform: translateY(-50%);
-  cursor: help;
-  color: rgb(255, 255, 255);
-  font-size: 18px;
-}
-
-.prediction-popup input {
-  width: 100%;
-  padding: 10px;
-  margin-top: 5px;
-  background: transparent;
-  border: 1px solid rgb(255, 255, 255);
-  border-radius: 5px;
-  color: white;
-}
-
-.prediction-popup .buttons {
-  display: flex;
-  justify-content: flex-end;
-  gap: 15px;
-  margin-top: 25px;
-}
-
-.prediction-popup button {
-  padding: 10px 25px;
-  border-radius: 25px;
-  cursor: pointer;
-  transition: all 0.3s ease;
-}
-
-.prediction-popup .predict-btn {
-  border-radius: 25px;
-  min-height: 48px;
-  min-width: 180px;
-  border: 3px solid transparent;
-  background:
-    linear-gradient(#000000, #000000) padding-box,
-    linear-gradient(60deg, rgb(96, 0, 147), rgb(255, 255, 255)) border-box;
-  color: #fffefe;
-}
-
-.prediction-popup .cancel-btn {
-  background: transparent;
-  color: white;
-  border: 1px solid rgb(251, 251, 251);
+table tr {
+  animation: fadeInUp 0.5s ease-in-out;
 }
