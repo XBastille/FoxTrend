@@ -1,3 +1,15 @@
+document.getElementById('aapl').addEventListener('click', () => {
+    const popup = document.querySelector('.prediction-popup');
+    popup.style.display = 'block';
+    setTimeout(() => popup.classList.add('show'), 10);
+  });
+  
+  document.querySelector('.prediction-popup .cancel-btn').addEventListener('click', () => {
+    const popup = document.querySelector('.prediction-popup');
+    popup.classList.remove('show');
+    setTimeout(() => popup.style.display = 'none', 300);
+  });
+
 class SearchDropdown {
     constructor(inputId) {
         this.input = document.getElementById(inputId);
