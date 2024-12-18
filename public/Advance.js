@@ -109,8 +109,9 @@ Papa.parse("/public/csv_1/stock_data_1.csv", {
             x: xarray,
             y: [],
             customdata: customdata,
-            mode: "lines",
+            mode: "lines+markers",
             type: "scatter",
+            name: val,
             fill: "tozeroy",
             fillgradient: {
                 type: 'vertical',
@@ -119,7 +120,12 @@ Papa.parse("/public/csv_1/stock_data_1.csv", {
             line: {
                 width: 2
             },
+            marker: {
+                size: 3,
+                color: "#7834a8"
+            },
             hovertemplate:
+                val + '<br>' +
                 'Date: %{x}<br>' +
                 'Close: %{y}<br>' +
                 `Open: %{customdata.Open}<br>` +
@@ -128,6 +134,7 @@ Papa.parse("/public/csv_1/stock_data_1.csv", {
                 `Volume: %{customdata.Volume}<br>` +
                 '<extra></extra>',
         }];
+
 
 
         //LAYOUT ONLOAD
@@ -202,6 +209,7 @@ Papa.parse("/public/csv_1/stock_data_1.csv", {
                     width: 2
                 },
                 hovertemplate:    //HOVERING TEMPLATE
+                val + '<br>' +
                     'Date: %{x}<br>' +
                     'Close: %{y}<br>' +
                     `Open: %{customdata.Open}<br>` +
@@ -373,6 +381,7 @@ function fus() {
                     width: 2
                 },
                 hovertemplate:
+                    addmulti + '<br>' +
                     'Date: %{x}<br>' +
                     'Close: %{y}<br>' +
                     `Open: %{customdata.Open}<br>` +
@@ -397,133 +406,123 @@ function fus() {
 
 
 //BOILENGER BAND GRAPH--------------------------------------
-Papa.parse("/public/csv_1/stock_data_1.csv", {
+Papa.parse("/public/csv_1/technical_indicators_1.csv", {
     download: true,
     header: true,
     complete: function (results) {
         const xarray = [];
-        const yarray = [];
-
+        const upperBand = [];
+        const lowerBand = [];
 
         results.data.forEach(row => {
-            xarray.push(row['Date']);
-            yarray.push(parseFloat(row['Close']));
-        });
-        function calculate(yarray, period = 20, multiplier = 2) {
-            const upper = [];
-            const lower = [];
-            const middle = [];
-            for (let i = 0; i < yarray.length; i++) {
-                if (i >= period - 1) {
-                    const slice = yarray.slice(i - period + 1, i + 1);
-                    const mean = slice.reduce((a, b) => a + b, 0) / period;
-                    const sd = Math.sqrt(slice.map(val => Math.pow(val - mean, 2)).reduce((a, b) => a + b, 0) / period)
-                    upper.push(mean + multiplier * sd);
-                    middle.push(mean);
-                    lower.push(mean - multiplier * sd);
-                }
+            if (row['Bollinger_hband'] && row['Bollinger_lband']) {
+                xarray.push(row['Date']);
+                upperBand.push(parseFloat(row['Bollinger_hband']));
+                lowerBand.push(parseFloat(row['Bollinger_lband']));
             }
-            return { middle, lower, upper };
-        }
+        });
 
-
-        const indicatorState = {
-            bollinger: false,
-            macd: false,
-            rsi: false
-        };
         const boilenger = document.getElementById("boilenger");
         let bollingerTraces = [];
+        let bollingerVisible = false;
 
         boilenger.addEventListener('click', () => {
-            if (!indicatorState.bollinger) {
-                const { upper, lower, middle } = calculate(yarray);
-
-                Plotly.addTraces("myplot", [{
+            if (!bollingerVisible) {
+                const traces = [{
                     x: xarray,
-                    y: upper,
-                    name: 'Upper Band',
-                    mode: "lines",
+                    y: upperBand,
+                    name: val + ' Upper Band',
+                    mode: "lines+markers",
                     type: "scatter",
-                    line: { width: 3, color: "blue" }
+                    line: { width: 2, color: "blue" },
+                    marker: {
+                        size: 3,
+                        color: "blue"
+                    },
+                    hovertemplate: 
+                        val + '<br>' +
+                        'Date: %{x}<br>' +
+                        'Upper Band: %{y:.2f}<br>' +
+                        '<extra></extra>',
+                    hoverlabel: {
+                        bgcolor: "blue"
+                    },
+                    yaxis: 'y1'
                 }, {
                     x: xarray,
-                    y: lower,
-                    name: 'Lower Band',
-                    mode: "lines",
+                    y: lowerBand,
+                    name: val + ' Lower Band',
+                    mode: "lines+markers", 
                     type: "scatter",
-                    line: { width: 3, color: "blue" }
-                }, {
-                    x: xarray,
-                    y: middle,
-                    name: 'Middle Band',
-                    mode: "lines",
-                    type: "scatter",
-                    line: { width: 3, color: "blue" }
-                }]);
+                    line: { width: 2, color: "blue" },
+                    marker: {
+                        size: 3,
+                        color: "blue"
+                    },
+                    hovertemplate: 
+                        val + '<br>' +
+                        'Date: %{x}<br>' +
+                        'Lower Band: %{y:.2f}<br>' +
+                        '<extra></extra>',
+                    hoverlabel: {
+                        bgcolor: "blue"
+                    },
+                    fill: 'tonexty',
+                    yaxis: 'y1'
+                }];
+                
 
-                bollingerTraces = [myplot.data.length - 3, myplot.data.length - 2, myplot.data.length - 1];
+                const maxBand = Math.max(...upperBand);
+                const minBand = Math.min(...lowerBand);
+                const currentYRange = myplot.layout.yaxis.range;
+                const newYRange = [
+                    Math.min(currentYRange[0], minBand),
+                    Math.max(currentYRange[1], maxBand)
+                ];
+
+                Plotly.update("myplot", {}, {
+                    yaxis: { range: newYRange }
+                });
+
+                Plotly.addTraces("myplot", traces);
+                bollingerTraces = [myplot.data.length - 2, myplot.data.length - 1];
                 boilenger.textContent = "Remove Bollinger Bands";
-                indicatorState.bollinger = true;
+                bollingerVisible = true;
             } else {
                 Plotly.deleteTraces("myplot", bollingerTraces);
                 boilenger.textContent = "Add Bollinger Bands";
-                indicatorState.bollinger = false;
+                bollingerVisible = false;
             }
         });
     }
-})
+});
+
+
+
+
+
+
 
 
 //RSI MARK
 // --------------------------------------------------------------------------------------------------------------------------------------
-Papa.parse("/public/csv_1/stock_data_1.csv", {
+Papa.parse("/public/csv_1/technical_indicators_1.csv", {
     download: true,
     header: true,
     complete: function (results) {
         const xarray = [];
-        const yarray = [];
-        const customdata = [];
-
+        const RSI = [];
 
         results.data.forEach(row => {
             xarray.push(row['Date']);
-            yarray.push(parseFloat(row['Close']));
+            RSI.push(parseFloat(row['RSI']));
         });
-
-
-        function changes(yarray, period = 14) {
-            let gain = [];
-            let losses = [];
-            for (let i = 1; i < yarray.length; i++) {
-                let change = yarray[i] - yarray[i - 1];
-                if (change > 0) {
-                    gain.push(change);
-                    losses.push(0);
-                } else {
-                    gain.push(0);
-                    losses.push(Math.abs(change));
-                }
-            }
-            let rsi = [];
-            for (let i = period; i < yarray.length; i++) {
-                const avggain = gain.slice(i - period, i).reduce((a, b) => a + b, 0) / period;
-                const avgloss = losses.slice(i - period, i).reduce((a, b) => a + b, 0) / period;
-                let rs = avggain / avgloss;
-                rsi.push(100 - (100 / (1 + rs)));
-            }
-            rsi = new Array(period).fill(null).concat(rsi);
-            return rsi;
-        }
-
 
         const rsii = document.getElementById("rsi");
         let rsiVisible = false;
 
-
         rsii.addEventListener('click', () => {
             if (!rsiVisible) {
-                const value = changes(yarray);
                 const rsilayout = {
                     xaxis: {
                         range: [xarray[0], xarray[xarray.length - 1]],
@@ -546,22 +545,19 @@ Papa.parse("/public/csv_1/stock_data_1.csv", {
                     paper_bgcolor: "black",
                 };
 
-
                 const rsitrace = [{
                     x: xarray,
-                    y: value,
+                    y: RSI,
                     mode: "lines",
                     type: "scatter",
                     line: { width: 2 }
                 }];
 
-
                 Plotly.newPlot("rsigraph", rsitrace, rsilayout);
 
-
+                // Add overbought/oversold lines
                 const ys = new Array(xarray.length).fill(70);
                 const ysi = new Array(xarray.length).fill(30);
-
 
                 Plotly.addTraces("rsigraph", [{
                     x: xarray,
@@ -579,7 +575,6 @@ Papa.parse("/public/csv_1/stock_data_1.csv", {
                     line: { color: "red", width: 2 }
                 }]);
 
-
                 document.getElementById("rsigraph").style.display = "block";
                 rsii.textContent = "Remove RSI";
                 rsiVisible = true;
@@ -591,6 +586,7 @@ Papa.parse("/public/csv_1/stock_data_1.csv", {
         });
     }
 });
+
 
 
 // MACD Implementation
@@ -1044,6 +1040,7 @@ function graphing() {
                     width: 2
                 },
                 hovertemplate:
+                    val + '<br>' +
                     'Date: %{x}<br>' +
                     'Close: %{y}<br>' +
                     `Open: %{customdata.Open}<br>` +
@@ -1127,6 +1124,7 @@ function graphing() {
                         width: 2
                     },
                     hovertemplate:    //HOVERING TEMPLATE
+                    val + '<br>' +
                         'Date: %{x}<br>' +
                         'Close: %{y}<br>' +
                         `Open: %{customdata.Open}<br>` +
