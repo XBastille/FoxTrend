@@ -26,6 +26,21 @@ router.get('/selectloan', ensureAuthentication, (req, res) => {
     res.render("selectloan")
 })
 
+router.get('/predict', ensureAuthentication, (req, res) => {
+    res.render('predict_stock')
+})
+
+router.post('/predict', async (req, res) => {
+    const { val } = req.body
+    const { days } = req.body
+    const { trails } = req.body
+    const args = [val, days, trails]
+    filesnaming = './prediction.py'
+    const dashboard = await runpython(args, filesnaming)
+    if (dashboard) {
+        return res.json({ sucess: 'true' })
+    }
+})
 
 //Rendering loan ---------
 router.get('/loan/IN', ensureAuthentication, (req, res) => {

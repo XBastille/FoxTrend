@@ -175,30 +175,7 @@
 </head>
 
 <body>
-  <div class="prediction-popup">
-  <div class="disclaimer">
-    <h3>Stock Prediction Disclaimer</h3>
-    <p>While our Machine Learning model has been extensively trained on historical market data and patterns, please note that stock market predictions inherently involve uncertainty. Our model provides data-driven insights based on past trends, but market conditions can change rapidly due to various external factors. We recommend using these predictions as one of many tools in your investment decision-making process.</p>
-  </div>
-  <div class="input-container">
-    <div class="input-group">
-      <label for="trials">Number of Trials</label>
-      <input type="number" id="trials" min="1" max="100" value="10">
-      <i class="fas fa-info-circle info-icon"></i>
-      <div class="info-tooltip">More trials lead to better prediction accuracy but increase processing time.</div>
-    </div>
-    <div class="input-group">
-      <label for="days">Days to Predict</label>
-      <input type="number" id="days" min="1" max="30" value="7">
-      <i class="fas fa-info-circle info-icon"></i>
-      <div class="info-tooltip">Longer prediction periods may reduce accuracy due to increasing market uncertainties. Recommended: 1-14 days.</div>
-    </div>
-  </div>
-  <div class="buttons">
-    <button class="cancel-btn">Cancel</button>
-    <button class="predict-btn">Predict</button>
-  </div>
-</div>
+
 
   <div class="loading-container" id="loading">
 
@@ -222,6 +199,36 @@
     </div>
   </div>
   <div id="background">
+    <div class="prediction-popup" id="prediction-popup">
+      <div class="disclaimer">
+        <h3>Stock Prediction Disclaimer</h3>
+        <p>While our Machine Learning model has been extensively trained on historical market data and patterns, please
+          note that stock market predictions inherently involve uncertainty. Our model provides data-driven insights
+          based
+          on past trends, but market conditions can change rapidly due to various external factors. We recommend using
+          these predictions as one of many tools in your investment decision-making process.</p>
+      </div>
+      <div class="input-container">
+        <div class="input-group">
+          <label for="trials">Number of Trials</label>
+          <input type="number" id="trials" name="trials" min="1" max="100" value="10">
+          <i class="fas fa-info-circle info-icon"></i>
+          <div class="info-tooltip">More trials lead to better prediction accuracy but increase processing time.</div>
+        </div>
+        <div class="input-group">
+          <label for="days">Days to Predict</label>
+          <input type="number" id="days" name="days" min="1" max="30" value="7">
+          <i class="fas fa-info-circle info-icon"></i>
+          <div class="info-tooltip">Longer prediction periods may reduce accuracy due to increasing market
+            uncertainties.
+            Recommended: 1-14 days.</div>
+        </div>
+      </div>
+      <div class="buttons">
+        <button class="cancel-btn">Cancel</button>
+        <button class="predict-btn" id="future_prediction">Predict</button>
+      </div>
+    </div>
     <ul class="icons open">
       <a href="#" class="fox-icon-link">
         <img src="media/fox.jpg" alt="Fox Icon" class="logo" />
@@ -288,7 +295,7 @@
             </div>
             <div class="services-dropdown-column">
               <div class="secondary-section">
-              <h3>Secondary <span class="arrow">→</span></h3>
+                <h3>Secondary <span class="arrow">→</span></h3>
                 <div class="secondary-elements">
                   <a href="/selectcar">Used Car Prediction</a>
                   <a href="/selecthouse">Housing Prediction</a>
@@ -329,7 +336,7 @@
 
     <div class="rightBox" style="float: right">
       <ul>
-        <button id="aapl">Predict AAPL</button><br />
+        <button id="aapl"></button><br />
         <div class="data">
           <a class="sum">Summary</a><br /><br />
           <a class="cha" href="chartPage"> Chart</a><br /><br />
@@ -342,7 +349,8 @@
     </div>
 
     <button id="advanced-btn">
-      <i style="font-size: 24px" class="fas">&#xf065;</i> <a style="color: white; " href="Advance" target="_blank">Advanced</a>
+      <i style="font-size: 24px" class="fas">&#xf065;</i> <a style="color: white; " href="Advance"
+        target="_blank">Advanced</a>
     </button>
     <div class="desc" style="margin-left: 200px">
       <h1 id="Company_title"></h1>

@@ -170,30 +170,7 @@
 </head>
 
 <body>
-    <div class="prediction-popup">
-  <div class="disclaimer">
-    <h3>Stock Prediction Disclaimer</h3>
-    <p>While our Machine Learning model has been extensively trained on historical market data and patterns, please note that stock market predictions inherently involve uncertainty. Our model provides data-driven insights based on past trends, but market conditions can change rapidly due to various external factors. We recommend using these predictions as one of many tools in your investment decision-making process.</p>
-  </div>
-  <div class="input-container">
-    <div class="input-group">
-      <label for="trials">Number of Trials</label>
-      <input type="number" id="trials" min="1" max="100" value="10">
-      <i class="fas fa-info-circle info-icon"></i>
-      <div class="info-tooltip">More trials lead to better prediction accuracy but increase processing time.</div>
-    </div>
-    <div class="input-group">
-      <label for="days">Days to Predict</label>
-      <input type="number" id="days" min="1" max="30" value="7">
-      <i class="fas fa-info-circle info-icon"></i>
-      <div class="info-tooltip">Longer prediction periods may reduce accuracy due to increasing market uncertainties. Recommended: 1-14 days.</div>
-    </div>
-  </div>
-  <div class="buttons">
-    <button class="cancel-btn">Cancel</button>
-    <button class="predict-btn">Predict</button>
-  </div>
-</div>
+
     <div class="loading-container" id="loading">
 
         <div class="grid"></div>
@@ -216,6 +193,40 @@
         </div>
     </div>
     <div id="background">
+        <div class="prediction-popup">
+            <div class="disclaimer">
+                <h3>Stock Prediction Disclaimer</h3>
+                <p>While our Machine Learning model has been extensively trained on historical market data and patterns,
+                    please note that stock market predictions inherently involve uncertainty. Our model provides
+                    data-driven
+                    insights based on past trends, but market conditions can change rapidly due to various external
+                    factors.
+                    We recommend using these predictions as one of many tools in your investment decision-making
+                    process.
+                </p>
+            </div>
+            <div class="input-container">
+                <div class="input-group">
+                    <label for="trials">Number of Trials</label>
+                    <input type="number" id="trials" min="1" max="100" value="10">
+                    <i class="fas fa-info-circle info-icon"></i>
+                    <div class="info-tooltip">More trials lead to better prediction accuracy but increase processing
+                        time.
+                    </div>
+                </div>
+                <div class="input-group">
+                    <label for="days">Days to Predict</label>
+                    <input type="number" id="days" min="1" max="30" value="7">
+                    <i class="fas fa-info-circle info-icon"></i>
+                    <div class="info-tooltip">Longer prediction periods may reduce accuracy due to increasing market
+                        uncertainties. Recommended: 1-14 days.</div>
+                </div>
+            </div>
+            <div class="buttons">
+                <button class="cancel-btn">Cancel</button>
+                <button class="predict-btn" id="future_prediction">Predict</button>
+            </div>
+        </div>
         <ul class="icons open">
             <a href="#" class="fox-icon-link">
                 <img src="media/fox.jpg" alt="Fox Icon" class="logo">
@@ -329,7 +340,7 @@
 
         <div class="rightBox" style="float: right;">
             <ul>
-                <button id="aapl">Predict AAPL</button><br>
+                <button id="aapl"></button><br>
                 <div class="data">
                     <a class="sum" href="summary">Summary</a><br><br>
                     <a class="cha" href="chartPage"> Chart</a><br><br>
@@ -772,6 +783,7 @@
         document.addEventListener('DOMContentLoaded', () => {
             setInterval(restartCubeAnimation, 11600);
         });
+        const aapl=document.getElementById('aapl')
         const profit = document.getElementById('profit')
         const operator = document.getElementById('operator')
         const roa = document.getElementById('roa')
@@ -808,59 +820,94 @@
         const pr = document.getElementById('pr')
         const lsf = document.getElementById('lsf')
         const sand = document.getElementById('sand')
-        function fetchjson() {
-            fetch('/public/graph.json')
-                .then((res) => {
-                    if (!res.ok) {
-                        console.log(res.status)
-                    }
-                    return res.json()
-                })
-                .then((data) => {
-                    Company_title.innerText = data.shortName
-                    Company_price.innerText = "$" + data.currentPrice
-                    profit.innerText = data.profitMargins.toFixed(2) + "%"
-                    operator.innerText = data.operatingMargins.toFixed(2) + "%"
-                    roa.innerText = (data.returnOnAssets).toFixed(2) + "%"
-                    roe.innerText = data.returnOnEquity.toFixed(2) + "%"
-                    const reven = data.totalRevenue
-                    revenue.innerText = (reven / 1000000000).toFixed(1) + "B"
-                    ros.innerText = data.revenuePerShare
-                    ebita.innerText = (data.ebitda / 1000000000).toFixed(1) + "B"
-                    nitc.innerText = (data.netIncomeToCommon / 1000000000).toFixed(2) + "B"
-                    tc.innerText = (data.totalCash / 1000000000).toFixed(1) + "B"
-                    tcps.innerText = data.totalCashPerShare
-                    tds.innerText = (data.totalDebt / 1000000000).toFixed(1) + "B"
-                    cr.innerText = (data.currentRatio).toFixed(2)
-                    ocf.innerText = (data.operatingCashflow / 1000000000).toFixed(2) + "B"
-                    bb.innerText = data.beta
-                    ftwl.innerText = data.fiftyTwoWeekLow
-                    ftwh.innerText = data.fiftyTwoWeekHigh.toFixed(2)
-                    fda.innerText = data.fiftyDayAverage.toFixed(2)
-                    thdma.innerText = data.twoHundredDayAverage.toFixed(2)
-                    av.innerText = (data.averageVolume / 1000000).toFixed(2) + "M"
-                    so.innerText = (data.sharesOutstanding / 1000000000).toFixed(1) + "B"
-                    iso.innerText = (data.sharesOutstanding / 1000000000).toFixed(2) + "B"
-                    fs.innerText = (data.floatShares / 1000000000).toFixed(2) + "B"
-                    hinsider.innerText = (data.heldPercentInsiders * 100).toFixed(2) + "%"
-                    hi.innerText = (data.heldPercentInstitutions * 100).toFixed(2) + "%"
-                    ss.innerText = (data.sharesShortPriorMonth / 1000000).toFixed(2) + "M"
-                    sr.innerText = (data.shortRatio)
-                    sso.innerText = data.sharesPercentSharesOut * 100 + "%"
-                    sshort.innerText = (data.sharesShortPreviousMonthDate / 10000000).toFixed(2) + "M"
-                    tadr.innerText = data.trailingAnnualDividendRate
-                    tady.innerText = (data.trailingAnnualDividendYield * 100).toFixed(2) + "%"
-                    yady.innerText = data.fiveYearAvgDividendYield
-                    pr.innerText = (data.payoutRatio * 100).toFixed(2) + "%"
-                    lsf.innerText = data.lastSplitFactor
-                    sand.innerText = (data.SandP52WeekChange * 100).toFixed(2) + "%"
-                })
-                .catch((err) => {
-                    console.log(err)
-                })
+        let values = '';
+        async function fetchjson() {
+            try {
+                const res = await fetch('/public/graph.json');
+                console.log("Response status:", res.status);
+                if (!res.ok) throw new Error("Failed to fetch data");
+                const data = await res.json();
+                values = data.symbol;
+                aapl.innerText="Predict "+values
+                console.log(values)
+                Company_title.innerText = data.shortName
+                Company_price.innerText = "$" + data.currentPrice
+                profit.innerText = data.profitMargins.toFixed(2) + "%"
+                operator.innerText = data.operatingMargins.toFixed(2) + "%"
+                roa.innerText = (data.returnOnAssets).toFixed(2) + "%"
+                roe.innerText = data.returnOnEquity.toFixed(2) + "%"
+                const reven = data.totalRevenue
+                revenue.innerText = (reven / 1000000000).toFixed(1) + "B"
+                ros.innerText = data.revenuePerShare
+                ebita.innerText = (data.ebitda / 1000000000).toFixed(1) + "B"
+                nitc.innerText = (data.netIncomeToCommon / 1000000000).toFixed(2) + "B"
+                tc.innerText = (data.totalCash / 1000000000).toFixed(1) + "B"
+                tcps.innerText = data.totalCashPerShare
+                tds.innerText = (data.totalDebt / 1000000000).toFixed(1) + "B"
+                cr.innerText = (data.currentRatio).toFixed(2)
+                ocf.innerText = (data.operatingCashflow / 1000000000).toFixed(2) + "B"
+                bb.innerText = data.beta
+                ftwl.innerText = data.fiftyTwoWeekLow
+                ftwh.innerText = data.fiftyTwoWeekHigh.toFixed(2)
+                fda.innerText = data.fiftyDayAverage.toFixed(2)
+                thdma.innerText = data.twoHundredDayAverage.toFixed(2)
+                av.innerText = (data.averageVolume / 1000000).toFixed(2) + "M"
+                so.innerText = (data.sharesOutstanding / 1000000000).toFixed(1) + "B"
+                iso.innerText = (data.sharesOutstanding / 1000000000).toFixed(2) + "B"
+                fs.innerText = (data.floatShares / 1000000000).toFixed(2) + "B"
+                hinsider.innerText = (data.heldPercentInsiders * 100).toFixed(2) + "%"
+                hi.innerText = (data.heldPercentInstitutions * 100).toFixed(2) + "%"
+                ss.innerText = (data.sharesShortPriorMonth / 1000000).toFixed(2) + "M"
+                sr.innerText = (data.shortRatio)
+                sso.innerText = data.sharesPercentSharesOut * 100 + "%"
+                sshort.innerText = (data.sharesShortPreviousMonthDate / 10000000).toFixed(2) + "M"
+                tadr.innerText = data.trailingAnnualDividendRate
+                tady.innerText = (data.trailingAnnualDividendYield * 100).toFixed(2) + "%"
+                yady.innerText = data.fiveYearAvgDividendYield
+                pr.innerText = (data.payoutRatio * 100).toFixed(2) + "%"
+                lsf.innerText = data.lastSplitFactor
+                sand.innerText = (data.SandP52WeekChange * 100).toFixed(2) + "%"
+            } catch (err) {
+                console.error("Error fetching JSON:", err);
+                return null;
+            }
+            return values
         }
-        document.addEventListener('DOMContentLoaded', function () {
-            fetchjson();
+        document.addEventListener('DOMContentLoaded', async function () {
+            const val = await fetchjson();
+            const loads = document.getElementById('loading')
+            const backs = document.getElementById('background')
+            const future_prediction = document.getElementById('future_prediction')
+            future_prediction.addEventListener('click', async () => {
+                //val is the comapany setting
+                const days = document.getElementById('days').value
+                const trails = document.getElementById('trials').value
+                console.log(val, trails, days)
+                loads.style.display = 'flex'
+                loads.style.zIndex = '999'
+                backs.style.zIndex = '-999'
+                backs.style.filter = 'blur(30px)'
+                try {
+                    const response = await fetch('/predict', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                        },
+                        body: JSON.stringify({ val, days, trails })
+                    });
+                    const data = await response.json();
+                    console.log(data)
+                    if (data.sucess === 'true') {
+                        loads.style.display = 'none'
+                        loads.style.zIndex = '-999'
+                        backs.style.zIndex = '999'
+                        backs.style.filter = 'none'
+                        window.location.href = 'predict'
+                    }
+                } catch (error) {
+                    console.error('Error:', error);
+                }
+            })
         });
         const was = document.getElementById('was')
         was.addEventListener('click', () => {
@@ -942,6 +989,8 @@
             popup.classList.remove('show');
             setTimeout(() => popup.style.display = 'none', 300);
         });
+
+
     </script>
 
     <script src="/public/Stockspage.js"></script>
