@@ -10,6 +10,43 @@ document.querySelector('.prediction-popup .cancel-btn').addEventListener('click'
   setTimeout(() => popup.style.display = 'none', 300);
 });
 
+
+//prediction-------------------------------------------------
+const load = document.getElementById('loading')
+const back = document.getElementById('background')
+const future_prediction = document.getElementById('future_prediction')
+future_prediction.addEventListener('click', async () => {
+  //val is the comapany setting
+  const days = document.getElementById('days').value
+  const trails = document.getElementById('trials').value
+  console.log(val, trails, days)
+  load.style.display = 'flex'
+  load.style.zIndex = '999'
+  back.style.zIndex = '-999'
+  back.style.filter = 'blur(30px)'
+  try {
+    const response = await fetch('/predict', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ val, days, trails })
+    });
+    const data = await response.json();
+    console.log(data)
+    if (data.sucess === 'true') {
+      load.style.display = 'none'
+      load.style.zIndex = '-999'
+      back.style.zIndex = '999'
+      back.style.filter = 'none'
+      window.location.href = 'predict'
+    }
+  } catch (error) {
+    console.error('Error:', error);
+  }
+})
+
+//------------------------------------------------------------
 document.addEventListener('DOMContentLoaded', function () {
   const avatarEdit = document.querySelector('.avatar-edit');
   const avatarPopup = document.querySelector('.avatar-popup');
@@ -680,13 +717,7 @@ document.querySelectorAll('.from-calendar, .to-calendar').forEach(calendar => {
   updateCalendarBody(calendar, now.getMonth(), now.getFullYear());
 });
 
-
-
-
-
-
-
-
+const aapl = document.getElementById('aapl')
 const Company_title = document.getElementById("Company_title");
 let Company_price = document.getElementById("Company_price");
 let cp = ''
@@ -722,6 +753,7 @@ function fetchjson() {
     .then((data) => {
       val = data.symbol
       Company_title.innerText = data.shortName;
+      aapl.innerText="Predict "+val
       console.log(Company_title)
       Company_price.innerText = "$" + data.currentPrice;
       cp = "$" + data.currentPrice

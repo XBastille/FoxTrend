@@ -122,7 +122,7 @@ document.getElementById('prediction-form').addEventListener('submit', async func
 
     document.getElementById('prediction-gif').src = gifPath;
     console.log(price)
-    document.querySelector('.price-value').textContent = "$" + price;
+    document.querySelector('.price-value').textContent = "$" + price.toFixed(2);
 
     result.classList.add('show');
     result.style.animation = 'fadeInUp 0.5s ease forwards';

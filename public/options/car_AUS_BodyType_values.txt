@@ -1,0 +1,11 @@
+SUV
+Hatchback
+Coupe
+Commercial
+nan
+Wagon
+Ute / Tray
+Sedan
+People Mover
+Convertible
+Other
