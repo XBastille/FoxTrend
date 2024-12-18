@@ -132,6 +132,14 @@
         <h1 class="prediction-title">Prediction</h1>
     </div>
 
+    <div class="desc" style="margin-left: 200px">
+        <h1 id="Company_title">Tesla Inc.</h1>
+        <h1 id="Company_price"></h1>
+        <span id="dollar"></span>
+        <span id="percent"></span>
+        <br><br><br>
+        <br>
+    </div>
     <div id="myplot" style="width:1100px; height:400px; margin-left: 160px; margin-bottom: 0px;"></div>
     <div class="table-container">
         <p id="download-data" class="download-btn">Download Data</p>
@@ -139,7 +147,7 @@
             <thead>
                 <tr>
                     <th>Date</th>
-                    <th>Pred</th>
+                    <th>Pred (Closing Price)</th>
                 </tr>
             </thead>
             <tbody></tbody>
@@ -267,16 +275,27 @@
                     }
                 };
 
-                Plotly.newPlot("myplot", data, layout);
+                Plotly.newPlot("myplot", data, layout).then(function () {
+                    const myPlot = document.getElementById('myplot');
+
+                    myPlot.on('plotly_hover', function (data) {
+                        const price = data.points[0].y;
+                        document.getElementById('Company_price').textContent = `$${price.toFixed(2)}`;
+                    });
+
+                    if (yarray.length > 0) {
+                        document.getElementById('Company_price').textContent = `$${yarray[yarray.length - 1].toFixed(2)}`;
+                    }
+                });
 
                 const tbody = document.querySelector('#prediction-table tbody');
                 results.data.forEach(row => {
                     if (row.date && row.Close) {
                         const tr = document.createElement('tr');
                         tr.innerHTML = `
-            <td>${row.date}</td>
-            <td>$${parseFloat(row.Close).toFixed(2)}</td>
-        `;
+    <td>${row.date}</td>
+    <td>$${parseFloat(row.Close).toFixed(2)}</td>
+`;
                         tbody.appendChild(tr);
                     }
                 });
@@ -316,6 +335,7 @@
                     document.body.removeChild(a);
                 });
             }
+
         });
     </script>
 
