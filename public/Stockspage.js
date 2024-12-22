@@ -753,7 +753,7 @@ function fetchjson() {
     .then((data) => {
       val = data.symbol
       Company_title.innerText = data.shortName;
-      aapl.innerText="Predict "+val
+      aapl.innerText = "Predict " + val
       console.log(Company_title)
       Company_price.innerText = "$" + data.currentPrice;
       cp = "$" + data.currentPrice
@@ -1510,23 +1510,211 @@ searching.addEventListener('keypress', async (e) => {
 })
 
 
-//--------------------------------------------------
-//(emergency code)
-// try {
-//   const response = await fetch('/summary', {
-//     method: 'POST',
-//     headers: {
-//       'Content-Type': 'application/json',
-//     },
-//     body: JSON.stringify({ val, start, end })
-//   });
-//   const data = await response.json();
-//   console.log(data)
-//   if (data.sucess === 'true') {
-//     sessionStorage.setItem('summaryData', JSON.stringify(data.summaryanimation));
-//     console.log(data.summaryanimation)
-//     window.location.href = '/loading';
-//   }
-// } catch (error) {
-//   console.error('Error:', error);
-// }
+//people also watch
+
+const pcomptic1 = document.getElementById('pcomptic1')
+const pcompname1 = document.getElementById('pcompname1')
+const pcomprice1 = document.getElementById('pcompprice1')
+const pcomppercent1 = document.getElementById('pcomppercent1')
+
+const pcomptic2 = document.getElementById('pcomptic2')
+const pcompname2 = document.getElementById('pcompname2')
+const pcomprice2 = document.getElementById('pcompprice2')
+const pcomppercent2 = document.getElementById('pcomppercent2')
+
+const pcomptic3 = document.getElementById('pcomptic3')
+const pcompname3 = document.getElementById('pcompname3')
+const pcomprice3 = document.getElementById('pcompprice3')
+const pcomppercent3 = document.getElementById('pcomppercent3')
+
+const pcomptic4 = document.getElementById('pcomptic4')
+const pcompname4 = document.getElementById('pcompname4')
+const pcomprice4 = document.getElementById('pcompprice4')
+const pcomppercent4 = document.getElementById('pcomppercent4')
+
+const pcomptic5 = document.getElementById('pcomptic5')
+const pcompname5 = document.getElementById('pcompname5')
+const pcomprice5 = document.getElementById('pcompprice5')
+const pcomppercent5 = document.getElementById('pcomppercent5')
+
+const pcomptic6 = document.getElementById('pcomptic6')
+const pcompname6 = document.getElementById('pcompname6')
+const pcomprice6 = document.getElementById('pcompprice6')
+const pcomppercent6 = document.getElementById('pcomppercent6')
+
+const pcomptic7 = document.getElementById('pcomptic7')
+const pcompname7 = document.getElementById('pcompname7')
+const pcomprice7 = document.getElementById('pcompprice7')
+const pcomppercent7 = document.getElementById('pcomppercent7')
+
+const pcomptic8 = document.getElementById('pcomptic8')
+const pcompname8 = document.getElementById('pcompname8')
+const pcomprice8 = document.getElementById('pcompprice8')
+const pcomppercent8 = document.getElementById('pcomppercent8')
+
+const pcomptic9 = document.getElementById('pcomptic9')
+const pcompname9 = document.getElementById('pcompname9')
+const pcomprice9 = document.getElementById('pcompprice9')
+const pcomppercent9 = document.getElementById('pcomppercent9')
+
+const pcomptic10 = document.getElementById('pcomptic10')
+const pcompname10 = document.getElementById('pcompname10')
+const pcomprice10 = document.getElementById('pcompprice10')
+const pcomppercent10 = document.getElementById('pcomppercent10')
+
+function peoplealsowatch() {
+  fetch("/public/people_also_watch.json")
+    .then((res) => {
+      if (!res.ok) {
+        console.log(res.status);
+      }
+      return res.json();
+    })
+    .then((data) => {
+      pcomptic1.innerText = data[0].Ticker
+      pcompname1.innerText = data[0].Company_Name
+      pcomprice1.innerText = "$" + data[0].Price
+      const rprice1 = String(data[0].Price)
+      if (rprice1.substring(0, 1) === '-') {
+        pcomprice1.style.color = 'red'
+      }
+
+      const rpercent1 = String(data[0]['Change %'])
+      if (rpercent1.substring(0, 1) === '-') {
+        pcomppercent1.style.color = 'red'
+      }
+      pcomppercent1.innerText = String(data[0]['Change %'].toFixed(2)) + "%"
+
+      pcomptic2.innerText = data[1].Ticker
+      pcompname2.innerText = data[1].Company_Name
+      pcomprice2.innerText = "$" + data[1].Price
+      const rprice2 = String(data[1].Price)
+      if (rprice2.substring(0, 1) === '-') {
+        pcomprice2.style.color = 'red'
+      }
+
+      const rpercent2 = String(data[1]['Change %'])
+      if (rpercent2.substring(0, 1) === '-') {
+        pcomppercent2.style.color = 'red'
+      }
+      pcomppercent2.innerText = String(data[1]['Change %'].toFixed(2)) + "%"
+
+      pcomptic3.innerText = data[2].Ticker
+      pcompname3.innerText = data[2].Company_Name
+      pcomprice3.innerText = "$" + data[2].Price
+      const rprice3 = String(data[2].Price)
+      if (rprice3.substring(0, 1) === '-') {
+        pcomprice3.style.color = 'red'
+      }
+
+      const rpercent3 = String(data[2]['Change %'])
+      if (rpercent3.substring(0, 1) === '-') {
+        pcomppercent3.style.color = 'red'
+      }
+      pcomppercent3.innerText = String(data[2]['Change %'].toFixed(2)) + "%"
+
+      pcomptic4.innerText = data[3].Ticker
+      pcompname4.innerText = data[3].Company_Name
+      pcomprice4.innerText = "$" + data[3].Price
+      const rprice4 = String(data[3].Price)
+      if (rprice4.substring(0, 1) === '-') {
+        pcomprice4.style.color = 'red'
+      }
+
+      const rpercent4 = String(data[3]['Change %'])
+      if (rpercent4.substring(0, 1) === '-') {
+        pcomppercent4.style.color = 'red'
+      }
+      pcomppercent4.innerText = String(data[3]['Change %'].toFixed(2)) + "%"
+
+      pcomptic5.innerText = data[4].Ticker
+      pcompname5.innerText = data[4].Company_Name
+      pcomprice5.innerText = "$" + data[4].Price
+      const rprice5 = String(data[4].Price)
+      if (rprice5.substring(0, 1) === '-') {
+        pcomprice5.style.color = 'red'
+      }
+
+      const rpercent5 = String(data[4]['Change %'])
+      if (rpercent5.substring(0, 1) === '-') {
+        pcomppercent5.style.color = 'red'
+      }
+      pcomppercent5.innerText = String(data[4]['Change %'].toFixed(2)) + "%"
+
+      pcomptic6.innerText = data[5].Ticker
+      pcompname6.innerText = data[5].Company_Name
+      pcomprice6.innerText = "$" + data[5].Price
+      const rprice6 = String(data[5].Price)
+      if (rprice6.substring(0, 1) === '-') {
+        pcomprice6.style.color = 'red'
+      }
+
+      const rpercent6 = String(data[5]['Change %'])
+      if (rpercent6.substring(0, 1) === '-') {
+        pcomppercent6.style.color = 'red'
+      }
+      pcomppercent6.innerText = String(data[5]['Change %'].toFixed(2)) + "%"
+
+      pcomptic7.innerText = data[6].Ticker
+      pcompname7.innerText = data[6].Company_Name
+      pcomprice7.innerText = "$" + data[6].Price
+      const rprice7 = String(data[6].Price)
+      if (rprice7.substring(0, 1) === '-') {
+        pcomprice7.style.color = 'red'
+      }
+
+      const rpercent7 = String(data[6]['Change %'])
+      if (rpercent7.substring(0, 1) === '-') {
+        pcomppercent7.style.color = 'red'
+      }
+      pcomppercent7.innerText = String(data[6]['Change %'].toFixed(2)) + "%"
+
+      pcomptic8.innerText = data[7].Ticker
+      pcompname8.innerText = data[7].Company_Name
+      pcomprice8.innerText = "$" + data[7].Price
+      const rprice8 = String(data[7].Price)
+      if (rprice8.substring(0, 1) === '-') {
+        pcomprice8.style.color = 'red'
+      }
+
+      const rpercent8 = String(data[7]['Change %'])
+      if (rpercent8.substring(0, 1) === '-') {
+        pcomppercent8.style.color = 'red'
+      }
+      pcomppercent8.innerText = String(data[7]['Change %'].toFixed(2)) + "%"
+
+      pcomptic9.innerText = data[8].Ticker
+      pcompname9.innerText = data[8].Company_Name
+      pcomprice9.innerText = "$" + data[8].Price
+      const rprice9 = String(data[8].Price)
+      if (rprice9.substring(0, 1) === '-') {
+        pcomprice9.style.color = 'red'
+      }
+
+      const rpercent9 = String(data[8]['Change %'])
+      if (rpercent9.substring(0, 1) === '-') {
+        pcomppercent9.style.color = 'red'
+      }
+      pcomppercent9.innerText = String(data[8]['Change %'].toFixed(2)) + "%"
+
+      pcomptic10.innerText = data[9].Ticker
+      pcompname10.innerText = data[9].Company_Name
+      pcomprice10.innerText = "$" + data[9].Price
+      const rprice10 = String(data[9].Price)
+      if (rprice10.substring(0, 1) === '-') {
+        pcomprice10.style.color = 'red'
+      }
+
+      const rpercent10 = String(data[9]['Change %'])
+      if (rpercent10.substring(0, 1) === '-') {
+        pcomppercent10.style.color = 'red'
+      }
+      pcomppercent10.innerText = String(data[9]['Change %'].toFixed(2)) + "%"
+    })
+    .catch((err) => {
+      console.log(err);
+    });
+}
+document.addEventListener("DOMContentLoaded", function () {
+  peoplealsowatch();
+});
