@@ -341,6 +341,7 @@ const runpython = (args, filename) => {
         pyone.stdout.on('data', function (data) {
             data1 += data.toString();
             console.log(data1)
+            
         });
 
         pyone.on('close', (code) => {

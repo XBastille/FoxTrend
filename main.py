@@ -5,12 +5,15 @@ import pandas as pd
 import yfinance as yf
 import ta
 import json
+import requests
+from bs4 import BeautifulSoup
 
 class StockDataVisualizer:
     def __init__(self, company_name, index):
         self.company_name=company_name
         self.index=index
         self.stock_data=self.download_stock_data()
+        self.related_stocks = self.get_related_stocks()
 
     def download_stock_data(self):
         end_date=datetime.datetime.now()
@@ -44,6 +47,53 @@ class StockDataVisualizer:
         plt.title(f"Historical Close Prices for {self.company_name}")
         self.plot_technical_indicators_28_10("Price")'''
         print("csvfile is created")
+
+    def get_related_stocks(self):
+        headers = {'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_10_1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/39.0.2171.95 Safari/537.36'}
+        url = f"https://finance.yahoo.com/quote/{self.company_name}/chart"
+        r = requests.get(url, headers=headers)
+        soup = BeautifulSoup(r.text, "lxml")
+
+        tickers = [
+            ticker.text.strip()
+            for ticker in soup.find_all(class_="symbol yf-1m808gl")
+            if ticker.text.strip()
+            and not any(char in ticker.text for char in '%+')
+            and not ticker.text.strip().isdigit()
+        ]
+
+        stock_data = []
+        for ticker in tickers:
+            stock = yf.Ticker(ticker)
+            info = stock.info
+            
+            current_price = info.get("currentPrice")
+            if info.get("quoteType") == "CRYPTOCURRENCY":
+                current_price = info.get("dayLow")
+            
+            regular_market_open = info.get("regularMarketPreviousClose")
+            previous_close = info.get("dayLow")
+
+            if regular_market_open and previous_close:
+                change = round(regular_market_open - previous_close, 4)
+                change_percent = round(((regular_market_open - previous_close) / previous_close) * 100, 4)
+            else:
+                change = None
+                change_percent = None
+
+            stock_dict = {
+                "Ticker": ticker,
+                "Price": current_price,
+                "Change": change,
+                "Change %": change_percent,
+                "Company_Name": info.get("longName")
+            }
+            stock_data.append(stock_dict)
+
+        with open(f'public/people_also_watch.json', 'w') as f:
+            json.dump(stock_data, f, indent=4)
+        
+        return stock_data
 
     def plot_technical_indicators(self, start_date=None, end_date=None):
         df=self.plot_technical_indicators_2(start_date, end_date)

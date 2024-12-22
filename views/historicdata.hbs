@@ -442,77 +442,78 @@
             <h2 id="people">People Also Watch</h2>
 
             <div class="slider-container">
-
                 <div class="company-container" id="slider">
                     <div class="company-box">
-                        <b>AMZN</b>
-                        <p>Amazon</p>
-                        <p class="company-price">$519.38</p>
-                        <a class="company-percent">1.29%</a>
+                        <b id="prcomptic1"></b>
+                        <p id="prcompname1"></p>
+                        <p class="company-price" id="prcompprice1"></p>
+                        <a class="company-percent" id="prcomppercent1"></a>
                     </div>
                     <div class="company-box">
-                        <b>TSLA</b>
-                        <p>Tesla</p>
-                        <p class="company-price">$412.62 </p>
-                        <a class="company-percent">0.91%</a>
+                        <b id="prcomptic2"></b>
+                        <p id="prcompname2"></p>
+                        <p class="company-price" id="prcompprice2"></p>
+                        <a class="company-percent" id="prcomppercent2"></a>
                     </div>
                     <div class="company-box">
-                        <b>GOOG</b>
-                        <p>Alphabet</p>
-                        <p class="company-price">$685.09</p>
-                        <a class="company-percent">0.80%</a>
+                        <b id="prcomptic3"></b>
+                        <p id="prcompname3"></p>
+                        <p class="company-price" id="prcompprice3"></p>
+                        <a class="company-percent" id="prcomppercent3"></a>
                     </div>
                     <div class="company-box">
-                        <b>META</b>
-                        <p>Meta Platforms.</p>
-                        <p class="company-price">$179.44</p>
-                        <a class="company-percent">3.53%</a>
+                        <b id="prcomptic4"></b>
+                        <p id="prcompname4"></p>
+                        <p class="company-price" id="prcompprice4"></p>
+                        <a class="company-percent" id="prcomppercent4"></a>
                     </div>
                     <div class="company-box">
-                        <b>MSFT</b>
-                        <p>Microsoft</p>
-                        <p class="company-price">$160.28 </p>
-                        <a class="company-percent">1.56%</a>
+                        <b id="prcomptic5"></b>
+                        <p id="prcompname5"></p>
+                        <p class="company-price" id="prcompprice5"></p>
+                        <a class="company-percent" id="prcomppercent5"></a>
                     </div>
                     <div class="company-box">
-                        <b>NTFLX</b>
-                        <p>Netflix</p>
-                        <p class="company-price">$233.29</p>
-                        <a class="company-percent">6.33%</a>
+                        <b id="prcomptic6"></b>
+                        <p id="prcompname6"></p>
+                        <p class="company-price" id="prcompprice6"></p>
+                        <a class="company-percent" id="prcomppercent6"></a>
                     </div>
                     <div class="company-box">
-                        <b>NVDA</b>
-                        <p>NVIDIA</p>
-                        <p class="company-price">$108.75</p>
-                        <a class="company-percent">2.39%</a>
+                        <b id="prcomptic7"></b>
+                        <p id="prcompname7"></p>
+                        <p class="company-price" id="prcompprice7"></p>
+                        <a class="company-percent" id="prcomppercent7"></a>
                     </div>
                     <div class="company-box">
-                        <b>AMD</b>
-                        <p id="micro">Advanced Micro Devices </p>
-                        <p class="company-price">$155.99</p>
-                        <a class="company-percent">7.70%</a>
+                        <b id="prcomptic8"></b>
+                        <p id="prcompname8"></p>
+                        <p class="company-price" id="prcompprice8"></p>
+                        <a class="company-percent" id="prcomppercent8"></a>
                     </div>
                     <div class="company-box">
-                        <b>INTL</b>
-                        <p>Intel</p>
-                        <p class="company-price">$21.37</p>
-                        <a class="company-percent">0.60%</a>
+                        <b id="prcomptic9"></b>
+                        <p id="prcompname9"></p>
+                        <p class="company-price" id="prcompprice9"></p>
+                        <a class="company-percent" id="prcomppercent9"></a>
+                    </div>
+                    <div class="company-box">
+                        <b id="prcomptic10"></b>
+                        <p id="prcompname10"></p>
+                        <p class="company-price" id="prcompprice10"></p>
+                        <a class="company-percent" id="prcomppercent10"></a>
                     </div>
                 </div>
 
                 <div id="SliderBtns">
-
                     <span class="slider-btn next" onclick="slide(1)">
-                        <img src="media/arrow-right.jpg">
+                        <img src="media/arrow-right.jpg" />
                     </span>
-
 
                     <span class="slider-btn prev" onclick="slide(-1)">
-                        <img src="media/arrow-left.jpg">
+                        <img src="media/arrow-left.jpg" />
                     </span>
-
                 </div>
-
             </div>
         </div>
         <footer>
@@ -1144,6 +1145,216 @@
                 }
             }
         })
+
+        //people also watch
+
+        const prcomptic1 = document.getElementById('prcomptic1')
+        const prcompname1 = document.getElementById('prcompname1')
+        const prcomprice1 = document.getElementById('prcompprice1')
+        const prcomppercent1 = document.getElementById('prcomppercent1')
+
+        const prcomptic2 = document.getElementById('prcomptic2')
+        const prcompname2 = document.getElementById('prcompname2')
+        const prcomprice2 = document.getElementById('prcompprice2')
+        const prcomppercent2 = document.getElementById('prcomppercent2')
+
+        const prcomptic3 = document.getElementById('prcomptic3')
+        const prcompname3 = document.getElementById('prcompname3')
+        const prcomprice3 = document.getElementById('prcompprice3')
+        const prcomppercent3 = document.getElementById('prcomppercent3')
+
+        const prcomptic4 = document.getElementById('prcomptic4')
+        const prcompname4 = document.getElementById('prcompname4')
+        const prcomprice4 = document.getElementById('prcompprice4')
+        const prcomppercent4 = document.getElementById('prcomppercent4')
+
+        const prcomptic5 = document.getElementById('prcomptic5')
+        const prcompname5 = document.getElementById('prcompname5')
+        const prcomprice5 = document.getElementById('prcompprice5')
+        const prcomppercent5 = document.getElementById('prcomppercent5')
+
+        const prcomptic6 = document.getElementById('prcomptic6')
+        const prcompname6 = document.getElementById('prcompname6')
+        const prcomprice6 = document.getElementById('prcompprice6')
+        const prcomppercent6 = document.getElementById('prcomppercent6')
+
+        const prcomptic7 = document.getElementById('prcomptic7')
+        const prcompname7 = document.getElementById('prcompname7')
+        const prcomprice7 = document.getElementById('prcompprice7')
+        const prcomppercent7 = document.getElementById('prcomppercent7')
+
+        const prcomptic8 = document.getElementById('prcomptic8')
+        const prcompname8 = document.getElementById('prcompname8')
+        const prcomprice8 = document.getElementById('prcompprice8')
+        const prcomppercent8 = document.getElementById('prcomppercent8')
+
+        const prcomptic9 = document.getElementById('prcomptic9')
+        const prcompname9 = document.getElementById('prcompname9')
+        const prcomprice9 = document.getElementById('prcompprice9')
+        const prcomppercent9 = document.getElementById('prcomppercent9')
+
+        const prcomptic10 = document.getElementById('prcomptic10')
+        const prcompname10 = document.getElementById('prcompname10')
+        const prcomprice10 = document.getElementById('prcompprice10')
+        const prcomppercent10 = document.getElementById('prcomppercent10')
+
+        function peoplealsowatch() {
+            fetch("/public/people_also_watch.json")
+                .then((res) => {
+                    if (!res.ok) {
+                        console.log(res.status);
+                    }
+                    return res.json();
+                })
+                .then((data) => {
+                    prcomptic1.innerText = data[0].Ticker
+                    prcompname1.innerText = data[0].Company_Name
+                    prcomprice1.innerText = "$" + data[0].Price
+                    const r1price1 = String(data[0].Price)
+                    if (r1price1.substring(0, 1) === '-') {
+                        prcomprice1.style.color = 'red'
+                    }
+
+                    const r1percent1 = String(data[0]['Change %'])
+                    if (r1percent1.substring(0, 1) === '-') {
+                        prcomppercent1.style.color = 'red'
+                    }
+                    prcomppercent1.innerText = String(data[0]['Change %'].toFixed(2)) + "%"
+
+                    prcomptic2.innerText = data[1].Ticker
+                    prcompname2.innerText = data[1].Company_Name
+                    prcomprice2.innerText = "$" + data[1].Price
+                    const r2price2 = String(data[1].Price)
+                    if (r2price2.substring(0, 1) === '-') {
+                        prcomprice2.style.color = 'red'
+                    }
+
+                    const r2percent2 = String(data[1]['Change %'])
+                    if (r2percent2.substring(0, 1) === '-') {
+                        prcomppercent2.style.color = 'red'
+                    }
+                    prcomppercent2.innerText = String(data[1]['Change %'].toFixed(2)) + "%"
+
+                    prcomptic3.innerText = data[2].Ticker
+                    prcompname3.innerText = data[2].Company_Name
+                    prcomprice3.innerText = "$" + data[2].Price
+                    const r3price3 = String(data[2].Price)
+                    if (r3price3.substring(0, 1) === '-') {
+                        prcomprice3.style.color = 'red'
+                    }
+
+                    const r3percent3 = String(data[2]['Change %'])
+                    if (r3percent3.substring(0, 1) === '-') {
+                        prcomppercent3.style.color = 'red'
+                    }
+                    prcomppercent3.innerText = String(data[2]['Change %'].toFixed(2)) + "%"
+
+                    prcomptic4.innerText = data[3].Ticker
+                    prcompname4.innerText = data[3].Company_Name
+                    prcomprice4.innerText = "$" + data[3].Price
+                    const r4price4 = String(data[3].Price)
+                    if (r4price4.substring(0, 1) === '-') {
+                        prcomprice4.style.color = 'red'
+                    }
+
+                    const r4percent4 = String(data[3]['Change %'])
+                    if (r4percent4.substring(0, 1) === '-') {
+                        prcomppercent4.style.color = 'red'
+                    }
+                    prcomppercent4.innerText = String(data[3]['Change %'].toFixed(2)) + "%"
+
+                    prcomptic5.innerText = data[4].Ticker
+                    prcompname5.innerText = data[4].Company_Name
+                    prcomprice5.innerText = "$" + data[4].Price
+                    const r5price5 = String(data[4].Price)
+                    if (r5price5.substring(0, 1) === '-') {
+                        prcomprice5.style.color = 'red'
+                    }
+
+                    const r5percent5 = String(data[4]['Change %'])
+                    if (r5percent5.substring(0, 1) === '-') {
+                        prcomppercent5.style.color = 'red'
+                    }
+                    prcomppercent5.innerText = String(data[4]['Change %'].toFixed(2)) + "%"
+
+                    prcomptic6.innerText = data[5].Ticker
+                    prcompname6.innerText = data[5].Company_Name
+                    prcomprice6.innerText = "$" + data[5].Price
+                    const r6price6 = String(data[5].Price)
+                    if (r6price6.substring(0, 1) === '-') {
+                        prcomprice6.style.color = 'red'
+                    }
+
+                    const r6percent6 = String(data[5]['Change %'])
+                    if (r6percent6.substring(0, 1) === '-') {
+                        prcomppercent6.style.color = 'red'
+                    }
+                    prcomppercent6.innerText = String(data[5]['Change %'].toFixed(2)) + "%"
+
+                    prcomptic7.innerText = data[6].Ticker
+                    prcompname7.innerText = data[6].Company_Name
+                    prcomprice7.innerText = "$" + data[6].Price
+                    const r7price7 = String(data[6].Price)
+                    if (r7price7.substring(0, 1) === '-') {
+                        prcomprice7.style.color = 'red'
+                    }
+
+                    const r7percent7 = String(data[6]['Change %'])
+                    if (r7percent7.substring(0, 1) === '-') {
+                        prcomppercent7.style.color = 'red'
+                    }
+                    prcomppercent7.innerText = String(data[6]['Change %'].toFixed(2)) + "%"
+
+                    prcomptic8.innerText = data[7].Ticker
+                    prcompname8.innerText = data[7].Company_Name
+                    prcomprice8.innerText = "$" + data[7].Price
+                    const r8price8 = String(data[7].Price)
+                    if (r8price8.substring(0, 1) === '-') {
+                        prcomprice8.style.color = 'red'
+                    }
+
+                    const r8percent8 = String(data[7]['Change %'])
+                    if (r8percent8.substring(0, 1) === '-') {
+                        prcomppercent8.style.color = 'red'
+                    }
+                    prcomppercent8.innerText = String(data[7]['Change %'].toFixed(2)) + "%"
+
+                    prcomptic9.innerText = data[8].Ticker
+                    prcompname9.innerText = data[8].Company_Name
+                    prcomprice9.innerText = "$" + data[8].Price
+                    const r9price9 = String(data[8].Price)
+                    if (r9price9.substring(0, 1) === '-') {
+                        prcomprice9.style.color = 'red'
+                    }
+
+                    const r9percent9 = String(data[8]['Change %'])
+                    if (r9percent9.substring(0, 1) === '-') {
+                        prcomppercent9.style.color = 'red'
+                    }
+                    prcomppercent9.innerText = String(data[8]['Change %'].toFixed(2)) + "%"
+
+                    prcomptic10.innerText = data[9].Ticker
+                    prcompname10.innerText = data[9].Company_Name
+                    prcomprice10.innerText = "$" + data[9].Price
+                    const r10price10 = String(data[9].Price)
+                    if (r10price10.substring(0, 1) === '-') {
+                        prcomprice10.style.color = 'red'
+                    }
+
+                    const r10percent10 = String(data[9]['Change %'])
+                    if (r10percent10.substring(0, 1) === '-') {
+                        prcomppercent10.style.color = 'red'
+                    }
+                    prcomppercent10.innerText = String(data[9]['Change %'].toFixed(2)) + "%"
+                })
+                .catch((err) => {
+                    console.log(err);
+                });
+        }
+        document.addEventListener("DOMContentLoaded", function () {
+            peoplealsowatch();
+        });
+
     </script>
 </body>
 
