@@ -1,6 +1,6 @@
 # FoxTrend
 
-<img src="public/Media/website_logo.jpg" alt="FoxTrend Logo" height="400" margin-left="400">
+<img src="images/logo.png" alt="FoxTrend Logo" height="400">
 
 # 🚀 DEVELOPMENT STAGE RELEASED! 🎉
 We are thrilled to announce that FoxTrend has officially entered the development stage in a grand way, marking an exciting milestone in its journey. 🎉
@@ -30,6 +30,17 @@ Clone the repository to explore the initial codebase:
 ```bash
 git clone https://github.com/XBastille/FoxTrend.git
 ```
+
+After cloning, initialize the project by running the following commands:
+
+```bash
+npm init
+npm i bcryptjs body-parser express express-session hbs passport passport-local node-cron csv-parser
+```
+
+Ensure you configure the project with your own SQL password and MongoDB URL by updating the respective configuration files. Add your MongoDB key in `key.js` and your SQL password in the relevant Java files.
+
+Please note that FoxTrend is currently in the development phase. Images and videos are not yet connected, and the design is still a work in progress to meet our expectations.
 
 ## Contact
 
