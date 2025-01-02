@@ -1,0 +1,242 @@
+[
+    {
+        "Ticker": "AMZN",
+        "Price": 227.03,
+        "Change": 6.48,
+        "Change %": 2.9381,
+        "Company_Name": "Amazon.com, Inc.",
+        "Volume": 43683979,
+        "Beta": 1.146,
+        "PE_Ratio": 48.510685
+    },
+    {
+        "Ticker": "LULU",
+        "Price": 399.6,
+        "Change": 54.79,
+        "Change %": 15.8899,
+        "Company_Name": "Lululemon Athletica Inc.",
+        "Volume": 10890880,
+        "Beta": 1.237,
+        "PE_Ratio": 28.89371
+    },
+    {
+        "Ticker": "DOCU",
+        "Price": 106.99,
+        "Change": 23.31,
+        "Change %": 27.8561,
+        "Company_Name": "DocuSign, Inc.",
+        "Volume": 19582503,
+        "Beta": 0.898,
+        "PE_Ratio": 22.151138
+    },
+    {
+        "Ticker": "PLTR",
+        "Price": 76.34,
+        "Change": 4.47,
+        "Change %": 6.2196,
+        "Company_Name": "Palantir Technologies Inc.",
+        "Volume": 91235644,
+        "Beta": 2.697,
+        "PE_Ratio": 381.69998
+    },
+    {
+        "Ticker": "ASAN",
+        "Price": 22.19,
+        "Change": 6.73,
+        "Change %": 43.5317,
+        "Company_Name": "Asana, Inc.",
+        "Volume": 23821631,
+        "Beta": 1.134,
+        "PE_Ratio": null
+    },
+    {
+        "Ticker": "GME",
+        "Price": 29.06,
+        "Change": 0.43,
+        "Change %": 1.5019,
+        "Company_Name": "GameStop Corp.",
+        "Volume": 14506375,
+        "Beta": -0.098,
+        "PE_Ratio": 207.57143
+    },
+    {
+        "Ticker": "AMC",
+        "Price": 4.73,
+        "Change": -0.47,
+        "Change %": -9.0385,
+        "Company_Name": "AMC Entertainment Holdings, Inc.",
+        "Volume": 36752999,
+        "Beta": 1.994,
+        "PE_Ratio": null
+    },
+    {
+        "Ticker": "QBTS",
+        "Price": 5.06,
+        "Change": 1.29,
+        "Change %": 34.2175,
+        "Company_Name": "D-Wave Quantum Inc.",
+        "Volume": 84685344,
+        "Beta": 0.946,
+        "PE_Ratio": null
+    },
+    {
+        "Ticker": "SHOP",
+        "Price": 118.37,
+        "Change": 4.28,
+        "Change %": 3.7514,
+        "Company_Name": "Shopify Inc.",
+        "Volume": 10120944,
+        "Beta": 2.365,
+        "PE_Ratio": 110.62617
+    },
+    {
+        "Ticker": "RBRK",
+        "Price": 64.63,
+        "Change": 10.97,
+        "Change %": 20.4435,
+        "Company_Name": null,
+        "Volume": 16303605,
+        "Beta": null,
+        "PE_Ratio": null
+    },
+    {
+        "Ticker": "META",
+        "Price": 623.77,
+        "Change": 14.84,
+        "Change %": 2.4371,
+        "Company_Name": "Meta Platforms, Inc.",
+        "Volume": 16945869,
+        "Beta": 1.215,
+        "PE_Ratio": 29.409243
+    },
+    {
+        "Ticker": "GXAI",
+        "Price": 2.6,
+        "Change": 1.18,
+        "Change %": 83.0986,
+        "Company_Name": "Gaxos.ai Inc.",
+        "Volume": 143331615,
+        "Beta": null,
+        "PE_Ratio": null
+    },
+    {
+        "Ticker": "RUM",
+        "Price": 8.41,
+        "Change": 1.435,
+        "Change %": 20.5735,
+        "Company_Name": "Rumble Inc.",
+        "Volume": 12656228,
+        "Beta": 0.731,
+        "PE_Ratio": null
+    },
+    {
+        "Ticker": "UPC",
+        "Price": 3.39,
+        "Change": 2.34,
+        "Change %": 222.8571,
+        "Company_Name": "Universe Pharmaceuticals INC",
+        "Volume": 93285703,
+        "Beta": 1.544,
+        "PE_Ratio": null
+    },
+    {
+        "Ticker": "ULTA",
+        "Price": 428.17,
+        "Change": 35.3,
+        "Change %": 8.9852,
+        "Company_Name": "Ulta Beauty, Inc.",
+        "Volume": 3415407,
+        "Beta": 1.326,
+        "PE_Ratio": 17.154247
+    },
+    {
+        "Ticker": "NVAX",
+        "Price": 8.94,
+        "Change": 0.64,
+        "Change %": 7.7108,
+        "Company_Name": "Novavax, Inc.",
+        "Volume": 7091414,
+        "Beta": 2.088,
+        "PE_Ratio": null
+    },
+    {
+        "Ticker": "RGTI",
+        "Price": 4.38,
+        "Change": 1.2,
+        "Change %": 37.7358,
+        "Company_Name": "Rigetti Computing, Inc.",
+        "Volume": 130999202,
+        "Beta": 2.138,
+        "PE_Ratio": null
+    },
+    {
+        "Ticker": "SERV",
+        "Price": 11.8,
+        "Change": 2.27,
+        "Change %": 23.8195,
+        "Company_Name": "Serve Robotics Inc.",
+        "Volume": 19885208,
+        "Beta": null,
+        "PE_Ratio": null
+    },
+    {
+        "Ticker": "AI",
+        "Price": 40.52,
+        "Change": 3.03,
+        "Change %": 8.0822,
+        "Company_Name": "C3.ai, Inc.",
+        "Volume": 10979214,
+        "Beta": 1.789,
+        "PE_Ratio": null
+    },
+    {
+        "Ticker": "PLUG",
+        "Price": 2.38,
+        "Change": -0.07,
+        "Change %": -2.8571,
+        "Company_Name": "Plug Power Inc.",
+        "Volume": 76675349,
+        "Beta": 1.81,
+        "PE_Ratio": null
+    },
+    {
+        "Ticker": "SMCI",
+        "Price": 43.93,
+        "Change": 2.79,
+        "Change %": 6.7817,
+        "Company_Name": "Super Micro Computer, Inc.",
+        "Volume": 93555503,
+        "Beta": 1.279,
+        "PE_Ratio": 21.855722
+    },
+    {
+        "Ticker": "OXY",
+        "Price": 47.54,
+        "Change": -0.94,
+        "Change %": -1.9389,
+        "Company_Name": "Occidental Petroleum Corporation",
+        "Volume": 14748278,
+        "Beta": 1.608,
+        "PE_Ratio": 13.024657
+    },
+    {
+        "Ticker": "AA",
+        "Price": 42.49,
+        "Change": -3.68,
+        "Change %": -7.9705,
+        "Company_Name": "Alcoa Corporation",
+        "Volume": 9493971,
+        "Beta": 2.419,
+        "PE_Ratio": null
+    },
+    {
+        "Ticker": "ALBT",
+        "Price": 4.12,
+        "Change": 1.46,
+        "Change %": 54.8872,
+        "Company_Name": "Avalon GloboCare Corp.",
+        "Volume": 48719205,
+        "Beta": null,
+        "PE_Ratio": null
+    }
+]

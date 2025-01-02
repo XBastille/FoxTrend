@@ -1,0 +1,10 @@
+Hatchback
+Coupe
+Estate
+Saloon
+Convertible
+MPV
+SUV
+Minibus
+Combi Van
+Pickup
