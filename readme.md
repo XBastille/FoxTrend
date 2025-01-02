@@ -1,8 +1,9 @@
 ---
 
 # FoxTrend
-
-![FoxTrend Logo](public/Media/website_logo.jpg)
+```markdown
+<img src="public/Media/website_logo.jpg" alt="FoxTrend Logo" height="100">
+```
 
 # 🚀 DEVELOPMENT STAGE RELEASED! 🎉
 We are thrilled to announce that FoxTrend has officially entered the development stage in a grand way, marking an exciting milestone in its journey. 🎉
