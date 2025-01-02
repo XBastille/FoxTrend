@@ -34,6 +34,7 @@ git clone https://github.com/XBastille/FoxTrend.git
 After cloning, initialize the project by running the following commands:
 
 ```bash
+cd FoxTrend
 npm init
 npm i bcryptjs body-parser express express-session hbs passport passport-local node-cron csv-parser
 ```
