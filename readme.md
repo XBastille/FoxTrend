@@ -1,5 +1,3 @@
----
-
 # FoxTrend
 
 <img src="public/Media/website_logo.jpg" alt="FoxTrend Logo" height="400" margin-left="400">
