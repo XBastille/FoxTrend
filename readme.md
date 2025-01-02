@@ -2,7 +2,7 @@
 
 # FoxTrend
 
-<img src="public/Media/website_logo.jpg" alt="FoxTrend Logo" height="400">
+<img src="public/Media/website_logo.jpg" alt="FoxTrend Logo" height="400" width="200">
 
 # 🚀 DEVELOPMENT STAGE RELEASED! 🎉
 We are thrilled to announce that FoxTrend has officially entered the development stage in a grand way, marking an exciting milestone in its journey. 🎉
