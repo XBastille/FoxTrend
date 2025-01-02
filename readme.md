@@ -21,7 +21,7 @@ These additional tools are available as secondary features:
 
 ## Status
 
-FoxTrend has officially entered the development stage, which was released in a grand way to mark the beginning of its journey. 🎉✨ The platform’s stock-related features are the primary focus, and we are actively enhancing functionality. Stay tuned for exciting updates! 🔧📅
+FoxTrend has officially entered the development stage, which marks a huge milestone in its journey. 🎉✨ The platform’s stock-related features are the primary focus, and we are actively enhancing functionality. Stay tuned for exciting updates! 🔧📅
 
 ## Getting Started
 
