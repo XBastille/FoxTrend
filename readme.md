@@ -47,7 +47,7 @@ Please note that FoxTrend is currently in the development phase. Images and vide
 
 📧 For questions or inquiries, please contact me at [eziopuhan825@gmail.com](mailto:eziopuhan825@gmail.com).
 
-Thank you for your interest in FoxTrendAI! 🙏🚀
+Thank you for your interest in FoxTrend! 🙏🚀
 
 ---
 
