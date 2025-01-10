@@ -3,7 +3,7 @@
 <img src="public/Media/website_logo.jpg" alt="FoxTrend Logo" height="400">
 
 # 🚀 DEVELOPMENT STAGE RELEASED! 🎉
-We are thrilled to announce that FoxTrend has officially entered the development stage in a grand way, marking an exciting milestone in its journey. 🎉
+We are thrilled to announce that FoxTrend has officially entered the development stage, marking an exciting milestone in its journey. 🎉
 
 FoxTrend is a comprehensive platform designed to provide detailed stock price information, predictions, and company insights for every company in existence, including cryptocurrencies. With an emphasis on data-driven decision-making, our platform enables users to track stock prices and forecast future trends with accuracy and ease. 📊💡
 
