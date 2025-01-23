@@ -286,7 +286,7 @@
             </div>
             <div class="services-dropdown-column">
               <div class="secondary-section">
-              <h3>Secondary <span class="arrow">→</span></h3>
+                <h3>Secondary <span class="arrow">→</span></h3>
                 <div class="secondary-elements">
                   <a href="/selectcar">Used Car Prediction</a>
                   <a href="/selecthouse">Housing Prediction</a>
@@ -326,38 +326,14 @@
     </div>
 
     <div class="Greeting-Message">
-      <h2>Good Morning, {{username}}!</h2>
+      <h2>Welcome Back, {{username}}!!</h2>
       <h3>Time to seize the market!!</h3>
-      <!-- <h2>Good afternoon, [User's Name]! Check the latest market pulse</h2>
-        <h2>Good evening, [User's Name]! Review today’s market wrap-up.</h2> -->
     </div>
+    <div class="stock-animation">
+    <video autoplay loop muted></video>
+  </div>
 
-    <div id="scene" class="w-96 h-96 relative">
-      <div id="sun"
-        class="absolute w-64 h-64 rounded-full left-1/2 top-1/2 transform -translate-x-1/2 -translate-y-1/2">
-        <div class="sun-texture"></div>
-      </div>
-      <div id="rays" class="absolute w-full h-full left-1/2 top-1/2 transform -translate-x-1/2 -translate-y-1/2">
-        <div
-          class="ray absolute w-2 h-20 bg-yellow-200 left-1/2 top-0 transform -translate-x-1/2 -translate-y-full origin-bottom">
-        </div>
-      </div>
-      <div id="clouds" class="absolute inset-0">
-        <svg width="0" height="0">
-          <filter id="cloud-filter">
-            <feGaussianBlur in="SourceGraphic" stdDeviation="5" />
-          </filter>
-        </svg>
-        <div class="cloud absolute w-64 h-32 rounded-full">
-          <div class="cloud-highlight"></div>
-          <div class="cloud-shadow"></div>
-        </div>
-        <div class="cloud absolute w-72 h-36 rounded-full">
-          <div class="cloud-highlight"></div>
-          <div class="cloud-shadow"></div>
-        </div>
-      </div>
-    </div>
+   
 
     <h2 style="font-size: 32px; color: white;  margin-left: 220px; ;">Trending</h2>
     <section class="trending">
@@ -889,19 +865,20 @@
       val = searchcomp.value
       searchcomp.value = "";
       const dates = new Date()
-      const month = dates.getMonth()
-      const months = dates.getMonth() + 1
+      let month = dates.getMonth()
+      let months = dates.getMonth() + 1
       let day = dates.getDate()
       let year = dates.getFullYear()
+      let years = dates.getFullYear();
       if (month === 0) {
         year = year - 1;
         month = 12
         months = 1;
       }
       console.log(day + "-" + month + "-" + year)
-      console.log(day + "-" + months + "-" + year)
+      console.log(day + "-" + months + "-" + years)
       const start = day + "-" + month + "-" + year
-      const end = day + "-" + months + "-" + year
+      const end = day + "-" + months + "-" + years
 
       try {
         const response = await fetch('/dashboard', {

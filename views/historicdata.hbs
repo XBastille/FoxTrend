@@ -656,7 +656,7 @@
                     endsmonth = (i + 1);
                 }
             }
-            var endsyear = first.substring(12, 16)
+            var endsyear = last.substring(12, 16)
             const end = (endsday + '-' + endsmonth + '-' + endsyear);
             console.log(end)
             loadings.style.display = 'flex'
@@ -691,10 +691,11 @@
         const onemonths = document.getElementById('onemonth')
         onemonths.addEventListener('click', async () => {
             const dates = new Date()
-            const month = dates.getMonth()
-            const months = dates.getMonth() + 1
+            let month = dates.getMonth()
+            let months = dates.getMonth() + 1
             let day = dates.getDate()
             let year = dates.getFullYear()
+            let years = dates.getFullYear();
             if (month === 0) {
                 year = year - 1;
                 month = 12
@@ -703,7 +704,7 @@
             console.log(day + "-" + month + "-" + year)
             console.log(day + "-" + months + "-" + year)
             const start = day + "-" + month + "-" + year
-            const end = day + "-" + months + "-" + year
+            const end = day + "-" + months + "-" + years
             loadings.style.display = 'flex'
             loadings.style.zIndex = '999'
             myplots.style.zIndex = '-999'
@@ -742,14 +743,23 @@
             let months = dates.getMonth() + 1
             let day = dates.getDate()
             let year = dates.getFullYear()
+            let years = dates.getFullYear();
             if (month === 0) {
                 year = year - 1;
+                month = 12;
+            }
+            if (month === 1) {
+                month = 13
+            }
+
+            if (month === 2) {
+                month = 14;
             }
             month -= 2;
             console.log(day + "-" + month + "-" + year)
             console.log(day + "-" + months + "-" + year)
             const start = day + "-" + month + "-" + year
-            const end = day + "-" + months + "-" + year
+            const end = day + "-" + months + "-" + years
             loadings.style.display = 'flex'
             loadings.style.zIndex = '999'
             myplots.style.zIndex = '-999'
