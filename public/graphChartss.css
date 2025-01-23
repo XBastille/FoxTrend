@@ -95,6 +95,7 @@
   justify-content: flex-start;
   align-items: flex-start;
   padding-left: 0;
+  height: 400px;
   margin-left: 0;
 }
 
@@ -109,10 +110,17 @@
   color: #fff2f2;
   font-weight: 500;
   margin-left: 240px;
-  margin-bottom: -47px;
   display: flex;
   align-items: center;
   transition: color 0.3s ease;
+}
+
+.services-dropdown-column h2 {
+  margin-top: -47px;
+}
+
+.services-dropdown-column h3 {
+  margin-top: -150px;
 }
 
 .services-dropdown-column h3 {
@@ -122,11 +130,13 @@
 .services-dropdown-column h2:hover,
 .services-dropdown-column h3:hover {
   color: #999;
+
 }
 
 .services-dropdown-column h2 .arrow {
   display: inline-block;
   margin-left: 143px;
+  margin-bottom: 100px;
   transition: transform 0.3s ease;
 }
 
@@ -134,7 +144,7 @@
   display: block;
   position: relative;
   left: 470px;
-  bottom: -10px;
+  bottom: 155px;
   padding: 10px;
   z-index: 10;
   border-radius: 5px;
@@ -144,11 +154,12 @@
   display: none;
   position: absolute;
   left: 570px;
-  bottom: -25px;
+  bottom: 57px;
   padding: 10px;
   z-index: 10;
   border-radius: 5px;
 }
+
 
 .secondary-elements a {
   white-space: nowrap;
@@ -160,6 +171,10 @@
 
 .secondary-section:hover .secondary-elements {
   display: block;
+}
+
+.secondary-section:hover {
+  position: absolute;
 }
 
 .secondary-section:hover ~ .primary-elements {
@@ -177,6 +192,7 @@
 .services-dropdown-column h3 .arrow {
   display: inline-block;
   margin-left: 110px;
+  margin-bottom: 100px;
   transition: transform 0.3s ease;
 }
 
@@ -487,6 +503,14 @@ body {
   transition: 0.5s;
 }
 
+.sum,
+.cha,
+.histo,
+.stat,
+.pro {
+  text-decoration: none;
+}
+
 img {
   height: 25px;
   width: 25px;
@@ -633,9 +657,6 @@ button{
   transition: transform 0.3s ease;
 }
 
-.show .Arrow {
-  transform: rotate(180deg);
-}
 
 #stp {
   background-color: #000000;

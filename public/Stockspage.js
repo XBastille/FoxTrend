@@ -1171,6 +1171,7 @@ oneweek.addEventListener('click', async () => {
   var endsmonth;
   var currentDate = new Date();
   var last = new Date(currentDate.setDate(currentDate.getDate() - currentDate.getDay())).toUTCString();
+  console.log(last)
   var first = new Date(currentDate.setDate(currentDate.getDate() - currentDate.getDay() - 6)).toUTCString();
   const monthly = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
   var firstsday = first.substring(5, 7)
@@ -1191,7 +1192,8 @@ oneweek.addEventListener('click', async () => {
       endsmonth = (i + 1);
     }
   }
-  var endsyear = first.substring(12, 16)
+  var endsyear = last.substring(12, 16)
+  console.log(endsyear)
   const end = (endsday + '-' + endsmonth + '-' + endsyear);
   console.log(end)
   loading.style.display = 'flex'
@@ -1225,17 +1227,18 @@ oneweek.addEventListener('click', async () => {
 const onemonth = document.getElementById('onemonth')
 onemonth.addEventListener('click', async () => {
   const dates = new Date()
-  const month = dates.getMonth()
-  const months = dates.getMonth() + 1
+  let month = dates.getMonth()
+  let months = dates.getMonth() + 1
   let day = dates.getDate()
   let year = dates.getFullYear()
+  let years = dates.getFullYear()
   if (month === 0) {
     year = year - 1;
     month = 12
     months = 1;
   }
   const start = day + "-" + month + "-" + year
-  const end = day + "-" + months + "-" + year
+  const end = day + "-" + months + "-" + years
   loading.style.display = 'flex'
   loading.style.zIndex = '999'
   myplot.style.zIndex = '-999'
@@ -1275,14 +1278,23 @@ threemonth.addEventListener('click', async () => {
   let months = dates.getMonth() + 1
   let day = dates.getDate()
   let year = dates.getFullYear()
+  let years = dates.getFullYear();
   if (month === 0) {
     year = year - 1;
+    month = 12;
+  }
+  if (month === 1) {
+    month = 13
+  }
+
+  if (month === 2) {
+    month = 14;
   }
   month -= 2;
   console.log(day + "-" + month + "-" + year)
   console.log(day + "-" + months + "-" + year)
   const start = day + "-" + month + "-" + year
-  const end = day + "-" + months + "-" + year
+  const end = day + "-" + months + "-" + years
   loading.style.display = 'flex'
   loading.style.zIndex = '999'
   myplot.style.zIndex = '-999'
@@ -1468,8 +1480,8 @@ searching.addEventListener('keypress', async (e) => {
     val = searching.value
     searching.value = '';
     const dates = new Date()
-    const month = dates.getMonth()
-    const months = dates.getMonth() + 1
+    let month = dates.getMonth()
+    let months = dates.getMonth() + 1
     let day = dates.getDate()
     let year = dates.getFullYear()
     if (month === 0) {

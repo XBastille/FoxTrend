@@ -8,15 +8,24 @@ const visibleSlides = 5;
 const totalSlides = document.querySelectorAll('.company-box').length;
 const slider = document.getElementById('slider');
 
+function setRandomVideo() {
+  const totalVideos = 5; 
+  const randomIndex = Math.floor(Math.random() * totalVideos) + 1;
+  const video = document.querySelector('.stock-animation video');
+  video.src = `/public/Media/stock_animation_${randomIndex}.mp4`;
+}
 
-document.addEventListener('DOMContentLoaded', function() {
+document.addEventListener('DOMContentLoaded', setRandomVideo);
+
+
+document.addEventListener('DOMContentLoaded', function () {
   addTrendingBoxClickHandlers();
 });
 
 function addTrendingBoxClickHandlers() {
-  for(let i = 1; i <= 15; i++) {
+  for (let i = 1; i <= 15; i++) {
     const box = document.querySelector(`.company-box:nth-child(${i})`);
-    box.addEventListener('click', function() {
+    box.addEventListener('click', function () {
       const ticker = document.getElementById(`ticker${i}`).innerText;
       handleRowClick(ticker);
     });
@@ -40,15 +49,15 @@ function loadStockData(initial = true) {
   if (initial) {
     currentPage = 1;
   }
-  
+
   Papa.parse("/public/csv/all_stock_data.csv", {
     download: true,
     header: true,
-    complete: function(results) {
+    complete: function (results) {
       allStockData = results.data;
       const start = (currentPage - 1) * itemsPerPage;
       const end = currentPage * itemsPerPage;
-      
+
       const stocksToDisplay = results.data.slice(start, end).map(row => ({
         company: row.Company_Name || row.Ticker,
         price: parseFloat(row.Price),
@@ -58,15 +67,15 @@ function loadStockData(initial = true) {
         marketCap: row['Market Cap'],
         yearChange: parseFloat(row['52W Change'])
       }));
-      
+
       if (initial) {
-        document.getElementById('stockTableBody').innerHTML = 
+        document.getElementById('stockTableBody').innerHTML =
           stocksToDisplay.map(stock => renderStockRow(stock)).join('');
       } else {
-        document.getElementById('stockTableBody').innerHTML += 
+        document.getElementById('stockTableBody').innerHTML +=
           stocksToDisplay.map(stock => renderStockRow(stock)).join('');
       }
-      
+
       isLoading = false;
     }
   });
@@ -74,7 +83,7 @@ function loadStockData(initial = true) {
 
 window.addEventListener('scroll', () => {
   const { scrollTop, scrollHeight, clientHeight } = document.documentElement;
-  
+
   if (scrollTop + clientHeight >= scrollHeight - 5 && !isLoading) {
     isLoading = true;
     currentPage++;
@@ -474,15 +483,15 @@ function renderStockRow(stock) {
 function handleRowClick(company) {
   const searchInput = document.getElementById('searchcomp');
   searchInput.value = company;
-  
+
   const enterEvent = new KeyboardEvent('keypress', {
-      key: 'Enter',
-      code: 'Enter',
-      keyCode: 13,
-      which: 13,
-      bubbles: true
+    key: 'Enter',
+    code: 'Enter',
+    keyCode: 13,
+    which: 13,
+    bubbles: true
   });
-  
+
   searchInput.dispatchEvent(enterEvent);
 }
 
@@ -1067,17 +1076,18 @@ async function renderingcomp() {
   const val = acp;
   console.log(val);
   const dates = new Date()
-  const month = dates.getMonth()
-  const months = dates.getMonth() + 1
+  let month = dates.getMonth()
+  let months = dates.getMonth() + 1
   let day = dates.getDate()
   let year = dates.getFullYear()
+  let years = dates.getFullYear();
   if (month === 0) {
     year = year - 1;
     month = 12
     months = 1;
   }
   const start = day + "-" + month + "-" + year
-  const end = day + "-" + months + "-" + year
+  const end = day + "-" + months + "-" + years
   const graphsignal = "doit"
 
 
@@ -1115,21 +1125,22 @@ async function duplicating(company_naming, number, boxing) {
   const val = company_naming;
   console.log(val);
   const dates = new Date()
-  const month = dates.getMonth()
-  const months = dates.getMonth() + 1
+  let month = dates.getMonth()
+  let months = dates.getMonth() + 1
   let day = dates.getDate()
   let year = dates.getFullYear()
+  let years = dates.getFullYear();
   if (month === 0) {
     year = year - 1;
     month = 12
     months = 1;
   }
   const start = day + "-" + month + "-" + year
-  const end = day + "-" + months + "-" + year
+  const end = day + "-" + months + "-" + years
   const graphsignal = "doit"
 
   loading1.style.marginTop = '1180px'
-  loading1.style.marginLeft='240px'
+  loading1.style.marginLeft = '240px'
   loading1.style.display = 'flex'
   loading1.style.zIndex = '9999'
   background1.style.zIndex = '-999'

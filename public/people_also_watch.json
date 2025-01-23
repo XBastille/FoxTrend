@@ -1,72 +1,72 @@
 [
     {
-        "Ticker": "RIVN",
-        "Price": 13.83,
-        "Change": 0.3299,
-        "Change %": 2.5915,
-        "Company_Name": "Rivian Automotive, Inc."
+        "Ticker": "BABA",
+        "Price": 85.25,
+        "Change": 1.29,
+        "Change %": 1.5157,
+        "Company_Name": "Alibaba Group Holding Limited"
     },
     {
-        "Ticker": "LCID",
-        "Price": 3.02,
-        "Change": 0.05,
-        "Change %": 1.938,
-        "Company_Name": "Lucid Group, Inc."
+        "Ticker": "JD",
+        "Price": 38.645,
+        "Change": 0.58,
+        "Change %": 1.5049,
+        "Company_Name": "JD.com, Inc."
     },
     {
-        "Ticker": "F",
-        "Price": 9.88,
-        "Change": 0.06,
-        "Change %": 0.6198,
-        "Company_Name": "Ford Motor Company"
+        "Ticker": "MELI",
+        "Price": 1816.175,
+        "Change": 2.315,
+        "Change %": 0.1275,
+        "Company_Name": "MercadoLibre, Inc."
     },
     {
-        "Ticker": "NIO",
-        "Price": 4.54,
-        "Change": -0.02,
-        "Change %": -0.4525,
-        "Company_Name": "NIO Inc."
+        "Ticker": "PDD",
+        "Price": 101.998,
+        "Change": 1.35,
+        "Change %": 1.327,
+        "Company_Name": "PDD Holdings Inc."
     },
     {
-        "Ticker": "GM",
-        "Price": 51.81,
-        "Change": 0.27,
-        "Change %": 0.5392,
-        "Company_Name": "General Motors Company"
+        "Ticker": "SE",
+        "Price": 116.805,
+        "Change": 2.36,
+        "Change %": 2.0345,
+        "Company_Name": "Sea Limited"
     },
     {
-        "Ticker": "NSANY",
-        "Price": 5.68,
-        "Change": 0.04,
-        "Change %": 0.7117,
-        "Company_Name": "Nissan Motor Co., Ltd."
+        "Ticker": "9988.HK",
+        "Price": 82.9,
+        "Change": -0.35,
+        "Change %": -0.424,
+        "Company_Name": "Alibaba Group Holding Limited"
     },
     {
-        "Ticker": "HMC",
-        "Price": 23.89,
-        "Change": 0.29,
-        "Change %": 1.2388,
-        "Company_Name": "Honda Motor Co., Ltd."
+        "Ticker": "CHWY",
+        "Price": 37.74,
+        "Change": 0.07,
+        "Change %": 0.1885,
+        "Company_Name": "Chewy, Inc."
     },
     {
-        "Ticker": "XPEV",
-        "Price": 12.64,
-        "Change": 0.48,
-        "Change %": 3.9248,
-        "Company_Name": "XPeng Inc."
+        "Ticker": "CPNG",
+        "Price": 22.09,
+        "Change": 0.24,
+        "Change %": 1.0904,
+        "Company_Name": "Coupang, Inc."
     },
     {
-        "Ticker": "TM",
-        "Price": 178.17,
-        "Change": -1.78,
-        "Change %": -1.0114,
-        "Company_Name": "Toyota Motor Corporation"
+        "Ticker": "W",
+        "Price": 46.7401,
+        "Change": 1.0395,
+        "Change %": 2.2254,
+        "Company_Name": "Wayfair Inc."
     },
     {
-        "Ticker": "GOEV",
-        "Price": 0.0856,
-        "Change": 0.0143,
-        "Change %": 17.875,
-        "Company_Name": "Canoo Inc."
+        "Ticker": "ETSY",
+        "Price": 54.155,
+        "Change": 0.15,
+        "Change %": 0.2879,
+        "Company_Name": "Etsy, Inc."
     }
 ]
