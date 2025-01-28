@@ -1,0 +1,558 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src='https://cdn.plot.ly/plotly-2.32.0.min.js'></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.3.0/papaparse.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css"></script>
+    <link rel="stylesheet" href="graphstatss.css">
+</head>
+
+<body>
+    <ul class="icons open"> 
+        <a href="#" class="fox-icon-link">
+            <img src="media/fox.jpg" alt="Fox Icon" class="logo">
+          </a>
+        <li class="Icon-items" data-name="Home">
+            <img src="media/home.jpg" id="item1"> 
+            <span class="icon-name">Home</span>
+        </li>
+        <li class="Icon-items" data-name="Watch">
+            <img src="media/recent_watch.jpg" id="item2"> 
+            <span class="icon-name">Watch</span>
+        </li>
+        <li class="Icon-items" data-name="Lists">
+            <img src="media/list.jpg" id="item3">
+            <span class="icon-name">Lists</span>
+        </li>
+        <li class="Icon-items" data-name="Donate">
+            <img src="media/donate.jpg" id="item4">
+            <span class="icon-name">Donate</span>
+        </li>
+        <li class="Icon-items" data-name="Profile">
+            <img src="media/account.jpg" id="item5">
+            <span class="icon-name">Profile</span>
+        </li>
+        <li class="Arrow">
+            <img src="media/arrow-right.jpg">
+        </li>
+    </ul>  
+   
+           
+              
+    <div class="search-container">
+        <input type="text" class="search-bar" placeholder="Search">
+        <i class="search-icon fas fa-search"></i>
+        <div class="magnifying-glass">
+            <i class="fa-solid fa-magnifying-glass"></i>
+        </div>
+        <div class="navigationBar">
+            <a href="#" class="serv">
+                Services
+                <svg width="20" height="20" viewBox="0 -4 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M5 7.5L10 12.5L15 7.5" stroke="currentColor" stroke-width="1.67" stroke-linecap="round" stroke-linejoin="round"></path>
+                </svg>
+            </a>
+            <a href="#" class="comp">
+                Company
+                <svg width="20" height="20" viewBox="0 -4 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M5 7.5L10 12.5L15 7.5" stroke="currentColor" stroke-width="1.67" stroke-linecap="round" stroke-linejoin="round"></path>
+                </svg>
+            </a>
+            <a href="#" class="blog">Blog</a>  
+            <a href="#" class="port">Contact Us</a>
+            <div class="services-dropdown">
+                <div class="services-dropdown-content">
+                    <div class="services-label">
+                        <h1>Services</h1>
+                    </div>
+                    <div class="services-dropdown-column">
+                        <div class="primary-section">
+                        <h2>Primary <span class="arrow">→</span></h2>
+                        <div class="primary-elements">
+                            <a href="#">Stock Market Prediction</a>
+                        </div>
+                    </div>
+                    </div>
+                    <div class="services-dropdown-column">
+                        <h3>Secondary <span class="arrow">→</span></h3>
+                        <div class="secondary-section">
+                        <div class="secondary-elements">
+                            <a href="#">Used Car Prediction</a>
+                            <a href="#">Housing Prediction</a>
+                            <a href="#">Loan Approval Prediction</a>
+                        </div>
+                    </div>
+                    </div>
+                    <img src="media/services.jpg" alt="Your Alt Text" class="service-image">
+                </div>
+            </div>
+                <div class="company-dropdown">
+                <div class="company-dropdown-content">
+                    <div class="company-label">
+                        <h1>Company</h1>
+                    </div>
+                    <div class="company-dropdown-column">
+                        <h2>MORE ABOUT US</h2>
+                        <a href="#">About Us</a>
+                        <a href="#">Blog</a>
+                        <a href="#">Privacy Policy</a>
+                        <a href="#">License</a>
+                    </div>
+                    <div class="company-dropdown-column">
+                        <h2>SOCIAL</h2>
+                        <a href="#">LinkedIn</a>
+                        <a href="#">Instagram</a>
+                        <a href="#">X</a>
+                    </div>
+                    <div class="company-dropdown-column">
+                        <h2>CONTACTS</h2>
+                        <a href="#">Book a Call</a>
+                        <a href="#">Mail Us</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+            
+
+       
+            <div class="rightBox" style = "float: right;">
+                <ul> 
+                    <button id="aapl">Predict AAPL</button><br>
+                    <div class="data">
+                    <a class="sum">Summary</a><br><br>
+                    <a class="cha"> Chart</a><br><br>
+                    <a class="histo"> Historical Data</a><br><br>
+                    <a class="stat" >Statistics</a><br><br>
+                    <a class="pro">Profile</a><br><br>
+                </div>
+                    <button id="Add"> Add To Lists</button>
+                </ul>
+            </div>
+
+        
+               
+            
+          
+          
+          <div class="desc">
+            <h1>Apple</h1>
+            <h1>$220.30</h1>
+            <h5>-$2.51(-1.13%) Pre-market</h5>
+            <h4>24 Hour Market</h4>
+          </div>
+          <div class="Advance" style=" padding: 20px; width: 50px;">
+            <button style="transform: translateX(1800%); border: none; background: transparent; ;">Advance</button>
+            </div>
+            <div class="Valuation_Measures">
+                <h2>Valuation Measures</h2>
+                <table>
+                    <th>    </th>
+                    <th>Current</th>
+                    <th>6/30/2024</th>
+                    <th>3/31/2024</th>
+                    <th>12/31/2023</th>
+                    <th>9/30/2023</th>
+                    <th>6/30/2023</th>
+
+                    <tr>
+                        <td>Market Cap</td>
+                        <td>3.47T</td>
+                        <td>3.23T</td>
+                        <td>2.65T</td>
+                        <td>2.99T</td>
+                        <td>2.68T</td>
+                        <td>3.05T</td>
+                      </tr>
+                      <tr>
+                        <td>Enterprise Value</td>
+                        <td>3.51T</td>
+                        <td>3.27T</td>
+                        <td>2.68T</td>
+                        <td>3.06T</td>
+                        <td>2.72T</td>
+                        <td>3.10T</td>
+                      </tr>
+                      <tr>
+                        <td>Trailing P/E</td>
+                        <td>34.73</td>
+                        <td>32.76</td>
+                        <td>26.67</td>
+                        <td>31.41</td>
+                        <td>28.73</td>
+                        <td>32,88</td>
+                      </tr>
+                      <tr>
+                        <td>Forward P/E</td>
+                        <td>30.03</td>
+                        <td>28.65</td>
+                        <td>26.32</td>
+                        <td>29.15</td>
+                        <td>25.77</td>
+                        <td>29.41</td>
+                      </tr>
+                      <tr>
+                        <td>PEG Ratio (5yr expected)</td>
+                        <td>2.19</td>
+                        <td>2.23</td>
+                        <td>2.11</td>
+                        <td>2.31</td>
+                        <td>2.18</td>
+                        <td>2.66</td>
+                      </tr>
+                      <tr>
+                        <td>Price/Sales</td>
+                        <td>9.18</td>
+                        <td>8.62</td>
+                        <td>6.99</td>
+                        <td>7.94</td>
+                        <td>7.10</td>
+                        <td>8.08</td>
+                      </tr>
+                      <tr>
+                        <td>Price/Book</td>
+                        <td>52.01</td>
+                        <td>43.21</td>
+                        <td>35.49</td>
+                        <td>47.90</td>
+                        <td>44.17</td>
+                        <td>49.08</td>
+                      </tr>
+                      <tr>
+                        <td>Enterprise Value/Revenue</td>
+                        <td>9.10</td>
+                        <td>8.56</td>
+                        <td>6.96</td>
+                        <td>7.98</td>
+                        <td>7.09</td>
+                        <td>8.06</td>
+                      </tr>
+                      <tr>
+                        <td>Enterprise Value/EBITDA</td>
+                        <td>25.96</td>
+                        <td>24.57</td>
+                        <td>20.10</td>
+                        <td>23.66</td>
+                        <td>21.46</td>
+                        <td>24.51</td>
+                      </tr>
+                </table>
+
+            </div>
+
+            <div class = "FinancialHighlights">
+                <h2>Financial Highlights</h2>
+                <h3>Profitability</h3>
+                <table>
+                    <tr>
+                        <td>Profit Margin</td>
+                        <td><b>26.44%</b></td>
+                    </tr>
+                    <tr>
+                        <td>Operating Margin (ttm)</td>
+                        <td><b>29.56%</b></td>
+                    </tr>
+                </table>
+
+                <h3>Management Effectiveness</h3>
+                <table>
+                    <tr>
+                        <td>Return on Assets (ttm)</td>
+                        <td><b>22.61%</b></td>
+                    </tr>
+                    <tr>
+                        <td>Return on Wquity (ttm)</td>
+                        <td><b>160.58%</b></td>
+                    </tr>
+                </table>
+
+                <h3>Income Statement</h3>
+                <table>
+                    <tr>
+                        <td>Revenue (ttm)</td>
+                        <td><b>385.6B</b></td>
+                    </tr>
+                    <tr>
+                        <td>Revenue Per Share (ttm)</td>
+                        <td><b>24.96</b></td>
+                    </tr>
+                    <tr>
+                        <td>EBITDA</td>
+                        <td><b>131.78B</b></td>
+                    </tr>
+                    <tr>
+                        <td>Net Income to Common (ttm)</td>
+                        <td><b>101.96B</b></td>
+                    </tr>
+                </table>
+
+                <h3>Balance Sheet</h3>
+                <table>
+                    <tr>
+                        <td>Total Cash (mrq)</td>
+                        <td><b>61.8B</b></td>
+                    </tr>
+                    <tr>
+                        <td>Total Cash Per Share (ttm)</td>
+                        <td><b>4.07</b></td>
+                    </tr>
+                    <tr>
+                        <td>Total Debt (mrq)</td>
+                        <td><b>101.3B</b></td>
+                    </tr>
+                    <tr>
+                        <td>Current Ratio (mrq)</td>
+                        <td><b>0.95</b></td>
+                    </tr>
+                </table>
+
+                <h3>Cash Flow Statement</h3>
+                <table>
+                    <tr>
+                        <td>Operating Cash Flow (ttm)</td>
+                        <td><b>113.04B</b></td>
+                    </tr>
+                </table>
+            </div>
+
+            <div class = "TradingInformation">
+                <h2>Trading Information</h2>
+                <h3>Stock Price History</h3>
+                <table>
+                    <tr>
+                        <td>Beta (5Y Monthly)</td>
+                        <td><b>1.24</b></td>
+                    </tr>
+                    <tr>
+                        <td>S&P 500 52-Week Change</td>
+                        <td><b>31.47%</b></td>
+                    </tr>
+                    <tr>
+                        <td>52 Week High</td>
+                        <td><b>237.23</b></td>
+                    </tr>
+                    <tr>
+                        <td>52 Week Low</td>
+                        <td><b>164.08</b></td>
+                    </tr>
+                    <tr>
+                        <td>50-Day Average</td>
+                        <td><b>222.44</b></td>
+                    </tr>
+                    <tr>
+                        <td>200-Day Moving Average</td>
+                        <td><b>196.35</b></td>
+                    </tr>
+                </table>
+
+                <h3>Share Statistics</h3>
+                <table>
+                    <tr>
+                        <td>Avg Vol (10 day)</td>
+                        <td><b>78.78M</b></td>
+                    </tr>
+                    <tr>
+                        <td>Shares Outstanding</td>
+                        <td><b>15.2B</b></td>
+                    </tr>
+                    <tr>
+                        <td>Implied Shares Outstanding</td>
+                        <td><b>15.25B</b></td>
+                    </tr>
+                    <tr>
+                        <td>Float Shares</td>
+                        <td><b>15.18B</b></td>
+                    </tr>
+                    <tr>
+                        <td>% Held by Insiders</td>
+                        <td><b>2.70%</b></td>
+                    </tr>
+                    <tr>
+                        <td>% Held by Institutions</td>
+                        <td><b>60.88%</b></td>
+                    </tr>
+                    <tr>
+                        <td>Shares Short(8/30/2024)</td>
+                        <td><b>135.04M</b></td>
+                    </tr>
+                    <tr>
+                        <td>Shares Ratio(8/30/2024)</td>
+                        <td><b>2.67</b></td>
+                    </tr>
+                    <tr>
+                        <td>Short % of Shares Outstanding (8/30/2024)</td>
+                        <td><b>0.89%</b></td>
+                    </tr>
+                    <tr>
+                        <td>Shares Short(prior month 7/31/2024)</td>
+                        <td><b>117.7M</b></td>
+                    </tr>
+                </table>
+
+                <h3>Dividents & Splits</h3>
+                <table>
+                    <tr>
+                        <td>Trailing Annual Dividend Rate</td>
+                        <td><b>0.97</b></td>
+                    </tr>
+                    <tr>
+                        <td>Trailing Annual Dividend Yeild</td>
+                        <td><b>0.42%</b></td>
+                    </tr>
+                    <tr>
+                        <td>5 Year Average Divedend Yeild</td>
+                        <td><b>0.66</b></td>
+                    </tr>
+                    <tr>
+                        <td>Payout Ratio</td>
+                        <td><b>14.76%</b></td>
+                    </tr>
+                    <tr>
+                        <td>Dividend Date</td>
+                        <td><b>8/15/2024</b></td>
+                    </tr>
+                    <tr>
+                        <tr>
+                            <td>Ex-Dividend Date</td>
+                            <td><b>8/12/2024</b></td>
+                        </tr>
+                        <tr>
+                            <td>Last Split Factor</td>
+                            <td><b>4:1</b></td>
+                        </tr>
+                    </tr>
+                        <td>Last Split Date</td>
+                        <td><b>8/31/2020</b></td>
+                    </tr>
+                    
+                </table>
+
+            </div>
+
+            <div class = "AbbreviationGuide">
+                <h2>Abbreviation Guide</h2>
+                <p>
+                    mrq = Most Recent Quarter<br>
+                    ttm = Trailing Twelve Months<br>
+                    yoy = Year Over Year<br>
+                    lfy = Last Fiscal Year<br>
+                    fye = Fiscal Year Ending
+                </p>
+            </div>
+            <div class="PeopleAlsoWatch">
+                <h2 id="people">People Also Watch</h2>
+        
+                <div class="slider-container">
+        
+                <div class="company-container" id="slider">
+                    <div class="company-box">
+                        <b>AMZN</b>
+                        <p>Amazon</p>
+                        <p class="company-price">$519.38</p>
+                        <a class="company-percent">1.29%</a>
+                    </div>
+                    <div class="company-box">
+                        <b>TSLA</b>
+                        <p>Tesla</p>
+                        <p class="company-price">$412.62 </p>
+                        <a class="company-percent">0.91%</a>
+                    </div>
+                    <div class="company-box">
+                        <b>GOOG</b>
+                        <p>Alphabet</p>
+                        <p class="company-price">$685.09</p>
+                        <a class="company-percent">0.80%</a>
+                    </div>
+                    <div class="company-box">
+                        <b>META</b>
+                        <p>Meta Platforms.</p>
+                        <p class="company-price">$179.44</p>
+                        <a class="company-percent">3.53%</a>
+                    </div>
+                    <div class="company-box">
+                        <b>MSFT</b>
+                        <p>Microsoft</p>
+                        <p class="company-price">$160.28 </p>
+                        <a class="company-percent">1.56%</a>
+                    </div>
+                    <div class="company-box">
+                        <b>NTFLX</b>
+                        <p>Netflix</p>
+                        <p class="company-price">$233.29</p>
+                        <a class="company-percent">6.33%</a>
+                    </div>
+                    <div class="company-box">
+                        <b>NVDA</b>
+                        <p>NVIDIA</p>
+                        <p class="company-price">$108.75</p>
+                        <a class="company-percent">2.39%</a>
+                    </div>
+                    <div class="company-box">
+                        <b>AMD</b>
+                        <p id="micro">Advanced Micro Devices </p>
+                        <p class="company-price">$155.99</p>
+                        <a class="company-percent">7.70%</a>
+                    </div>
+                    <div class="company-box">
+                        <b>INTL</b>
+                        <p>Intel</p>
+                        <p class="company-price">$21.37</p>
+                        <a class="company-percent">0.60%</a>
+                    </div>
+                </div>
+                 
+                <div id="SliderBtns">
+        
+                <span class="slider-btn next" onclick="slide(1)">
+                     <img src="media/arrow-right.jpg">
+                </span>
+        
+                
+                <span class="slider-btn prev" onclick="slide(-1)">
+                    <img src="media/arrow-left.jpg">
+                </span>
+                
+            </div>
+        
+            </div>
+            </div>
+          <style>
+            ul {
+              list-style-type: none;
+              padding-inline-start: 0;
+            }
+          </style>
+    <footer>
+        <div class="footer-links">
+             <img src="media/website_logo.jpg" class="foot-logo">
+                <div class="footer-block">
+                <div class="footer-title" id="Comp">Company</div>
+                   <li><a class="links" id="mail">Mail us</a></li>
+                    <li><a class="links" id="SERV">Services</a></li>
+                </div>
+
+                <div class="footer-block">
+                <div class="footer-title" id="more">More</div>
+                    <li><a class="links" id="tandc">Blog</a></li>
+                    <li><a class="links" id="career">License</a></li>
+                    <li><a class="links" id="privacy">Privacy Policy</a></li>
+                </div>
+            
+                <div class="footer-block">
+                <div class="footer-title" id="social">Social</div>
+                <li><a class="links" id="linkedin">LinkedIn</a></li>
+                <li> <a  class="links" id="yt">Instagram</a></li>
+                <li> <a  class="links" id="tw">X</a></li>
+                </div>
+            
+        </div>
+    </footer> 
+
+
+    <script src="Stockspage.js"></script>
+</body>
+</html>
