@@ -1,0 +1,10 @@
+Diesel
+Premium
+Unleaded
+Hybrid
+-
+Other
+Electric
+LPG
+Leaded
+nan

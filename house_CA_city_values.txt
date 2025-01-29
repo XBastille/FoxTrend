@@ -1,0 +1,45 @@
+Toronto
+Vancouver
+Calgary
+Edmonton
+Ottawa
+Winnipeg
+Hamilton
+Kitchener
+London
+St. Catharines
+Oshawa
+Victoria
+Windsor
+Saskatoon
+Regina
+St. John's
+Barrie
+Kelowna
+Abbotsford
+Sudbury
+Kingston
+Guelph
+Moncton
+Brantford
+Thunder Bay
+Saint John
+Peterborough
+Red Deer
+Kamloops
+Nanaimo
+Lethbridge
+White Rock
+Maple Ridge
+Prince George
+Sault Ste. Marie
+Medicine Hat
+New Westminster
+Caledon
+Burnaby
+Airdrie
+Montreal
+Sherbrooke
+Quebec
+Trois-Rivieres
+Halifax
