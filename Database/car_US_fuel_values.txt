@@ -1,0 +1,6 @@
+nan
+gas
+other
+diesel
+hybrid
+electric
