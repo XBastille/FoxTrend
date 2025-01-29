@@ -1,7 +1,0 @@
-Euro 6
-Euro 4
-Euro 5
-nan
-Euro 3
-Euro 2
-Euro 1
