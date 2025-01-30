@@ -30,6 +30,14 @@ router.get('/predict', ensureAuthentication, (req, res) => {
     res.render('predict_stock')
 })
 
+router.get('/social' , ensureAuthentication, (req, res) => {
+    res.render('social')  
+})
+
+router.get('/journey' , ensureAuthentication, (req, res) => {
+    res.render('journey')  
+})
+
 router.post('/predict', async (req, res) => {
     const { val } = req.body
     const { days } = req.body

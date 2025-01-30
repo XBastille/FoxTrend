@@ -187,8 +187,7 @@
         <div class="snake snake-top"></div>
         <div class="snake snake-diagonal-right"></div>
         <div class="center-element">
-            <img src="https://github.com/XBastille/FoxTrend/blob/NSA/media/fox.jpg?raw=true" alt="Your Image"
-                class="center-image">
+            <img src="/public/Media/fox.jpg" alt="Your Image" class="center-image">
         </div>
         <div class="cube">
             <div class="cube-edge top"></div>
@@ -229,30 +228,32 @@
         </div>
         <ul class="icons open">
             <a href="#" class="fox-icon-link">
-                <img src="media/fox.jpg" alt="Fox Icon" class="logo" />
+                <img src="/public/Media/fox.jpg" alt="Fox Icon" class="logo" />
             </a>
-            <li class="Icon-items" data-name="Home">
-                <img src="media/home.jpg" id="item1" />
-                <button><span class="icon-name">Home</span></button>
-            </li>
+            <a href="/dashboard">
+                <li class="Icon-items" data-name="Home">
+                    <img src="public/Media/home.jpg" id="item1" />
+                    <button><span class="icon-name">Home</span></button>
+                </li>
+            </a>
             <li class="Icon-items" data-name="Watch">
-                <img src="media/recent_watch.jpg" id="item2" />
+                <img src="/public/Media/recent_watch.jpg" id="item2" />
                 <button id="watch"><span class="icon-name">Watch</span></button>
             </li>
             <li class="Icon-items" data-name="Lists">
-                <img src="media/list.jpg" id="item3" />
+                <img src="/public/Media/list.jpg" id="item3" />
                 <button id="lists"><span class="icon-name">Lists</span></button>
             </li>
             <li class="Icon-items" data-name="Donate">
-                <img src="media/donate.jpg" id="item4" />
+                <img src="/public/Media/donate.jpg" id="item4" />
                 <button><span class="icon-name">Donate</span></button>
             </li>
             <li class="Icon-items" data-name="Profile">
-                <img src="media/account.jpg" id="item5" />
+                <img src="/public/Media/account.jpg" id="item5" />
                 <button id="profile"><span class="icon-name">Profile</span></button>
             </li>
             <li class="Arrow">
-                <img src="media/arrow-right.jpg" />
+                <img src="/public/Media/arrow-right.jpg" />
             </li>
         </ul>
         <div class="search-container">
@@ -293,7 +294,7 @@
                         </div>
                         <div class="services-dropdown-column">
                             <div class="secondary-section">
-                            <h3>Secondary <span class="arrow">→</span></h3>
+                                <h3>Secondary <span class="arrow">→</span></h3>
                                 <div class="secondary-elements">
                                     <a href="/selectcar">Used Car Prediction</a>
                                     <a href="/selecthouse">Housing Prediction</a>
@@ -301,7 +302,7 @@
                                 </div>
                             </div>
                         </div>
-                        <img src="media/services.jpg" alt="Your Alt Text" class="service-image" />
+                        <img src="/public/Media/services.jpg" alt="Your Alt Text" class="service-image" />
                     </div>
                 </div>
                 <div class="company-dropdown">
@@ -311,21 +312,21 @@
                         </div>
                         <div class="company-dropdown-column">
                             <h2>MORE ABOUT US</h2>
-                            <a href="#">About Us</a>
+                            <a href="/journey">About Us</a>
                             <a href="#">Blog</a>
                             <a href="#">Privacy Policy</a>
                             <a href="#">License</a>
                         </div>
                         <div class="company-dropdown-column">
                             <h2>SOCIAL</h2>
-                            <a href="#">LinkedIn</a>
-                            <a href="#">Instagram</a>
-                            <a href="#">X</a>
+                            <a href="/social" target="_blank">LinkedIn</a>
+                            <a href="/social" target="_blank">Instagram</a>
+                            <a href="/social" target="_blank">X</a>
                         </div>
                         <div class="company-dropdown-column">
                             <h2>CONTACTS</h2>
                             <a href="#">Book a Call</a>
-                            <a href="#">Mail Us</a>
+                            <a href="https://mail.google.com/mail/u/0/#inbox?compose=GTvVlcSKjgJRjZdghDHWgvNWjpSMmRMVVprtPGJtLpldLsvnmhRDJFvWtbKpPQpRMlGhMpkFGmJNz" target="_blank">Mail Us</a>
                         </div>
                     </div>
                 </div>
@@ -347,8 +348,8 @@
         </div>
 
         <button id="advanced-btn">
-            <i style="font-size: 24px" class="fas">&#xf065;</i> <a href="Advance" style="color: white; text-decoration: none;"
-                target="_blank">Advanced</a>
+            <i style="font-size: 24px" class="fas">&#xf065;</i> <a href="Advance"
+                style="color: white; text-decoration: none;" target="_blank">Advanced</a>
         </button>
         <div class="desc" style="margin-left: 200px">
             <h1 id="Company_title"></h1>
@@ -502,11 +503,11 @@
 
                 <div id="SliderBtns">
                     <span class="slider-btn next" onclick="slide(1)">
-                        <img src="media/arrow-right.jpg" />
+                        <img src="public/Media/arrow-right.jpg" />
                     </span>
 
                     <span class="slider-btn prev" onclick="slide(-1)">
-                        <img src="media/arrow-left.jpg" />
+                        <img src="public/Media/arrow-left.jpg" />
                     </span>
                 </div>
             </div>
@@ -514,10 +515,10 @@
 
         <footer>
             <div class="footer-links">
-                <img src="media/website_logo.jpg" class="foot-logo" />
+                <img src="public/Media/website_logo.jpg" class="foot-logo" />
                 <div class="footer-block">
                     <div class="footer-title" id="Comp">Company</div>
-                    <li><a class="links" id="mail">Mail us</a></li>
+                    <li><a class="links" href="https://mail.google.com/mail/u/0/#inbox?compose=GTvVlcSKjgJRjZdghDHWgvNWjpSMmRMVVprtPGJtLpldLsvnmhRDJFvWtbKpPQpRMlGhMpkFGmJNz" target="_blank" id="mail">Mail us</a></li>
                     <li><a class="links" id="SERV">Services</a></li>
                 </div>
 
