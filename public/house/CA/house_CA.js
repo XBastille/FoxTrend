@@ -97,7 +97,7 @@ document.getElementById('prediction-form').addEventListener('submit', async func
     const price = await fetchingalldata(bedrooms, bathrooms, population, province, city, median_income)
     const result = document.getElementById('result');
     const gifNumber = Math.floor(Math.random() * 4) + 1;
-    const gifPath = `media/house/house_${gifNumber}.gif`;
+    const gifPath = `../public/Media/house/house_${gifNumber}.gif`;
 
     document.getElementById('prediction-gif').src = gifPath;
     document.querySelector('.price-value').textContent = "$" + Number.parseInt(price).toFixed(2);

@@ -118,7 +118,7 @@ document.getElementById('prediction-form').addEventListener('submit', async func
     }
     const result = document.getElementById('result');
     const gifNumber = Math.floor(Math.random() * 4) + 1;
-    const gifPath = `media/car/car_${gifNumber}.gif`;
+    const gifPath = `../public/Media/car/car_${gifNumber}.gif`;
 
     document.getElementById('prediction-gif').src = gifPath;
     console.log(price)
