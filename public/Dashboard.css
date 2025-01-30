@@ -1576,4 +1576,8 @@ cursor: pointer;
     height: 100%;
     object-fit: cover;
   }
+
+  #perati{
+    margin-left: 40px;
+  }
   

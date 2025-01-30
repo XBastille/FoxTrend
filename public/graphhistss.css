@@ -1112,6 +1112,7 @@ input [type="date"] {
   padding: 10px;
   text-align: center;
   width: 180px;
+  cursor: pointer;
   height: 255px;
   border-radius: 8px;
   background-color: #000000;

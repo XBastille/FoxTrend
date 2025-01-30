@@ -1003,6 +1003,7 @@ tr{
 
 .company-box {
   border: 1px solid #ddd;
+  cursor: pointer;
   padding: 10px;
   text-align: center;
   width: 180px;

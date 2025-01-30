@@ -1,3 +1,52 @@
+document.addEventListener('DOMContentLoaded', function() {
+  const avatarEdit = document.querySelector('.avatar-edit');
+  const avatarPopup = document.querySelector('.avatar-popup');
+
+  if (avatarEdit && avatarPopup) {
+    avatarEdit.addEventListener('click', function() {
+      console.log('Avatar edit clicked');
+      avatarPopup.classList.toggle('show');
+      
+      if (avatarPopup.classList.contains('show')) {
+        avatarPopup.style.display = 'flex';
+        setTimeout(() => avatarPopup.style.opacity = '1', 10);
+        console.log('Avatar popup displayed');
+      } else {
+        avatarPopup.style.opacity = '0';
+        setTimeout(() => avatarPopup.style.display = 'none', 500);
+        console.log('Avatar popup hidden');
+      }
+    });
+  }
+});
+
+document.addEventListener('DOMContentLoaded', function() {
+  const avatarOptions = document.querySelectorAll('.avatar-option');
+  const selectButton = document.querySelector('.select-button');
+  const profileAvatar = document.querySelector('.avatar');
+  const avatarPopup = document.querySelector('.avatar-popup');
+
+  const initialSelectedAvatar = document.querySelector('.avatar-option.selected');
+  if (initialSelectedAvatar) {
+    profileAvatar.src = initialSelectedAvatar.src;
+  }
+
+  avatarOptions.forEach(option => {
+    option.addEventListener('click', function() {
+      avatarOptions.forEach(opt => opt.classList.remove('selected'));
+      this.classList.add('selected');
+    });
+  });
+
+  selectButton.addEventListener('click', function() {
+    const selectedAvatar = document.querySelector('.avatar-option.selected');
+    if (selectedAvatar) {
+      profileAvatar.src = selectedAvatar.src;
+      avatarPopup.style.display = 'none';
+    }
+  });
+});
+
 document.getElementById('aapl').addEventListener('click', () => {
   const popup = document.querySelector('.prediction-popup');
   popup.style.display = 'block';
@@ -46,63 +95,35 @@ future_prediction.addEventListener('click', async () => {
   }
 })
 
-//------------------------------------------------------------
-document.addEventListener('DOMContentLoaded', function () {
-  const avatarEdit = document.querySelector('.avatar-edit');
-  const avatarPopup = document.querySelector('.avatar-popup');
-
-  avatarEdit.addEventListener('click', function () {
-    console.log('Avatar edit clicked');
-    if (avatarPopup) {
-      avatarPopup.classList.toggle('show');
-      if (avatarPopup.classList.contains('show')) {
-        avatarPopup.style.display = 'flex';
-        setTimeout(() => avatarPopup.style.opacity = '1', 10);
-        console.log('Avatar popup displayed');
-      } else {
-        avatarPopup.style.opacity = '0';
-        setTimeout(() => avatarPopup.style.display = 'none', 500);
-        console.log('Avatar popup hidden');
-      }
-    } else {
-      console.log('Avatar popup not found');
-    }
+document.querySelectorAll('.company-box').forEach(box => {
+  box.addEventListener('click', async () => {
+    const ticker = box.querySelector('b').textContent;
+    localStorage.setItem('clickOneMonth', 'true');
+    const searchBar = document.getElementById('searching');
+    searchBar.value = ticker;
+    const enterEvent = new KeyboardEvent('keypress', {
+      key: 'Enter',
+      code: 'Enter',
+      keyCode: 13,
+      which: 13,
+      bubbles: true
+    });
+    searchBar.dispatchEvent(enterEvent);
   });
 });
 
-document.addEventListener('DOMContentLoaded', function () {
-  const avatarOptions = document.querySelectorAll('.avatar-option');
-  const selectButton = document.querySelector('.select-button');
-  const profileAvatar = document.querySelector('.avatar');
-  const avatarPopup = document.querySelector('.avatar-popup');
 
-  const initialSelectedAvatar = document.querySelector('.avatar-option.selected');
-  if (initialSelectedAvatar) {
-    profileAvatar.src = initialSelectedAvatar.src;
+document.addEventListener('DOMContentLoaded', () => {
+  if (localStorage.getItem('clickOneMonth') === 'true') {
+    localStorage.removeItem('clickOneMonth');
+    setTimeout(() => {
+      document.getElementById('onemonth').click();
+    }, 1000);
   }
-
-  avatarOptions.forEach(option => {
-    option.addEventListener('click', function () {
-      avatarOptions.forEach(opt => opt.classList.remove('selected'));
-      this.classList.add('selected');
-    });
-  });
-
-  avatarOptions.forEach(option => {
-    option.addEventListener('click', function () {
-      avatarOptions.forEach(opt => opt.classList.remove('selected'));
-      this.classList.add('selected');
-    });
-  });
-
-  selectButton.addEventListener('click', function () {
-    const selectedAvatar = document.querySelector('.avatar-option.selected');
-    if (selectedAvatar) {
-      profileAvatar.src = selectedAvatar.src;
-      avatarPopup.style.display = 'none';
-    }
-  });
 });
+
+//------------------------------------------------------------
+
 
 document.addEventListener('DOMContentLoaded', function () {
   const accountItems = document.querySelectorAll('.account-item');
