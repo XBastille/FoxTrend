@@ -11,11 +11,11 @@
   "dependencies": {
     "bcryptjs": "^2.4.3",
     "body-parser": "^1.20.3",
-    "csv-parser": "^3.0.0",
+    "csv-parser": "^3.2.0",
     "express": "^4.21.2",
     "express-session": "^1.18.1",
     "hbs": "^4.2.0",
-    "mongoose": "^8.9.2",
+    "mongoose": "^8.9.5",
     "node-cron": "^3.0.3",
     "passport": "^0.7.0",
     "passport-local": "^1.0.0"

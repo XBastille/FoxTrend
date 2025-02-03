@@ -116,7 +116,8 @@
                     <div class="company-dropdown-column">
                         <h2>CONTACTS</h2>
                         <a href="#">Book a Call</a>
-                        <a href="https://mail.google.com/mail/u/0/#inbox?compose=GTvVlcSKjgJRjZdghDHWgvNWjpSMmRMVVprtPGJtLpldLsvnmhRDJFvWtbKpPQpRMlGhMpkFGmJNz" target="_blank">Mail Us</a>
+                        <a href="https://mail.google.com/mail/u/0/#inbox?compose=GTvVlcSKjgJRjZdghDHWgvNWjpSMmRMVVprtPGJtLpldLsvnmhRDJFvWtbKpPQpRMlGhMpkFGmJNz"
+                            target="_blank">Mail Us</a>
                     </div>
                 </div>
             </div>
@@ -157,7 +158,7 @@
                 </button>
             </div>
         </div>
-        <form class="profile-section">
+        <form class="profile-section" method="POST" action="/userprofile">
             <h2>Personal Information</h2>
             <div class="profile-field">
                 <label>Name:</label>
@@ -180,7 +181,7 @@
                 <label>Confirm Password:</label>
                 <input type="password" id="confirm_password" name="confirm_password">
             </div>
-            <button class="edit-button" id="submit_button">
+            <button class="edit-button" id="submitbutton">
                 <i class="fas fa-pen"></i> Edit Info
             </button>
         </form>
@@ -219,7 +220,9 @@
             <img src="public/Media/website_logo.jpg" class="foot-logo">
             <div class="footer-block">
                 <div class="footer-title" id="Comp">Company</div>
-                <li><a class="links" href="https://mail.google.com/mail/u/0/#inbox?compose=GTvVlcSKjgJRjZdghDHWgvNWjpSMmRMVVprtPGJtLpldLsvnmhRDJFvWtbKpPQpRMlGhMpkFGmJNz" target="_blank" id="mail">Mail us</a></li>
+                <li><a class="links"
+                        href="https://mail.google.com/mail/u/0/#inbox?compose=GTvVlcSKjgJRjZdghDHWgvNWjpSMmRMVVprtPGJtLpldLsvnmhRDJFvWtbKpPQpRMlGhMpkFGmJNz"
+                        target="_blank" id="mail">Mail us</a></li>
                 <li><a class="links" id="SERV">Services</a></li>
             </div>
 
@@ -252,6 +255,207 @@
         prf.addEventListener('click', () => {
             window.location.href = '/userprofile'
         })
+
+        let c = 0;
+
+        let formdata = {
+            username: "",
+        }
+
+        const nhi = "false"
+        async function handless() {
+            try {
+                const response = await fetch('/userprofile', {
+                    method: 'POST',
+                    headers: {
+                        'Content-type': 'application/json'
+                    },
+                    body: JSON.stringify(formdata)
+                })
+                const datas = await response.json()
+                console.log(datas)
+                return datas.success === 'false' ? 'false' : 'true';
+            } catch (error) {
+                console.log(error)
+            }
+        }
+
+        function formdatas() {
+            formdata.username = document.getElementById("username").value.trim()
+            console.log(formdata)
+        }
+
+
+
+        document.addEventListener('DOMContentLoaded', function () {
+            const editButton = document.querySelector('.edit-button');
+            const profileForm = document.querySelector('.profile-section');
+            const profileFields = document.querySelectorAll('.profile-field');
+            const avatarUsername = document.querySelector('.profile-header h1');
+            const confirmPasswordField = document.querySelector('.confirm-password');
+            const submitbutton = document.getElementById('submitbutton')
+            submitbutton.addEventListener('click', async (event) => {
+                event.preventDefault();
+                console.log("button is clicked")
+                c++;
+                console.log(c)
+                const passwordss = document.getElementById('password').value
+                const confirm_passwords = document.getElementById('confirm_password').value
+                const emailss = document.getElementById('email').value
+                console.log(emailss)
+                if (c % 2 != 0) {
+                    event.preventDefault()
+                    console.log('ishmai aaya h')
+                    const usernames = document.getElementById('username').value
+                    const emails = document.getElementById('email').value
+                    const passwords = document.getElementById('password').value
+                    const confirm_password = document.getElementById('confirm_password').value
+                    try {
+                        const response = await fetch('/userprofile', {
+                            method: 'POST',
+                            headers: {
+                                'Content-Type': 'application/json',
+                            },
+                            body: JSON.stringify({ emails, passwords })
+                        });
+                        if (!response.ok) {
+                            throw new Error(`HTTP error! Status: ${response.status}`);
+                        }
+                        const data = await response.json();
+                        console.log('Response from server:', data);
+                    } catch (error) {
+                        console.error('Error:', error);
+                    }
+                }
+                else {
+                    //event.preventDefault()
+                    formdatas();
+                    const result = await handless()
+                    console.log(result)
+                    if (result === 'false') {
+                        //event.preventDefault()
+                        console.log("usernames already exists")
+                        c = 1;
+                        window.location.href = '/username';
+                        return
+                    }
+                    if (passwordss !== confirm_passwords) {
+                        event.preventDefault()
+                        console.log("equal nhi bsdk")
+                        c = 1;
+                        return
+                    }
+                    if (!emailss.endsWith("@gmail.com")) {
+                        event.preventDefault()
+                        console.log("equal nhi bsdk")
+                        c = 1;
+                        return
+                    }
+                    profileForm.method = 'POST'
+                    profileForm.action = "/userprofile"
+                    profileForm.submit();
+                    //window.location.reload();
+                    console.log("submitted")
+                }
+            })
+
+
+            function validateEmail(email) {
+                const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+                return re.test(email);
+            }
+
+            function clearError(field) {
+                const errorMessage = field.querySelector('.error-message');
+                if (errorMessage) errorMessage.remove();
+                field.querySelectorAll('input').forEach(input => input.classList.remove('error'));
+            }
+
+            editButton.addEventListener('click', function () {
+                console.log('hello world')
+                if (this.textContent.trim() === 'Edit Info') {
+                    profileFields.forEach(field => {
+                        const span = field.querySelector('span');
+                        const input = field.querySelector('input');
+                        if (span && input) {
+                            span.style.display = 'none';
+                            input.style.display = 'inline-block';
+                        }
+                    });
+
+                    confirmPasswordField.style.display = 'flex';
+                    this.textContent = 'Save Info';
+                } else {
+                    let isValid = true;
+                    let updatedUsername = '';
+
+                    profileFields.forEach(field => {
+                        clearError(field);
+                        const span = field.querySelector('span');
+                        const input = field.querySelector('input');
+                        const errorMessage = document.createElement('div');
+                        errorMessage.className = 'error-message';
+                        errorMessage.style.color = 'red';
+                        errorMessage.style.fontSize = '12px';
+
+                        if (input) {
+                            if (input.value.trim() === '') {
+                                isValid = false;
+                                input.classList.add('error');
+                                errorMessage.textContent = 'This field cannot be empty';
+                                field.appendChild(errorMessage);
+                            } else if (input.type === 'email' && !validateEmail(input.value)) {
+                                isValid = false;
+                                input.classList.add('error');
+                                errorMessage.textContent = 'Please enter a valid email address';
+                                field.appendChild(errorMessage);
+                            } else if (span) {
+                                span.textContent = input.type === 'password' ? '••••••••' : input.value;
+                                if (input.type === 'text' && field.querySelector('label').textContent === 'Username:') {
+                                    updatedUsername = input.value;
+                                }
+                            }
+                        }
+                    });
+                    const passwordField = document.querySelector('.profile-field input[type="password"]');
+                    const confirmPasswordInput = document.querySelector('.confirm-password input');
+                    if (passwordField.value !== confirmPasswordInput.value) {
+                        isValid = false;
+                        confirmPasswordInput.classList.add('error');
+                        const errorMessage = document.createElement('div');
+                        errorMessage.className = 'error-message';
+                        errorMessage.textContent = 'Passwords do not match';
+                        errorMessage.style.color = 'red';
+                        confirmPasswordInput.parentElement.appendChild(errorMessage);
+                    }
+                    if (isValid) {
+                        profileFields.forEach(field => {
+                            const span = field.querySelector('span');
+                            const input = field.querySelector('input');
+                            if (span && input) {
+                                input.style.display = 'none';
+                                span.style.display = 'inline-block';
+                            }
+                        });
+
+                        if (updatedUsername) {
+                            avatarUsername.textContent = updatedUsername;
+                        }
+
+                        confirmPasswordField.style.display = 'none';
+
+                        this.textContent = 'Edit Info';
+                    }
+                }
+            });
+
+            profileFields.forEach(field => {
+                const inputs = field.querySelectorAll('input');
+                inputs.forEach(input => {
+                    input.addEventListener('input', () => clearError(field));
+                });
+            });
+        });
 
     </script>
     <script src="/public/Stockspage.js"></script>

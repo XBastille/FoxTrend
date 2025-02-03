@@ -283,7 +283,8 @@
                     </svg>
                 </a>
                 <a href="#" class="blog">Blog</a>
-                <a href="https://mail.google.com/mail/u/0/#inbox?compose=GTvVlcSKjgJRjZdghDHWgvNWjpSMmRMVVprtPGJtLpldLsvnmhRDJFvWtbKpPQpRMlGhMpkFGmJNz" target="_blank" class="port">Contact Us</a>
+                <a href="https://mail.google.com/mail/u/0/#inbox?compose=GTvVlcSKjgJRjZdghDHWgvNWjpSMmRMVVprtPGJtLpldLsvnmhRDJFvWtbKpPQpRMlGhMpkFGmJNz"
+                    target="_blank" class="port">Contact Us</a>
                 <div class="services-dropdown">
                     <div class="services-dropdown-content">
                         <div class="services-label">
@@ -595,10 +596,6 @@
             });
         }
 
-        const ho = document.getElementById('ho')
-        ho.addEventListener('click', () => {
-            window.location.href = '/watch'
-        })
 
         const wat = document.getElementById('wat')
         wat.addEventListener('click', () => {
@@ -740,6 +737,7 @@
         const myplots = document.getElementById('demo')
         const threemonths = document.getElementById('threemonth')
         threemonths.addEventListener('click', async () => {
+            console.log('hello world')
             const dates = new Date()
             let month = dates.getMonth()
             let months = dates.getMonth() + 1
@@ -751,10 +749,12 @@
                 month = 12;
             }
             if (month === 1) {
+                year = year - 1;
                 month = 13
             }
 
             if (month === 2) {
+                year = year - 1;
                 month = 14;
             }
             month -= 2;

@@ -376,39 +376,39 @@
 
                 <tr>
                     <td>Market Cap</td>
-                    <td>3.47T</td>
+                    <td id="marketcapping">--</td>
                 </tr>
                 <tr>
                     <td>Enterprise Value</td>
-                    <td>3.51T</td>
+                    <td id="entvals">--</td>
                 </tr>
                 <tr>
                     <td>Trailing P/E</td>
-                    <td>34.73</td>
+                    <td id="tpes">--</td>
                 </tr>
                 <tr>
                     <td>Forward P/E</td>
-                    <td>30.03</td>
+                    <td id="fpes">--</td>
                 </tr>
                 <tr>
                     <td>PEG Ratio (5yr expected)</td>
-                    <td>2.19</td>
+                    <td id="pegrat">--</td>
                 </tr>
                 <tr>
                     <td>Price/Sales</td>
-                    <td>9.18</td>
+                    <td id="prsale">--</td>
                 </tr>
                 <tr>
                     <td>Price/Book</td>
-                    <td>52.01</td>
+                    <td id="prbook">--</td>
                 </tr>
                 <tr>
                     <td>Enterprise Value/Revenue</td>
-                    <td>9.10</td>
+                    <td id="entvr">--</td>
                 </tr>
                 <tr>
                     <td>Enterprise Value/EBITDA</td>
-                    <td>25.96</td>
+                    <td id="entvalebi">--</td>
                 </tr>
             </table>
         </div>
@@ -773,6 +773,15 @@
         const pr = document.getElementById('pr')
         const lsf = document.getElementById('lsf')
         const sand = document.getElementById('sand')
+        const marketcapping =document.getElementById('marketcapping')
+        const entvals=document.getElementById('entvals')
+        const tpes=document.getElementById('tpes')
+        const fpes=document.getElementById('fpes')
+        const pegrat=document.getElementById('pegrat')
+        const prsale=document.getElementById('prsale')
+        const prbook=document.getElementById('prbook')
+        const entvr=document.getElementById('entvr')
+        const entvalebi=document.getElementById('entvalebi')
         let values = '';
         async function fetchjson() {
             try {
@@ -820,6 +829,16 @@
                 pr.innerText = (data.payoutRatio * 100).toFixed(2) + "%"
                 lsf.innerText = data.lastSplitFactor
                 sand.innerText = (data.SandP52WeekChange * 100).toFixed(2) + "%"
+                marketcapping.innerText=(data.marketCap /1000000000000).toFixed(2) +"T"
+                entvals.innerText=(data.enterpriseValue/1000000000000).toFixed(2) +"T"
+                fpes.innerText=(data.forwardPE).toFixed(2)
+                pegrat.innerText=(data.trailingPegRatio).toFixed(2)
+                tpes.innerText=(data.trailingPE).toFixed(2)
+                prsale.innerText=(data.priceToSalesTrailing12Months).toFixed(2) 
+                prbook.innerText=(data.priceToBook).toFixed(2)
+                entvr.innerText=(data.enterpriseToRevenue).toFixed(2)
+                entvalebi.innerText=(data.enterpriseToEbitda).toFixed(2)
+
             } catch (err) {
                 console.error("Error fetching JSON:", err);
                 return null;
