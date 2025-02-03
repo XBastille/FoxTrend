@@ -209,7 +209,7 @@ Papa.parse("/public/csv_1/stock_data_1.csv", {
                     width: 2
                 },
                 hovertemplate:    //HOVERING TEMPLATE
-                val + '<br>' +
+                    val + '<br>' +
                     'Date: %{x}<br>' +
                     'Close: %{y}<br>' +
                     `Open: %{customdata.Open}<br>` +
@@ -235,17 +235,18 @@ add_multiple_graph.addEventListener('keypress', async (e) => {
         add_multiple_graph.value = ''
         const dates = new Date();
         if (find_button === 'onemonth') {
-            const month = dates.getMonth()
-            const months = dates.getMonth() + 1
+            let month = dates.getMonth()
+            let months = dates.getMonth() + 1
             let day = dates.getDate()
             let year = dates.getFullYear()
+            let years = dates.getFullYear()
             if (month === 0) {
                 year = year - 1;
                 month = 12
                 months = 1;
             }
             start = day + "-" + month + "-" + year
-            end = day + "-" + months + "-" + year
+            end = day + "-" + months + "-" + years
         }
         if (find_button === 'threemonth') {
             let month = dates.getMonth()
@@ -439,7 +440,7 @@ Papa.parse("/public/csv_1/technical_indicators_1.csv", {
                         size: 3,
                         color: "blue"
                     },
-                    hovertemplate: 
+                    hovertemplate:
                         val + '<br>' +
                         'Date: %{x}<br>' +
                         'Upper Band: %{y:.2f}<br>' +
@@ -452,14 +453,14 @@ Papa.parse("/public/csv_1/technical_indicators_1.csv", {
                     x: xarray,
                     y: lowerBand,
                     name: val + ' Lower Band',
-                    mode: "lines+markers", 
+                    mode: "lines+markers",
                     type: "scatter",
                     line: { width: 2, color: "blue" },
                     marker: {
                         size: 3,
                         color: "blue"
                     },
-                    hovertemplate: 
+                    hovertemplate:
                         val + '<br>' +
                         'Date: %{x}<br>' +
                         'Lower Band: %{y:.2f}<br>' +
@@ -470,7 +471,7 @@ Papa.parse("/public/csv_1/technical_indicators_1.csv", {
                     fill: 'tonexty',
                     yaxis: 'y1'
                 }];
-                
+
 
                 const maxBand = Math.max(...upperBand);
                 const minBand = Math.min(...lowerBand);
@@ -1124,7 +1125,7 @@ function graphing() {
                         width: 2
                     },
                     hovertemplate:    //HOVERING TEMPLATE
-                    val + '<br>' +
+                        val + '<br>' +
                         'Date: %{x}<br>' +
                         'Close: %{y}<br>' +
                         `Open: %{customdata.Open}<br>` +
@@ -1207,17 +1208,18 @@ oneweek.addEventListener('click', async () => {
 const onemonth = document.getElementById('onemonth')
 onemonth.addEventListener('click', async () => {
     const dates = new Date()
-    const month = dates.getMonth()
-    const months = dates.getMonth() + 1
+    let month = dates.getMonth()
+    let months = dates.getMonth() + 1
     let day = dates.getDate()
     let year = dates.getFullYear()
+    let years = dates.getFullYear();
     if (month === 0) {
         year = year - 1;
         month = 12
         months = 1;
     }
     const start = day + "-" + month + "-" + year
-    const end = day + "-" + months + "-" + year
+    const end = day + "-" + months + "-" + years
     find_button = 'onemonth'
     const calender = 'true'
     const searchbar = 'nosearch'
@@ -1261,14 +1263,25 @@ threemonth.addEventListener('click', async () => {
     let months = dates.getMonth() + 1
     let day = dates.getDate()
     let year = dates.getFullYear()
+    let years = dates.getFullYear();
     if (month === 0) {
         year = year - 1;
+        month = 12;
+    }
+    if (month === 1) {
+        year = year - 1;
+        month = 13
+    }
+
+    if (month === 2) {
+        year = year - 1;
+        month = 14;
     }
     month -= 2;
     console.log(day + "-" + month + "-" + year)
-    console.log(day + "-" + months + "-" + year)
+    console.log(day + "-" + months + "-" + years)
     const start = day + "-" + month + "-" + year
-    const end = day + "-" + months + "-" + year
+    const end = day + "-" + months + "-" + years
     find_button = 'threemonth';
     const calender = 'true';
     const searchbar = 'nosearch'

@@ -1,72 +1,72 @@
 [
     {
-        "Ticker": "RIVN",
-        "Price": 12.42,
-        "Change": 0.49,
-        "Change %": 4.0098,
-        "Company_Name": "Rivian Automotive, Inc."
+        "Ticker": "BABA",
+        "Price": 98.84,
+        "Change": 4.61,
+        "Change %": 4.6978,
+        "Company_Name": "Alibaba Group Holding Limited"
     },
     {
-        "Ticker": "GM",
-        "Price": 49.78,
-        "Change": 0.92,
-        "Change %": 1.873,
-        "Company_Name": "General Motors Company"
+        "Ticker": "MELI",
+        "Price": 1922.19,
+        "Change": 28.36,
+        "Change %": 1.4779,
+        "Company_Name": "MercadoLibre, Inc."
     },
     {
-        "Ticker": "NIO",
-        "Price": 4.22,
-        "Change": 0.1,
-        "Change %": 2.3697,
-        "Company_Name": "NIO Inc."
+        "Ticker": "SE",
+        "Price": 121.79,
+        "Change": 1.68,
+        "Change %": 1.3804,
+        "Company_Name": "Sea Limited"
     },
     {
-        "Ticker": "LCID",
-        "Price": 2.67,
-        "Change": 0.13,
-        "Change %": 4.9242,
-        "Company_Name": "Lucid Group, Inc."
+        "Ticker": "JD",
+        "Price": 40.72,
+        "Change": 1.845,
+        "Change %": 4.5606,
+        "Company_Name": "JD.com, Inc."
     },
     {
-        "Ticker": "F",
-        "Price": 10.21,
-        "Change": 0.05,
-        "Change %": 0.4985,
-        "Company_Name": "Ford Motor Company"
+        "Ticker": "PDD",
+        "Price": 111.91,
+        "Change": 4.4,
+        "Change %": 3.964,
+        "Company_Name": "PDD Holdings Inc."
     },
     {
-        "Ticker": "XPEV",
-        "Price": 14.81,
-        "Change": 0.365,
-        "Change %": 2.4754,
-        "Company_Name": "XPeng Inc."
+        "Ticker": "CHWY",
+        "Price": 38.98,
+        "Change": 0.865,
+        "Change %": 2.2217,
+        "Company_Name": "Chewy, Inc."
     },
     {
-        "Ticker": "GOEV",
-        "Price": 0.37,
-        "Change": 0.0,
-        "Change %": 0.0,
-        "Company_Name": "Canoo Inc."
+        "Ticker": "9988.HK",
+        "Price": 88.3,
+        "Change": -0.4,
+        "Change %": -0.4564,
+        "Company_Name": "Alibaba Group Holding Limited"
     },
     {
-        "Ticker": "LI",
-        "Price": 23.13,
-        "Change": 0.305,
-        "Change %": 1.3281,
-        "Company_Name": "Li Auto Inc."
+        "Ticker": "ETSY",
+        "Price": 54.91,
+        "Change": 1.3975,
+        "Change %": 2.5566,
+        "Company_Name": "Etsy, Inc."
     },
     {
-        "Ticker": "MULN",
-        "Price": 0.29,
-        "Change": 0.021,
-        "Change %": 7.7491,
-        "Company_Name": "Mullen Automotive, Inc."
+        "Ticker": "CPNG",
+        "Price": 23.51,
+        "Change": 0.185,
+        "Change %": 0.7901,
+        "Company_Name": "Coupang, Inc."
     },
     {
-        "Ticker": "TM",
-        "Price": 186.98,
-        "Change": -1.19,
-        "Change %": -0.6381,
-        "Company_Name": "Toyota Motor Corporation"
+        "Ticker": "EBAY",
+        "Price": 67.48,
+        "Change": 0.44,
+        "Change %": 0.6559,
+        "Company_Name": "eBay Inc."
     }
 ]
