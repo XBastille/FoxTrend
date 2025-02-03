@@ -502,22 +502,6 @@
                         <p id="descp"></p>
                     </div>
                 </div>
-
-                <div class="corporate-governance">
-                    <div class="governance-content">
-                        <h2>Corporate Governance</h2>
-                        <p>
-                            Apple Inc.’s ISS Governance QualityScore as of September 18, 2024 is 1. The pillar scores
-                            are
-                            Audit: 6; Board: 1; Shareholder Rights: 1; Compensation: 2.
-                            <hr>
-                            Corporate governance scores courtesy of <a href="#">Institutional Shareholder Services (ISS)
-                            </a>Scores indicate decile rank relative to index or region. A decile score of 1 indicates
-                            lower
-                            governance risk, while a 10 indicates higher governance risk.
-                        </p>
-                    </div>
-                </div>
             </div>
         </div>
 
@@ -814,7 +798,7 @@
                     pay1.innerText = '- - -'
                 }
                 else {
-                    let pays1 = ((data.companyOfficers[0].totalPay) / 100000).toFixed(2)
+                    let pays1 = ((data.companyOfficers[0].totalPay) / 1000000).toFixed(2)
                     pay1.innerText = pays1 + "M"
                 }
                 ex1.innerText = data.companyOfficers[0].exercisedValue
