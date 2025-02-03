@@ -293,72 +293,96 @@
             const profileFields = document.querySelectorAll('.profile-field');
             const avatarUsername = document.querySelector('.profile-header h1');
             const confirmPasswordField = document.querySelector('.confirm-password');
-            const submitbutton = document.getElementById('submitbutton')
+            const submitbutton = document.getElementById('submitbutton');
+
+            profileFields.forEach(field => {
+                const input = field.querySelector('input');
+                if (input) {
+                    input.disabled = true;
+                }
+            });
+
+            confirmPasswordField.style.display = 'none';
+
             submitbutton.addEventListener('click', async (event) => {
                 event.preventDefault();
-                console.log("button is clicked")
                 c++;
-                console.log(c)
-                const passwordss = document.getElementById('password').value
-                const confirm_passwords = document.getElementById('confirm_password').value
-                const emailss = document.getElementById('email').value
-                console.log(emailss)
-                if (c % 2 != 0) {
-                    event.preventDefault()
-                    console.log('ishmai aaya h')
-                    const usernames = document.getElementById('username').value
-                    const emails = document.getElementById('email').value
-                    const passwords = document.getElementById('password').value
-                    const confirm_password = document.getElementById('confirm_password').value
+
+                const name = document.getElementById('name').value;
+                const username = document.getElementById('username').value;
+                const email = document.getElementById('email').value;
+                const password = document.getElementById('password').value;
+                const confirm_password = document.getElementById('confirm_password').value;
+
+                if (c % 2 !== 0) {
                     try {
+                        const emailResponse = await fetch('/userprofile', {
+                            method: 'POST',
+                            headers: {
+                                'Content-Type': 'application/json',
+                            },
+                            body: JSON.stringify({
+                                email: email
+                            })
+                        });
+
                         const response = await fetch('/userprofile', {
                             method: 'POST',
                             headers: {
                                 'Content-Type': 'application/json',
                             },
-                            body: JSON.stringify({ emails, passwords })
+                            body: JSON.stringify({
+                                emails: email,
+                                passwords: password,
+                                name: name,
+                                usernames: username
+                            })
                         });
-                        if (!response.ok) {
-                            throw new Error(`HTTP error! Status: ${response.status}`);
-                        }
+
                         const data = await response.json();
-                        console.log('Response from server:', data);
+                        if (data.success !== 'false') {
+                            window.location.reload();
+                        }
                     } catch (error) {
                         console.error('Error:', error);
                     }
-                }
-                else {
-                    //event.preventDefault()
+                } else {
                     formdatas();
-                    const result = await handless()
-                    console.log(result)
+                    const result = await handless();
+
                     if (result === 'false') {
-                        //event.preventDefault()
-                        console.log("usernames already exists")
                         c = 1;
                         window.location.href = '/username';
-                        return
+                        return;
                     }
-                    if (passwordss !== confirm_passwords) {
-                        event.preventDefault()
-                        console.log("equal nhi bsdk")
-                        c = 1;
-                        return
-                    }
-                    if (!emailss.endsWith("@gmail.com")) {
-                        event.preventDefault()
-                        console.log("equal nhi bsdk")
-                        c = 1;
-                        return
-                    }
-                    profileForm.method = 'POST'
-                    profileForm.action = "/userprofile"
-                    profileForm.submit();
-                    //window.location.reload();
-                    console.log("submitted")
-                }
-            })
 
+                    if (password !== confirm_password) {
+                        c = 1;
+                        return;
+                    }
+
+                    if (!email.endsWith("@gmail.com")) {
+                        c = 1;
+                        return;
+                    }
+
+                    const formData = new FormData();
+                    formData.append('email', email);
+                    formData.append('emails', email);
+                    formData.append('passwords', password);
+                    formData.append('name', name);
+                    formData.append('usernames', username);
+
+                    const response = await fetch('/userprofile', {
+                        method: 'POST',
+                        body: formData
+                    });
+
+                    if (response.ok) {
+                        window.location.reload();
+                    }
+                }
+            });
 
             function validateEmail(email) {
                 const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -372,78 +396,43 @@
             }
 
             editButton.addEventListener('click', function () {
-                console.log('hello world')
                 if (this.textContent.trim() === 'Edit Info') {
                     profileFields.forEach(field => {
-                        const span = field.querySelector('span');
                         const input = field.querySelector('input');
-                        if (span && input) {
-                            span.style.display = 'none';
-                            input.style.display = 'inline-block';
+                        if (input) {
+                            input.disabled = false;
                         }
                     });
-
                     confirmPasswordField.style.display = 'flex';
                     this.textContent = 'Save Info';
                 } else {
                     let isValid = true;
-                    let updatedUsername = '';
 
                     profileFields.forEach(field => {
                         clearError(field);
-                        const span = field.querySelector('span');
                         const input = field.querySelector('input');
-                        const errorMessage = document.createElement('div');
-                        errorMessage.className = 'error-message';
-                        errorMessage.style.color = 'red';
-                        errorMessage.style.fontSize = '12px';
-
-                        if (input) {
-                            if (input.value.trim() === '') {
-                                isValid = false;
-                                input.classList.add('error');
-                                errorMessage.textContent = 'This field cannot be empty';
-                                field.appendChild(errorMessage);
-                            } else if (input.type === 'email' && !validateEmail(input.value)) {
-                                isValid = false;
-                                input.classList.add('error');
-                                errorMessage.textContent = 'Please enter a valid email address';
-                                field.appendChild(errorMessage);
-                            } else if (span) {
-                                span.textContent = input.type === 'password' ? '••••••••' : input.value;
-                                if (input.type === 'text' && field.querySelector('label').textContent === 'Username:') {
-                                    updatedUsername = input.value;
-                                }
-                            }
+                        if (input && input.type === 'email' && !validateEmail(input.value)) {
+                            isValid = false;
+                            input.classList.add('error');
                         }
                     });
+
                     const passwordField = document.querySelector('.profile-field input[type="password"]');
                     const confirmPasswordInput = document.querySelector('.confirm-password input');
                     if (passwordField.value !== confirmPasswordInput.value) {
                         isValid = false;
-                        confirmPasswordInput.classList.add('error');
-                        const errorMessage = document.createElement('div');
-                        errorMessage.className = 'error-message';
-                        errorMessage.textContent = 'Passwords do not match';
-                        errorMessage.style.color = 'red';
-                        confirmPasswordInput.parentElement.appendChild(errorMessage);
                     }
+
                     if (isValid) {
+                        submitbutton.click();
+
                         profileFields.forEach(field => {
-                            const span = field.querySelector('span');
                             const input = field.querySelector('input');
-                            if (span && input) {
-                                input.style.display = 'none';
-                                span.style.display = 'inline-block';
+                            if (input) {
+                                input.disabled = true;
                             }
                         });
-
-                        if (updatedUsername) {
-                            avatarUsername.textContent = updatedUsername;
-                        }
-
                         confirmPasswordField.style.display = 'none';
-
                         this.textContent = 'Edit Info';
                     }
                 }
@@ -456,6 +445,9 @@
                 });
             });
         });
+
+
+
 
     </script>
     <script src="/public/Stockspage.js"></script>
