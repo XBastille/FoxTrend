@@ -352,7 +352,7 @@
                 const data = await res.json();
                 val = data.symbol
                 Company_price.innerText = "$" + data.currentPrice
-                Company_title.innerText =data.symbol
+                Company_title.innerText =data.shortName
                 console.log(data.shortName)
             } catch (error) {
                 console.log(error)

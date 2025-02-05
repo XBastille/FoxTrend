@@ -27,7 +27,7 @@ app.use(session({
     secret: 'secret',
     saveUninitialized: true,
     resave: false,
-    // cookie: { secure: process.env.ENV === 'PRODUCTION' }  production mai jab daalenge tab comment out kar denge
+    cookie: { secure: process.env.ENV === 'PRODUCTION' } // production mai jab daalenge tab comment out kar denge
 }));
 
 app.use(passport.initialize());
@@ -123,30 +123,30 @@ function python_script(args) {
     });
 }
 var task;
-// function callingfunc() {
-//     task = cron.schedule('* * * * *', () => {  //calling python file using child-process
-//         console.log("ready to launch the rocket at" + new Date());
-//         const args = ["./python_files/try.py"]
-//         python_script(args);
-//     })
-// }
+function callingfunc() {
+    task = cron.schedule('* * * * *', () => {  //calling python file using child-process
+        console.log("ready to launch the rocket at" + new Date());
+        const args = ["./python_files/try.py"]
+        python_script(args);
+    })
+}
 
-// function sortingdata() {
-//     task = cron.schedule('* * * * *', () => { //callling python files using child-process
-//         const args = ["./python_files/sortingdata.py"]
-//         python_script(args);
-//     })
-// }
+function sortingdata() {
+    task = cron.schedule('* * * * *', () => { //callling python files using child-process
+        const args = ["./python_files/sortingdata.py"]
+        python_script(args);
+    })
+}
 
-// cron.schedule('30 10 * * * ', () => {  //calling callingfunc function for calling python files
-//     console.log('hola amigo')
-//     callingfunc();
-// })
+cron.schedule('30 10 * * * ', () => {  //calling callingfunc function for calling python files
+    console.log('hola amigo')
+    callingfunc();
+})
 
-// cron.schedule('0 11 * * *', () => {   //calling sortingdata function for calling python files
-//     console.log("sortingdata is running")
-//     sortingdata();
-// })
+cron.schedule('0 11 * * *', () => {   //calling sortingdata function for calling python files
+    console.log("sortingdata is running")
+    sortingdata();
+})
 //-------------------------------------------------------------------------------------------------
 
 app.listen(port, () => {
