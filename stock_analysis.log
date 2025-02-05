@@ -92,3 +92,39 @@
 2025-02-03 01:47:42,040 - INFO - Created technical indicators CSV file: technical_indicators_1.csv
 2025-02-03 02:01:40,900 - INFO - Created JSON file: graph.json for RBRK
 2025-02-03 02:01:40,907 - INFO - Created technical indicators CSV file: technical_indicators_1.csv
+2025-02-04 00:48:28,151 - INFO - Created JSON file: graph.json for GME
+2025-02-04 00:48:28,159 - INFO - Created technical indicators CSV file: technical_indicators_1.csv
+2025-02-04 21:34:21,527 - INFO - Created JSON file: graph.json for RBRK
+2025-02-04 21:34:21,552 - INFO - Created technical indicators CSV file: technical_indicators_1.csv
+2025-02-04 21:35:34,139 - INFO - Created JSON file: graph.json for PLTR
+2025-02-04 21:35:34,158 - INFO - Created technical indicators CSV file: technical_indicators_1.csv
+2025-02-04 22:10:46,160 - INFO - Created JSON file: graph.json for UPC
+2025-02-04 22:10:46,166 - INFO - Created technical indicators CSV file: technical_indicators_1.csv
+2025-02-04 22:17:18,923 - INFO - Created JSON file: graph.json for AMZN
+2025-02-04 22:17:18,930 - INFO - Created technical indicators CSV file: technical_indicators_1.csv
+2025-02-04 22:18:00,496 - INFO - Created JSON file: graph.json for RUM
+2025-02-04 22:18:00,505 - INFO - Created technical indicators CSV file: technical_indicators_1.csv
+2025-02-04 22:28:05,033 - INFO - Created JSON file: graph.json for QBTS
+2025-02-04 22:28:05,041 - INFO - Created technical indicators CSV file: technical_indicators_1.csv
+2025-02-04 22:37:34,903 - ERROR - 
+1 Failed download:
+2025-02-04 22:37:34,903 - ERROR - ['UNDEFINED']: YFTzMissingError('$%ticker%: possibly delisted; No timezone found')
+2025-02-04 22:37:37,111 - ERROR - 404 Client Error: Not Found for url: https://query2.finance.yahoo.com/v10/finance/quoteSummary/UNDEFINED?modules=financialData%2CquoteType%2CdefaultKeyStatistics%2CassetProfile%2CsummaryDetail&corsDomain=finance.yahoo.com&formatted=false&symbol=UNDEFINED&crumb=3evy36b7JJP
+2025-02-04 22:37:37,239 - INFO - Created JSON file: graph.json for undefined
+2025-02-04 22:39:59,655 - INFO - Created JSON file: graph.json for QBTS
+2025-02-04 22:39:59,660 - INFO - Created technical indicators CSV file: technical_indicators_1.csv
+2025-02-05 16:11:13,308 - INFO - Created JSON file: graph.json for GXAI
+2025-02-05 16:11:13,330 - INFO - Created technical indicators CSV file: technical_indicators_1.csv
+2025-02-05 17:12:29,526 - ERROR - 
+1 Failed download:
+2025-02-05 17:12:29,526 - ERROR - ['UNDEFINED']: YFTzMissingError('$%ticker%: possibly delisted; No timezone found')
+2025-02-05 17:12:32,074 - ERROR - 404 Client Error: Not Found for url: https://query2.finance.yahoo.com/v10/finance/quoteSummary/UNDEFINED?modules=financialData%2CquoteType%2CdefaultKeyStatistics%2CassetProfile%2CsummaryDetail&corsDomain=finance.yahoo.com&formatted=false&symbol=UNDEFINED&crumb=dxULGWULo%2FP
+2025-02-05 17:12:32,287 - INFO - Created JSON file: graph.json for undefined
+2025-02-05 21:44:15,327 - INFO - Created JSON file: graph.json for RUM
+2025-02-05 21:44:15,367 - INFO - Created technical indicators CSV file: technical_indicators_1.csv
+2025-02-05 21:44:26,132 - INFO - Created JSON file: graph.json for DOCU
+2025-02-05 21:44:26,145 - INFO - Created technical indicators CSV file: technical_indicators_1.csv
+2025-02-05 22:26:32,841 - INFO - Created JSON file: graph.json for UPC
+2025-02-05 22:26:32,866 - INFO - Created technical indicators CSV file: technical_indicators_1.csv
+2025-02-05 22:32:21,398 - INFO - Created JSON file: graph.json for SHOP
+2025-02-05 22:32:21,413 - INFO - Created technical indicators CSV file: technical_indicators_1.csv

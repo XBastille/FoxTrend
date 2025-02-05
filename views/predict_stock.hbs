@@ -108,8 +108,8 @@
                     <div class="company-dropdown-column">
                         <h2>SOCIAL</h2>
                         <a href="/social" target="_blank">LinkedIn</a>
-                            <a href="/social" target="_blank">Instagram</a>
-                            <a href="/social" target="_blank">X</a>
+                        <a href="/social" target="_blank">Instagram</a>
+                        <a href="/social" target="_blank">X</a>
                     </div>
                     <div class="company-dropdown-column">
                         <h2>CONTACTS</h2>
@@ -337,6 +337,33 @@
             }
 
         });
+
+        //connecting the data wiht json file like comany name
+        let val = '';
+        const Company_price = document.getElementById('Company_price')
+        const Company_title = document.getElementById('Company_title')
+        async function companaming() {
+            try {
+                const res = await fetch('/public/graph.json')
+                if (!res.ok) {
+                    console.log(res.status)
+                    return;
+                }
+                const data = await res.json();
+                val = data.symbol
+                Company_price.innerText = "$" + data.currentPrice
+                Company_title.innerText =data.symbol
+                console.log(data.shortName)
+            } catch (error) {
+                console.log(error)
+            }
+        }
+
+        document.addEventListener("DOMContentLoaded", function () {
+            companaming();
+        });
+
+
     </script>
 
     <script src="../public/predict_stock.js"></script>

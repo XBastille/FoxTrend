@@ -172,30 +172,7 @@
 </head>
 
 <body>
-    <div class="prediction-popup">
-  <div class="disclaimer">
-    <h3>Stock Prediction Disclaimer</h3>
-    <p>While our Machine Learning model has been extensively trained on historical market data and patterns, please note that stock market predictions inherently involve uncertainty. Our model provides data-driven insights based on past trends, but market conditions can change rapidly due to various external factors. We recommend using these predictions as one of many tools in your investment decision-making process.</p>
-  </div>
-  <div class="input-container">
-    <div class="input-group">
-      <label for="trials">Number of Trials</label>
-      <input type="number" id="trials" min="1" max="100" value="10">
-      <i class="fas fa-info-circle info-icon"></i>
-      <div class="info-tooltip">More trials lead to better prediction accuracy but increase processing time.</div>
-    </div>
-    <div class="input-group">
-      <label for="days">Days to Predict</label>
-      <input type="number" id="days" min="1" max="30" value="7">
-      <i class="fas fa-info-circle info-icon"></i>
-      <div class="info-tooltip">Longer prediction periods may reduce accuracy due to increasing market uncertainties. Recommended: 1-14 days.</div>
-    </div>
-  </div>
-  <div class="buttons">
-    <button class="cancel-btn">Cancel</button>
-    <button class="predict-btn">Predict</button>
-  </div>
-</div>
+
     <div class="loading-container" id="loading">
 
         <div class="grid"></div>
@@ -218,6 +195,40 @@
         </div>
     </div>
     <div id="background">
+        <div class="prediction-popup">
+            <div class="disclaimer">
+                <h3>Stock Prediction Disclaimer</h3>
+                <p>While our Machine Learning model has been extensively trained on historical market data and patterns,
+                    please note that stock market predictions inherently involve uncertainty. Our model provides
+                    data-driven
+                    insights based on past trends, but market conditions can change rapidly due to various external
+                    factors.
+                    We recommend using these predictions as one of many tools in your investment decision-making
+                    process.
+                </p>
+            </div>
+            <div class="input-container">
+                <div class="input-group">
+                    <label for="trials">Number of Trials</label>
+                    <input type="number" id="trials" min="1" max="100" value="10">
+                    <i class="fas fa-info-circle info-icon"></i>
+                    <div class="info-tooltip">More trials lead to better prediction accuracy but increase processing
+                        time.
+                    </div>
+                </div>
+                <div class="input-group">
+                    <label for="days">Days to Predict</label>
+                    <input type="number" id="days" min="1" max="30" value="7">
+                    <i class="fas fa-info-circle info-icon"></i>
+                    <div class="info-tooltip">Longer prediction periods may reduce accuracy due to increasing market
+                        uncertainties. Recommended: 1-14 days.</div>
+                </div>
+            </div>
+            <div class="buttons">
+                <button class="cancel-btn">Cancel</button>
+                <button class="predict-btn" id="future_prediction">Predict</button>
+            </div>
+        </div>
         <header>
             <div style="display: flex; justify-content: space-around; gap: 15px;">
                 <h1 style="margin-top: 29px" id="compadvance"></h1>
@@ -396,7 +407,7 @@
 
 
 
-                <button style="margin-left: 60px;" id="aapl">Predict AAPL</button>
+                <button style="margin-left: 60px;" id="aapl"></button>
                 <br>
             </section>
         </header>
@@ -461,84 +472,84 @@
             </div>
         </div>
 
-    </div>
-    </div>
+
+        <div class="graph-stats" style="border-top: 1px solid white;">
+
+            <div class="indicators"
+                style="margin-top: 90px; cursor: pointer; border-right: 1px solid white; margin-bottom: 20px; margin-top: 00px; ">
+
+                <ul>
+
+                    <div class="dropdownmenuinfo">
+                        <p>Moving average (MA) shows the average closing price over a period of time. It’s often used to
+                            track price trends. The period is defined by a number of intervals. The length of an
+                            interval
+                            depends on the span of the chart.
+
+                            Analysts compare MAs for different time periods to see whether or not they might expect
+                            further
+                            increases or decreases in the price of a security.</p>
+                    </div>
 
 
-    <div class="graph-stats" style="border-top: 1px solid white;">
+                    <div class="bibhor" style="margin-top: 150px; ">
+                        <li id="price" style="display: flex;  justify-content: space-evenly;">Price<img
+                                id="infodropdown" style="display:none; height: 20px ; width: 20px;"
+                                src="https://img.icons8.com/m_outlined/200/FFFFFF/info--v2.png"></li><br>
+                        <li id="boll" style="display: flex; display: none; justify-content: space-evenly;">BOLL<img
+                                id="infodropdown1" style="display:none; height: 20px ; width: 20px;"
+                                src="https://img.icons8.com/m_outlined/200/FFFFFF/info--v2.png"></li><br>
+                        <li id="RSI" style="display: flex; display: none; justify-content: space-evenly;">RSI<img
+                                id="infodropdown2" style="display:none; height: 20px ; width: 20px;"
+                                src="https://img.icons8.com/m_outlined/200/FFFFFF/info--v2.png"></li><br>
+                        <li id="MACD" style="display: flex; display: none; justify-content: space-evenly;">MACD<img
+                                id="infodropdown3" style="display:none; height: 20px ; width: 20px;"
+                                src="https://img.icons8.com/m_outlined/200/FFFFFF/info--v2.png"></li><br>
 
-        <div class="indicators"
-            style="margin-top: 90px; cursor: pointer; border-right: 1px solid white; margin-bottom: 20px; margin-top: 00px; ">
+                        <button class="addBtn" id="addButton">+ ADD</button>
+                    </div>
+                    <section class="addSection">
+                        <ul type="none" class="dropdown" id="dropdownMenu">
+                            <li style="border-bottom: 1px solid gray;">Add Indicators</li><br>
+                            <div style="display: flex; flex-direction: row;" id="bolbtn">
+                                <li id="band">Bollinger Bands</li><button style="display: flex; flex-direction: column;"
+                                    id="boilenger"> Boilenger</button>
+                                <img id="imgboll"
+                                    style="height: 20px ; width: 20px; margin-top: 6px; margin-left: 20px;"
+                                    src="https://img.icons8.com/ios11/512/FFFFFF/delete.png">
+                            </div><br>
+                            <div style="display: flex; flex-direction: row;" id="rsibtn">
+                                <li id="ind">Relative strength index</li><button
+                                    style="display: flex; flex-direction: column;" id="rsi"> RSI</button>
+                                <img id="imgrsi" style="height: 20px ; width: 20px; margin-top: 6px; margin-left: 10px;"
+                                    src="https://img.icons8.com/ios11/512/FFFFFF/delete.png">
+                            </div><br>
+                            <div style="display: flex; flex-direction: row;" id="macdbtn">
+                                <li id="strn">MACD</li><button style="display: flex; flex-direction: column;" id="macd">
+                                    MACD</button>
+                                <img id="imgmacd"
+                                    style="height: 20px ; width: 20px; margin-top: 6px; margin-left: 20px;"
+                                    src="https://img.icons8.com/ios11/512/FFFFFF/delete.png">
+                            </div>
+                        </ul>
+                    </section>
+                    </li>
+                </ul>
+            </div>
 
-            <ul>
 
-                <div class="dropdownmenuinfo">
-                    <p>Moving average (MA) shows the average closing price over a period of time. It’s often used to
-                        track price trends. The period is defined by a number of intervals. The length of an interval
-                        depends on the span of the chart.
-
-                        Analysts compare MAs for different time periods to see whether or not they might expect further
-                        increases or decreases in the price of a security.</p>
-                </div>
-
-
-                <div class="bibhor" style="margin-top: 150px; ">
-                    <li id="price" style="display: flex;  justify-content: space-evenly;">Price<img id="infodropdown"
-                            style="display:none; height: 20px ; width: 20px;"
-                            src="https://img.icons8.com/m_outlined/200/FFFFFF/info--v2.png"></li><br>
-                    <li id="boll" style="display: flex; display: none; justify-content: space-evenly;">BOLL<img
-                            id="infodropdown1" style="display:none; height: 20px ; width: 20px;"
-                            src="https://img.icons8.com/m_outlined/200/FFFFFF/info--v2.png"></li><br>
-                    <li id="RSI" style="display: flex; display: none; justify-content: space-evenly;">RSI<img
-                            id="infodropdown2" style="display:none; height: 20px ; width: 20px;"
-                            src="https://img.icons8.com/m_outlined/200/FFFFFF/info--v2.png"></li><br>
-                    <li id="MACD" style="display: flex; display: none; justify-content: space-evenly;">MACD<img
-                            id="infodropdown3" style="display:none; height: 20px ; width: 20px;"
-                            src="https://img.icons8.com/m_outlined/200/FFFFFF/info--v2.png"></li><br>
-
-                    <button class="addBtn" id="addButton">+ ADD</button>
-                </div>
-                <section class="addSection">
-                    <ul type="none" class="dropdown" id="dropdownMenu">
-                        <li style="border-bottom: 1px solid gray;">Add Indicators</li><br>
-                        <div style="display: flex; flex-direction: row;" id="bolbtn">
-                            <li id="band">Bollinger Bands</li><button style="display: flex; flex-direction: column;"
-                                id="boilenger"> Boilenger</button>
-                            <img id="imgboll" style="height: 20px ; width: 20px; margin-top: 6px; margin-left: 20px;"
-                                src="https://img.icons8.com/ios11/512/FFFFFF/delete.png">
-                        </div><br>
-                        <div style="display: flex; flex-direction: row;" id="rsibtn">
-                            <li id="ind">Relative strength index</li><button
-                                style="display: flex; flex-direction: column;" id="rsi"> RSI</button>
-                            <img id="imgrsi" style="height: 20px ; width: 20px; margin-top: 6px; margin-left: 10px;"
-                                src="https://img.icons8.com/ios11/512/FFFFFF/delete.png">
-                        </div><br>
-                        <div style="display: flex; flex-direction: row;" id="macdbtn">
-                            <li id="strn">MACD</li><button style="display: flex; flex-direction: column;" id="macd">
-                                MACD</button>
-                            <img id="imgmacd" style="height: 20px ; width: 20px; margin-top: 6px; margin-left: 20px;"
-                                src="https://img.icons8.com/ios11/512/FFFFFF/delete.png">
-                        </div>
-                    </ul>
-                </section>
-                </li>
-            </ul>
+            <div id="myplot" style="width:100%; height:100%; margin-left: 35px;"></div>
         </div>
 
 
-        <div id="myplot" style="width:100%; height:100%; margin-left: 35px;"></div>
-    </div>
+        <div class="graph-buttons" style="">
+            <img id="cross" style="display:none;height: 30px ; width: 30px; margin-left: 1300px; cursor: pointer;"
+                src="https://www.freeiconspng.com/thumbs/close-button-png/silver-close-button-png-15.png">
+            <div id="rsigraph">
 
-
-    <div class="graph-buttons" style="">
-        <img id="cross" style="display:none;height: 30px ; width: 30px; margin-left: 1300px; cursor: pointer;"
-            src="https://www.freeiconspng.com/thumbs/close-button-png/silver-close-button-png-15.png">
-        <div id="rsigraph">
-
+            </div>
         </div>
     </div>
-    </div>
-
 
     <script src="/public/Advance.js"></script>
     <script>
@@ -555,7 +566,41 @@
             setInterval(restartCubeAnimation, 11600);
         });
 
-
+        //prediction-------------------------------------------------
+        const load = document.getElementById('loading')
+        const back = document.getElementById('background')
+        const future_prediction = document.getElementById('future_prediction')
+        future_prediction.addEventListener('click', async () => {
+            //val is the comapany setting
+            const days = document.getElementById('days').value
+            const trails = document.getElementById('trials').value
+            const predict = "predict"
+            console.log(val, trails, days)
+            load.style.display = 'flex'
+            load.style.zIndex = '999'
+            back.style.zIndex = '-999'
+            back.style.filter = 'blur(30px)'
+            try {
+                const response = await fetch('/predict', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({ val, days, trails, predict })
+                });
+                const data = await response.json();
+                console.log(data)
+                if (data.sucess === 'true') {
+                    load.style.display = 'none'
+                    load.style.zIndex = '-999'
+                    back.style.zIndex = '999'
+                    back.style.filter = 'none'
+                    window.location.href = 'predict'
+                }
+            } catch (error) {
+                console.error('Error:', error);
+            }
+        })
 
     </script>
 
