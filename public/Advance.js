@@ -977,6 +977,8 @@ closeDisclosure.addEventListener('click', () => {
 
 const compadvance = document.getElementById('compadvance')
 const compadvanceprice = document.getElementById('compadvanceprice')
+const aapl=document.getElementById('aapl')
+
 //connecting the data wiht json file like comany name
 let val = '';
 async function companaming() {
@@ -990,6 +992,7 @@ async function companaming() {
         val = data.symbol
         compadvance.innerText = data.shortName
         compadvanceprice.innerText = "$" + data.currentPrice
+        aapl.innerText="Predict "+data.symbol
         console.log(data.shortName)
     } catch (error) {
         console.log(error)

@@ -1,6 +1,18 @@
 document.addEventListener('DOMContentLoaded', () => {
-    document.getElementById('prediction-form').addEventListener('submit', function (e) {
+    document.getElementById('prediction-form').addEventListener('submit', async function (e) {
         e.preventDefault();
+
+        let age = document.getElementById('age').value
+        console.log(age)
+        let experience = document.getElementById('experience').value
+        let income = document.getElementById('income').value
+        let family = document.getElementById('family').value
+        let ccavg = document.getElementById('ccavg').value
+        let education = document.getElementById('education').value
+        let mortgage = document.getElementById('mortgage').value
+        let cd_account = document.getElementById('cd_account').value
+        let credit_card = document.getElementById('credit_card').value
+        const price = await fetchingalldatas(age, experience, income, family, ccavg, education, mortgage, cd_account, credit_card)
         const inputs = this.querySelectorAll('input[required]');
         let isValid = true;
 
@@ -19,10 +31,10 @@ document.addEventListener('DOMContentLoaded', () => {
         const gifNumber = Math.floor(Math.random() * 2) + 1;
         // For now, always showing approval (1)
         const isApproved = 0;
-        const gifPath = isApproved ? `media/loan/loan_${gifNumber}.gif` : `media/loan/not_loan_${gifNumber}.jpg`;
+        const gifPath = price ? `media/loan/loan_${gifNumber}.gif` : `media/loan/not_loan_${gifNumber}.jpg`;
 
         document.getElementById('prediction-gif').src = gifPath;
-        document.querySelector('.price-value').textContent = isApproved ? "Congratulations! Your chances of loan approval are HIGH!" : "Sorry, your chances of loan approval are LOW";
+        document.querySelector('.price-value').textContent = price ? "Congratulations! Your chances of loan approval are HIGH!" : "Sorry, your chances of loan approval are LOW";
 
         result.classList.add('show');
         result.style.animation = 'fadeInUp 0.5s ease forwards';
@@ -173,3 +185,50 @@ document.addEventListener('DOMContentLoaded', function () {
     });
 
 });
+
+//loading animation  -------------------------
+function restartCubeAnimation() {
+    const cube = document.querySelector('.cube');
+    const cubeEdges = cube.querySelectorAll('.cube-edge');
+    cubeEdges.forEach(edge => {
+        const clone = edge.cloneNode(true);
+        edge.parentNode.replaceChild(clone, edge);
+    });
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+    setInterval(restartCubeAnimation, 11600);
+});
+
+let pricing;
+const loading = document.getElementById('loading')
+const background = document.getElementById('background')
+async function fetchingalldatas(age, experience, income, family, ccavg, education, mortgage, cd_account, credit_card) {
+    console.log('aa toh raha h idhar')
+    loading.style.display = 'flex'
+    loading.style.zIndex = '999'
+    loading.style.marginTop = '500px'
+    background.style.zIndex = '-999'
+    background.style.filter = 'blur(30px)'
+    try {
+        const response = await fetch('/loan/UN', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ age, experience, income, family, ccavg, education, mortgage, cd_account, credit_card })
+        });
+        const data = await response.json();
+        pricing = data.value
+        console.log(pricing)
+        if (data.sucess === 'true') {
+            loading.style.display = 'none'
+            loading.style.zIndex = '-999'
+            background.style.zIndex = '999'
+            background.style.filter = 'none'
+        }
+    } catch (error) {
+        console.error('Error:', error);
+    }
+    return pricing;
+}
