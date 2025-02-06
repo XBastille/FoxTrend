@@ -16,6 +16,8 @@ document.addEventListener('DOMContentLoaded', () => {
         const inputs = this.querySelectorAll('input[required]');
         let isValid = true;
 
+        console.log(price)
+
         inputs.forEach(input => {
             if (!input.value) {
                 isValid = false;
@@ -34,7 +36,12 @@ document.addEventListener('DOMContentLoaded', () => {
         const gifPath = price ? `media/loan/loan_${gifNumber}.gif` : `media/loan/not_loan_${gifNumber}.jpg`;
 
         document.getElementById('prediction-gif').src = gifPath;
-        document.querySelector('.price-value').textContent = price ? "Congratulations! Your chances of loan approval are HIGH!" : "Sorry, your chances of loan approval are LOW";
+        if(price === 'Denied'){
+            document.querySelector('.price-value').textContent="Sorry, your chances of loan approval are LOW";
+        }
+        if(price === 'Approved'){
+            document.querySelector('.price-value').textContent="Congratulations! Your chances of loan approval are HIGH!"
+        }
 
         result.classList.add('show');
         result.style.animation = 'fadeInUp 0.5s ease forwards';
