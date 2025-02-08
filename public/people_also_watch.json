@@ -1,72 +1,72 @@
 [
     {
         "Ticker": "BABA",
-        "Price": 99.72,
-        "Change": 3.32,
-        "Change %": 3.3525,
+        "Price": 103.51,
+        "Change": -2.8804,
+        "Change %": -2.7895,
         "Company_Name": "Alibaba Group Holding Limited"
     },
     {
-        "Ticker": "MELI",
-        "Price": 1974.02,
-        "Change": 16.41,
-        "Change %": 0.8415,
-        "Company_Name": "MercadoLibre, Inc."
-    },
-    {
         "Ticker": "PDD",
-        "Price": 110.175,
-        "Change": 5.22,
-        "Change %": 4.7965,
+        "Price": 114.27,
+        "Change": 1.39,
+        "Change %": 1.2485,
         "Company_Name": "PDD Holdings Inc."
     },
     {
+        "Ticker": "MELI",
+        "Price": 1996.65,
+        "Change": 27.7,
+        "Change %": 1.3954,
+        "Company_Name": "MercadoLibre, Inc."
+    },
+    {
         "Ticker": "JD",
-        "Price": 39.9793,
-        "Change": 1.355,
-        "Change %": 3.4041,
+        "Price": 40.17,
+        "Change": 0.15,
+        "Change %": 0.3763,
         "Company_Name": "JD.com, Inc."
     },
     {
         "Ticker": "SE",
-        "Price": 123.65,
-        "Change": 2.89,
-        "Change %": 2.4031,
+        "Price": 123.0,
+        "Change": 0.34,
+        "Change %": 0.278,
         "Company_Name": "Sea Limited"
     },
     {
         "Ticker": "9988.HK",
-        "Price": 97.55,
-        "Change": 2.35,
-        "Change %": 2.4659,
+        "Price": 100.0,
+        "Change": 0.85,
+        "Change %": 0.87,
         "Company_Name": "Alibaba Group Holding Limited"
     },
     {
         "Ticker": "CHWY",
-        "Price": 37.68,
-        "Change": 1.07,
-        "Change %": 2.8495,
+        "Price": 37.16,
+        "Change": 1.62,
+        "Change %": 4.3713,
         "Company_Name": "Chewy, Inc."
     },
     {
-        "Ticker": "CPNG",
-        "Price": 23.885,
-        "Change": 0.185,
-        "Change %": 0.7864,
-        "Company_Name": "Coupang, Inc."
-    },
-    {
         "Ticker": "ETSY",
-        "Price": 55.85,
-        "Change": -0.04,
-        "Change %": -0.0741,
+        "Price": 54.4,
+        "Change": 1.19,
+        "Change %": 2.1927,
         "Company_Name": "Etsy, Inc."
     },
     {
+        "Ticker": "CPNG",
+        "Price": 23.65,
+        "Change": 0.22,
+        "Change %": 0.9306,
+        "Company_Name": "Coupang, Inc."
+    },
+    {
         "Ticker": "W",
-        "Price": 47.78,
-        "Change": 0.47,
-        "Change %": 1.0017,
+        "Price": 43.76,
+        "Change": 4.24,
+        "Change %": 9.8307,
         "Company_Name": "Wayfair Inc."
     }
 ]

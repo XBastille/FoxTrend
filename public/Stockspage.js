@@ -572,6 +572,8 @@ let exdividenddate = "";
 const d = new Date(exdividenddate * 1000);
 const ceoname = document.getElementById("ceoname");
 const city_state = document.getElementById("city_state");
+const dollar = document.getElementById('dollar')
+const percent = document.getElementById('percent')
 let val = ''
 function fetchjson() {
   fetch("/public/graph.json")
@@ -588,6 +590,20 @@ function fetchjson() {
       console.log(Company_title)
       Company_price.innerText = "$" + data.currentPrice;
       cp = "$" + data.currentPrice
+
+      const currPrice = data.currentPrice;
+      const prevPrice = data.previousClose;
+
+      const priceChange = currPrice - prevPrice
+      const percentChange = (priceChange / prevPrice) * 100;
+
+      const sign = priceChange >= 0 ? '+' : '-';
+      dollar.innerText = `${sign}$${Math.abs(priceChange).toFixed(2)}`;
+      percent.innerText = `(${sign}${Math.abs(percentChange).toFixed(2)}%)`;
+
+      dollar.style.color = priceChange >= 0 ? 'green' : 'red'
+      percent.style.color = priceChange >= 0 ? 'green' : 'red'
+
       longsummary.innerText = data.longBusinessSummary;
       prevclose.innerText = data.previousClose;
       bidprice.innerText = data.bid;
@@ -623,25 +639,25 @@ document.addEventListener("DOMContentLoaded", function () {
 
 
 
-const dollar = document.getElementById('dollar').innerText
-const percent = document.getElementById('percent').innerText
+// const dollar = document.getElementById('dollar').innerText
+// const percent = document.getElementById('percent').innerText
 
-console.log(dollar.substring(0, 1))
-if (dollar.substring(0, 1) === '-') {
-  document.getElementById('dollar').style.color = 'red'
-}
+// console.log(dollar.substring(0, 1))
+// if (dollar.substring(0, 1) === '-') {
+//   document.getElementById('dollar').style.color = 'red'
+// }
 
-if (dollar.substring(0, 1) === '+') {
-  document.getElementById('dollar').style.color = 'green'
-}
+// if (dollar.substring(0, 1) === '+') {
+//   document.getElementById('dollar').style.color = 'green'
+// }
 
-if (percent.substring(1, 2) === '-') {
-  document.getElementById('percent').style.color = 'red'
-}
+// if (percent.substring(1, 2) === '-') {
+//   document.getElementById('percent').style.color = 'red'
+// }
 
-if (percent.substring(1, 2) === '+') {
-  document.getElementById('percent').style.color = 'green'
-}
+// if (percent.substring(1, 2) === '+') {
+//   document.getElementById('percent').style.color = 'green'
+// }
 
 
 Papa.parse("/public/stock_data_1.csv", {

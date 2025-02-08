@@ -487,6 +487,15 @@ body {
   transition: 0.5s;
 }
 
+.sum,
+.cha,
+.histo,
+.stat,
+.pro {
+  text-decoration: none;
+}
+
+
 img {
   height: 25px;
   width: 25px;

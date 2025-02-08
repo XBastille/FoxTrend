@@ -8,8 +8,16 @@ const visibleSlides = 5;
 const totalSlides = document.querySelectorAll('.company-box').length;
 const slider = document.getElementById('slider');
 
+function formatPriceChange(change, changePercent) {
+  const cleanChange = Math.abs(change);
+  const cleanPercent = Math.abs(changePercent);
+  const sign = change >= 0 ? '+' : '-';
+  return `${sign}${cleanChange.toFixed(2)} (${sign}${cleanPercent.toFixed(2)}%)`;
+}
+
+
 function setRandomVideo() {
-  const totalVideos = 5; 
+  const totalVideos = 5;
   const randomIndex = Math.floor(Math.random() * totalVideos) + 1;
   const video = document.querySelector('.stock-animation video');
   video.src = `/public/Media/stock_animation_${randomIndex}.mp4`;
@@ -628,10 +636,25 @@ async function fetchingjson() {
   try {
     const res = await fetch('./public/json/sorted_stock_data.json')
     if (!res.ok) {
-      console.log(res.status)
-      return;
+      throw new Error(res.status);
     }
     const data = await res.json();
+    const stockValueElements = document.querySelectorAll('.stock-value .change');
+    const initialChange = parseFloat(data[i0].Change);
+    const initialChangePercent = parseFloat(data[i0]['Change %']);
+    const changeText = formatPriceChange(initialChange, initialChangePercent);
+
+    stockValueElements.forEach(element => {
+      element.innerText = changeText;
+      element.classList.toggle('negative', initialChange < 0);
+      element.classList.toggle('positive', initialChange >= 0);
+    });
+  
+    stockValueElements[0].innerText = changeText;
+
+    stockValueElements[1].innerText = changeText;
+
+    stockValueElements[2].innerText = changeText;
     randomcomp = data[i0].Ticker
     ticker1.innerText = data[0].Ticker
     company1.innerText = data[0].Company_Name || data[0].Ticker
@@ -781,35 +804,60 @@ async function fetchingjson() {
 
     //clicking of first button from any of the button
     graph1comp1.addEventListener('click', () => {
-      const randomcomp1 = data[i0].Ticker
+      const randomcomp1 = data[i0].Ticker;
       const tickercomp = 1;
-      const boxing = 1
+      const boxing = 1;
+      const stockData = data[i0];
+      const stockValue = document.querySelector('#box1 .stock-value .change');
+      stockValue.innerText = formatPriceChange(
+        parseFloat(stockData.Change),
+        parseFloat(stockData['Change %'])
+      );
+      stockValue.classList.toggle('negative', stockData.Change < 0);
+      stockValue.classList.toggle('positive', stockData.Change >= 0);
       perati.innerText = data[i0].PE_Ratio != null ? ("$" + (data[i0].PE_Ratio).toFixed(2)) : "undefined";
       var nums = data[i0].Volume;
       volumess.innerText = nums != null ? nums.toLocaleString() : "undefined";
       beta.innerText = data[i0].Beta != null ? data[i0].Beta : "undefined"
       cprice.innerText = data[i0].Price != null ? "$" + data[i0].Price : "undefined"
       duplicating(randomcomp1, tickercomp, boxing);
-    })
+    });
 
     //clicking of second button data rendering-----------------
     graph1comp2.addEventListener('click', () => {
       const randomcomp2 = data[i1].Ticker;
       const tickercomp = 2;
-      const boxing = 1
+      const boxing = 1;
+      const stockData = data[i1];
+      const stockValue = document.querySelector('#box1 .stock-value .change');
+      stockValue.innerText = formatPriceChange(
+        parseFloat(stockData.Change),
+        parseFloat(stockData['Change %'])
+      );
+      stockValue.classList.toggle('negative', stockData.Change < 0);
+      stockValue.classList.toggle('positive', stockData.Change >= 0);
       perati.innerText = data[i1].PE_Ratio != null ? ("$" + (data[i1].PE_Ratio).toFixed(2)) : "undefined";
       var nums = data[i1].Volume;
       volumess.innerText = nums != null ? nums.toLocaleString() : "undefined";
       beta.innerText = data[i1].Beta != null ? data[i1].Beta : "undefined"
       cprice.innerText = data[i1].Price != null ? "$" + data[i1].Price : "undefined"
       duplicating(randomcomp2, tickercomp, boxing);
-    })
+    });
 
     //clicking of third button data rendering------------------------------
     graph1comp3.addEventListener('click', () => {
-      const randomcomp3 = data[i2].Ticker
+      const randomcomp3 = data[i2].Ticker;
       const tickercomp = 3;
       const boxing = 1;
+      const stockData = data[i2];
+      const stockValue = document.querySelector('#box1 .stock-value .change');
+      stockValue.innerText = formatPriceChange(
+        parseFloat(stockData.Change),
+        parseFloat(stockData['Change %'])
+      );
+      stockValue.classList.toggle('negative', stockData.Change < 0);
+      stockValue.classList.toggle('positive', stockData.Change >= 0);
+
       perati.innerText = data[i2].PE_Ratio != null ? ("$" + (data[i2].PE_Ratio).toFixed(2)) : "undefined";
       var nums = data[i2].Volume;
       volumess.innerText = nums != null ? nums.toLocaleString() : "undefined";
@@ -831,42 +879,66 @@ async function fetchingjson() {
 
     //clicking of first button from any of the button
     graph2comp1.addEventListener('click', () => {
-      const randomcomp1 = data[i0].Ticker
+      const randomcomp1 = data[i0].Ticker;
       const tickercomp = 1;
       const boxing = 2;
+      const stockData = data[i0];
+      const stockValue = document.querySelector('#box2 .stock-value .change');
+      stockValue.innerText = formatPriceChange(
+        parseFloat(stockData.Change),
+        parseFloat(stockData['Change %'])
+      );
+      stockValue.classList.toggle('negative', stockData.Change < 0);
+      stockValue.classList.toggle('positive', stockData.Change >= 0);
       peratii.innerText = data[i0].PE_Ratio != null ? ("$" + (data[i0].PE_Ratio).toFixed(2)) : "undefined";
       var nums = data[i0].Volume;
       volumeess.innerText = nums != null ? nums.toLocaleString() : "undefined";
       betaa.innerText = data[i0].Beta != null ? data[i0].Beta : "undefined"
       clprice.innerText = data[i0].Price != null ? "$" + data[i0].Price : "undefined"
       duplicating(randomcomp1, tickercomp, boxing);
-    })
+    });
 
     //clicking of second button from any of the button
     graph2comp2.addEventListener('click', () => {
-      const randomcomp2 = data[i1].Ticker
+      const randomcomp2 = data[i1].Ticker;
       const tickercomp = 2;
-      const boxing = 2
+      const boxing = 2;
+      const stockData = data[i1];
+      const stockValue = document.querySelector('#box2 .stock-value .change');
+      stockValue.innerText = formatPriceChange(
+        parseFloat(stockData.Change),
+        parseFloat(stockData['Change %'])
+      );
+      stockValue.classList.toggle('negative', stockData.Change < 0);
+      stockValue.classList.toggle('positive', stockData.Change >= 0);
       peratii.innerText = data[i1].PE_Ratio != null ? ("$" + (data[i1].PE_Ratio).toFixed(2)) : "undefined";
       var nums = data[i1].Volume;
       volumeess.innerText = nums != null ? nums.toLocaleString() : "undefined";
       betaa.innerText = data[i1].Beta != null ? data[i1].Beta : "undefined"
       clprice.innerText = data[i1].Price != null ? "$" + data[i1].Price : "undefined"
       duplicating(randomcomp2, tickercomp, boxing);
-    })
+    });
 
     //clicking of third button from any of the button
     graph2comp3.addEventListener('click', () => {
-      const randomcomp3 = data[i2].Ticker
+      const randomcomp3 = data[i2].Ticker;
       const tickercomp = 3;
       const boxing = 2;
+      const stockData = data[i2];
+      const stockValue = document.querySelector('#box2 .stock-value .change');
+      stockValue.innerText = formatPriceChange(
+        parseFloat(stockData.Change),
+        parseFloat(stockData['Change %'])
+      );
+      stockValue.classList.toggle('negative', stockData.Change < 0);
+      stockValue.classList.toggle('positive', stockData.Change >= 0);
       peratii.innerText = data[i2].PE_Ratio != null ? ("$" + (data[i2].PE_Ratio).toFixed(2)) : "undefined";
       var nums = data[i2].Volume;
       volumeess.innerText = nums != null ? nums.toLocaleString() : "undefined";
       betaa.innerText = data[i2].Beta != null ? data[i2].Beta : "undefined"
       clprice.innerText = data[i2].Price != null ? "$" + data[i2].Price : "undefined"
       duplicating(randomcomp3, tickercomp, boxing);
-    })
+    });
 
     //-------setting values on graph2------------------------------------------
     graph3comp1.innerText = data[i0].Ticker
@@ -882,42 +954,66 @@ async function fetchingjson() {
 
     //clicking of first button from any of the button
     graph3comp1.addEventListener('click', () => {
-      const randomcomp1 = data[i0].Ticker
+      const randomcomp1 = data[i0].Ticker;
       const tickercomp = 1;
-      const boxing = 3
+      const boxing = 3;
+      const stockData = data[i0];
+      const stockValue = document.querySelector('#box3 .stock-value .change');
+      stockValue.innerText = formatPriceChange(
+        parseFloat(stockData.Change),
+        parseFloat(stockData['Change %'])
+      );
+      stockValue.classList.toggle('negative', stockData.Change < 0);
+      stockValue.classList.toggle('positive', stockData.Change >= 0);
       pera.innerText = data[i0].PE_Ratio != null ? ("$" + (data[i0].PE_Ratio).toFixed(2)) : "undefined";
       var nums = data[i0].Volume;
       vomes.innerText = nums != null ? nums.toLocaleString() : "undefined";
       betaaa.innerText = data[i0].Beta != null ? data[i0].Beta : "undefined"
       cloprice.innerText = data[i0].Price != null ? "$" + data[i0].Price : "undefined"
       duplicating(randomcomp1, tickercomp, boxing);
-    })
+    });
 
     //clicking of second button from any of the button
     graph3comp2.addEventListener('click', () => {
-      const randomcomp2 = data[i1].Ticker
-      const tickercomp = 2
+      const randomcomp2 = data[i1].Ticker;
+      const tickercomp = 2;
       const boxing = 3;
+      const stockData = data[i1];
+      const stockValue = document.querySelector('#box3 .stock-value .change');
+      stockValue.innerText = formatPriceChange(
+        parseFloat(stockData.Change),
+        parseFloat(stockData['Change %'])
+      );
+      stockValue.classList.toggle('negative', stockData.Change < 0);
+      stockValue.classList.toggle('positive', stockData.Change >= 0);
       pera.innerText = data[i1].PE_Ratio != null ? ("$" + (data[i1].PE_Ratio).toFixed(2)) : "undefined";
       var nums = data[i1].Volume;
       vomes.innerText = nums != null ? nums.toLocaleString() : "undefined";
       betaaa.innerText = data[i1].Beta != null ? data[i1].Beta : "undefined"
       cloprice.innerText = data[i1].Price != null ? "$" + data[i1].Price : "undefined"
       duplicating(randomcomp2, tickercomp, boxing);
-    })
+    });
 
     //clicking of second button from any of the button
     graph3comp3.addEventListener('click', () => {
-      const randomcomp3 = data[i2].Ticker
-      const tickercomp = 3
-      const boxing = 3
+      const randomcomp3 = data[i2].Ticker;
+      const tickercomp = 3;
+      const boxing = 3;
+      const stockData = data[i2];
+      const stockValue = document.querySelector('#box3 .stock-value .change');
+      stockValue.innerText = formatPriceChange(
+        parseFloat(stockData.Change),
+        parseFloat(stockData['Change %'])
+      );
+      stockValue.classList.toggle('negative', stockData.Change < 0);
+      stockValue.classList.toggle('positive', stockData.Change >= 0);
       pera.innerText = data[i2].PE_Ratio != null ? ("$" + (data[i2].PE_Ratio).toFixed(2)) : "undefined";
       var nums = data[i2].Volume;
       vomes.innerText = nums != null ? nums.toLocaleString() : "undefined";
       betaaa.innerText = data[i2].Beta != null ? data[i2].Beta : "undefined"
       cloprice.innerText = data[i2].Price != null ? "$" + data[i2].Price : "undefined"
       duplicating(randomcomp3, tickercomp, boxing);
-    })
+    });
     return randomcomp
   } catch (error) {
     console.log(error)

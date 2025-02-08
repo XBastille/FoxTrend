@@ -121,7 +121,7 @@ document.getElementById('prediction-form').addEventListener('submit', async func
     const gifNumber = Math.floor(Math.random() * 2) + 1;
     // For now, always showing approval (1)
     const isApproved = 1;
-    const gifPath = price ? `media/loan/loan_${gifNumber}.gif` : `media/loan/not_loan_${gifNumber}.jpg`;
+    const gifPath = price ? `../public/Media/loan/loan_${gifNumber}.gif` : `../public/Media/loan/not_loan_${gifNumber}.jpg`;
 
     document.getElementById('prediction-gif').src = gifPath;
     if (price === 'Denied') {
