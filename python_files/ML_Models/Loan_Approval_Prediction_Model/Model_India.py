@@ -40,4 +40,4 @@ input_features = {
 
 prediction = model.predict(input_features)
 result = "Approved" if prediction == 0 else "Denied"
-print({result})
+print(result)
