@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Profile_Page</title>
     <script src='https://cdn.plot.ly/plotly-2.32.0.min.js'></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.3.0/papaparse.min.js"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
@@ -273,14 +273,14 @@
                     </svg>
                 </a>
                 <a href="#" class="comp">
-                    Company
+                    Project
                     <svg width="20" height="20" viewBox="0 -4 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
                         <path d="M5 7.5L10 12.5L15 7.5" stroke="currentColor" stroke-width="1.67" stroke-linecap="round"
                             stroke-linejoin="round"></path>
                     </svg>
                 </a>
-                <a href="#" class="blog">Blog</a>
-                <a href="https://mail.google.com/mail/u/0/#inbox?compose=GTvVlcSKjgJRjZdghDHWgvNWjpSMmRMVVprtPGJtLpldLsvnmhRDJFvWtbKpPQpRMlGhMpkFGmJNz"
+                <a href="https://github.com/XBastille/FoxTrend" target="_blank" class="blog">Github</a>
+                <a href="https://mail.google.com/mail/?view=cm&fs=1&to=eziopuhan825@gmail.com"
                     target="_blank" class="port">Contact Us</a>
                 <div class="services-dropdown">
                     <div class="services-dropdown-content">
@@ -291,17 +291,17 @@
                             <div class="primary-section">
                                 <h2>Primary <span class="arrow">→</span></h2>
                                 <div class="primary-elements">
-                                    <a href="/dashboard">Stock Market Prediction</a>
+                                    <a href="#">Stock Market Prediction</a>
                                 </div>
                             </div>
                         </div>
                         <div class="services-dropdown-column">
-                            <h3>Secondary <span class="arrow">→</span></h3>
                             <div class="secondary-section">
+                                <h3>Secondary <span class="arrow">→</span></h3>
                                 <div class="secondary-elements">
-                                    <a href="#">Used Car Prediction</a>
-                                    <a href="#">Housing Prediction</a>
-                                    <a href="#">Loan Approval Prediction</a>
+                                    <a href="/selectcar">Used Car Prediction</a>
+                                    <a href="/selecthouse">Housing Prediction</a>
+                                    <a href="/selectloan">Loan Approval Prediction</a>
                                 </div>
                             </div>
                         </div>
@@ -311,12 +311,12 @@
                 <div class="company-dropdown">
                     <div class="company-dropdown-content">
                         <div class="company-label">
-                            <h1>Company</h1>
+                            <h1>Project</h1>
                         </div>
                         <div class="company-dropdown-column">
                             <h2>MORE ABOUT US</h2>
-                            <a href="#">About Us</a>
-                            <a href="#">Blog</a>
+                            <a href="/#about-section">About Us</a>
+                            <a href="https://github.com/XBastille/FoxTrend" target="_blank">Github</a>
                             <a href="#">Privacy Policy</a>
                             <a href="#">License</a>
                         </div>
@@ -327,9 +327,9 @@
                             <a href="/social" target="_blank">X</a>
                         </div>
                         <div class="company-dropdown-column">
-                            <h2>CONTACTS</h2>
-                            <a href="#">Book a Call</a>
-                            <a href="https://mail.google.com/mail/u/0/#inbox?compose=GTvVlcSKjgJRjZdghDHWgvNWjpSMmRMVVprtPGJtLpldLsvnmhRDJFvWtbKpPQpRMlGhMpkFGmJNz"
+                            <h2>Project</h2>
+                            <a href="#">Donate</a>
+                            <a href="https://mail.google.com/mail/?view=cm&fs=1&to=eziopuhan825@gmail.com"
                                 target="_blank">Mail Us</a>
                         </div>
                     </div>
@@ -356,8 +356,8 @@
         <div class="desc" style="margin-left: 200px;">
             <h1 id="compyname"></h1>
             <h1 id="currprice">$220.30</h1>
-            <h5>-$2.51(-1.13%) Pre-market</h5>
-            <h4>24 Hour Market</h4>
+            <span id="dollar"></span>
+            <span id="percent"></span>
         </div>
 
         <style>
@@ -481,9 +481,9 @@
                 <div class="inc">
                     <h2 id="hello"></h2>
                     <p id="address"></p>
-                    <a href="#" id="phn"><b>408 996 1010</b></a>
+                    <a href="#" id="phn"><b></b></a>
                     <br>
-                    <a href="#"><b id="web">https://www.apple.com</b></a>
+                    <a href="#"><b id="web"></b></a>
 
                     <p>
                         Sector: <b id="sector">Technology</b>
@@ -590,29 +590,30 @@
         </div>
         <footer>
             <div class="footer-links">
-                <img src="public/Media/website_logo.jpg" class="foot-logo">
+                <img src="public/Media/website_logo.jpg" class="foot-logo" />
                 <div class="footer-block">
-                    <div class="footer-title" id="Comp">Company</div>
-                    <li><a class="links"
-                            href="https://mail.google.com/mail/u/0/#inbox?compose=GTvVlcSKjgJRjZdghDHWgvNWjpSMmRMVVprtPGJtLpldLsvnmhRDJFvWtbKpPQpRMlGhMpkFGmJNz"
+                    <div class="footer-title" id="Comp">Project</div>
+                    <li><a style="text-decoration: none;" class="links"
+                            href="https://mail.google.com/mail/?view=cm&fs=1&to=eziopuhan825@gmail.com"
                             target="_blank" id="mail">Mail us</a></li>
-                    <li><a class="links" id="SERV">Services</a></li>
+                    <li><a href="https://github.com/XBastille/FoxTrend" style="text-decoration: none;" target="_blank"
+                            class="links" id="SERV">Github</a></li>
+                    <li><a href="#" style="text-decoration: none;" target="_blank" class="links" id="SERV">Donate</a>
+                    </li>
                 </div>
 
                 <div class="footer-block">
                     <div class="footer-title" id="more">More</div>
-                    <li><a class="links" id="tandc">Blog</a></li>
                     <li><a class="links" id="career">License</a></li>
                     <li><a class="links" id="privacy">Privacy Policy</a></li>
                 </div>
 
                 <div class="footer-block">
                     <div class="footer-title" id="social">Social</div>
-                    <li><a class="links" id="linkedin">LinkedIn</a></li>
-                    <li> <a class="links" id="yt">Instagram</a></li>
-                    <li> <a class="links" id="tw">X</a></li>
+                    <li><a class="links" style="text-decoration: none;" href="/social" target="_blank" id="linkedin">LinkedIn</a></li>
+                    <li><a class="links" style="text-decoration: none;" href="/social" target="_blank" id="yt">Instagram</a></li>
+                    <li><a class="links" style="text-decoration: none;" href="/social" target="_blank" id="tw">X</a></li>
                 </div>
-
             </div>
         </footer>
     </div>
@@ -772,14 +773,16 @@
         const ex10 = document.getElementById('ex10')
         const year10 = document.getElementById('year10')
 
-        const descp=document.getElementById('descp')
-        const hello=document.getElementById('hello')
-        const address=document.getElementById('address')
-        const phn=document.getElementById('phn')
-        const web=document.getElementById('web')
-        const sector=document.getElementById('sector')
-        const industry=document.getElementById('industry')
-        const fulltime=document.getElementById('fulltime')
+        const descp = document.getElementById('descp')
+        const hello = document.getElementById('hello')
+        const address = document.getElementById('address')
+        const phn = document.getElementById('phn')
+        const web = document.getElementById('web')
+        const sector = document.getElementById('sector')
+        const industry = document.getElementById('industry')
+        const fulltime = document.getElementById('fulltime')
+        const dollar = document.getElementById('dollar')
+        const percent = document.getElementById('percent')
         let values = '';
         async function fetchjson() {
             try {
@@ -985,22 +988,35 @@
                 }
                 else {
                     year10.innerText = data.companyOfficers[9].yearBorn
-                } 
+                }
 
-                descp.innerText=data.longBusinessSummary
-                hello.innerText=data.shortName
-                let add=(data.address1 )
-                let cit=data.city
-                let stat=data.state
-                let final =add+" ,"+cit+" "+stat
-                address.innerText=final
+                descp.innerText = data.longBusinessSummary
+                hello.innerText = data.shortName
+                let add = (data.address1)
+                let cit = data.city
+                let stat = data.state
+                let final = add + " ," + cit + " " + stat
+                address.innerText = final
 
-                phn.innerText=data.phone
-                web.innerText=data.website
+                phn.innerText = data.phone
+                web.innerText = data.website
 
-                sector.innerText=data.sector
-                industry.innerText=data.sectorKey
-                fulltime.innerText=data.sectorDisp
+                sector.innerText = data.sector
+                industry.innerText = data.sectorKey
+                fulltime.innerText = data.sectorDisp
+
+                const currPrice = data.currentPrice;
+                const prevPrice = data.previousClose;
+
+                const priceChange = currPrice - prevPrice
+                const percentChange = (priceChange / prevPrice) * 100;
+
+                const sign = priceChange >= 0 ? '+' : '-';
+                dollar.innerText = `${sign}$${Math.abs(priceChange).toFixed(2)}`;
+                percent.innerText = `(${sign}${Math.abs(percentChange).toFixed(2)}%)`;
+
+                dollar.style.color = priceChange >= 0 ? 'green' : 'red'
+                percent.style.color = priceChange >= 0 ? 'green' : 'red'
 
             } catch (err) {
                 console.error("Error fetching JSON:", err);

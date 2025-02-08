@@ -275,14 +275,14 @@
                     </svg>
                 </a>
                 <a href="#" class="comp">
-                    Company
+                    Project
                     <svg width="20" height="20" viewBox="0 -4 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
                         <path d="M5 7.5L10 12.5L15 7.5" stroke="currentColor" stroke-width="1.67" stroke-linecap="round"
                             stroke-linejoin="round"></path>
                     </svg>
                 </a>
                 <a href="#" class="blog">Blog</a>
-                <a href="https://mail.google.com/mail/u/0/#inbox?compose=GTvVlcSKjgJRjZdghDHWgvNWjpSMmRMVVprtPGJtLpldLsvnmhRDJFvWtbKpPQpRMlGhMpkFGmJNz" target="_blank" class="port">Contact Us</a>
+                <a href="https://mail.google.com/mail/?view=cm&fs=1&to=eziopuhan825@gmail.com" target="_blank" class="port">Contact Us</a>
                 <div class="services-dropdown">
                     <div class="services-dropdown-content">
                         <div class="services-label">
@@ -312,11 +312,11 @@
                 <div class="company-dropdown">
                     <div class="company-dropdown-content">
                         <div class="company-label">
-                            <h1>Company</h1>
+                            <h1>Project</h1>
                         </div>
                         <div class="company-dropdown-column">
                             <h2>MORE ABOUT US</h2>
-                            <a href="/journey">About Us</a>
+                            <a href="/#about-section">About Us</a>
                             <a href="#">Blog</a>
                             <a href="#">Privacy Policy</a>
                             <a href="#">License</a>
@@ -330,7 +330,7 @@
                         <div class="company-dropdown-column">
                             <h2>CONTACTS</h2>
                             <a href="#">Book a Call</a>
-                            <a href="https://mail.google.com/mail/u/0/#inbox?compose=GTvVlcSKjgJRjZdghDHWgvNWjpSMmRMVVprtPGJtLpldLsvnmhRDJFvWtbKpPQpRMlGhMpkFGmJNz" target="_blank">Mail Us</a>
+                            <a href="https://mail.google.com/mail/?view=cm&fs=1&to=eziopuhan825@gmail.com" target="_blank">Mail Us</a>
                         </div>
                     </div>
                 </div>
@@ -359,11 +359,11 @@
 
 
 
-        <div class="desc">
+        <div class="desc" style="margin-left: 200px">
             <h1 id="Company_title"></h1>
             <h1 id="Company_price"></h1>
-            <h5>-$2.51(-1.13%) Pre-market</h5>
-            <h4>24 Hour Market</h4>
+            <span id="dollar"></span>
+            <span id="percent"></span>
         </div>
         <div class="Advance" style=" padding: 20px; width: 50px;">
             <button style="transform: translateX(1800%); border: none; background: transparent; ;">Advance</button>
@@ -699,27 +699,28 @@
         </style>
         <footer>
             <div class="footer-links">
-                <img src="public/Media/website_logo.jpg" class="foot-logo">
+                <img src="public/Media/website_logo.jpg" class="foot-logo" />
                 <div class="footer-block">
-                    <div class="footer-title" id="Comp">Company</div>
-                    <li><a class="links" href="https://mail.google.com/mail/u/0/#inbox?compose=GTvVlcSKjgJRjZdghDHWgvNWjpSMmRMVVprtPGJtLpldLsvnmhRDJFvWtbKpPQpRMlGhMpkFGmJNz" target="_blank" id="mail">Mail us</a></li>
-                    <li><a class="links" id="SERV">Services</a></li>
+                    <div class="footer-title" id="Comp">Project</div>
+                    <li><a style="text-decoration: none;" class="links"
+                            href="https://mail.google.com/mail/?view=cm&fs=1&to=eziopuhan825@gmail.com"
+                            target="_blank" id="mail">Mail us</a></li>
+                    <li><a href="https://github.com/XBastille/FoxTrend" style="text-decoration: none;" target="_blank" class="links" id="SERV">Github</a></li>
+                    <li><a href="#" style="text-decoration: none;" target="_blank" class="links" id="SERV">Donate</a></li>
                 </div>
 
                 <div class="footer-block">
                     <div class="footer-title" id="more">More</div>
-                    <li><a class="links" id="tandc">Blog</a></li>
                     <li><a class="links" id="career">License</a></li>
                     <li><a class="links" id="privacy">Privacy Policy</a></li>
                 </div>
 
                 <div class="footer-block">
                     <div class="footer-title" id="social">Social</div>
-                    <li><a class="links" id="linkedin">LinkedIn</a></li>
-                    <li> <a class="links" id="yt">Instagram</a></li>
-                    <li> <a class="links" id="tw">X</a></li>
+                    <li><a class="links" style="text-decoration: none;" href="/social" target="_blank" id="linkedin">LinkedIn</a></li>
+                    <li><a class="links" style="text-decoration: none;" href="/social" target="_blank" id="yt">Instagram</a></li>
+                    <li><a class="links" style="text-decoration: none;" href="/social" target="_blank" id="tw">X</a></li>
                 </div>
-
             </div>
         </footer>
     </div>
@@ -773,15 +774,17 @@
         const pr = document.getElementById('pr')
         const lsf = document.getElementById('lsf')
         const sand = document.getElementById('sand')
-        const marketcapping =document.getElementById('marketcapping')
-        const entvals=document.getElementById('entvals')
-        const tpes=document.getElementById('tpes')
-        const fpes=document.getElementById('fpes')
-        const pegrat=document.getElementById('pegrat')
-        const prsale=document.getElementById('prsale')
-        const prbook=document.getElementById('prbook')
-        const entvr=document.getElementById('entvr')
-        const entvalebi=document.getElementById('entvalebi')
+        const marketcapping = document.getElementById('marketcapping')
+        const entvals = document.getElementById('entvals')
+        const tpes = document.getElementById('tpes')
+        const fpes = document.getElementById('fpes')
+        const pegrat = document.getElementById('pegrat')
+        const prsale = document.getElementById('prsale')
+        const prbook = document.getElementById('prbook')
+        const entvr = document.getElementById('entvr')
+        const entvalebi = document.getElementById('entvalebi')
+        const dollar = document.getElementById('dollar')
+        const percent = document.getElementById('percent')
         let values = '';
         async function fetchjson() {
             try {
@@ -829,15 +832,28 @@
                 pr.innerText = (data.payoutRatio * 100).toFixed(2) + "%"
                 lsf.innerText = data.lastSplitFactor
                 sand.innerText = (data.SandP52WeekChange * 100).toFixed(2) + "%"
-                marketcapping.innerText=(data.marketCap /1000000000000).toFixed(2) +"T"
-                entvals.innerText=(data.enterpriseValue/1000000000000).toFixed(2) +"T"
-                fpes.innerText=(data.forwardPE).toFixed(2)
-                pegrat.innerText=(data.trailingPegRatio).toFixed(2)
-                tpes.innerText=(data.trailingPE).toFixed(2)
-                prsale.innerText=(data.priceToSalesTrailing12Months).toFixed(2) 
-                prbook.innerText=(data.priceToBook).toFixed(2)
-                entvr.innerText=(data.enterpriseToRevenue).toFixed(2)
-                entvalebi.innerText=(data.enterpriseToEbitda).toFixed(2)
+                marketcapping.innerText = (data.marketCap / 1000000000000).toFixed(2) + "T"
+                entvals.innerText = (data.enterpriseValue / 1000000000000).toFixed(2) + "T"
+                fpes.innerText = (data.forwardPE).toFixed(2)
+                pegrat.innerText = (data.trailingPegRatio).toFixed(2)
+                tpes.innerText = (data.trailingPE).toFixed(2)
+                prsale.innerText = (data.priceToSalesTrailing12Months).toFixed(2)
+                prbook.innerText = (data.priceToBook).toFixed(2)
+                entvr.innerText = (data.enterpriseToRevenue).toFixed(2)
+                entvalebi.innerText = (data.enterpriseToEbitda).toFixed(2)
+
+                const currPrice = data.currentPrice;
+                const prevPrice = data.previousClose;
+
+                const priceChange = currPrice - prevPrice
+                const percentChange = (priceChange / prevPrice) * 100;
+
+                const sign = priceChange >= 0 ? '+' : '-';
+                dollar.innerText = `${sign}$${Math.abs(priceChange).toFixed(2)}`;
+                percent.innerText = `(${sign}${Math.abs(percentChange).toFixed(2)}%)`;
+
+                dollar.style.color = priceChange >= 0 ? 'green' : 'red'
+                percent.style.color = priceChange >= 0 ? 'green' : 'red'
 
             } catch (err) {
                 console.error("Error fetching JSON:", err);
