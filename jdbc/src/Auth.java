@@ -15,7 +15,7 @@ public class Auth {
         createDbStatement.executeUpdate(createDatabaseQuery);
         createDbStatement.close();
         con.close();
-        con = DriverManager.getConnection("jdbc:mysql://localhost:3306/UserAuthentication", "root", "Abhinab@2004");
+        con = DriverManager.getConnection("jdbc:mysql://localhost:3307/UserAuthentication", "root", "letitfeel36");
         String createTableQuery = "CREATE TABLE IF NOT EXISTS user_database ("
                 + "id INT AUTO_INCREMENT PRIMARY KEY, "
                 + "name VARCHAR(255) UNIQUE NOT NULL, "
@@ -43,10 +43,10 @@ public class Auth {
     }
 
     public static Connection getConnection() throws InterruptedException {
-        int retries = 5;
+        int retries = 1;
         while (retries > 0) {
             try {
-                Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/", "root", "Abhinab@2004");
+                Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3307/", "root", "password");
                 System.out.println("Connected to the database!");
                 return con;
             } catch (Exception e) {
