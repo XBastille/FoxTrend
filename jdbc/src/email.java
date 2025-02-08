@@ -8,7 +8,7 @@ public class email {
     public static void main(String[] args) throws Exception {
         Scanner sc = new Scanner(System.in);
         Class.forName("com.mysql.cj.jdbc.Driver");
-        Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3307/UserAuthentication", "root", "password");
+        Connection con = DriverManager.getConnection("jdbc:mysql://db:3308/UserAuthentication", "root", "password");
 
         // String email = sc.nextLine();
          String email = args[0];
