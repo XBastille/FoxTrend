@@ -11,7 +11,15 @@ class StockDataVisualizer:
     def __init__(self, company_name, index):
         self.company_name=company_name
         self.index=index
-        self.stock_data=self.download_stock_data()
+        try:
+            ticker = yf.Ticker(company_name)
+            info = ticker.info
+            if not info or 'regularMarketOpen' not in info:
+                raise ValueError(f"Invalid ticker symbol: {company_name}")
+            self.stock_data = self.download_stock_data()
+        except Exception as e:
+            print(f"Error initializing data for {company_name}: {str(e)}")
+            self.stock_data = pd.DataFrame()
 
     def download_stock_data(self):
         end_date=datetime.datetime.now()
@@ -107,8 +115,11 @@ class StockDataVisualizer:
         plt.show()
 
     def run(self, start_date, end_date):
-        self.plot_historical_data(start_date, end_date)
-        self.plot_technical_indicators(start_date, end_date)
+        if not self.stock_data.empty:
+            self.plot_historical_data(start_date, end_date)
+            self.plot_technical_indicators(start_date, end_date)
+        else:
+            print(f"Skipping analysis for {self.company_name} due to invalid data")
 
 if __name__ == "__main__":
     if len(sys.argv)<3:
