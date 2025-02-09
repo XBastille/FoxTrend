@@ -992,6 +992,11 @@ async function companaming() {
         val = data.symbol
         compadvance.innerText = data.shortName
         compadvanceprice.innerText = "$" + data.currentPrice
+        const priceChange = data.currentPrice - data.previousClose;
+        const priceChangeElement = document.getElementById('priceChangeValue');
+        const sign = priceChange >= 0 ? '+' : '-';
+        priceChangeElement.innerText = `(${sign}$${Math.abs(priceChange).toFixed(2)})`;
+        priceChangeElement.style.color = priceChange >= 0 ? 'green' : 'red';
         aapl.innerText="Predict "+data.symbol
         console.log(data.shortName)
     } catch (error) {

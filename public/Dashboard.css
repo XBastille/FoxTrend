@@ -847,6 +847,42 @@ pointer-events: none;
  margin-right: 80px;
 }
 
+.search-dropdown-menu {
+  display: none;
+  position: absolute;
+  top: 100px;
+  width: 500px;
+  text-align: left;
+  max-height: 240px;
+  background: #1a1a1a;
+  border: 1px solid #444;
+  border-radius: 8px;
+  z-index: 1000;
+  margin-left: -600px;
+}
+
+.search-dropdown-menu.active {
+  display: block;
+}
+
+.search-dropdown-options {
+  max-height: 240px;
+  overflow-y: auto;
+}
+
+.search-dropdown-option {
+  padding: 10px;
+  cursor: pointer;
+  color: #fff;
+  transition: background-color 0.3s ease;
+}
+
+.search-dropdown-option:hover {
+  background-color: #2d2d2d;
+}
+
+
+
 @media (max-width: 768px) {
   .navigationBar {
     flex-direction: column;  display: none;

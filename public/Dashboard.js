@@ -8,12 +8,75 @@ const visibleSlides = 5;
 const totalSlides = document.querySelectorAll('.company-box').length;
 const slider = document.getElementById('slider');
 
-function formatPriceChange(change, changePercent) {
-  const cleanChange = Math.abs(change);
-  const cleanPercent = Math.abs(changePercent);
-  const sign = change >= 0 ? '+' : '-';
-  return `${sign}${cleanChange.toFixed(2)} (${sign}${cleanPercent.toFixed(2)}%)`;
+class SearchDropdown {
+  constructor(inputId) {
+      this.input = document.getElementById(inputId);
+      this.dropdownMenu = document.createElement('div');
+      this.dropdownMenu.className = 'search-dropdown-menu';
+      this.optionsContainer = document.createElement('div');
+      this.optionsContainer.className = 'search-dropdown-options';
+      this.dropdownMenu.appendChild(this.optionsContainer);
+      this.input.parentElement.appendChild(this.dropdownMenu);
+      this.setupDropdown();
+  }
+
+  setupDropdown() {
+      this.input.addEventListener('click', () => {
+          this.dropdownMenu.classList.add('active');
+          this.loadOptions('');
+      });
+
+      document.addEventListener('click', (e) => {
+          if (!this.input.contains(e.target) && !this.dropdownMenu.contains(e.target)) {
+              this.dropdownMenu.classList.remove('active');
+          }
+      });
+
+      this.input.addEventListener('input', (e) => {
+          const searchTerm = e.target.value.toLowerCase();
+          this.loadOptions(searchTerm);
+      });
+  }
+
+  async loadOptions(searchTerm) {
+      try {
+          const response = await fetch('/public/textfile/all_ticker.txt');
+          const text = await response.text();
+          const options = text.split('\n').filter(option => option.trim());
+
+          const filteredOptions = options
+              .filter(option => option.toLowerCase().startsWith(searchTerm.toLowerCase()))
+              .slice(0, 6);
+
+          this.optionsContainer.innerHTML = '';
+          filteredOptions.forEach(option => {
+              const optionElement = document.createElement('div');
+              optionElement.className = 'search-dropdown-option';
+              optionElement.textContent = option;
+              optionElement.addEventListener('click', () => {
+                  this.input.value = option;
+                  this.dropdownMenu.classList.remove('active');
+                  const enterEvent = new KeyboardEvent('keypress', {
+                      key: 'Enter',
+                      code: 'Enter',
+                      keyCode: 13,
+                      which: 13,
+                      bubbles: true
+                  });
+                  this.input.dispatchEvent(enterEvent);
+              });
+              this.optionsContainer.appendChild(optionElement);
+          });
+      } catch (error) {
+          console.error('Error loading options:', error);
+      }
+  }
 }
+
+document.addEventListener('DOMContentLoaded', () => {
+  new SearchDropdown('searchcomp');
+});
+
 
 
 function setRandomVideo() {
@@ -631,30 +694,20 @@ const ticker15 = document.getElementById('ticker15')
 const company15 = document.getElementById('company15')
 const companyprice15 = document.getElementById('companyprice15')
 const companypercent15 = document.getElementById('companypercent15')
+
+const price_percent_Change = document.getElementById('price_percent_Change');
+const price_percent_Changes = document.getElementById('price_percent_Changes');
+const price_percent_Changess = document.getElementById('price_percent_Changess');
+
 let randomcomp;
 async function fetchingjson() {
   try {
     const res = await fetch('./public/json/sorted_stock_data.json')
     if (!res.ok) {
-      throw new Error(res.status);
+      console.log(res.status)
+      return;
     }
     const data = await res.json();
-    const stockValueElements = document.querySelectorAll('.stock-value .change');
-    const initialChange = parseFloat(data[i0].Change);
-    const initialChangePercent = parseFloat(data[i0]['Change %']);
-    const changeText = formatPriceChange(initialChange, initialChangePercent);
-
-    stockValueElements.forEach(element => {
-      element.innerText = changeText;
-      element.classList.toggle('negative', initialChange < 0);
-      element.classList.toggle('positive', initialChange >= 0);
-    });
-  
-    stockValueElements[0].innerText = changeText;
-
-    stockValueElements[1].innerText = changeText;
-
-    stockValueElements[2].innerText = changeText;
     randomcomp = data[i0].Ticker
     ticker1.innerText = data[0].Ticker
     company1.innerText = data[0].Company_Name || data[0].Ticker
@@ -804,60 +857,35 @@ async function fetchingjson() {
 
     //clicking of first button from any of the button
     graph1comp1.addEventListener('click', () => {
-      const randomcomp1 = data[i0].Ticker;
+      const randomcomp1 = data[i0].Ticker
       const tickercomp = 1;
-      const boxing = 1;
-      const stockData = data[i0];
-      const stockValue = document.querySelector('#box1 .stock-value .change');
-      stockValue.innerText = formatPriceChange(
-        parseFloat(stockData.Change),
-        parseFloat(stockData['Change %'])
-      );
-      stockValue.classList.toggle('negative', stockData.Change < 0);
-      stockValue.classList.toggle('positive', stockData.Change >= 0);
+      const boxing = 1
       perati.innerText = data[i0].PE_Ratio != null ? ("$" + (data[i0].PE_Ratio).toFixed(2)) : "undefined";
       var nums = data[i0].Volume;
       volumess.innerText = nums != null ? nums.toLocaleString() : "undefined";
       beta.innerText = data[i0].Beta != null ? data[i0].Beta : "undefined"
       cprice.innerText = data[i0].Price != null ? "$" + data[i0].Price : "undefined"
       duplicating(randomcomp1, tickercomp, boxing);
-    });
+    })
 
     //clicking of second button data rendering-----------------
     graph1comp2.addEventListener('click', () => {
       const randomcomp2 = data[i1].Ticker;
       const tickercomp = 2;
-      const boxing = 1;
-      const stockData = data[i1];
-      const stockValue = document.querySelector('#box1 .stock-value .change');
-      stockValue.innerText = formatPriceChange(
-        parseFloat(stockData.Change),
-        parseFloat(stockData['Change %'])
-      );
-      stockValue.classList.toggle('negative', stockData.Change < 0);
-      stockValue.classList.toggle('positive', stockData.Change >= 0);
+      const boxing = 1
       perati.innerText = data[i1].PE_Ratio != null ? ("$" + (data[i1].PE_Ratio).toFixed(2)) : "undefined";
       var nums = data[i1].Volume;
       volumess.innerText = nums != null ? nums.toLocaleString() : "undefined";
       beta.innerText = data[i1].Beta != null ? data[i1].Beta : "undefined"
       cprice.innerText = data[i1].Price != null ? "$" + data[i1].Price : "undefined"
       duplicating(randomcomp2, tickercomp, boxing);
-    });
+    })
 
     //clicking of third button data rendering------------------------------
     graph1comp3.addEventListener('click', () => {
-      const randomcomp3 = data[i2].Ticker;
+      const randomcomp3 = data[i2].Ticker
       const tickercomp = 3;
       const boxing = 1;
-      const stockData = data[i2];
-      const stockValue = document.querySelector('#box1 .stock-value .change');
-      stockValue.innerText = formatPriceChange(
-        parseFloat(stockData.Change),
-        parseFloat(stockData['Change %'])
-      );
-      stockValue.classList.toggle('negative', stockData.Change < 0);
-      stockValue.classList.toggle('positive', stockData.Change >= 0);
-
       perati.innerText = data[i2].PE_Ratio != null ? ("$" + (data[i2].PE_Ratio).toFixed(2)) : "undefined";
       var nums = data[i2].Volume;
       volumess.innerText = nums != null ? nums.toLocaleString() : "undefined";
@@ -879,66 +907,42 @@ async function fetchingjson() {
 
     //clicking of first button from any of the button
     graph2comp1.addEventListener('click', () => {
-      const randomcomp1 = data[i0].Ticker;
+      const randomcomp1 = data[i0].Ticker
       const tickercomp = 1;
       const boxing = 2;
-      const stockData = data[i0];
-      const stockValue = document.querySelector('#box2 .stock-value .change');
-      stockValue.innerText = formatPriceChange(
-        parseFloat(stockData.Change),
-        parseFloat(stockData['Change %'])
-      );
-      stockValue.classList.toggle('negative', stockData.Change < 0);
-      stockValue.classList.toggle('positive', stockData.Change >= 0);
       peratii.innerText = data[i0].PE_Ratio != null ? ("$" + (data[i0].PE_Ratio).toFixed(2)) : "undefined";
       var nums = data[i0].Volume;
       volumeess.innerText = nums != null ? nums.toLocaleString() : "undefined";
       betaa.innerText = data[i0].Beta != null ? data[i0].Beta : "undefined"
       clprice.innerText = data[i0].Price != null ? "$" + data[i0].Price : "undefined"
       duplicating(randomcomp1, tickercomp, boxing);
-    });
+    })
 
     //clicking of second button from any of the button
     graph2comp2.addEventListener('click', () => {
-      const randomcomp2 = data[i1].Ticker;
+      const randomcomp2 = data[i1].Ticker
       const tickercomp = 2;
-      const boxing = 2;
-      const stockData = data[i1];
-      const stockValue = document.querySelector('#box2 .stock-value .change');
-      stockValue.innerText = formatPriceChange(
-        parseFloat(stockData.Change),
-        parseFloat(stockData['Change %'])
-      );
-      stockValue.classList.toggle('negative', stockData.Change < 0);
-      stockValue.classList.toggle('positive', stockData.Change >= 0);
+      const boxing = 2
       peratii.innerText = data[i1].PE_Ratio != null ? ("$" + (data[i1].PE_Ratio).toFixed(2)) : "undefined";
       var nums = data[i1].Volume;
       volumeess.innerText = nums != null ? nums.toLocaleString() : "undefined";
       betaa.innerText = data[i1].Beta != null ? data[i1].Beta : "undefined"
       clprice.innerText = data[i1].Price != null ? "$" + data[i1].Price : "undefined"
       duplicating(randomcomp2, tickercomp, boxing);
-    });
+    })
 
     //clicking of third button from any of the button
     graph2comp3.addEventListener('click', () => {
-      const randomcomp3 = data[i2].Ticker;
+      const randomcomp3 = data[i2].Ticker
       const tickercomp = 3;
       const boxing = 2;
-      const stockData = data[i2];
-      const stockValue = document.querySelector('#box2 .stock-value .change');
-      stockValue.innerText = formatPriceChange(
-        parseFloat(stockData.Change),
-        parseFloat(stockData['Change %'])
-      );
-      stockValue.classList.toggle('negative', stockData.Change < 0);
-      stockValue.classList.toggle('positive', stockData.Change >= 0);
       peratii.innerText = data[i2].PE_Ratio != null ? ("$" + (data[i2].PE_Ratio).toFixed(2)) : "undefined";
       var nums = data[i2].Volume;
       volumeess.innerText = nums != null ? nums.toLocaleString() : "undefined";
       betaa.innerText = data[i2].Beta != null ? data[i2].Beta : "undefined"
       clprice.innerText = data[i2].Price != null ? "$" + data[i2].Price : "undefined"
       duplicating(randomcomp3, tickercomp, boxing);
-    });
+    })
 
     //-------setting values on graph2------------------------------------------
     graph3comp1.innerText = data[i0].Ticker
@@ -954,66 +958,42 @@ async function fetchingjson() {
 
     //clicking of first button from any of the button
     graph3comp1.addEventListener('click', () => {
-      const randomcomp1 = data[i0].Ticker;
+      const randomcomp1 = data[i0].Ticker
       const tickercomp = 1;
-      const boxing = 3;
-      const stockData = data[i0];
-      const stockValue = document.querySelector('#box3 .stock-value .change');
-      stockValue.innerText = formatPriceChange(
-        parseFloat(stockData.Change),
-        parseFloat(stockData['Change %'])
-      );
-      stockValue.classList.toggle('negative', stockData.Change < 0);
-      stockValue.classList.toggle('positive', stockData.Change >= 0);
+      const boxing = 3
       pera.innerText = data[i0].PE_Ratio != null ? ("$" + (data[i0].PE_Ratio).toFixed(2)) : "undefined";
       var nums = data[i0].Volume;
       vomes.innerText = nums != null ? nums.toLocaleString() : "undefined";
       betaaa.innerText = data[i0].Beta != null ? data[i0].Beta : "undefined"
       cloprice.innerText = data[i0].Price != null ? "$" + data[i0].Price : "undefined"
       duplicating(randomcomp1, tickercomp, boxing);
-    });
+    })
 
     //clicking of second button from any of the button
     graph3comp2.addEventListener('click', () => {
-      const randomcomp2 = data[i1].Ticker;
-      const tickercomp = 2;
+      const randomcomp2 = data[i1].Ticker
+      const tickercomp = 2
       const boxing = 3;
-      const stockData = data[i1];
-      const stockValue = document.querySelector('#box3 .stock-value .change');
-      stockValue.innerText = formatPriceChange(
-        parseFloat(stockData.Change),
-        parseFloat(stockData['Change %'])
-      );
-      stockValue.classList.toggle('negative', stockData.Change < 0);
-      stockValue.classList.toggle('positive', stockData.Change >= 0);
       pera.innerText = data[i1].PE_Ratio != null ? ("$" + (data[i1].PE_Ratio).toFixed(2)) : "undefined";
       var nums = data[i1].Volume;
       vomes.innerText = nums != null ? nums.toLocaleString() : "undefined";
       betaaa.innerText = data[i1].Beta != null ? data[i1].Beta : "undefined"
       cloprice.innerText = data[i1].Price != null ? "$" + data[i1].Price : "undefined"
       duplicating(randomcomp2, tickercomp, boxing);
-    });
+    })
 
     //clicking of second button from any of the button
     graph3comp3.addEventListener('click', () => {
-      const randomcomp3 = data[i2].Ticker;
-      const tickercomp = 3;
-      const boxing = 3;
-      const stockData = data[i2];
-      const stockValue = document.querySelector('#box3 .stock-value .change');
-      stockValue.innerText = formatPriceChange(
-        parseFloat(stockData.Change),
-        parseFloat(stockData['Change %'])
-      );
-      stockValue.classList.toggle('negative', stockData.Change < 0);
-      stockValue.classList.toggle('positive', stockData.Change >= 0);
+      const randomcomp3 = data[i2].Ticker
+      const tickercomp = 3
+      const boxing = 3
       pera.innerText = data[i2].PE_Ratio != null ? ("$" + (data[i2].PE_Ratio).toFixed(2)) : "undefined";
       var nums = data[i2].Volume;
       vomes.innerText = nums != null ? nums.toLocaleString() : "undefined";
       betaaa.innerText = data[i2].Beta != null ? data[i2].Beta : "undefined"
       cloprice.innerText = data[i2].Price != null ? "$" + data[i2].Price : "undefined"
       duplicating(randomcomp3, tickercomp, boxing);
-    });
+    })
     return randomcomp
   } catch (error) {
     console.log(error)
@@ -1161,7 +1141,7 @@ setTimeout(() => {
   //-------------------------------------------------------------------
   //loading animation for three graphs
 
-  //graph1,graph2, graph3 of comp1 will render after 3 secs
+  //graph1,graph2, graph3 of comp1 will render after 1 secs
 
   const rendercomp = setTimeout(renderingcomp, 1000)
 
@@ -1209,6 +1189,23 @@ async function renderingcomp() {
       document.body.style.filter = 'none';
       document.body.style.pointerEvents = 'auto'; // Re-enable interaction
       graphings();
+
+      const string = (data.value).substring(0, 1);
+      console.log(string)
+      if (string === '-') {
+        price_percent_Change.style.color = 'red'
+        price_percent_Changes.style.color = 'red'
+        price_percent_Changess.style.color = 'red'
+      }
+      if (string === '+') {
+        price_percent_Change.style.color = 'green'
+        price_percent_Changes.style.color = 'green'
+        price_percent_Changess.style.color = 'green'
+      }
+
+      price_percent_Change.innerText = data.value
+      price_percent_Changes.innerText = data.value
+      price_percent_Changess.innerText = data.value
     }
   } catch (error) {
     console.error('Error:', error);
@@ -1235,7 +1232,7 @@ async function duplicating(company_naming, number, boxing) {
   const end = day + "-" + months + "-" + years
   const graphsignal = "doit"
 
-  loading1.style.marginTop = '1180px'
+  loading1.style.marginTop = '1150px'
   loading1.style.marginLeft = '240px'
   loading1.style.display = 'flex'
   loading1.style.zIndex = '9999'
@@ -1259,12 +1256,40 @@ async function duplicating(company_naming, number, boxing) {
       document.body.style.filter = 'none';
       document.body.style.pointerEvents = 'auto'; // Re-enable interaction
       graphiings(number, boxing);
+      console.log(boxing)
+      const string = (data.value).substring(0, 1);
+      if (boxing === 1) {
+        price_percent_Change.innerText = data.value
+        if (string === '-') {
+          price_percent_Change.style.color = 'red'
+        }
+        if (string === '+') {
+          price_percent_Change.style.color = 'green'
+        }
+      }
+      if (boxing === 2) {
+        price_percent_Changes.innerText = data.value
+        if (string === '-') {
+          price_percent_Changes.style.color = 'red'
+        }
+        if (string === '+') {
+          price_percent_Changes.style.color = 'green'
+        }
+      }
+      if (boxing === 3) {
+        price_percent_Changess.innerText = data.value
+        if (string === '-') {
+          price_percent_Changess.style.color = 'red'
+        }
+        if(string === '+') {
+          price_percent_Changess.style.color = 'green'
+        }
+      }
     }
   } catch (error) {
     console.error('Error:', error);
   }
 }
-
 
 
 
