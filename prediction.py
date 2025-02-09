@@ -23,13 +23,39 @@ logger = logging.getLogger(__name__)
 
 class StockPredictor:
     def __init__(self, company_name, num_days_pred, no_of_trial, stock_data):
-        self.company_name=company_name
-        mlflow.set_experiment(f"Stock_Prediction_{company_name}_{num_days_pred}")
-        self.num_days_pred=num_days_pred
-        self.no_of_trial=no_of_trial
-        self.stock_data=stock_data
-        self.df_xgb=self.prepare_data()
-        logger.info(f"Initializing StockPredictor for {company_name} with {num_days_pred} days prediction")
+        try:
+            if not isinstance(num_days_pred, int) or num_days_pred <= 0:
+                print("yes")
+                pd.DataFrame().to_csv("public/prediction.csv")
+                raise ValueError("Number of prediction days must be a positive integer")
+            if not isinstance(no_of_trial, int) or no_of_trial <= 0:
+                print("yes")
+                pd.DataFrame().to_csv("public/prediction.csv")
+                raise ValueError("Number of trials must be a positive integer")
+            if stock_data.empty:
+                print("yes")
+                pd.DataFrame().to_csv("public/prediction.csv")
+                raise ValueError(f"No data available for {company_name}")
+
+            self.company_name = company_name
+            self.num_days_pred = num_days_pred
+            self.no_of_trial = no_of_trial
+            self.stock_data = stock_data
+            
+            ticker = yf.Ticker(company_name)
+            info = ticker.info
+            if not info or 'regularMarketOpen' not in info:
+                raise ValueError(f"Invalid ticker symbol: {company_name}")
+
+            mlflow.set_experiment(f"Stock_Prediction_{company_name}_{num_days_pred}")
+            self.df_xgb = self.prepare_data()
+            logger.info(f"Successfully initialized StockPredictor for {company_name}")
+            
+        except Exception as e:
+            logger.error(f"Error initializing predictor: {str(e)}")
+            self.stock_data = pd.DataFrame()
+            self.df_xgb = pd.DataFrame()
+
 
     def mean_absolute_percentage_error(self, y_true, y_pred):
         y_true, y_pred=np.array(y_true), np.array(y_pred)
@@ -206,11 +232,32 @@ class StockPredictor:
 
 if __name__=="__main__":
     logger.info("Starting prediction run")
-    if len(sys.argv) != 4:
-        sys.exit(1)
-    company_name=sys.argv[1]
-    num_days_pred=int(sys.argv[2])
-    no_of_trial=int(sys.argv[3])
-    data=StockDataVisualizer(company_name)
-    predictor=StockPredictor(company_name, num_days_pred, no_of_trial, data.stock_data)
-    predictor.run()
+    try:
+        if len(sys.argv) != 4:
+            logger.error("Required arguments: company_name num_days_pred no_of_trial")
+            sys.exit(0)
+            
+        company_name = sys.argv[1]
+        num_days_pred = int(sys.argv[2])
+        no_of_trial = int(sys.argv[3])
+        
+        if num_days_pred <= 0 or no_of_trial <= 0:
+            print("yes")
+            pd.DataFrame().to_csv("public/prediction.csv")
+            raise ValueError("Number of days and trials must be positive integers")
+            
+        data = StockDataVisualizer(company_name)
+        if data.stock_data.empty:
+            print("yes")
+            pd.DataFrame().to_csv("public/prediction.csv")
+            raise ValueError(f"No data available for {company_name}")
+            
+        predictor = StockPredictor(company_name, num_days_pred, no_of_trial, data.stock_data)
+        predictor.run()
+        
+    except ValueError as ve:
+        logger.error(f"Input validation error: {str(ve)}")
+        sys.exit(0)
+    except Exception as e:
+        logger.error(f"Unexpected error: {str(e)}")
+        sys.exit(0)

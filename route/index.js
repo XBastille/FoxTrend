@@ -331,14 +331,12 @@ const runpython = (args, filename) => {
         pyone.stdout.on('data', function (data) {
             data1 += data.toString();
             console.log(data1)
-
         });
 
         pyone.on('close', (code) => {
             console.log(`child process close all stdio with code ${code}`);
             if (code === 0) {
                 resolve(data1.trim());
-
             }
             else {
                 //flash message dalana h idhar ki ticker not correct type ka
@@ -385,7 +383,7 @@ router.post('/dashboard', async (req, res) => {
         const filenaming = './python_files/main_2.py'
         const graph_animation = await runpython(args, filenaming)
         if (graph_animation) {
-            return res.json({ sucess: 'true' })
+            return res.json({ sucess: 'true', value: graph_animation })
         }
     }
     return res.json({ sucess: 'true', loadinganimation })

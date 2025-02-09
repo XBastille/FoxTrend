@@ -261,7 +261,7 @@
 
 
         <div class="search-container">
-            <input type="text" class="search-bar" id="searching" placeholder="Search">
+            <input type="text" class="search-bar" id="searching" placeholder="Search Ticker" />
             <i class="search-icon fas fa-search"></i>
             <div class="magnifying-glass">
                 <i class="fa-solid fa-magnifying-glass"></i>
@@ -282,7 +282,8 @@
                     </svg>
                 </a>
                 <a href="#" class="blog">Blog</a>
-                <a href="https://mail.google.com/mail/?view=cm&fs=1&to=eziopuhan825@gmail.com" target="_blank" class="port">Contact Us</a>
+                <a href="https://mail.google.com/mail/?view=cm&fs=1&to=eziopuhan825@gmail.com" target="_blank"
+                    class="port">Contact Us</a>
                 <div class="services-dropdown">
                     <div class="services-dropdown-content">
                         <div class="services-label">
@@ -330,7 +331,8 @@
                         <div class="company-dropdown-column">
                             <h2>CONTACTS</h2>
                             <a href="#">Book a Call</a>
-                            <a href="https://mail.google.com/mail/?view=cm&fs=1&to=eziopuhan825@gmail.com" target="_blank">Mail Us</a>
+                            <a href="https://mail.google.com/mail/?view=cm&fs=1&to=eziopuhan825@gmail.com"
+                                target="_blank">Mail Us</a>
                         </div>
                     </div>
                 </div>
@@ -703,10 +705,12 @@
                 <div class="footer-block">
                     <div class="footer-title" id="Comp">Project</div>
                     <li><a style="text-decoration: none;" class="links"
-                            href="https://mail.google.com/mail/?view=cm&fs=1&to=eziopuhan825@gmail.com"
-                            target="_blank" id="mail">Mail us</a></li>
-                    <li><a href="https://github.com/XBastille/FoxTrend" style="text-decoration: none;" target="_blank" class="links" id="SERV">Github</a></li>
-                    <li><a href="#" style="text-decoration: none;" target="_blank" class="links" id="SERV">Donate</a></li>
+                            href="https://mail.google.com/mail/?view=cm&fs=1&to=eziopuhan825@gmail.com" target="_blank"
+                            id="mail">Mail us</a></li>
+                    <li><a href="https://github.com/XBastille/FoxTrend" style="text-decoration: none;" target="_blank"
+                            class="links" id="SERV">Github</a></li>
+                    <li><a href="#" style="text-decoration: none;" target="_blank" class="links" id="SERV">Donate</a>
+                    </li>
                 </div>
 
                 <div class="footer-block">
@@ -717,14 +721,85 @@
 
                 <div class="footer-block">
                     <div class="footer-title" id="social">Social</div>
-                    <li><a class="links" style="text-decoration: none;" href="/social" target="_blank" id="linkedin">LinkedIn</a></li>
-                    <li><a class="links" style="text-decoration: none;" href="/social" target="_blank" id="yt">Instagram</a></li>
-                    <li><a class="links" style="text-decoration: none;" href="/social" target="_blank" id="tw">X</a></li>
+                    <li><a class="links" style="text-decoration: none;" href="/social" target="_blank"
+                            id="linkedin">LinkedIn</a></li>
+                    <li><a class="links" style="text-decoration: none;" href="/social" target="_blank"
+                            id="yt">Instagram</a></li>
+                    <li><a class="links" style="text-decoration: none;" href="/social" target="_blank" id="tw">X</a>
+                    </li>
                 </div>
             </div>
         </footer>
     </div>
     <script>
+        class SearchDropdown {
+            constructor(inputId) {
+                this.input = document.getElementById(inputId);
+                this.dropdownMenu = document.createElement('div');
+                this.dropdownMenu.className = 'search-dropdown-menu';
+                this.optionsContainer = document.createElement('div');
+                this.optionsContainer.className = 'search-dropdown-options';
+                this.dropdownMenu.appendChild(this.optionsContainer);
+                this.input.parentElement.appendChild(this.dropdownMenu);
+                this.setupDropdown();
+            }
+
+            setupDropdown() {
+                this.input.addEventListener('click', () => {
+                    this.dropdownMenu.classList.add('active');
+                    this.loadOptions('');
+                });
+
+                document.addEventListener('click', (e) => {
+                    if (!this.input.contains(e.target) && !this.dropdownMenu.contains(e.target)) {
+                        this.dropdownMenu.classList.remove('active');
+                    }
+                });
+
+                this.input.addEventListener('input', (e) => {
+                    const searchTerm = e.target.value.toLowerCase();
+                    this.loadOptions(searchTerm);
+                });
+            }
+
+            async loadOptions(searchTerm) {
+                try {
+                    const response = await fetch('/public/textfile/all_ticker.txt');
+                    const text = await response.text();
+                    const options = text.split('\n').filter(option => option.trim());
+
+                    const filteredOptions = options
+                        .filter(option => option.toLowerCase().startsWith(searchTerm.toLowerCase()))
+                        .slice(0, 6);
+
+                    this.optionsContainer.innerHTML = '';
+                    filteredOptions.forEach(option => {
+                        const optionElement = document.createElement('div');
+                        optionElement.className = 'search-dropdown-option';
+                        optionElement.textContent = option;
+                        optionElement.addEventListener('click', () => {
+                            this.input.value = option;
+                            this.dropdownMenu.classList.remove('active');
+                            const enterEvent = new KeyboardEvent('keypress', {
+                                key: 'Enter',
+                                code: 'Enter',
+                                keyCode: 13,
+                                which: 13,
+                                bubbles: true
+                            });
+                            this.input.dispatchEvent(enterEvent);
+                        });
+                        this.optionsContainer.appendChild(optionElement);
+                    });
+                } catch (error) {
+                    console.error('Error loading options:', error);
+                }
+            }
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            new SearchDropdown('searching');
+        });
         function restartCubeAnimation() {
             const cube = document.querySelector('.cube');
             const cubeEdges = cube.querySelectorAll('.cube-edge');
