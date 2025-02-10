@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Profile_Page</title>
     <script src='https://cdn.plot.ly/plotly-2.32.0.min.js'></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.3.0/papaparse.min.js"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
@@ -246,10 +246,12 @@
                 <img src="public/Media/list.jpg" id="item3">
                 <button id="liss"><span class="icon-name">Lists</span></button>
             </li>
+            <a href="https://github.com/XBastille/FoxTrend/blob/main/.github/FUNDING.yml" target="_blank" style="text-decoration: none;">
             <li class="Icon-items" data-name="Donate">
                 <img src="public/Media/donate.jpg" id="item4">
-                <button><span class="icon-name">Donate</span></button>
+                <span class="icon-name">Donate</span>
             </li>
+            </a>
             <li class="Icon-items" data-name="Profile">
                 <img src="public/Media/account.jpg" id="item5">
                 <button id="pros"><span class="icon-name">Profile</span></button>
@@ -259,7 +261,7 @@
             </li>
         </ul>
         <div class="search-container">
-            <input type="text" class="search-bar" id="searching" placeholder="Search">
+            <input type="text" class="search-bar" id="searching" placeholder="Search Ticker">
             <i class="search-icon fas fa-search"></i>
             <div class="magnifying-glass">
                 <i class="fa-solid fa-magnifying-glass"></i>
@@ -273,14 +275,15 @@
                     </svg>
                 </a>
                 <a href="#" class="comp">
-                    Company
+                    Project
                     <svg width="20" height="20" viewBox="0 -4 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
                         <path d="M5 7.5L10 12.5L15 7.5" stroke="currentColor" stroke-width="1.67" stroke-linecap="round"
                             stroke-linejoin="round"></path>
                     </svg>
                 </a>
-                <a href="#" class="blog">Blog</a>
-                <a href="https://mail.google.com/mail/u/0/#inbox?compose=GTvVlcSKjgJRjZdghDHWgvNWjpSMmRMVVprtPGJtLpldLsvnmhRDJFvWtbKpPQpRMlGhMpkFGmJNz" target="_blank" class="port">Contact Us</a>
+                <a href="https://github.com/XBastille/FoxTrend" target="_blank" class="blog">Github</a>
+                <a href="https://mail.google.com/mail/?view=cm&fs=1&to=eziopuhan825@gmail.com" target="_blank"
+                    class="port">Contact Us</a>
                 <div class="services-dropdown">
                     <div class="services-dropdown-content">
                         <div class="services-label">
@@ -290,17 +293,17 @@
                             <div class="primary-section">
                                 <h2>Primary <span class="arrow">→</span></h2>
                                 <div class="primary-elements">
-                                    <a href="/dashboard">Stock Market Prediction</a>
+                                    <a href="#">Stock Market Prediction</a>
                                 </div>
                             </div>
                         </div>
                         <div class="services-dropdown-column">
-                            <h3>Secondary <span class="arrow">→</span></h3>
                             <div class="secondary-section">
+                                <h3>Secondary <span class="arrow">→</span></h3>
                                 <div class="secondary-elements">
-                                    <a href="#">Used Car Prediction</a>
-                                    <a href="#">Housing Prediction</a>
-                                    <a href="#">Loan Approval Prediction</a>
+                                    <a href="/selectcar">Used Car Prediction</a>
+                                    <a href="/selecthouse">Housing Prediction</a>
+                                    <a href="/selectloan">Loan Approval Prediction</a>
                                 </div>
                             </div>
                         </div>
@@ -310,12 +313,12 @@
                 <div class="company-dropdown">
                     <div class="company-dropdown-content">
                         <div class="company-label">
-                            <h1>Company</h1>
+                            <h1>Project</h1>
                         </div>
                         <div class="company-dropdown-column">
                             <h2>MORE ABOUT US</h2>
-                            <a href="#">About Us</a>
-                            <a href="#">Blog</a>
+                            <a href="/#about-section">About Us</a>
+                            <a href="https://github.com/XBastille/FoxTrend" target="_blank">Github</a>
                             <a href="#">Privacy Policy</a>
                             <a href="#">License</a>
                         </div>
@@ -326,9 +329,10 @@
                             <a href="/social" target="_blank">X</a>
                         </div>
                         <div class="company-dropdown-column">
-                            <h2>CONTACTS</h2>
-                            <a href="#">Book a Call</a>
-                            <a href="https://mail.google.com/mail/u/0/#inbox?compose=GTvVlcSKjgJRjZdghDHWgvNWjpSMmRMVVprtPGJtLpldLsvnmhRDJFvWtbKpPQpRMlGhMpkFGmJNz" target="_blank">Mail Us</a>
+                            <h2>Project</h2>
+                            <a href="https://github.com/XBastille/FoxTrend/blob/main/.github/FUNDING.yml" target="_blank">Donate</a>
+                            <a href="https://mail.google.com/mail/?view=cm&fs=1&to=eziopuhan825@gmail.com"
+                                target="_blank">Mail Us</a>
                         </div>
                     </div>
                 </div>
@@ -352,10 +356,10 @@
             </ul>
         </div>
         <div class="desc" style="margin-left: 200px;">
-            <h1>Apple</h1>
-            <h1>$220.30</h1>
-            <h5>-$2.51(-1.13%) Pre-market</h5>
-            <h4>24 Hour Market</h4>
+            <h1 id="compyname"></h1>
+            <h1 id="currprice">$220.30</h1>
+            <span id="dollar"></span>
+            <span id="percent"></span>
         </div>
 
         <style>
@@ -385,110 +389,110 @@
                         </tr>
 
                         <tr>
-                            <td>Mr. Timothy D. Cook</td>
-                            <td>CEO & Director</td>
-                            <td>16.24M</td>
-                            <td>--</td>
-                            <td>1961</td>
+                            <td id="name1"></td>
+                            <td id="post1"></td>
+                            <td id="pay1"></td>
+                            <td id="ex1">--</td>
+                            <td id="year1"></td>
 
                         </tr>
 
                         <tr>
-                            <td>Mr. Luca Maestri</td>
-                            <td>CFO & Senior VP</td>
-                            <td>4.61M</td>
-                            <td>--</td>
-                            <td>1963</td>
+                            <td id="name2"></td>
+                            <td id="post2"></td>
+                            <td id="pay2"></td>
+                            <td id="ex2">--</td>
+                            <td id="year2"></td>
 
                         </tr>
 
                         <tr>
-                            <td>Mr. Jeffrey E. Williams</td>
-                            <td>Chief Operating Officer</td>
-                            <td>4.64M</td>
-                            <td>--</td>
-                            <td>1964</td>
+                            <td id="name3"></td>
+                            <td id="post3"></td>
+                            <td id="pay3"></td>
+                            <td id="ex3">--</td>
+                            <td id="year3"></td>
 
                         </tr>
 
                         <tr>
-                            <td>Ms. Katherine L. Adams</td>
-                            <td>Senior VP, General Counsel & Secretary</td>
-                            <td>4.62M</td>
-                            <td>--</td>
-                            <td>1964</td>
+                            <td id="name4"></td>
+                            <td id="post4"></td>
+                            <td id="pay4"></td>
+                            <td id="ex4">--</td>
+                            <td id="year4"></td>
 
                         </tr>
 
                         <tr>
-                            <td>Ms. Deirdre O'Brien</td>
-                            <td>Senior Vice President of Retail</td>
-                            <td>4.61M</td>
-                            <td>--</td>
-                            <td>1967</td>
+                            <td id="name5"></td>
+                            <td id="post5"></td>
+                            <td id="pay5"></td>
+                            <td id="ex5">--</td>
+                            <td id="year5"></td>
 
                         </tr>
 
                         <tr>
-                            <td>Mr. Chris Kondo</td>
-                            <td>Senior Director of Corporate Accounting</td>
-                            <td>--</td>
-                            <td>--</td>
-                            <td>--</td>
+                            <td id="name6"></td>
+                            <td id="post6"></td>
+                            <td id="pay6">--</td>
+                            <td id="ex6">--</td>
+                            <td id="year6">--</td>
 
                         </tr>
 
                         <tr>
-                            <td>Mr. James Wilson</td>
-                            <td>Chief Technology Officer</td>
-                            <td>--</td>
-                            <td>--</td>
-                            <td>--</td>
+                            <td id="name7"></td>
+                            <td id="post7"></td>
+                            <td id="pay7">--</td>
+                            <td id="ex7">--</td>
+                            <td id="year7">--</td>
 
                         </tr>
 
                         <tr>
-                            <td>Suhasini Chandramouli</td>
-                            <td>Director of Investor Relations</td>
-                            <td>--</td>
-                            <td>--</td>
-                            <td>--</td>
+                            <td id="name8"></td>
+                            <td id="post8"></td>
+                            <td id="pay8">--</td>
+                            <td id="ex8">--</td>
+                            <td id="year8">--</td>
 
                         </tr>
 
                         <tr>
-                            <td>Mr. Greg Joswiak</td>
-                            <td>Senior Vice President of Worldwide Marketing</td>
-                            <td>--</td>
-                            <td>--</td>
-                            <td>--</td>
+                            <td id="name9"></td>
+                            <td id="post9"></td>
+                            <td id="pay9">--</td>
+                            <td id="ex9">--</td>
+                            <td id="year9">--</td>
 
                         </tr>
 
                         <tr>
-                            <td>Mr. Adrian Perica</td>
-                            <td>Head of Corporate Development</td>
-                            <td>--</td>
-                            <td>--</td>
-                            <td>1974</td>
+                            <td id="name10"></td>
+                            <td id="post10"></td>
+                            <td id="pay10">--</td>
+                            <td id="ex10">--</td>
+                            <td id="year10"></td>
 
                         </tr>
                     </table>
                 </div>
 
                 <div class="inc">
-                    <h2>Apple Inc.</h2>
-                    <p>One Apple Park Way Cupertino, CA 95014 United States</p>
-                    <a href="#"><b>408 996 1010</b></a>
+                    <h2 id="hello"></h2>
+                    <p id="address"></p>
+                    <a href="#" id="phn"><b></b></a>
                     <br>
-                    <a href="#"><b>https://www.apple.com</b></a>
+                    <a href="#"><b id="web"></b></a>
 
                     <p>
-                        Sector: <b>Technology</b>
+                        Sector: <b id="sector">Technology</b>
                         <br>
-                        Industry: <b>Consumer Electronics</b>
+                        Industry: <b id="industry">Consumer Electronics</b>
                         <br>
-                        Full Time Employees: <b>161,000</b>
+                        Full Time Employees: <b id="fulltime">161,000</b>
 
                     </p>
                 </div>
@@ -497,49 +501,7 @@
                 <div class="description-governance">
                     <div class="description">
                         <h2>Description</h2>
-                        <p>Apple Inc. designs, manufactures, and markets smartphones, personal computers, tablets,
-                            wearables, and accessories worldwide. The company offers iPhone, a line of smartphones; Mac,
-                            a
-                            line of personal computers; iPad, a line of multi-purpose tablets; and wearables, home, and
-                            accessories comprising AirPods, Apple TV, Apple Watch, Beats products, and HomePod. It also
-                            provides AppleCare support and cloud services; and operates various platforms, including the
-                            App
-                            Store that allow customers to discover and download applications and digital content, such
-                            as
-                            books, music, video, games, and podcasts. In addition, the company offers various services,
-                            such
-                            as Apple Arcade, a game subscription service; Apple Fitness+, a personalized fitness
-                            service;
-                            Apple Music, which offers users a curated listening experience with on-demand radio
-                            stations;
-                            Apple News+, a subscription news and magazine service; Apple TV+, which offers exclusive
-                            original content; Apple Card, a co-branded credit card; and Apple Pay, a cashless payment
-                            service, as well as licenses its intellectual property. The company serves consumers, and
-                            small
-                            and mid-sized businesses; and the education, enterprise, and government markets. It
-                            distributes
-                            third-party applications for its products through the App Store. The company also sells its
-                            products through its retail and online stores, and direct sales force; and third-party
-                            cellular
-                            network carriers, wholesalers, retailers, and resellers. Apple Inc. was founded in 1976 and
-                            is
-                            headquartered in Cupertino, California.</p>
-                    </div>
-                </div>
-
-                <div class="corporate-governance">
-                    <div class="governance-content">
-                        <h2>Corporate Governance</h2>
-                        <p>
-                            Apple Inc.’s ISS Governance QualityScore as of September 18, 2024 is 1. The pillar scores
-                            are
-                            Audit: 6; Board: 1; Shareholder Rights: 1; Compensation: 2.
-                            <hr>
-                            Corporate governance scores courtesy of <a href="#">Institutional Shareholder Services (ISS)
-                            </a>Scores indicate decile rank relative to index or region. A decile score of 1 indicates
-                            lower
-                            governance risk, while a 10 indicates higher governance risk.
-                        </p>
+                        <p id="descp"></p>
                     </div>
                 </div>
             </div>
@@ -630,31 +592,106 @@
         </div>
         <footer>
             <div class="footer-links">
-                <img src="public/Media/website_logo.jpg" class="foot-logo">
+                <img src="public/Media/website_logo.jpg" class="foot-logo" />
                 <div class="footer-block">
-                    <div class="footer-title" id="Comp">Company</div>
-                    <li><a class="links" href="https://mail.google.com/mail/u/0/#inbox?compose=GTvVlcSKjgJRjZdghDHWgvNWjpSMmRMVVprtPGJtLpldLsvnmhRDJFvWtbKpPQpRMlGhMpkFGmJNz" target="_blank" id="mail">Mail us</a></li>
-                    <li><a class="links" id="SERV">Services</a></li>
+                    <div class="footer-title" id="Comp">Project</div>
+                    <li><a style="text-decoration: none;" class="links"
+                            href="https://mail.google.com/mail/?view=cm&fs=1&to=eziopuhan825@gmail.com" target="_blank"
+                            id="mail">Mail us</a></li>
+                    <li><a href="https://github.com/XBastille/FoxTrend" style="text-decoration: none;" target="_blank"
+                            class="links" id="SERV">Github</a></li>
+                    <li><a href="https://github.com/XBastille/FoxTrend/blob/main/.github/FUNDING.yml" style="text-decoration: none;" target="_blank" class="links" id="SERV">Donate</a>
+                    </li>
                 </div>
 
                 <div class="footer-block">
                     <div class="footer-title" id="more">More</div>
-                    <li><a class="links" id="tandc">Blog</a></li>
                     <li><a class="links" id="career">License</a></li>
                     <li><a class="links" id="privacy">Privacy Policy</a></li>
                 </div>
 
                 <div class="footer-block">
                     <div class="footer-title" id="social">Social</div>
-                    <li><a class="links" id="linkedin">LinkedIn</a></li>
-                    <li> <a class="links" id="yt">Instagram</a></li>
-                    <li> <a class="links" id="tw">X</a></li>
+                    <li><a class="links" style="text-decoration: none;" href="/social" target="_blank"
+                            id="linkedin">LinkedIn</a></li>
+                    <li><a class="links" style="text-decoration: none;" href="/social" target="_blank"
+                            id="yt">Instagram</a></li>
+                    <li><a class="links" style="text-decoration: none;" href="/social" target="_blank" id="tw">X</a>
+                    </li>
                 </div>
-
             </div>
         </footer>
     </div>
     <script>
+
+        class SearchDropdown {
+            constructor(inputId) {
+                this.input = document.getElementById(inputId);
+                this.dropdownMenu = document.createElement('div');
+                this.dropdownMenu.className = 'search-dropdown-menu';
+                this.optionsContainer = document.createElement('div');
+                this.optionsContainer.className = 'search-dropdown-options';
+                this.dropdownMenu.appendChild(this.optionsContainer);
+                this.input.parentElement.appendChild(this.dropdownMenu);
+                this.setupDropdown();
+            }
+
+            setupDropdown() {
+                this.input.addEventListener('click', () => {
+                    this.dropdownMenu.classList.add('active');
+                    this.loadOptions('');
+                });
+
+                document.addEventListener('click', (e) => {
+                    if (!this.input.contains(e.target) && !this.dropdownMenu.contains(e.target)) {
+                        this.dropdownMenu.classList.remove('active');
+                    }
+                });
+
+                this.input.addEventListener('input', (e) => {
+                    const searchTerm = e.target.value.toLowerCase();
+                    this.loadOptions(searchTerm);
+                });
+            }
+
+            async loadOptions(searchTerm) {
+                try {
+                    const response = await fetch('/public/textfile/all_ticker.txt');
+                    const text = await response.text();
+                    const options = text.split('\n').filter(option => option.trim());
+
+                    const filteredOptions = options
+                        .filter(option => option.toLowerCase().startsWith(searchTerm.toLowerCase()))
+                        .slice(0, 6);
+
+                    this.optionsContainer.innerHTML = '';
+                    filteredOptions.forEach(option => {
+                        const optionElement = document.createElement('div');
+                        optionElement.className = 'search-dropdown-option';
+                        optionElement.textContent = option;
+                        optionElement.addEventListener('click', () => {
+                            this.input.value = option;
+                            this.dropdownMenu.classList.remove('active');
+                            const enterEvent = new KeyboardEvent('keypress', {
+                                key: 'Enter',
+                                code: 'Enter',
+                                keyCode: 13,
+                                which: 13,
+                                bubbles: true
+                            });
+                            this.input.dispatchEvent(enterEvent);
+                        });
+                        this.optionsContainer.appendChild(optionElement);
+                    });
+                } catch (error) {
+                    console.error('Error loading options:', error);
+                }
+            }
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            new SearchDropdown('searching');
+        });
 
         function restartCubeAnimation() {
             const cube = document.querySelector('.cube');
@@ -748,6 +785,78 @@
             setTimeout(() => popup.style.display = 'none', 300);
         });
         const aapl = document.getElementById('aapl')
+        const compyname = document.getElementById('compyname')
+        const currprice = document.getElementById('currprice')
+        const name1 = document.getElementById('name1')
+        const post1 = document.getElementById('post1')
+        const pay1 = document.getElementById('pay1')
+        const ex1 = document.getElementById('ex1')
+        const year1 = document.getElementById('year1')
+
+        const name2 = document.getElementById('name2')
+        const post2 = document.getElementById('post2')
+        const pay2 = document.getElementById('pay2')
+        const ex2 = document.getElementById('ex2')
+        const year2 = document.getElementById('year2')
+
+        const name3 = document.getElementById('name3')
+        const post3 = document.getElementById('post3')
+        const pay3 = document.getElementById('pay3')
+        const ex3 = document.getElementById('ex3')
+        const year3 = document.getElementById('year3')
+
+        const name4 = document.getElementById('name4')
+        const post4 = document.getElementById('post4')
+        const pay4 = document.getElementById('pay4')
+        const ex4 = document.getElementById('ex4')
+        const year4 = document.getElementById('year4')
+
+        const name5 = document.getElementById('name5')
+        const post5 = document.getElementById('post5')
+        const pay5 = document.getElementById('pay5')
+        const ex5 = document.getElementById('ex5')
+        const year5 = document.getElementById('year5')
+
+        const name6 = document.getElementById('name6')
+        const post6 = document.getElementById('post6')
+        const pay6 = document.getElementById('pay6')
+        const ex6 = document.getElementById('ex6')
+        const year6 = document.getElementById('year6')
+
+        const name7 = document.getElementById('name7')
+        const post7 = document.getElementById('post7')
+        const pay7 = document.getElementById('pay7')
+        const ex7 = document.getElementById('ex7')
+        const year7 = document.getElementById('year7')
+
+        const name8 = document.getElementById('name8')
+        const post8 = document.getElementById('post8')
+        const pay8 = document.getElementById('pay8')
+        const ex8 = document.getElementById('ex8')
+        const year8 = document.getElementById('year8')
+
+        const name9 = document.getElementById('name9')
+        const post9 = document.getElementById('post9')
+        const pay9 = document.getElementById('pay9')
+        const ex9 = document.getElementById('ex9')
+        const year9 = document.getElementById('year9')
+
+        const name10 = document.getElementById('name10')
+        const post10 = document.getElementById('post10')
+        const pay10 = document.getElementById('pay10')
+        const ex10 = document.getElementById('ex10')
+        const year10 = document.getElementById('year10')
+
+        const descp = document.getElementById('descp')
+        const hello = document.getElementById('hello')
+        const address = document.getElementById('address')
+        const phn = document.getElementById('phn')
+        const web = document.getElementById('web')
+        const sector = document.getElementById('sector')
+        const industry = document.getElementById('industry')
+        const fulltime = document.getElementById('fulltime')
+        const dollar = document.getElementById('dollar')
+        const percent = document.getElementById('percent')
         let values = '';
         async function fetchjson() {
             try {
@@ -757,6 +866,232 @@
                 const data = await res.json();
                 values = data.symbol;
                 aapl.innerText = "Predict " + values
+                compyname.innerText = data.symbol
+                currprice.innerText = "$ " + data.currentPrice
+                name1.innerText = data.companyOfficers[0].name
+                post1.innerText = data.companyOfficers[0].title
+                let payss1 = (data.companyOfficers[0].totalPay)
+                if (payss1 === undefined) {
+                    pay1.innerText = '- - -'
+                }
+                else {
+                    let pays1 = ((data.companyOfficers[0].totalPay) / 1000000).toFixed(2)
+                    pay1.innerText = pays1 + "M"
+                }
+                ex1.innerText = data.companyOfficers[0].exercisedValue
+                let years1 = data.companyOfficers[0].yearBorn
+                if (years1 === undefined) {
+                    year1.innerText = data.companyOfficers[0].yearBorn
+                }
+                else {
+                    year1.innerText = data.companyOfficers[0].yearBorn
+                }
+
+                name2.innerText = data.companyOfficers[1].name
+                post2.innerText = data.companyOfficers[1].title
+                let payss2 = (data.companyOfficers[1].totalPay)
+                if (payss2 === undefined) {
+                    pay2.innerText = '- - -'
+                }
+                else {
+                    let pays2 = ((data.companyOfficers[1].totalPay) / 100000).toFixed(2)
+                    pay2.innerText = pays2 + "M"
+                }
+                ex2.innerText = data.companyOfficers[1].exercisedValue
+                let years2 = data.companyOfficers[1].yearBorn
+                if (years2 === undefined) {
+                    year2.innerText = '- - -'
+                }
+                else {
+                    year2.innerText = data.companyOfficers[1].yearBorn
+
+                }
+
+                name3.innerText = data.companyOfficers[2].name
+                post3.innerText = data.companyOfficers[2].title
+                let payss3 = (data.companyOfficers[2].totalPay)
+                if (payss3 === undefined) {
+                    pay3.innerText = '- - -'
+                }
+                else {
+                    let pays3 = ((data.companyOfficers[2].totalPay) / 100000).toFixed(2)
+                    pay3.innerText = pays3 + "M"
+                }
+                ex3.innerText = data.companyOfficers[2].exercisedValue
+                let years3 = data.companyOfficers[2].yearBorn
+                if (years3 === undefined) {
+                    year3.innerText = '- - -'
+                }
+                else {
+                    year3.innerText = data.companyOfficers[2].yearBorn
+                }
+
+                name4.innerText = data.companyOfficers[3].name
+                post4.innerText = data.companyOfficers[3].title
+                let payss4 = (data.companyOfficers[3].totalPay)
+                if (payss4 === undefined) {
+                    pay4.innerText = '- - -'
+                }
+                else {
+                    let pays4 = ((data.companyOfficers[3].totalPay) / 100000).toFixed(2)
+                    pay4.innerText = pays4 + "M"
+                }
+                ex4.innerText = data.companyOfficers[3].exercisedValue
+                let years4 = data.companyOfficers[3].yearBorn
+                if (years4 === undefined) {
+                    year4.innerText = '- - -'
+                }
+                else {
+                    year4.innerText = data.companyOfficers[3].yearBorn
+                }
+
+                name5.innerText = data.companyOfficers[4].name
+                post5.innerText = data.companyOfficers[4].title
+                let payss5 = (data.companyOfficers[4].totalPay)
+                if (payss5 === undefined) {
+                    pay5.innerText = '- - -'
+                }
+                else {
+                    let pays5 = ((data.companyOfficers[4].totalPay) / 100000).toFixed(2)
+                    pay5.innerText = pays5 + "M"
+                }
+                ex5.innerText = data.companyOfficers[4].exercisedValue
+                let years5 = data.companyOfficers[4].yearBorn
+                if (years5 === undefined) {
+                    year5.innerText = '- - -'
+                }
+                else {
+                    year5.innerText = data.companyOfficers[4].yearBorn
+                }
+
+                name6.innerText = data.companyOfficers[5].name
+                post6.innerText = data.companyOfficers[5].title
+                let payss6 = (data.companyOfficers[5].totalPay)
+                if (payss6 === undefined) {
+                    pay6.innerText = '- - -'
+                }
+                else {
+                    let pays6 = ((data.companyOfficers[5].totalPay) / 100000).toFixed(2)
+                    pay6.innerText = pays6 + "M"
+                }
+                ex6.innerText = data.companyOfficers[5].exercisedValue
+                let years6 = data.companyOfficers[5].yearBorn
+                if (years6 === undefined) {
+                    year6.innerText = '- - -'
+                }
+                else {
+                    year6.innerText = data.companyOfficers[5].yearBorn
+                }
+                name7.innerText = data.companyOfficers[6].name
+                post7.innerText = data.companyOfficers[6].title
+                let payss7 = (data.companyOfficers[6].totalPay)
+                if (payss7 === undefined) {
+                    pay7.innerText = '- - -'
+                }
+                else {
+                    let pays7 = ((data.companyOfficers[6].totalPay) / 100000).toFixed(2)
+                    pay7.innerText = pays7 + "M"
+                }
+                ex7.innerText = data.companyOfficers[6].exercisedValue
+                let years7 = data.companyOfficers[6].yearBorn
+                if (years7 === undefined) {
+                    year7.innerText = '- - -'
+                }
+                else {
+                    year7.innerText = data.companyOfficers[6].yearBorn
+                }
+
+                name8.innerText = data.companyOfficers[7].name
+                post8.innerText = data.companyOfficers[7].title
+                let payss8 = data.companyOfficers[7].totalPay
+                if (payss8 === undefined) {
+                    pay8.innerText = '- - -'
+                }
+                else {
+                    let pays8 = ((data.companyOfficers[7].totalPay) / 100000).toFixed(2)
+                    pay8.innerText = pays8 + "M"
+                }
+                ex8.innerText = data.companyOfficers[7].exercisedValue
+                let years8 = data.companyOfficers[7].yearBorn
+                if (years8 === undefined) {
+                    year8.innerText = '- - -'
+                }
+                else {
+                    year8.innerText = data.companyOfficers[7].yearBorn
+                }
+
+                name9.innerText = data.companyOfficers[8].name
+                post9.innerText = data.companyOfficers[8].title
+                let payss9 = data.companyOfficers[8].totalPay
+                if (payss9 === undefined) {
+                    pay9.innerText = '- - -'
+                }
+                else {
+                    let pays9 = ((data.companyOfficers[8].totalPay) / 100000).toFixed(2)
+                    pay9.innerText = pays9 + "M"
+                }
+                ex9.innerText = data.companyOfficers[8].exercisedValue
+                let years9 = data.companyOfficers[8].yearBorn
+                if (years9 === undefined) {
+                    year9.innerText = '- - -'
+                }
+                else {
+                    year9.innerText = data.companyOfficers[8].yearBorn
+                }
+
+                name10.innerText = data.companyOfficers[9].name
+                post10.innerText = data.companyOfficers[9].title
+
+                let payss = data.companyOfficers[9].totalPay
+                console.log(payss)
+                if (payss === undefined) {
+                    pay10.innerText = "- - -"
+                }
+                else {
+                    let pays10 = ((data.companyOfficers[9].totalPay) / 100000).toFixed(2)
+                    pay10.innerText = pays10 + "M"
+                }
+
+                ex10.innerText = data.companyOfficers[9].exercisedValue
+
+                let years10 = data.companyOfficers[9].yearBorn
+                console.log(years10)
+                if (years10 === undefined) {
+                    year10.innerText = '- - -'
+
+                }
+                else {
+                    year10.innerText = data.companyOfficers[9].yearBorn
+                }
+
+                descp.innerText = data.longBusinessSummary
+                hello.innerText = data.shortName
+                let add = (data.address1)
+                let cit = data.city
+                let stat = data.state
+                let final = add + " ," + cit + " " + stat
+                address.innerText = final
+
+                phn.innerText = data.phone
+                web.innerText = data.website
+
+                sector.innerText = data.sector
+                industry.innerText = data.sectorKey
+                fulltime.innerText = data.sectorDisp
+
+                const currPrice = data.currentPrice;
+                const prevPrice = data.previousClose;
+
+                const priceChange = currPrice - prevPrice
+                const percentChange = (priceChange / prevPrice) * 100;
+
+                const sign = priceChange >= 0 ? '+' : '-';
+                dollar.innerText = `${sign}$${Math.abs(priceChange).toFixed(2)}`;
+                percent.innerText = `(${sign}${Math.abs(percentChange).toFixed(2)}%)`;
+
+                dollar.style.color = priceChange >= 0 ? 'green' : 'red'
+                percent.style.color = priceChange >= 0 ? 'green' : 'red'
+
             } catch (err) {
                 console.error("Error fetching JSON:", err);
                 return null;

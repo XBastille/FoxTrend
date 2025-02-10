@@ -34,10 +34,12 @@
             <img src="public/Media/list.jpg" id="item3">
             <button id="lst"><span class="icon-name">Lists</span></button>
         </li>
+        <a href="https://github.com/XBastille/FoxTrend/blob/main/.github/FUNDING.yml" target="_blank" style="text-decoration: none;">
         <li class="Icon-items" data-name="Donate">
             <img src="public/Media/donate.jpg" id="item4">
-            <button><span class="icon-name">Donate</span></button>
+            <span class="icon-name">Donate</span>
         </li>
+        </a>
         <li class="Icon-items" data-name="Profile">
             <img src="public/Media/account.jpg" id="item5">
             <button id="prf"><span class="icon-name">Profile</span></button>
@@ -61,7 +63,7 @@
                 </svg>
             </a>
             <a href="#" class="comp">
-                Company
+                Project
                 <svg width="20" height="20" viewBox="0 -4 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
                     <path d="M5 7.5L10 12.5L15 7.5" stroke="currentColor" stroke-width="1.67" stroke-linecap="round"
                         stroke-linejoin="round"></path>
@@ -98,7 +100,7 @@
             <div class="company-dropdown">
                 <div class="company-dropdown-content">
                     <div class="company-label">
-                        <h1>Company</h1>
+                        <h1>Project</h1>
                     </div>
                     <div class="company-dropdown-column">
                         <h2>MORE ABOUT US</h2>
@@ -116,7 +118,8 @@
                     <div class="company-dropdown-column">
                         <h2>CONTACTS</h2>
                         <a href="#">Book a Call</a>
-                        <a href="https://mail.google.com/mail/u/0/#inbox?compose=GTvVlcSKjgJRjZdghDHWgvNWjpSMmRMVVprtPGJtLpldLsvnmhRDJFvWtbKpPQpRMlGhMpkFGmJNz" target="_blank">Mail Us</a>
+                        <a href="https://mail.google.com/mail/?view=cm&fs=1&to=eziopuhan825@gmail.com"
+                            target="_blank">Mail Us</a>
                     </div>
                 </div>
             </div>
@@ -157,7 +160,7 @@
                 </button>
             </div>
         </div>
-        <form class="profile-section">
+        <form class="profile-section" method="POST" action="/userprofile">
             <h2>Personal Information</h2>
             <div class="profile-field">
                 <label>Name:</label>
@@ -180,7 +183,7 @@
                 <label>Confirm Password:</label>
                 <input type="password" id="confirm_password" name="confirm_password">
             </div>
-            <button class="edit-button" id="submit_button">
+            <button class="edit-button" id="submitbutton">
                 <i class="fas fa-pen"></i> Edit Info
             </button>
         </form>
@@ -215,28 +218,31 @@
         </div>
     </div>
     <footer>
-        <div class="footer-links">
-            <img src="public/Media/website_logo.jpg" class="foot-logo">
-            <div class="footer-block">
-                <div class="footer-title" id="Comp">Company</div>
-                <li><a class="links" href="https://mail.google.com/mail/u/0/#inbox?compose=GTvVlcSKjgJRjZdghDHWgvNWjpSMmRMVVprtPGJtLpldLsvnmhRDJFvWtbKpPQpRMlGhMpkFGmJNz" target="_blank" id="mail">Mail us</a></li>
-                <li><a class="links" id="SERV">Services</a></li>
-            </div>
+            <div class="footer-links">
+                <img src="public/Media/website_logo.jpg" class="foot-logo" />
+                <div class="footer-block">
+                    <div class="footer-title" id="Comp">Project</div>
+                    <li><a style="text-decoration: none;" class="links"
+                            href="https://mail.google.com/mail/?view=cm&fs=1&to=eziopuhan825@gmail.com"
+                            target="_blank" id="mail">Mail us</a></li>
+                    <li><a href="https://github.com/XBastille/FoxTrend" style="text-decoration: none;" target="_blank" class="links" id="SERV">Github</a></li>
+                    <li><a href="https://github.com/XBastille/FoxTrend/blob/main/.github/FUNDING.yml" style="text-decoration: none;" target="_blank" class="links" id="SERV">Donate</a></li>
+                </div>
 
-            <div class="footer-block">
-                <div class="footer-title" id="more">More</div>
-                <li><a class="links" id="tandc">Blog</a></li>
-                <li><a class="links" id="career">License</a></li>
-                <li><a class="links" id="privacy">Privacy Policy</a></li>
+                <div class="footer-block">
+                    <div class="footer-title" id="more">More</div>
+                    <li><a class="links" id="career">License</a></li>
+                    <li><a class="links" id="privacy">Privacy Policy</a></li>
+                </div>
+
+                <div class="footer-block">
+                    <div class="footer-title" id="social">Social</div>
+                    <li><a class="links" style="text-decoration: none;" href="/social" target="_blank" id="linkedin">LinkedIn</a></li>
+                    <li><a class="links" style="text-decoration: none;" href="/social" target="_blank" id="yt">Instagram</a></li>
+                    <li><a class="links" style="text-decoration: none;" href="/social" target="_blank" id="tw">X</a></li>
+                </div>
             </div>
-            <div class="footer-block">
-                <div class="footer-title" id="social">Social</div>
-                <li><a class="links" id="linkedin">LinkedIn</a></li>
-                <li> <a class="links" id="yt">Instagram</a></li>
-                <li> <a class="links" id="tw">X</a></li>
-            </div>
-        </div>
-    </footer>
+        </footer>
     <script>
         const wat = document.getElementById('wat')
         wat.addEventListener('click', () => {
@@ -252,6 +258,199 @@
         prf.addEventListener('click', () => {
             window.location.href = '/userprofile'
         })
+
+        let c = 0;
+
+        let formdata = {
+            username: "",
+        }
+
+        const nhi = "false"
+        async function handless() {
+            try {
+                const response = await fetch('/userprofile', {
+                    method: 'POST',
+                    headers: {
+                        'Content-type': 'application/json'
+                    },
+                    body: JSON.stringify(formdata)
+                })
+                const datas = await response.json()
+                console.log(datas)
+                return datas.success === 'false' ? 'false' : 'true';
+            } catch (error) {
+                console.log(error)
+            }
+        }
+
+        function formdatas() {
+            formdata.username = document.getElementById("username").value.trim()
+            console.log(formdata)
+        }
+
+
+
+        document.addEventListener('DOMContentLoaded', function () {
+            const editButton = document.querySelector('.edit-button');
+            const profileForm = document.querySelector('.profile-section');
+            const profileFields = document.querySelectorAll('.profile-field');
+            const avatarUsername = document.querySelector('.profile-header h1');
+            const confirmPasswordField = document.querySelector('.confirm-password');
+            const submitbutton = document.getElementById('submitbutton');
+
+            profileFields.forEach(field => {
+                const input = field.querySelector('input');
+                if (input) {
+                    input.disabled = true;
+                }
+            });
+
+            confirmPasswordField.style.display = 'none';
+
+            submitbutton.addEventListener('click', async (event) => {
+                event.preventDefault();
+                c++;
+
+                const name = document.getElementById('name').value;
+                const username = document.getElementById('username').value;
+                const email = document.getElementById('email').value;
+                const password = document.getElementById('password').value;
+                const confirm_password = document.getElementById('confirm_password').value;
+
+                if (c % 2 !== 0) {
+                    try {
+                        const emailResponse = await fetch('/userprofile', {
+                            method: 'POST',
+                            headers: {
+                                'Content-Type': 'application/json',
+                            },
+                            body: JSON.stringify({
+                                email: email
+                            })
+                        });
+
+                        const response = await fetch('/userprofile', {
+                            method: 'POST',
+                            headers: {
+                                'Content-Type': 'application/json',
+                            },
+                            body: JSON.stringify({
+                                emails: email,
+                                passwords: password,
+                                name: name,
+                                usernames: username
+                            })
+                        });
+
+                        const data = await response.json();
+                        if (data.success !== 'false') {
+                            window.location.reload();
+                        }
+                    } catch (error) {
+                        console.error('Error:', error);
+                    }
+                } else {
+                    formdatas();
+                    const result = await handless();
+
+                    if (result === 'false') {
+                        c = 1;
+                        window.location.href = '/username';
+                        return;
+                    }
+
+                    if (password !== confirm_password) {
+                        c = 1;
+                        return;
+                    }
+
+                    if (!email.endsWith("@gmail.com")) {
+                        c = 1;
+                        return;
+                    }
+
+                    const formData = new FormData();
+                    formData.append('email', email);
+                    formData.append('emails', email);
+                    formData.append('passwords', password);
+                    formData.append('name', name);
+                    formData.append('usernames', username);
+
+                    const response = await fetch('/userprofile', {
+                        method: 'POST',
+                        body: formData
+                    });
+
+                    if (response.ok) {
+                        window.location.reload();
+                    }
+                }
+            });
+
+            function validateEmail(email) {
+                const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+                return re.test(email);
+            }
+
+            function clearError(field) {
+                const errorMessage = field.querySelector('.error-message');
+                if (errorMessage) errorMessage.remove();
+                field.querySelectorAll('input').forEach(input => input.classList.remove('error'));
+            }
+
+            editButton.addEventListener('click', function () {
+                if (this.textContent.trim() === 'Edit Info') {
+                    profileFields.forEach(field => {
+                        const input = field.querySelector('input');
+                        if (input) {
+                            input.disabled = false;
+                        }
+                    });
+                    confirmPasswordField.style.display = 'flex';
+                    this.textContent = 'Save Info';
+                } else {
+                    let isValid = true;
+
+                    profileFields.forEach(field => {
+                        clearError(field);
+                        const input = field.querySelector('input');
+                        if (input && input.type === 'email' && !validateEmail(input.value)) {
+                            isValid = false;
+                            input.classList.add('error');
+                        }
+                    });
+
+                    const passwordField = document.querySelector('.profile-field input[type="password"]');
+                    const confirmPasswordInput = document.querySelector('.confirm-password input');
+                    if (passwordField.value !== confirmPasswordInput.value) {
+                        isValid = false;
+                    }
+
+                    if (isValid) {
+                        submitbutton.click();
+
+                        profileFields.forEach(field => {
+                            const input = field.querySelector('input');
+                            if (input) {
+                                input.disabled = true;
+                            }
+                        });
+                        confirmPasswordField.style.display = 'none';
+                        this.textContent = 'Edit Info';
+                    }
+                }
+            });
+
+            profileFields.forEach(field => {
+                const inputs = field.querySelectorAll('input');
+                inputs.forEach(input => {
+                    input.addEventListener('input', () => clearError(field));
+                });
+            });
+        });
+
+
+
 
     </script>
     <script src="/public/Stockspage.js"></script>

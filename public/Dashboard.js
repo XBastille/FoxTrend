@@ -8,8 +8,79 @@ const visibleSlides = 5;
 const totalSlides = document.querySelectorAll('.company-box').length;
 const slider = document.getElementById('slider');
 
+class SearchDropdown {
+  constructor(inputId) {
+      this.input = document.getElementById(inputId);
+      this.dropdownMenu = document.createElement('div');
+      this.dropdownMenu.className = 'search-dropdown-menu';
+      this.optionsContainer = document.createElement('div');
+      this.optionsContainer.className = 'search-dropdown-options';
+      this.dropdownMenu.appendChild(this.optionsContainer);
+      this.input.parentElement.appendChild(this.dropdownMenu);
+      this.setupDropdown();
+  }
+
+  setupDropdown() {
+      this.input.addEventListener('click', () => {
+          this.dropdownMenu.classList.add('active');
+          this.loadOptions('');
+      });
+
+      document.addEventListener('click', (e) => {
+          if (!this.input.contains(e.target) && !this.dropdownMenu.contains(e.target)) {
+              this.dropdownMenu.classList.remove('active');
+          }
+      });
+
+      this.input.addEventListener('input', (e) => {
+          const searchTerm = e.target.value.toLowerCase();
+          this.loadOptions(searchTerm);
+      });
+  }
+
+  async loadOptions(searchTerm) {
+      try {
+          const response = await fetch('/public/textfile/all_ticker.txt');
+          const text = await response.text();
+          const options = text.split('\n').filter(option => option.trim());
+
+          const filteredOptions = options
+              .filter(option => option.toLowerCase().startsWith(searchTerm.toLowerCase()))
+              .slice(0, 6);
+
+          this.optionsContainer.innerHTML = '';
+          filteredOptions.forEach(option => {
+              const optionElement = document.createElement('div');
+              optionElement.className = 'search-dropdown-option';
+              optionElement.textContent = option;
+              optionElement.addEventListener('click', () => {
+                  this.input.value = option;
+                  this.dropdownMenu.classList.remove('active');
+                  const enterEvent = new KeyboardEvent('keypress', {
+                      key: 'Enter',
+                      code: 'Enter',
+                      keyCode: 13,
+                      which: 13,
+                      bubbles: true
+                  });
+                  this.input.dispatchEvent(enterEvent);
+              });
+              this.optionsContainer.appendChild(optionElement);
+          });
+      } catch (error) {
+          console.error('Error loading options:', error);
+      }
+  }
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+  new SearchDropdown('searchcomp');
+});
+
+
+
 function setRandomVideo() {
-  const totalVideos = 5; 
+  const totalVideos = 5;
   const randomIndex = Math.floor(Math.random() * totalVideos) + 1;
   const video = document.querySelector('.stock-animation video');
   video.src = `/public/Media/stock_animation_${randomIndex}.mp4`;
@@ -623,6 +694,11 @@ const ticker15 = document.getElementById('ticker15')
 const company15 = document.getElementById('company15')
 const companyprice15 = document.getElementById('companyprice15')
 const companypercent15 = document.getElementById('companypercent15')
+
+const price_percent_Change = document.getElementById('price_percent_Change');
+const price_percent_Changes = document.getElementById('price_percent_Changes');
+const price_percent_Changess = document.getElementById('price_percent_Changess');
+
 let randomcomp;
 async function fetchingjson() {
   try {
@@ -1065,7 +1141,7 @@ setTimeout(() => {
   //-------------------------------------------------------------------
   //loading animation for three graphs
 
-  //graph1,graph2, graph3 of comp1 will render after 3 secs
+  //graph1,graph2, graph3 of comp1 will render after 1 secs
 
   const rendercomp = setTimeout(renderingcomp, 1000)
 
@@ -1113,6 +1189,23 @@ async function renderingcomp() {
       document.body.style.filter = 'none';
       document.body.style.pointerEvents = 'auto'; // Re-enable interaction
       graphings();
+
+      const string = (data.value).substring(0, 1);
+      console.log(string)
+      if (string === '-') {
+        price_percent_Change.style.color = 'red'
+        price_percent_Changes.style.color = 'red'
+        price_percent_Changess.style.color = 'red'
+      }
+      if (string === '+') {
+        price_percent_Change.style.color = 'green'
+        price_percent_Changes.style.color = 'green'
+        price_percent_Changess.style.color = 'green'
+      }
+
+      price_percent_Change.innerText = data.value
+      price_percent_Changes.innerText = data.value
+      price_percent_Changess.innerText = data.value
     }
   } catch (error) {
     console.error('Error:', error);
@@ -1139,7 +1232,7 @@ async function duplicating(company_naming, number, boxing) {
   const end = day + "-" + months + "-" + years
   const graphsignal = "doit"
 
-  loading1.style.marginTop = '1180px'
+  loading1.style.marginTop = '1150px'
   loading1.style.marginLeft = '240px'
   loading1.style.display = 'flex'
   loading1.style.zIndex = '9999'
@@ -1163,12 +1256,40 @@ async function duplicating(company_naming, number, boxing) {
       document.body.style.filter = 'none';
       document.body.style.pointerEvents = 'auto'; // Re-enable interaction
       graphiings(number, boxing);
+      console.log(boxing)
+      const string = (data.value).substring(0, 1);
+      if (boxing === 1) {
+        price_percent_Change.innerText = data.value
+        if (string === '-') {
+          price_percent_Change.style.color = 'red'
+        }
+        if (string === '+') {
+          price_percent_Change.style.color = 'green'
+        }
+      }
+      if (boxing === 2) {
+        price_percent_Changes.innerText = data.value
+        if (string === '-') {
+          price_percent_Changes.style.color = 'red'
+        }
+        if (string === '+') {
+          price_percent_Changes.style.color = 'green'
+        }
+      }
+      if (boxing === 3) {
+        price_percent_Changess.innerText = data.value
+        if (string === '-') {
+          price_percent_Changess.style.color = 'red'
+        }
+        if(string === '+') {
+          price_percent_Changess.style.color = 'green'
+        }
+      }
     }
   } catch (error) {
     console.error('Error:', error);
   }
 }
-
 
 
 

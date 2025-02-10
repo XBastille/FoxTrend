@@ -10,8 +10,8 @@ public class finalinput {
 
 		String password = args[3];
 
-		Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/UserAuthentication", "root",
-				"Abhinab@2004");
+		Connection con = DriverManager.getConnection("jdbc:mysql://db:3308/UserAuthentication", "root",
+				"password");
 
 		String checkQuery = "SELECT COUNT(*) FROM user_database WHERE username = ?";
 		PreparedStatement checkStatement = con.prepareStatement(checkQuery);

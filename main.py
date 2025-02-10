@@ -12,19 +12,37 @@ class StockDataVisualizer:
     def __init__(self, company_name, index):
         self.company_name=company_name
         self.index=index
-        self.stock_data=self.download_stock_data()
-        self.related_stocks = self.get_related_stocks()
+        try:
+            ticker = yf.Ticker(company_name)
+            info = ticker.info
+            if not info or 'regularMarketOpen' not in info:
+                raise ValueError(f"Invalid ticker symbol: {company_name}")
+            self.stock_data = self.download_stock_data()
+            self.related_stocks = self.get_related_stocks()
+        except Exception as e:
+            print(f"Error initializing data for {company_name}: {str(e)}")
+            self.stock_data = self.download_stock_data()
+            self.related_stocks = []
 
     def download_stock_data(self):
-        end_date=datetime.datetime.now()
-        start_date=end_date - datetime.timedelta(days=25*365)
-        stock_data=yf.download(self.company_name, start=start_date, end=end_date)
-        stock_info = yf.Ticker(self.company_name).info
-        with open('public/graph.json', 'w') as json_file:
-            json.dump(stock_info, json_file, indent=4)
-        #stock_data.drop(columns=["Open", "High", "Low", "Adj Close", "Volume"], inplace=True)
-        print("jsonfile is created")
-        return stock_data
+        try:
+            end_date = datetime.datetime.now()
+            start_date = end_date - datetime.timedelta(days=25*365)
+            stock_data = yf.download(self.company_name, start=start_date, end=end_date)
+            stock_info = yf.Ticker(self.company_name).info
+            if not stock_info:
+                stock_info = {}
+                
+            with open('public/graph.json', 'w') as json_file:
+                json.dump(stock_info, json_file, indent=4)
+                
+            print("jsonfile is created")
+            return stock_data
+        except Exception as e:
+            print(f"Error downloading data: {str(e)}")
+            with open('public/graph.json', 'w') as json_file:
+                json.dump({}, json_file)
+            return pd.DataFrame()
 
     def calculate_price_change(self):
         close_price=self.stock_data["Close"].iloc[-1]
@@ -108,6 +126,7 @@ class StockDataVisualizer:
         df["Bollinger_hband"]=bollinger.bollinger_hband()
         df["Bollinger_lband"]=bollinger.bollinger_lband()
         df[["SMA50", "SMA200", "RSI", "MACD", "MACD_signal", "MACD_histogram", "Bollinger_hband", "Bollinger_lband"]].to_csv(f"public/technical_indicators_{self.index}.csv")
+        df[["SMA50", "SMA200", "RSI", "MACD", "MACD_signal", "MACD_histogram", "Bollinger_hband", "Bollinger_lband"]].to_csv(f"public/csv_1/technical_indicators_{self.index}.csv")
         '''plt.figure(figsize=(14,7))
         plt.plot(df["Close"], label="Close Price")
         plt.plot(df["SMA50"], label="50-Day SMA")
@@ -147,8 +166,21 @@ class StockDataVisualizer:
         plt.show()
 
     def run(self, start_date, end_date):
-        self.plot_historical_data(start_date, end_date)
-        self.plot_technical_indicators(start_date, end_date)
+        if not self.stock_data.empty:
+            self.plot_historical_data(start_date, end_date)
+            self.plot_technical_indicators(start_date, end_date)
+
+        elif self.related_stocks!=[]:
+            print("yes")
+            print(f"Skipping analysis for {self.company_name} due to invalid data")
+            pd.DataFrame().to_csv(f"public/csv_1/stock_data_{self.index}.csv")
+            pd.DataFrame().to_csv(f"public/stock_data_{self.index}.csv")
+            pd.DataFrame().to_csv(f"public/technical_indicators_{self.index}.csv")
+            pd.DataFrame().to_csv(f"public/csv_1/technical_indicators_{self.index}.csv")
+
+        else:
+            print(f"Skipping analysis for {self.company_name} due to invalid data")
+
 
 if __name__ == "__main__":
     if len(sys.argv)<3:

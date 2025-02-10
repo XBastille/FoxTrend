@@ -30,12 +30,12 @@ router.get('/predict', ensureAuthentication, (req, res) => {
     res.render('predict_stock')
 })
 
-router.get('/social' , ensureAuthentication, (req, res) => {
-    res.render('social')  
+router.get('/social', ensureAuthentication, (req, res) => {
+    res.render('social')
 })
 
-router.get('/journey' , ensureAuthentication, (req, res) => {
-    res.render('journey')  
+router.get('/journey', ensureAuthentication, (req, res) => {
+    res.render('journey')
 })
 
 router.post('/predict', async (req, res) => {
@@ -318,25 +318,7 @@ router.post('/summary', async (req, res) => {
     }
 })
 
-router.get('/dashboard', ensureAuthentication, async (req, res) => {
 
-    // const { page = 0, limit = 8 } = req.query
-    // try {
-    //     const comp = await CompanyDetails.find()
-    //         .skip(page * limit)
-    //         .limit(limit)
-    //     const total = await CompanyDetails.countDocuments();
-    //     return res.json({
-    //         data: comp,
-    //         total,
-    //         totalPages: Math.ceil(total / limit),
-    //         currentpage: page
-    //     })
-    // } catch (error) {
-    //     console.log(error)
-    // }
-    res.render("dashboard")
-})
 
 const runpython = (args, filename) => {
     return new Promise((resolve, reject) => {
@@ -349,14 +331,12 @@ const runpython = (args, filename) => {
         pyone.stdout.on('data', function (data) {
             data1 += data.toString();
             console.log(data1)
-            
         });
 
         pyone.on('close', (code) => {
             console.log(`child process close all stdio with code ${code}`);
             if (code === 0) {
                 resolve(data1.trim());
-
             }
             else {
                 //flash message dalana h idhar ki ticker not correct type ka
@@ -381,6 +361,12 @@ router.post('/loading', async (req, res) => {
     }
 })
 
+router.get('/dashboard', ensureAuthentication, async (req, res) => {
+    res.render("dashboard", {
+        name: req.user.username
+    })
+})
+
 
 router.post('/dashboard', async (req, res) => {
     const numCompanies = 1;
@@ -397,7 +383,7 @@ router.post('/dashboard', async (req, res) => {
         const filenaming = './python_files/main_2.py'
         const graph_animation = await runpython(args, filenaming)
         if (graph_animation) {
-            return res.json({ sucess: 'true' })
+            return res.json({ sucess: 'true', value: graph_animation })
         }
     }
     return res.json({ sucess: 'true', loadinganimation })
@@ -514,7 +500,7 @@ router.post('/userprofile', async (req, res) => {
     const usernamess = req.body.username
     const { usernames } = req.body
     const confirm_password = req.body.confirm_password
-    let c = 0;
+    console.log(Password, email, emails, name, usernames, usernamess)
     let sets = ""
     try {
         if (emails !== undefined) {
@@ -579,7 +565,7 @@ router.post('/userprofile', async (req, res) => {
         else {
             console.log("email not found")
         }
-        // return res.redirect('/userprofile')
+        return res.redirect('/userprofile')
     } catch (error) {
         console.log(error);
     }

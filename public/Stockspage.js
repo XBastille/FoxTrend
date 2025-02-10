@@ -1,12 +1,12 @@
-document.addEventListener('DOMContentLoaded', function() {
+document.addEventListener('DOMContentLoaded', function () {
   const avatarEdit = document.querySelector('.avatar-edit');
   const avatarPopup = document.querySelector('.avatar-popup');
 
   if (avatarEdit && avatarPopup) {
-    avatarEdit.addEventListener('click', function() {
+    avatarEdit.addEventListener('click', function () {
       console.log('Avatar edit clicked');
       avatarPopup.classList.toggle('show');
-      
+
       if (avatarPopup.classList.contains('show')) {
         avatarPopup.style.display = 'flex';
         setTimeout(() => avatarPopup.style.opacity = '1', 10);
@@ -20,7 +20,7 @@ document.addEventListener('DOMContentLoaded', function() {
   }
 });
 
-document.addEventListener('DOMContentLoaded', function() {
+document.addEventListener('DOMContentLoaded', function () {
   const avatarOptions = document.querySelectorAll('.avatar-option');
   const selectButton = document.querySelector('.select-button');
   const profileAvatar = document.querySelector('.avatar');
@@ -32,13 +32,13 @@ document.addEventListener('DOMContentLoaded', function() {
   }
 
   avatarOptions.forEach(option => {
-    option.addEventListener('click', function() {
+    option.addEventListener('click', function () {
       avatarOptions.forEach(opt => opt.classList.remove('selected'));
       this.classList.add('selected');
     });
   });
 
-  selectButton.addEventListener('click', function() {
+  selectButton.addEventListener('click', function () {
     const selectedAvatar = document.querySelector('.avatar-option.selected');
     if (selectedAvatar) {
       profileAvatar.src = selectedAvatar.src;
@@ -58,6 +58,76 @@ document.querySelector('.prediction-popup .cancel-btn').addEventListener('click'
   popup.classList.remove('show');
   setTimeout(() => popup.style.display = 'none', 300);
 });
+
+class SearchDropdown {
+  constructor(inputId) {
+      this.input = document.getElementById(inputId);
+      this.dropdownMenu = document.createElement('div');
+      this.dropdownMenu.className = 'search-dropdown-menu';
+      this.optionsContainer = document.createElement('div');
+      this.optionsContainer.className = 'search-dropdown-options';
+      this.dropdownMenu.appendChild(this.optionsContainer);
+      this.input.parentElement.appendChild(this.dropdownMenu);
+      this.setupDropdown();
+  }
+
+  setupDropdown() {
+      this.input.addEventListener('click', () => {
+          this.dropdownMenu.classList.add('active');
+          this.loadOptions('');
+      });
+
+      document.addEventListener('click', (e) => {
+          if (!this.input.contains(e.target) && !this.dropdownMenu.contains(e.target)) {
+              this.dropdownMenu.classList.remove('active');
+          }
+      });
+
+      this.input.addEventListener('input', (e) => {
+          const searchTerm = e.target.value.toLowerCase();
+          this.loadOptions(searchTerm);
+      });
+  }
+
+  async loadOptions(searchTerm) {
+      try {
+          const response = await fetch('/public/textfile/all_ticker.txt');
+          const text = await response.text();
+          const options = text.split('\n').filter(option => option.trim());
+
+          const filteredOptions = options
+              .filter(option => option.toLowerCase().startsWith(searchTerm.toLowerCase()))
+              .slice(0, 6);
+
+          this.optionsContainer.innerHTML = '';
+          filteredOptions.forEach(option => {
+              const optionElement = document.createElement('div');
+              optionElement.className = 'search-dropdown-option';
+              optionElement.textContent = option;
+              optionElement.addEventListener('click', () => {
+                  this.input.value = option;
+                  this.dropdownMenu.classList.remove('active');
+                  const enterEvent = new KeyboardEvent('keypress', {
+                      key: 'Enter',
+                      code: 'Enter',
+                      keyCode: 13,
+                      which: 13,
+                      bubbles: true
+                  });
+                  this.input.dispatchEvent(enterEvent);
+              });
+              this.optionsContainer.appendChild(optionElement);
+          });
+      } catch (error) {
+          console.error('Error loading options:', error);
+      }
+  }
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+  new SearchDropdown('searching');
+});
+
 
 
 //prediction-------------------------------------------------
@@ -98,7 +168,6 @@ future_prediction.addEventListener('click', async () => {
 document.querySelectorAll('.company-box').forEach(box => {
   box.addEventListener('click', async () => {
     const ticker = box.querySelector('b').textContent;
-    localStorage.setItem('clickOneMonth', 'true');
     const searchBar = document.getElementById('searching');
     searchBar.value = ticker;
     const enterEvent = new KeyboardEvent('keypress', {
@@ -111,17 +180,6 @@ document.querySelectorAll('.company-box').forEach(box => {
     searchBar.dispatchEvent(enterEvent);
   });
 });
-
-
-document.addEventListener('DOMContentLoaded', () => {
-  if (localStorage.getItem('clickOneMonth') === 'true') {
-    localStorage.removeItem('clickOneMonth');
-    setTimeout(() => {
-      document.getElementById('onemonth').click();
-    }, 1000);
-  }
-});
-
 //------------------------------------------------------------
 
 
@@ -161,196 +219,6 @@ document.addEventListener('DOMContentLoaded', function () {
           this.textContent = 'Connected';
         }
       }, 2000);
-    });
-  });
-});
-c = 0;
-
-let formdata = {
-  username: "",
-}
-
-const nhi = "false"
-async function handless() {
-  try {
-    const response = await fetch('/userprofile', {
-      method: 'POST',
-      headers: {
-        'Content-type': 'application/json'
-      },
-      body: JSON.stringify(formdata)
-    })
-    const datas = await response.json()
-    console.log(datas)
-    return datas.success === 'false' ? 'false' : 'true';
-  } catch (error) {
-    console.log(error)
-  }
-}
-
-function formdatas() {
-  formdata.username = document.getElementById("username").value.trim()
-  console.log(formdata)
-}
-
-
-
-document.addEventListener('DOMContentLoaded', function () {
-  const editButton = document.querySelector('.edit-button');
-  const profileForm = document.querySelector('.profile-section');
-  const profileFields = document.querySelectorAll('.profile-field');
-  const avatarUsername = document.querySelector('.profile-header h1');
-  const confirmPasswordField = document.querySelector('.confirm-password');
-  const submit_button = document.getElementById('submit_button')
-  submit_button.addEventListener('click', async (event) => {
-    c++;
-    const passwordss = document.getElementById('password').value
-    const confirm_passwords = document.getElementById('confirm_password').value
-    const emailss = document.getElementById('email').value
-    if (c % 2 != 0) {
-      event.preventDefault()
-      const usernames = document.getElementById('username').value
-      const emails = document.getElementById('email').value
-      const passwords = document.getElementById('password').value
-      const confirm_password = document.getElementById('confirm_password').value
-      try {
-        const response = await fetch('/userprofile', {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify({ emails, passwords })
-        });
-        const data = await response.json();
-        console.log('Response from server:', data);
-      } catch (error) {
-        console.error('Error:', error);
-      }
-    }
-    else {
-      // event.preventDefault()
-      formdatas();
-      const result = await handless()
-      console.log(result)
-      if (result === 'false') {
-        event.preventDefault()
-        console.log("usernames already exists")
-        c = 1;
-        return
-      }
-      if (passwordss !== confirm_passwords) {
-        event.preventDefault()
-        console.log("equal nhi bsdk")
-        c = 1;
-        return
-      }
-      if (!emailss.endsWith("@gmail.com")) {
-        event.preventDefault()
-        console.log("equal nhi bsdk")
-        c = 1;
-        return
-      }
-      profileForm.method = 'POST'
-      profileForm.action = "/userprofile"
-      profileForm.submit();
-      // window.location.reload();
-      console.log("submitted")
-    }
-  })
-
-
-  function validateEmail(email) {
-    const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    return re.test(email);
-  }
-
-  function clearError(field) {
-    const errorMessage = field.querySelector('.error-message');
-    if (errorMessage) errorMessage.remove();
-    field.querySelectorAll('input').forEach(input => input.classList.remove('error'));
-  }
-
-  editButton.addEventListener('click', function () {
-    if (this.textContent.trim() === 'Edit Info') {
-      profileFields.forEach(field => {
-        const span = field.querySelector('span');
-        const input = field.querySelector('input');
-        if (span && input) {
-          span.style.display = 'none';
-          input.style.display = 'inline-block';
-        }
-      });
-
-      confirmPasswordField.style.display = 'flex';
-      this.textContent = 'Save Info';
-    } else {
-      let isValid = true;
-      let updatedUsername = '';
-
-      profileFields.forEach(field => {
-        clearError(field);
-        const span = field.querySelector('span');
-        const input = field.querySelector('input');
-        const errorMessage = document.createElement('div');
-        errorMessage.className = 'error-message';
-        errorMessage.style.color = 'red';
-        errorMessage.style.fontSize = '12px';
-
-        if (input) {
-          if (input.value.trim() === '') {
-            isValid = false;
-            input.classList.add('error');
-            errorMessage.textContent = 'This field cannot be empty';
-            field.appendChild(errorMessage);
-          } else if (input.type === 'email' && !validateEmail(input.value)) {
-            isValid = false;
-            input.classList.add('error');
-            errorMessage.textContent = 'Please enter a valid email address';
-            field.appendChild(errorMessage);
-          } else if (span) {
-            span.textContent = input.type === 'password' ? '••••••••' : input.value;
-            if (input.type === 'text' && field.querySelector('label').textContent === 'Username:') {
-              updatedUsername = input.value;
-            }
-          }
-        }
-      });
-      const passwordField = document.querySelector('.profile-field input[type="password"]');
-      const confirmPasswordInput = document.querySelector('.confirm-password input');
-      if (passwordField.value !== confirmPasswordInput.value) {
-        isValid = false;
-        confirmPasswordInput.classList.add('error');
-        const errorMessage = document.createElement('div');
-        errorMessage.className = 'error-message';
-        errorMessage.textContent = 'Passwords do not match';
-        errorMessage.style.color = 'red';
-        confirmPasswordInput.parentElement.appendChild(errorMessage);
-      }
-      if (isValid) {
-        profileFields.forEach(field => {
-          const span = field.querySelector('span');
-          const input = field.querySelector('input');
-          if (span && input) {
-            input.style.display = 'none';
-            span.style.display = 'inline-block';
-          }
-        });
-
-        if (updatedUsername) {
-          avatarUsername.textContent = updatedUsername;
-        }
-
-        confirmPasswordField.style.display = 'none';
-
-        this.textContent = 'Edit Info';
-      }
-    }
-  });
-
-  profileFields.forEach(field => {
-    const inputs = field.querySelectorAll('input');
-    inputs.forEach(input => {
-      input.addEventListener('input', () => clearError(field));
     });
   });
 });
@@ -762,6 +630,8 @@ let exdividenddate = "";
 const d = new Date(exdividenddate * 1000);
 const ceoname = document.getElementById("ceoname");
 const city_state = document.getElementById("city_state");
+const dollar = document.getElementById('dollar')
+const percent = document.getElementById('percent')
 let val = ''
 function fetchjson() {
   fetch("/public/graph.json")
@@ -778,6 +648,20 @@ function fetchjson() {
       console.log(Company_title)
       Company_price.innerText = "$" + data.currentPrice;
       cp = "$" + data.currentPrice
+
+      const currPrice = data.currentPrice;
+      const prevPrice = data.previousClose;
+
+      const priceChange = currPrice - prevPrice
+      const percentChange = (priceChange / prevPrice) * 100;
+
+      const sign = priceChange >= 0 ? '+' : '-';
+      dollar.innerText = `${sign}$${Math.abs(priceChange).toFixed(2)}`;
+      percent.innerText = `(${sign}${Math.abs(percentChange).toFixed(2)}%)`;
+
+      dollar.style.color = priceChange >= 0 ? 'green' : 'red'
+      percent.style.color = priceChange >= 0 ? 'green' : 'red'
+
       longsummary.innerText = data.longBusinessSummary;
       prevclose.innerText = data.previousClose;
       bidprice.innerText = data.bid;
@@ -813,25 +697,25 @@ document.addEventListener("DOMContentLoaded", function () {
 
 
 
-const dollar = document.getElementById('dollar').innerText
-const percent = document.getElementById('percent').innerText
+// const dollar = document.getElementById('dollar').innerText
+// const percent = document.getElementById('percent').innerText
 
-console.log(dollar.substring(0, 1))
-if (dollar.substring(0, 1) === '-') {
-  document.getElementById('dollar').style.color = 'red'
-}
+// console.log(dollar.substring(0, 1))
+// if (dollar.substring(0, 1) === '-') {
+//   document.getElementById('dollar').style.color = 'red'
+// }
 
-if (dollar.substring(0, 1) === '+') {
-  document.getElementById('dollar').style.color = 'green'
-}
+// if (dollar.substring(0, 1) === '+') {
+//   document.getElementById('dollar').style.color = 'green'
+// }
 
-if (percent.substring(1, 2) === '-') {
-  document.getElementById('percent').style.color = 'red'
-}
+// if (percent.substring(1, 2) === '-') {
+//   document.getElementById('percent').style.color = 'red'
+// }
 
-if (percent.substring(1, 2) === '+') {
-  document.getElementById('percent').style.color = 'green'
-}
+// if (percent.substring(1, 2) === '+') {
+//   document.getElementById('percent').style.color = 'green'
+// }
 
 
 Papa.parse("/public/stock_data_1.csv", {
@@ -1305,10 +1189,12 @@ threemonth.addEventListener('click', async () => {
     month = 12;
   }
   if (month === 1) {
+    year = year - 1;
     month = 13
   }
 
   if (month === 2) {
+    year = year - 1;
     month = 14;
   }
   month -= 2;

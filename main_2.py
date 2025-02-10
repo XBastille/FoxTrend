@@ -1,3 +1,4 @@
+import os
 import sys
 import datetime
 import matplotlib.pyplot as plt
@@ -5,23 +6,32 @@ import pandas as pd
 import yfinance as yf
 import ta
 import json
+import logging
+
+logging.basicConfig(
+    level=logging.INFO,
+    format='%(asctime)s - %(levelname)s - %(message)s',
+    handlers=[
+        logging.FileHandler('stock_analysis.log'),
+        logging.StreamHandler()
+    ]
+)
 
 class StockDataVisualizer:
-    def __init__(self, company_name, index, number):
-        self.company_name = company_name
-        self.index = index
-        self.number = number
-        self.stock_data = self.download_stock_data()
+    def __init__(self, company_name, index):
+        self.company_name=company_name
+        self.index=index
+        self.stock_data=self.download_stock_data()
 
     def download_stock_data(self):
         end_date=datetime.datetime.now()
-        start_date=end_date - datetime.timedelta(days=25*365)
+        start_date=end_date-datetime.timedelta(days=25*365)
         stock_data=yf.download(self.company_name, start=start_date, end=end_date)
         stock_info = yf.Ticker(self.company_name).info
         with open('graph.json', 'w') as json_file:
             json.dump(stock_info, json_file, indent=4)
+            logging.info(f"Created JSON file: graph.json for {self.company_name}")
         #stock_data.drop(columns=["Open", "High", "Low", "Adj Close", "Volume"], inplace=True)
-        print("jsonfile is created")
         return stock_data
 
     def calculate_price_change(self):
@@ -32,18 +42,25 @@ class StockDataVisualizer:
         return price_change,percentage_change
 
     def plot_historical_data(self, start_date=None, end_date=None):
+        
         df = self.plot_technical_indicators_2(start_date, end_date)
         price_change, percentage_change = self.calculate_price_change()
+        
         if price_change > 0:
             print(f"+{price_change:.2f}  (+{percentage_change:.2f}%)")
         else:
-            print(f"{price_change:.2f}  ({percentage_change:.2f}%)")
-        df.to_csv(f"stock_data_{self.number}.csv")
+            print(f"-${abs(price_change):.2f}  ({percentage_change:.2f}%)")
+        os.makedirs('public/csv', exist_ok=True)
+        for i in range(1, 4):
+            csv_filename = f'public/csv/trending{i}.csv'
+            if not os.path.exists(csv_filename):
+                df.to_csv(csv_filename)
+                logging.info(f"Created stock data CSV file: {csv_filename}")
+                break
         '''plt.figure(figsize=(14,7))
         plt.plot(df["Close"], label="Historical Close Prices")
         plt.title(f"Historical Close Prices for {self.company_name}")
         self.plot_technical_indicators_28_10("Price")'''
-        print("csvfile is created")
 
     def plot_technical_indicators(self, start_date=None, end_date=None):
         df=self.plot_technical_indicators_2(start_date, end_date)
@@ -57,7 +74,9 @@ class StockDataVisualizer:
         bollinger=ta.volatility.BollingerBands(df["Close"], window=20, window_dev=2)
         df["Bollinger_hband"]=bollinger.bollinger_hband()
         df["Bollinger_lband"]=bollinger.bollinger_lband()
-        df[["SMA50", "SMA200", "RSI", "MACD", "MACD_signal", "MACD_histogram", "Bollinger_hband", "Bollinger_lband"]].to_csv(f"technical_indicators_{self.index}.csv")
+        csv_filename = f"technical_indicators_{self.index}.csv"
+        # df[["SMA50", "SMA200", "RSI", "MACD", "MACD_signal", "MACD_histogram", "Bollinger_hband", "Bollinger_lband"]].to_csv(csv_filename)
+        logging.info(f"Created technical indicators CSV file: {csv_filename}")
         '''plt.figure(figsize=(14,7))
         plt.plot(df["Close"], label="Close Price")
         plt.plot(df["SMA50"], label="50-Day SMA")
@@ -97,28 +116,23 @@ class StockDataVisualizer:
         plt.show()
 
     def run(self, start_date, end_date):
-        self.plot_historical_data(start_date, end_date)
-        self.plot_technical_indicators(start_date, end_date)
+        if not self.stock_data.empty:
+            self.plot_historical_data(start_date, end_date)
+            self.plot_technical_indicators(start_date, end_date)
+        else:
+            print(f"Skipping analysis for {self.company_name} due to invalid data")
 
 if __name__ == "__main__":
-    if len(sys.argv) < 4:  
+    if len(sys.argv)<3:
         sys.exit(1)
-    
-    number = int(sys.argv[1]) 
-    num_companies = int(sys.argv[2])  
-    companies = sys.argv[3:3+num_companies]  
-    start_date = sys.argv[3+num_companies] if len(sys.argv) > 3+num_companies else None
-    end_date = sys.argv[4+num_companies] if len(sys.argv) > 4+num_companies else None
-    
-    if not 1 <= number <= 3:
-        print("Number must be between 1 and 3")
-        sys.exit(1)
-        
+    num_companies=int(sys.argv[1])
+    companies=sys.argv[2:2+num_companies]
+    start_date=sys.argv[2+num_companies] if len(sys.argv)>2+num_companies else None
+    end_date=sys.argv[3+num_companies] if len(sys.argv)>3+num_companies else None
     if start_date:
         start_date = datetime.datetime.strptime(start_date, "%d-%m-%Y").strftime("%d-%m-%Y")
     if end_date:
         end_date = datetime.datetime.strptime(end_date, "%d-%m-%Y").strftime("%d-%m-%Y")
-        
     for i, company_name in enumerate(companies, start=1):
-        visualizer = StockDataVisualizer(company_name, i, number)
+        visualizer=StockDataVisualizer(company_name, i)
         visualizer.run(start_date, end_date)

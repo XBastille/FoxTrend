@@ -1,72 +1,72 @@
 [
     {
-        "Ticker": "RIVN",
-        "Price": 12.42,
-        "Change": 0.49,
-        "Change %": 4.0098,
-        "Company_Name": "Rivian Automotive, Inc."
+        "Ticker": "META",
+        "Price": 714.52,
+        "Change": 0.24,
+        "Change %": 0.0337,
+        "Company_Name": "Meta Platforms, Inc."
     },
     {
-        "Ticker": "GM",
-        "Price": 49.78,
-        "Change": 0.92,
-        "Change %": 1.873,
-        "Company_Name": "General Motors Company"
+        "Ticker": "SPOT",
+        "Price": 622.99,
+        "Change": 5.18,
+        "Change %": 0.8346,
+        "Company_Name": "Spotify Technology S.A."
     },
     {
-        "Ticker": "NIO",
-        "Price": 4.22,
-        "Change": 0.1,
-        "Change %": 2.3697,
-        "Company_Name": "NIO Inc."
+        "Ticker": "SNAP",
+        "Price": 10.92,
+        "Change": 0.09,
+        "Change %": 0.8491,
+        "Company_Name": "Snap Inc."
     },
     {
-        "Ticker": "LCID",
-        "Price": 2.67,
-        "Change": 0.13,
-        "Change %": 4.9242,
-        "Company_Name": "Lucid Group, Inc."
+        "Ticker": "PINS",
+        "Price": 40.0,
+        "Change": -5.26,
+        "Change %": -13.5393,
+        "Company_Name": "Pinterest, Inc."
     },
     {
-        "Ticker": "F",
-        "Price": 10.21,
-        "Change": 0.05,
-        "Change %": 0.4985,
-        "Company_Name": "Ford Motor Company"
+        "Ticker": "RDDT",
+        "Price": 225.23,
+        "Change": -1.6901,
+        "Change %": -0.7746,
+        "Company_Name": "Reddit, Inc."
     },
     {
-        "Ticker": "XPEV",
-        "Price": 14.81,
-        "Change": 0.365,
-        "Change %": 2.4754,
-        "Company_Name": "XPeng Inc."
+        "Ticker": "DJT",
+        "Price": 31.19,
+        "Change": 1.45,
+        "Change %": 4.688,
+        "Company_Name": "Trump Media & Technology Group Corp."
     },
     {
-        "Ticker": "GOEV",
-        "Price": 0.37,
-        "Change": 0.0,
-        "Change %": 0.0,
-        "Company_Name": "Canoo Inc."
+        "Ticker": "NBIS",
+        "Price": 38.13,
+        "Change": -0.36,
+        "Change %": -1.0312,
+        "Company_Name": null
     },
     {
-        "Ticker": "LI",
-        "Price": 23.13,
-        "Change": 0.305,
-        "Change %": 1.3281,
-        "Company_Name": "Li Auto Inc."
+        "Ticker": "BIDU",
+        "Price": 89.32,
+        "Change": -0.0153,
+        "Change %": -0.0172,
+        "Company_Name": "Baidu, Inc."
     },
     {
-        "Ticker": "MULN",
-        "Price": 0.29,
-        "Change": 0.021,
-        "Change %": 7.7491,
-        "Company_Name": "Mullen Automotive, Inc."
+        "Ticker": "DASH",
+        "Price": 195.54,
+        "Change": 1.25,
+        "Change %": 0.6404,
+        "Company_Name": "DoorDash, Inc."
     },
     {
-        "Ticker": "TM",
-        "Price": 186.98,
-        "Change": -1.19,
-        "Change %": -0.6381,
-        "Company_Name": "Toyota Motor Corporation"
+        "Ticker": "MTCH",
+        "Price": 33.8,
+        "Change": 1.19,
+        "Change %": 3.5629,
+        "Company_Name": "Match Group, Inc."
     }
 ]

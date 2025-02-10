@@ -32,14 +32,18 @@
             <img src="public/Media/list.jpg" id="item3">
             <span class="icon-name">Lists</span>
         </li>
+        <a style="text-decoration: none;" href="https://github.com/XBastille/FoxTrend/blob/main/.github/FUNDING.yml" target="_blank">
         <li class="Icon-items" data-name="Donate">
             <img src="public/Media/donate.jpg" id="item4">
             <span class="icon-name">Donate</span>
         </li>
-        <li class="Icon-items" data-name="Profile">
-            <img src="public/Media/account.jpg" id="item5">
-            <span class="icon-name">Profile</span>
-        </li>
+        </a>
+        <a href="/userprofile" style="text-decoration: none;">
+            <li class="Icon-items" data-name="Profile">
+                <img src="public/Media/account.jpg" id="item5" />
+                <span class="icon-name">Profile</span>
+            </li>
+        </a>
         <li class="Arrow">
             <img src="public/Media/arrow-right.jpg">
         </li>
@@ -59,14 +63,15 @@
                 </svg>
             </a>
             <a href="#" class="comp">
-                Company
+                Project
                 <svg width="20" height="20" viewBox="0 -4 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
                     <path d="M5 7.5L10 12.5L15 7.5" stroke="currentColor" stroke-width="1.67" stroke-linecap="round"
                         stroke-linejoin="round"></path>
                 </svg>
             </a>
-            <a href="#" class="blog">Blog</a>
-            <a href="#" class="port">Contact Us</a>
+            <a href="https://github.com/XBastille/FoxTrend" target="_blank" class="blog">Github</a>
+            <a href="https://mail.google.com/mail/?view=cm&fs=1&to=eziopuhan825@gmail.com" target="_blank"
+                class="port">Contact Us</a>
             <div class="services-dropdown">
                 <div class="services-dropdown-content">
                     <div class="services-label">
@@ -81,12 +86,12 @@
                         </div>
                     </div>
                     <div class="services-dropdown-column">
-                        <h3>Secondary <span class="arrow">→</span></h3>
                         <div class="secondary-section">
+                            <h3>Secondary <span class="arrow">→</span></h3>
                             <div class="secondary-elements">
-                                <a href="#">Used Car Prediction</a>
-                                <a href="#">Housing Prediction</a>
-                                <a href="#">Loan Approval Prediction</a>
+                                <a href="/selectcar">Used Car Prediction</a>
+                                <a href="/selecthouse">Housing Prediction</a>
+                                <a href="/selectloan">Loan Approval Prediction</a>
                             </div>
                         </div>
                     </div>
@@ -96,25 +101,26 @@
             <div class="company-dropdown">
                 <div class="company-dropdown-content">
                     <div class="company-label">
-                        <h1>Company</h1>
+                        <h1>Project</h1>
                     </div>
                     <div class="company-dropdown-column">
                         <h2>MORE ABOUT US</h2>
-                        <a href="#">About Us</a>
-                        <a href="#">Blog</a>
+                        <a href="/#about-section">About Us</a>
+                        <a href="https://github.com/XBastille/FoxTrend" target="_blank">Github</a>
                         <a href="#">Privacy Policy</a>
                         <a href="#">License</a>
                     </div>
                     <div class="company-dropdown-column">
                         <h2>SOCIAL</h2>
                         <a href="/social" target="_blank">LinkedIn</a>
-                            <a href="/social" target="_blank">Instagram</a>
-                            <a href="/social" target="_blank">X</a>
+                        <a href="/social" target="_blank">Instagram</a>
+                        <a href="/social" target="_blank">X</a>
                     </div>
                     <div class="company-dropdown-column">
                         <h2>CONTACTS</h2>
-                        <a href="#">Book a Call</a>
-                        <a href="#">Mail Us</a>
+                        <a href="https://github.com/XBastille/FoxTrend/blob/main/.github/FUNDING.yml" target="_blank">Donate</a>
+                        <a href="https://mail.google.com/mail/?view=cm&fs=1&to=eziopuhan825@gmail.com"
+                            target="_blank">Mail Us</a>
                     </div>
                 </div>
             </div>
@@ -156,33 +162,31 @@
 
     <footer>
         <div class="footer-links">
-
-
-
-            <img src="public/Media/website_logo.jpg" class="foot-logo">
-
-
-
+            <img src="public/Media/website_logo.jpg" class="foot-logo" />
             <div class="footer-block">
-                <div class="footer-title" id="Comp">Company</div>
-                <li><a class="links" id="mail">Mail us</a></li>
-                <li><a class="links" id="SERV">Services</a></li>
+                <div class="footer-title" id="Comp">Project</div>
+                <li><a style="text-decoration: none;" class="links"
+                        href="https://mail.google.com/mail/?view=cm&fs=1&to=eziopuhan825@gmail.com" target="_blank"
+                        id="mail">Mail us</a></li>
+                <li><a href="https://github.com/XBastille/FoxTrend" style="text-decoration: none;" target="_blank"
+                        class="links" id="SERV">Github</a></li>
+                <li><a href="https://github.com/XBastille/FoxTrend/blob/main/.github/FUNDING.yml" style="text-decoration: none;" target="_blank" class="links" id="SERV">Donate</a></li>
             </div>
 
             <div class="footer-block">
                 <div class="footer-title" id="more">More</div>
-                <li><a class="links" id="tandc">Blog</a></li>
                 <li><a class="links" id="career">License</a></li>
                 <li><a class="links" id="privacy">Privacy Policy</a></li>
             </div>
 
             <div class="footer-block">
                 <div class="footer-title" id="social">Social</div>
-                <li><a class="links" id="linkedin">LinkedIn</a></li>
-                <li> <a class="links" id="yt">Instagram</a></li>
-                <li> <a class="links" id="tw">X</a></li>
+                <li><a class="links" style="text-decoration: none;" href="/social" target="_blank"
+                        id="linkedin">LinkedIn</a></li>
+                <li><a class="links" style="text-decoration: none;" href="/social" target="_blank" id="yt">Instagram</a>
+                </li>
+                <li><a class="links" style="text-decoration: none;" href="/social" target="_blank" id="tw">X</a></li>
             </div>
-
         </div>
     </footer>
     <script>
@@ -337,6 +341,33 @@
             }
 
         });
+
+        //connecting the data wiht json file like comany name
+        let val = '';
+        const Company_price = document.getElementById('Company_price')
+        const Company_title = document.getElementById('Company_title')
+        async function companaming() {
+            try {
+                const res = await fetch('/public/graph.json')
+                if (!res.ok) {
+                    console.log(res.status)
+                    return;
+                }
+                const data = await res.json();
+                val = data.symbol
+                Company_price.innerText = "$" + data.currentPrice
+                Company_title.innerText = data.shortName
+                console.log(data.shortName)
+            } catch (error) {
+                console.log(error)
+            }
+        }
+
+        document.addEventListener("DOMContentLoaded", function () {
+            companaming();
+        });
+
+
     </script>
 
     <script src="../public/predict_stock.js"></script>

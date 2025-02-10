@@ -9,7 +9,15 @@ import json
 class StockDataVisualizer:
     def __init__(self, company_name):
         self.company_name=company_name
-        self.stock_data=self.download_stock_data()
+        try:
+            ticker = yf.Ticker(company_name)
+            info = ticker.info
+            if not info or 'regularMarketOpen' not in info:
+                raise ValueError(f"Invalid ticker symbol: {company_name}")
+            self.stock_data = self.download_stock_data()
+        except Exception as e:
+            print(f"Error initializing data for {company_name}: {str(e)}")
+            self.stock_data = pd.DataFrame()
 
     def download_stock_data(self):
         end_date=datetime.datetime.now()
