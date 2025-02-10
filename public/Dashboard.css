@@ -1466,6 +1466,7 @@ cursor: pointer;
   
   .search-wrapper {
     position: relative;
+    display: none;
   }
 
   .search-wrapper::before {
