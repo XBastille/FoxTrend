@@ -11,7 +11,17 @@ const fs = require('fs')
 const date = new Date();
 
 const app = express()
-const port = 3000;
+const port = process.env.PORT || 3000;
+const AWS = require('aws-sdk');
+const winston = require('winston');
+AWS.config.update({ region: process.env.AWS_REGION });
+const logger = winston.createLogger({
+    transports: [
+        new winston.transports.Console(),
+        new winston.transports.File({ filename: '/app/logs/app.log' })
+    ]
+});
+
 
 const db = require('./config/key').MongoURI
 const { CompanyStore, CompanyDetails } = require('./models/Users');
