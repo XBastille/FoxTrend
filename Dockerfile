@@ -16,7 +16,7 @@ FROM node:18 AS node-builder
 WORKDIR /app
 
 COPY package*.json ./
-RUN npm install bcryptjs cluster  body-parser express express-session hbs passport passport-local node-cron csv-parser mongoose
+RUN npm install bcryptjs aws-sdk winston cluster body-parser express express-session hbs passport passport-local node-cron csv-parser mongoose
 
 COPY . .
 
