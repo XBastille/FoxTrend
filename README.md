@@ -36,7 +36,7 @@ After cloning, initialize the project by running the following commands:
 ```bash
 cd FoxTrend
 npm init
-npm i bcryptjs body-parser express express-session hbs passport passport-local node-cron csv-parser mongoose
+npm i bcryptjs body-parser express express-session hbs passport passport-local node-cron csv-parser mongoose aws-sdk winston cluster
 ```
 
 Ensure you configure the project with your own SQL password and MongoDB URL by updating the respective configuration files. Add your MongoDB key in `key.js` and your SQL password in the relevant Java files.
