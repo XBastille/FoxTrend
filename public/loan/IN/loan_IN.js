@@ -74,18 +74,9 @@ class Dropdown {
 
 document.addEventListener('DOMContentLoaded', async () => {
     try {
-        const maritalResponse = await fetch('../public/options/loan_IN_marital_status_values.txt');
-        const maritalText = await maritalResponse.text();
-        const maritalOptions = maritalText.split('\n').filter(status => status.trim());
-
-        const houseResponse = await fetch('../public/options/loan_IN_house_ownership_values.txt');
-        const houseText = await houseResponse.text();
-        const houseOptions = houseText.split('\n').filter(house => house.trim());
-
-        const vehicleResponse = await fetch('../public/options/loan_IN_vehicle_ownership_values.txt');
-        const vehicleText = await vehicleResponse.text();
-        const vehicleOptions = vehicleText.split('\n').filter(vehicle => vehicle.trim());
-
+        const maritalOptions = ['single', 'married'];
+        const houseOptions = ['rented', 'owned', 'norent_noown'];
+        const vehicleOptions = ['no', 'yes'];
         new Dropdown('marital_status', maritalOptions);
         new Dropdown('house_ownership', houseOptions);
         new Dropdown('vehicle_ownership', vehicleOptions);
