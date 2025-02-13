@@ -217,7 +217,7 @@ section{
   color: #e0e0e0;
   font-size: 13px;
   line-height: 1.5;
-  z-index: 1000;
+  z-index: 10000000000;
   opacity: 0;
   visibility: hidden;
   transition: all 0.3s ease;

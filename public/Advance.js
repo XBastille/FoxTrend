@@ -11,6 +11,20 @@ document.querySelector('.prediction-popup .cancel-btn').addEventListener('click'
     setTimeout(() => popup.style.display = 'none', 300);
 });
 
+function restoreIndicatorStates() {
+    bollingerVisible = false;
+    rsiVisible = false;
+    macdVisible = false;
+
+    BOLL.style.display = 'none';
+    RSI.style.display = 'none';
+    MACD.style.display = 'none';
+    
+    BAND.style.color = 'gray';
+    IND.style.color = 'gray';
+    STRN.style.color = 'gray';
+}
+
 class SearchDropdown {
     constructor(inputId) {
         this.input = document.getElementById(inputId);
@@ -337,7 +351,7 @@ add_multiple_graph.addEventListener('keypress', async (e) => {
             if (data.sucess === 'true') {
                 loading.style.display = 'none'
                 loading.style.zIndex = '-999'
-                myplot.style.zIndex = '999'
+                myplot.style.zIndex = '99'
                 myplot.style.filter = 'none'
                 fus();
             }
@@ -735,10 +749,11 @@ document.addEventListener('DOMContentLoaded', function () {
                     if (data.sucess === 'true') {
                         loading.style.display = 'none'
                         loading.style.zIndex = '-999'
-                        myplot.style.zIndex = '999'
+                        myplot.style.zIndex = '99'
                         myplot.style.filter = 'none'
                         graphing();
                         i = 2;
+                        restoreIndicatorStates();
                     }
                 } catch (error) {
                     console.error('Error:', error);
@@ -1205,10 +1220,11 @@ oneweek.addEventListener('click', async () => {
         if (data.sucess === 'true') {
             loading.style.display = 'none'
             loading.style.zIndex = '-999'
-            myplot.style.zIndex = '999'
+            myplot.style.zIndex = '99'
             myplot.style.filter = 'none'
             graphing();
             i = 2;
+            restoreIndicatorStates();
         }
     } catch (error) {
         console.error('Error:', error);
@@ -1252,10 +1268,11 @@ onemonth.addEventListener('click', async () => {
         if (data.sucess === 'true') {
             loading.style.display = 'none'
             loading.style.zIndex = '-999'
-            myplot.style.zIndex = '999'
+            myplot.style.zIndex = '99'
             myplot.style.filter = 'none'
             graphing();
             i = 2;
+            restoreIndicatorStates();
         }
     } catch (error) {
         console.error('Error:', error);
@@ -1316,10 +1333,11 @@ threemonth.addEventListener('click', async () => {
         if (data.sucess === 'true') {
             loading.style.display = 'none'
             loading.style.zIndex = '-999'
-            myplot.style.zIndex = '999'
+            myplot.style.zIndex = '99'
             myplot.style.filter = 'none'
             graphing();
             i = 2;
+            restoreIndicatorStates();
         }
     } catch (error) {
         console.error('Error:', error);
@@ -1357,10 +1375,11 @@ yeartodate.addEventListener('click', async () => {
         if (data.sucess === 'true') {
             loading.style.display = 'none'
             loading.style.zIndex = '-999'
-            myplot.style.zIndex = '999'
+            myplot.style.zIndex = '99'
             myplot.style.filter = 'none'
             graphing();
             i = 2
+            restoreIndicatorStates();
         }
     } catch (error) {
         console.error('Error:', error);
@@ -1398,10 +1417,11 @@ oneyear.addEventListener('click', async () => {
         if (data.sucess === 'true') {
             loading.style.display = 'none'
             loading.style.zIndex = '-999'
-            myplot.style.zIndex = '999'
+            myplot.style.zIndex = '99'
             myplot.style.filter = 'none'
             graphing();
             i = 2;
+            restoreIndicatorStates();
         }
     } catch (error) {
         console.error('Error:', error);
@@ -1440,10 +1460,11 @@ fiveyear.addEventListener('click', async () => {
         if (data.sucess === 'true') {
             loading.style.display = 'none'
             loading.style.zIndex = '-999'
-            myplot.style.zIndex = '999'
+            myplot.style.zIndex = '99'
             myplot.style.filter = 'none'
             graphing();
             i = 2;
+            restoreIndicatorStates();
         }
     } catch (error) {
         console.error('Error:', error);
@@ -1481,10 +1502,11 @@ maxdate.addEventListener('click', async () => {
         if (data.sucess === 'true') {
             loading.style.display = 'none'
             loading.style.zIndex = '-999'
-            myplot.style.zIndex = '999'
+            myplot.style.zIndex = '99'
             myplot.style.filter = 'none'
             graphing();
             i = 2;
+            restoreIndicatorStates();
         }
     } catch (error) {
         console.error('Error:', error);
