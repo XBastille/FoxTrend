@@ -7,7 +7,7 @@
     <title>Advance_Page</title>
     <script src='https://cdn.plot.ly/plotly-2.32.0.min.js'></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.3.0/papaparse.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.1/css/solid.min.css"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" href="/public/Advance.css">
     <link rel="icon" type="image/x-icon" href="public/Media/favicon.ico">
     <style>
@@ -412,67 +412,88 @@
 
         <div class="graph-stats" style="border-top: 1px solid white;">
 
-            <div class="indicators"
-                style="margin-top: 90px; cursor: pointer; border-right: 1px solid white; margin-bottom: 20px; margin-top: 00px; ">
-
-                <ul>
-
-                    <div class="dropdownmenuinfo">
-                        <p>Moving average (MA) shows the average closing price over a period of time. It’s often used to
-                            track price trends. The period is defined by a number of intervals. The length of an
-                            interval
-                            depends on the span of the chart.
-
-                            Analysts compare MAs for different time periods to see whether or not they might expect
-                            further
-                            increases or decreases in the price of a security.</p>
+            <div class="indicators">
+                <div class="active-indicators">
+                    <div class="indicator-chip" id="price">
+                        <span class="indicator-name">Price</span>
+                        <i class="fa-solid fa-circle-info indicator-info"></i>
+                        <div class="indicator-tooltip">
+                            The price indicator displays today's market values, showing opening, closing, high, and
+                            low prices. Essential for tracking basic market movements and identifying potential
+                            entry/exit points.
+                        </div>
                     </div>
 
-
-                    <div class="bibhor" style="margin-top: 150px; ">
-                        <li id="price" style="display: flex;  justify-content: space-evenly;">Price<img
-                                id="infodropdown" style="display:none; height: 20px ; width: 20px;"
-                                src="https://img.icons8.com/m_outlined/200/FFFFFF/info--v2.png"></li><br>
-                        <li id="boll" style="display: flex; display: none; justify-content: space-evenly;">BOLL<img
-                                id="infodropdown1" style="display:none; height: 20px ; width: 20px;"
-                                src="https://img.icons8.com/m_outlined/200/FFFFFF/info--v2.png"></li><br>
-                        <li id="RSI" style="display: flex; display: none; justify-content: space-evenly;">RSI<img
-                                id="infodropdown2" style="display:none; height: 20px ; width: 20px;"
-                                src="https://img.icons8.com/m_outlined/200/FFFFFF/info--v2.png"></li><br>
-                        <li id="MACD" style="display: flex; display: none; justify-content: space-evenly;">MACD<img
-                                id="infodropdown3" style="display:none; height: 20px ; width: 20px;"
-                                src="https://img.icons8.com/m_outlined/200/FFFFFF/info--v2.png"></li><br>
-
-                        <button class="addBtn" id="addButton">+ ADD</button>
+                    <div class="indicator-chip" id="boll" style="display: none;">
+                        <span class="indicator-name">Bollinger Bands</span>
+                        <i class="fa-solid fa-circle-info indicator-info"></i>
+                        <div class="indicator-tooltip">
+                            Bollinger Bands measure market volatility using a moving average with upper and lower bands.
+                            They help identify overbought/oversold conditions and potential trend reversals. Wider bands
+                            indicate higher volatility, while narrower bands suggest lower volatility.
+                        </div>
+                        <i class="fa-solid fa-xmark indicator-delete" id="imgboll"></i>
                     </div>
-                    <section class="addSection">
-                        <ul type="none" class="dropdown" id="dropdownMenu">
-                            <li style="border-bottom: 1px solid gray;">Add Indicators</li><br>
-                            <div style="display: flex; flex-direction: row;" id="bolbtn">
-                                <li id="band">Bollinger Bands</li><button style="display: flex; flex-direction: column;"
-                                    id="boilenger"> Boilenger</button>
-                                <img id="imgboll"
-                                    style="height: 20px ; width: 20px; margin-top: 6px; margin-left: 20px;"
-                                    src="https://img.icons8.com/ios11/512/FFFFFF/delete.png">
-                            </div><br>
-                            <div style="display: flex; flex-direction: row;" id="rsibtn">
-                                <li id="ind">Relative strength index</li><button
-                                    style="display: flex; flex-direction: column;" id="rsi"> RSI</button>
-                                <img id="imgrsi" style="height: 20px ; width: 20px; margin-top: 6px; margin-left: 10px;"
-                                    src="https://img.icons8.com/ios11/512/FFFFFF/delete.png">
-                            </div><br>
-                            <div style="display: flex; flex-direction: row;" id="macdbtn">
-                                <li id="strn">MACD</li><button style="display: flex; flex-direction: column;" id="macd">
-                                    MACD</button>
-                                <img id="imgmacd"
-                                    style="height: 20px ; width: 20px; margin-top: 6px; margin-left: 20px;"
-                                    src="https://img.icons8.com/ios11/512/FFFFFF/delete.png">
-                            </div>
-                        </ul>
-                    </section>
-                    </li>
-                </ul>
+
+                    <div class="indicator-chip" id="RSI" style="display: none;">
+                        <span class="indicator-name">RSI</span>
+                        <i class="fa-solid fa-circle-info indicator-info"></i>
+                        <div class="indicator-tooltip">
+                            The Relative Strength Index measures momentum by comparing recent gains to recent losses.
+                            Values above 70 typically indicate overbought conditions, while values below 30 suggest
+                            oversold conditions. RSI helps identify potential trend reversals and market conditions.
+                        </div>
+                        <i class="fa-solid fa-xmark indicator-delete" id="imgrsi"></i>
+                    </div>
+
+                    <div class="indicator-chip" id="MACD" style="display: none;">
+                        <span class="indicator-name">MACD</span>
+                        <i class="fa-solid fa-circle-info indicator-info"></i>
+                        <div class="indicator-tooltip">
+                            Moving Average Convergence Divergence shows trend direction, strength, and momentum. It uses
+                            two moving averages to generate buy/sell signals. The MACD line crossing above the signal
+                            line suggests bullish momentum, while crossing below indicates bearish momentum.
+                        </div>
+                        <i class="fa-solid fa-xmark indicator-delete" id="imgmacd"></i>
+                    </div>
+                </div>
+
+                <button class="add-button" id="addButton">
+                    <i class="fa-solid fa-plus"></i>
+                    Add Indicator
+                </button>
+
+                <div class="indicators-dropdown" id="dropdownMenu" style="display: none;">
+                    <div class="dropdown-item" id="band">
+                        <div class="dropdown-content">
+                            <i class="fa-solid fa-chart-line"></i>
+                            <span>Bollinger Bands</span>
+                        </div>
+                        <button id="boilenger" class="add-indicator-btn">
+                            <i class="fa-solid fa-plus"></i>
+                        </button>
+                    </div>
+                    <div class="dropdown-item" id="ind">
+                        <div class="dropdown-content">
+                            <i class="fa-solid fa-chart-simple"></i>
+                            <span>Relative Strength Index</span>
+                        </div>
+                        <button id="rsi" class="add-indicator-btn">
+                            <i class="fa-solid fa-plus"></i>
+                        </button>
+                    </div>
+                    <div class="dropdown-item" id="strn">
+                        <div class="dropdown-content">
+                            <i class="fa-solid fa-chart-column"></i>
+                            <span>MACD</span>
+                        </div>
+                        <button id="macd" class="add-indicator-btn">
+                            <i class="fa-solid fa-plus"></i>
+                        </button>
+                    </div>
+                </div>
             </div>
+
 
 
             <div id="myplot" style="width:100%; height:100%; margin-left: 35px;"></div>
