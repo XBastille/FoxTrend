@@ -29,6 +29,208 @@ section{
   margin: 22.44px;
 }
 
+.indicators {
+  width: 280px;
+  padding: 20px;
+  height: 470px;
+  background: rgba(0, 0, 0, 0.95);
+  border-right: 1px solid rgba(255, 255, 255);
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.3);
+  z-index: 999;
+}
+
+.active-indicators {
+  margin-bottom: 20px;
+}
+
+.indicator-chip {
+  display: flex;
+  align-items: center;
+  background: linear-gradient(145deg, rgba(96, 0, 147, 0.1), rgba(0, 0, 0, 0.2));
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  border-radius: 12px;
+  padding: 12px 15px;
+  margin: 10px 0;
+  transition: all 0.3s ease;
+  backdrop-filter: blur(5px);
+}
+
+.indicator-chip:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 15px rgba(255, 255, 255, 0.2);
+  background: linear-gradient(145deg, rgba(96, 0, 147, 0.2), rgba(113, 112, 113, 0.3));
+}
+
+.indicator-name {
+  flex: 1;
+  color: #fff;
+  font-size: 14px;
+  font-weight: 500;
+  letter-spacing: 0.5px;
+}
+
+.indicator-info {
+  color: rgba(255, 255, 255, 0.6);
+  font-size: 16px;
+  margin-right: 12px;
+  transition: all 0.3s ease;
+  cursor: help;
+}
+
+.indicator-info:hover {
+  color: #fff;
+  transform: scale(1.1);
+}
+
+.indicator-delete {
+  color: rgba(255, 255, 255, 0.6);
+  font-size: 16px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.indicator-delete:hover {
+  color: #ff4757;
+  transform: scale(1.1) rotate(90deg);
+}
+
+.add-button {
+  width: 75%;
+  height: 10%;
+  padding: 14px;
+  margin-left: 25px;
+  background: linear-gradient(45deg, #600093, #9f1c7e);
+  border: none;
+  border-radius: 25px;
+  color: white;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  font-size: 15px;
+  letter-spacing: 0.5px;
+  box-shadow: 0 4px 15px rgba(96, 0, 147, 0.2);
+  position: relative;
+  overflow: hidden;
+}
+
+.add-button i {
+  transition: transform 0.3s ease;
+}
+
+.add-button:hover:not(.active) {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(96, 0, 147, 0.4);
+  background: linear-gradient(45deg, #700093, #bf1c7e);
+}
+
+.add-button.active {
+  background: linear-gradient(45deg, #ff4757, #ff6b81);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(255, 71, 87, 0.4);
+}
+
+.add-button.active:hover {
+  background: linear-gradient(45deg, #ff4757, #ff6b81);
+}
+
+.add-button.active i {
+  transform: rotate(45deg);
+}
+
+
+.add-button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(96, 0, 147, 0.4);
+  background: linear-gradient(45deg, #700093, #bf1c7e);
+}
+
+.indicators-dropdown {
+  margin-top: 15px;
+  background: rgba(28, 28, 28, 0.95);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+  backdrop-filter: blur(10px);
+}
+
+.dropdown-item {
+  padding: 15px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.dropdown-content {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.dropdown-content i {
+  color: rgba(255, 255, 255, 0.6);
+  font-size: 16px;
+}
+
+.dropdown-item:hover {
+  background: rgba(116, 116, 116, 0.15);
+}
+
+.dropdown-item:not(:last-child) {
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.add-indicator-btn {
+  background: transparent;
+  border: 1px solid rgba(96, 0, 147, 0.5);
+  color: rgba(255, 255, 255, 0.8);
+  width: 30px;
+  height: 30px;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.add-indicator-btn:hover {
+  background: rgb(96, 0, 147);
+  color: white;
+  transform: scale(1.1);
+}
+
+.indicator-tooltip {
+  position: absolute;
+  margin-left: 235px;
+  background: #000000;
+  border: 2px solid rgb(255, 255, 255);
+  border-radius: 15px;
+  padding: 20px;
+  width: 300px;
+  color: #e0e0e0;
+  font-size: 13px;
+  line-height: 1.5;
+  z-index: 1000;
+  opacity: 0;
+  visibility: hidden;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
+  transform: translateY(10px);
+}
+
+.indicator-info:hover + .indicator-tooltip {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0);
+}
+
 #aapl{
   border-radius: 4px;
   min-width: 160px;

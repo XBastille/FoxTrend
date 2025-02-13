@@ -490,16 +490,11 @@ boilenger.addEventListener('click', () => {
 
                     Plotly.addTraces("myplot", traces);
                     bollingerTraces = [myplot.data.length - 2, myplot.data.length - 1];
-                    boilenger.textContent = "Remove Bollinger Bands";
                     bollingerVisible = true;
 
                 }
             });
-        } else {
-            Plotly.deleteTraces("myplot", bollingerTraces);
-            boilenger.textContent = "Add Bollinger Bands";
-            bollingerVisible = false;
-        }
+        } 
     }, 100)
 });
 
@@ -557,7 +552,6 @@ rsii.addEventListener('click', () => {
 
                     Plotly.newPlot("rsigraph", rsitrace, rsilayout);
 
-                    // Add overbought/oversold lines
                     const ys = new Array(xarray.length).fill(70);
                     const ysi = new Array(xarray.length).fill(30);
 
@@ -578,17 +572,12 @@ rsii.addEventListener('click', () => {
                     }]);
 
                     document.getElementById("rsigraph").style.display = "block";
-                    rsii.textContent = "Remove RSI";
                     rsiVisible = true;
 
                 }
             });
 
-        } else {
-            document.getElementById("rsigraph").style.display = "none";
-            rsii.textContent = "Add RSI";
-            rsiVisible = false;
-        }
+        } 
     }, 100)
 });
 
@@ -662,15 +651,10 @@ macd.addEventListener('click', () => {
                         myplot.data.length - 2,
                         myplot.data.length - 1
                     ];
-                    macd.textContent = "Remove MACD";
                     macdVisible = true;
                 }
             });
-        } else {
-            Plotly.deleteTraces("myplot", macdTraces);
-            macd.textContent = "Add MACD";
-            macdVisible = false;
-        }
+        } 
     }, 100)
 });
 //----------------------------------------------------------------------------------------------------------------------
@@ -855,15 +839,17 @@ cross.addEventListener('click', () => {
 /*dropdown menu*/
 
 const addButton = document.getElementById("addButton");
-const dropdownMenu = document.getElementById("dropdownMenu")
+const dropdownMenu = document.getElementById("dropdownMenu");
 
 addButton.addEventListener('click', () => {
+    addButton.classList.toggle('active');
     dropdownMenu.style.display = dropdownMenu.style.display === 'block' ? 'none' : 'block';
-})
+});
 
 document.addEventListener('click', (event) => {
     if (!addButton.contains(event.target) && !dropdownMenu.contains(event.target)) {
         dropdownMenu.style.display = 'none';
+        addButton.classList.remove('active');
     }
 });
 
@@ -905,18 +891,30 @@ const imgmacd = document.getElementById("imgmacd");
 imgboll.addEventListener("click", () => {
     BOLL.style.display = 'none';
     BAND.style.color = 'gray';
-})
+    if (bollingerVisible) {
+        Plotly.deleteTraces("myplot", bollingerTraces);
+        bollingerVisible = false;
+    }
+});
 
 imgrsi.addEventListener("click", () => {
     RSI.style.display = 'none';
     IND.style.color = 'gray';
-})
-
+    if (rsiVisible) {
+        document.getElementById("rsigraph").style.display = "none";
+        rsiVisible = false;
+    }
+});
 
 imgmacd.addEventListener("click", () => {
     MACD.style.display = 'none';
     STRN.style.color = 'gray';
-})
+    if (macdVisible) {
+        Plotly.deleteTraces("myplot", macdTraces);
+        macdVisible = false;
+    }
+});
+
 
 /*icon dropdown hover */
 
