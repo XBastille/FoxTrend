@@ -30,12 +30,8 @@ router.get('/predict', ensureAuthentication, (req, res) => {
     res.render('predict_stock')
 })
 
-router.get('/social', ensureAuthentication, (req, res) => {
+router.get('/social', (req, res) => {
     res.render('social')
-})
-
-router.get('/journey', ensureAuthentication, (req, res) => {
-    res.render('journey')
 })
 
 router.post('/predict', async (req, res) => {
@@ -239,7 +235,7 @@ router.post('/car/IN', async (req, res) => {
     const { power } = req.body
     const { seats } = req.body
     const args = [brand, year, kilometers, mileage, engine, power, seats, location, fuel_type, transmission, owner_type];
-    filesnaming = './python_files/ML_Models/Used_car_price_prediction/Model_India.py'
+    filesnaming = './python_files/ML_Models/Used_car_price_prediction/model_India.py'
     const dashboard = await runpython(args, filesnaming);
     // Check if the Python script returned the expected result
     console.log(dashboard);
