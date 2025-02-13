@@ -1,3 +1,4 @@
+
 document.getElementById('aapl').addEventListener('click', () => {
     const popup = document.querySelector('.prediction-popup');
     popup.style.display = 'block';
@@ -403,103 +404,104 @@ function fus() {
 
 }
 
+const date = new Date()
 
 
 
 //BOILENGER BAND GRAPH--------------------------------------
-Papa.parse("/public/csv_1/technical_indicators_1.csv", {
-    download: true,
-    header: true,
-    complete: function (results) {
-        const xarray = [];
-        const upperBand = [];
-        const lowerBand = [];
-
-        results.data.forEach(row => {
-            if (row['Bollinger_hband'] && row['Bollinger_lband']) {
-                xarray.push(row['Date']);
-                upperBand.push(parseFloat(row['Bollinger_hband']));
-                lowerBand.push(parseFloat(row['Bollinger_lband']));
-            }
-        });
-
-        const boilenger = document.getElementById("boilenger");
-        let bollingerTraces = [];
-        let bollingerVisible = false;
-
-        boilenger.addEventListener('click', () => {
-            if (!bollingerVisible) {
-                const traces = [{
-                    x: xarray,
-                    y: upperBand,
-                    name: val + ' Upper Band',
-                    mode: "lines+markers",
-                    type: "scatter",
-                    line: { width: 2, color: "blue" },
-                    marker: {
-                        size: 3,
-                        color: "blue"
-                    },
-                    hovertemplate:
-                        val + '<br>' +
-                        'Date: %{x}<br>' +
-                        'Upper Band: %{y:.2f}<br>' +
-                        '<extra></extra>',
-                    hoverlabel: {
-                        bgcolor: "blue"
-                    },
-                    yaxis: 'y1'
-                }, {
-                    x: xarray,
-                    y: lowerBand,
-                    name: val + ' Lower Band',
-                    mode: "lines+markers",
-                    type: "scatter",
-                    line: { width: 2, color: "blue" },
-                    marker: {
-                        size: 3,
-                        color: "blue"
-                    },
-                    hovertemplate:
-                        val + '<br>' +
-                        'Date: %{x}<br>' +
-                        'Lower Band: %{y:.2f}<br>' +
-                        '<extra></extra>',
-                    hoverlabel: {
-                        bgcolor: "blue"
-                    },
-                    fill: 'tonexty',
-                    yaxis: 'y1'
-                }];
 
 
-                const maxBand = Math.max(...upperBand);
-                const minBand = Math.min(...lowerBand);
-                const currentYRange = myplot.layout.yaxis.range;
-                const newYRange = [
-                    Math.min(currentYRange[0], minBand),
-                    Math.max(currentYRange[1], maxBand)
-                ];
+const boilenger = document.getElementById("boilenger");
+let bollingerTraces = [];
+let bollingerVisible = false;
+boilenger.addEventListener('click', () => {
+    setTimeout(() => {
+        if (!bollingerVisible) {
+            Papa.parse("/public/csv_1/technical_indicators_1.csv", {
+                download: true,
+                header: true,
+                complete: function (results) {
+                    const xarray = [];
+                    const upperBand = [];
+                    const lowerBand = [];
 
-                Plotly.update("myplot", {}, {
-                    yaxis: { range: newYRange }
-                });
+                    results.data.forEach(row => {
+                        if (row['Bollinger_hband'] && row['Bollinger_lband']) {
+                            xarray.push(row['Date']);
+                            upperBand.push(parseFloat(row['Bollinger_hband']));
+                            lowerBand.push(parseFloat(row['Bollinger_lband']));
+                        }
+                    });
+                    const traces = [{
+                        x: xarray,
+                        y: upperBand,
+                        name: val + ' Upper Band',
+                        mode: "lines+markers",
+                        type: "scatter",
+                        line: { width: 2, color: "blue" },
+                        marker: {
+                            size: 3,
+                            color: "blue"
+                        },
+                        hovertemplate:
+                            val + '<br>' +
+                            'Date: %{x}<br>' +
+                            'Upper Band: %{y:.2f}<br>' +
+                            '<extra></extra>',
+                        hoverlabel: {
+                            bgcolor: "blue"
+                        },
+                        yaxis: 'y1'
+                    }, {
+                        x: xarray,
+                        y: lowerBand,
+                        name: val + ' Lower Band',
+                        mode: "lines+markers",
+                        type: "scatter",
+                        line: { width: 2, color: "blue" },
+                        marker: {
+                            size: 3,
+                            color: "blue"
+                        },
+                        hovertemplate:
+                            val + '<br>' +
+                            'Date: %{x}<br>' +
+                            'Lower Band: %{y:.2f}<br>' +
+                            '<extra></extra>',
+                        hoverlabel: {
+                            bgcolor: "blue"
+                        },
+                        fill: 'tonexty',
+                        yaxis: 'y1'
+                    }];
 
-                Plotly.addTraces("myplot", traces);
-                bollingerTraces = [myplot.data.length - 2, myplot.data.length - 1];
-                boilenger.textContent = "Remove Bollinger Bands";
-                bollingerVisible = true;
-            } else {
-                Plotly.deleteTraces("myplot", bollingerTraces);
-                boilenger.textContent = "Add Bollinger Bands";
-                bollingerVisible = false;
-            }
-        });
-    }
+
+                    const maxBand = Math.max(...upperBand);
+                    const minBand = Math.min(...lowerBand);
+                    const currentYRange = myplot.layout.yaxis.range;
+                    const newYRange = [
+                        Math.min(currentYRange[0], minBand),
+                        Math.max(currentYRange[1], maxBand)
+                    ];
+
+                    Plotly.update("myplot", {}, {
+                        yaxis: { range: newYRange }
+                    });
+
+                    Plotly.addTraces("myplot", traces);
+                    bollingerTraces = [myplot.data.length - 2, myplot.data.length - 1];
+                    boilenger.textContent = "Remove Bollinger Bands";
+                    bollingerVisible = true;
+
+                }
+            });
+        } else {
+            Plotly.deleteTraces("myplot", bollingerTraces);
+            boilenger.textContent = "Add Bollinger Bands";
+            bollingerVisible = false;
+        }
+    }, 100)
 });
-
-
-
 
 
 
@@ -507,85 +509,87 @@ Papa.parse("/public/csv_1/technical_indicators_1.csv", {
 
 //RSI MARK
 // --------------------------------------------------------------------------------------------------------------------------------------
-Papa.parse("/public/csv_1/technical_indicators_1.csv", {
-    download: true,
-    header: true,
-    complete: function (results) {
-        const xarray = [];
-        const RSI = [];
+const rsii = document.getElementById("rsi");
+let rsiVisible = false;
+rsii.addEventListener('click', () => {
+    setTimeout(() => {
+        if (!rsiVisible) {
+            Papa.parse("/public/csv_1/technical_indicators_1.csv", {
+                download: true,
+                header: true,
+                complete: function (results) {
+                    const xarray = [];
+                    const RSI = [];
 
-        results.data.forEach(row => {
-            xarray.push(row['Date']);
-            RSI.push(parseFloat(row['RSI']));
-        });
-
-        const rsii = document.getElementById("rsi");
-        let rsiVisible = false;
-
-        rsii.addEventListener('click', () => {
-            if (!rsiVisible) {
-                const rsilayout = {
-                    xaxis: {
-                        range: [xarray[0], xarray[xarray.length - 1]],
-                        title: {
-                            text: "Date",
-                            font: { color: "white" }
+                    results.data.forEach(row => {
+                        xarray.push(row['Date']);
+                        RSI.push(parseFloat(row['RSI']));
+                    });
+                    const rsilayout = {
+                        xaxis: {
+                            range: [xarray[0], xarray[xarray.length - 1]],
+                            title: {
+                                text: "Date",
+                                font: { color: "white" }
+                            },
+                            tickfont: { color: "white" }
                         },
-                        tickfont: { color: "white" }
-                    },
-                    yaxis: {
-                        range: [0, 100],
-                        title: {
-                            text: "RSI",
-                            font: { color: "white" }
+                        yaxis: {
+                            range: [0, 100],
+                            title: {
+                                text: "RSI",
+                                font: { color: "white" }
+                            },
+                            tickfont: { color: "white" }
                         },
-                        tickfont: { color: "white" }
-                    },
-                    colorway: ['#7834a8'],
-                    plot_bgcolor: "black",
-                    paper_bgcolor: "black",
-                };
+                        colorway: ['#7834a8'],
+                        plot_bgcolor: "black",
+                        paper_bgcolor: "black",
+                    };
 
-                const rsitrace = [{
-                    x: xarray,
-                    y: RSI,
-                    mode: "lines",
-                    type: "scatter",
-                    line: { width: 2 }
-                }];
+                    const rsitrace = [{
+                        x: xarray,
+                        y: RSI,
+                        mode: "lines",
+                        type: "scatter",
+                        line: { width: 2 }
+                    }];
 
-                Plotly.newPlot("rsigraph", rsitrace, rsilayout);
+                    Plotly.newPlot("rsigraph", rsitrace, rsilayout);
 
-                // Add overbought/oversold lines
-                const ys = new Array(xarray.length).fill(70);
-                const ysi = new Array(xarray.length).fill(30);
+                    // Add overbought/oversold lines
+                    const ys = new Array(xarray.length).fill(70);
+                    const ysi = new Array(xarray.length).fill(30);
 
-                Plotly.addTraces("rsigraph", [{
-                    x: xarray,
-                    y: ys,
-                    mode: "lines",
-                    type: "scatter",
-                    name: "overbought (70)",
-                    line: { color: "red", width: 2 }
-                }, {
-                    x: xarray,
-                    y: ysi,
-                    mode: "lines",
-                    type: "scatter",
-                    name: "oversold (30)",
-                    line: { color: "red", width: 2 }
-                }]);
+                    Plotly.addTraces("rsigraph", [{
+                        x: xarray,
+                        y: ys,
+                        mode: "lines",
+                        type: "scatter",
+                        name: "overbought (70)",
+                        line: { color: "red", width: 2 }
+                    }, {
+                        x: xarray,
+                        y: ysi,
+                        mode: "lines",
+                        type: "scatter",
+                        name: "oversold (30)",
+                        line: { color: "red", width: 2 }
+                    }]);
 
-                document.getElementById("rsigraph").style.display = "block";
-                rsii.textContent = "Remove RSI";
-                rsiVisible = true;
-            } else {
-                document.getElementById("rsigraph").style.display = "none";
-                rsii.textContent = "Add RSI";
-                rsiVisible = false;
-            }
-        });
-    }
+                    document.getElementById("rsigraph").style.display = "block";
+                    rsii.textContent = "Remove RSI";
+                    rsiVisible = true;
+
+                }
+            });
+
+        } else {
+            document.getElementById("rsigraph").style.display = "none";
+            rsii.textContent = "Add RSI";
+            rsiVisible = false;
+        }
+    }, 100)
 });
 
 
@@ -597,75 +601,77 @@ let macdVisible = false;
 
 
 macd.addEventListener('click', () => {
-    if (!macdVisible) {
-        Papa.parse("/public/csv_1/technical_indicators_1.csv", {
-            download: true,
-            header: true,
-            complete: function (results) {
-                const xarray = [];
-                const MACD = [];
-                const MACDsignal = [];
-                const MACDhistogramabove = new Array(results.data.length).fill(null);
-                const MACDhistogrambelow = new Array(results.data.length).fill(null);
+    setTimeout(() => {
+        if (!macdVisible) {
+            Papa.parse("/public/csv_1/technical_indicators_1.csv", {
+                download: true,
+                header: true,
+                complete: function (results) {
+                    const xarray = [];
+                    const MACD = [];
+                    const MACDsignal = [];
+                    const MACDhistogramabove = new Array(results.data.length).fill(null);
+                    const MACDhistogrambelow = new Array(results.data.length).fill(null);
 
 
-                results.data.forEach((row, index) => {
-                    xarray.push(row['Date']);
-                    MACD.push(row['MACD']);
-                    MACDsignal.push(row['MACD_signal']);
-                    const histo_value = row['MACD_histogram'];
-                    if (histo_value > 0) {
-                        MACDhistogramabove[index] = (histo_value);
-                    } else {
-                        MACDhistogrambelow[index] = (histo_value);
-                    }
-                });
+                    results.data.forEach((row, index) => {
+                        xarray.push(row['Date']);
+                        MACD.push(row['MACD']);
+                        MACDsignal.push(row['MACD_signal']);
+                        const histo_value = row['MACD_histogram'];
+                        if (histo_value > 0) {
+                            MACDhistogramabove[index] = (histo_value);
+                        } else {
+                            MACDhistogrambelow[index] = (histo_value);
+                        }
+                    });
 
 
-                Plotly.addTraces("myplot", [{
-                    x: xarray,
-                    y: MACD,
-                    mode: "lines",
-                    type: "scatter",
-                    name: "MACD",
-                    line: { width: 2, color: "yellow" }
-                }, {
-                    x: xarray,
-                    y: MACDsignal,
-                    mode: "lines",
-                    type: "scatter",
-                    name: "MACDsignals",
-                    line: { width: 2, color: "blue" }
-                }, {
-                    x: xarray,
-                    y: MACDhistogramabove,
-                    type: "bar",
-                    name: "MACDhistogramabove",
-                    marker: { color: "green" }
-                }, {
-                    x: xarray,
-                    y: MACDhistogrambelow,
-                    type: "bar",
-                    name: "MACDhistogrambelow",
-                    marker: { color: "red" }
-                }]);
+                    Plotly.addTraces("myplot", [{
+                        x: xarray,
+                        y: MACD,
+                        mode: "lines",
+                        type: "scatter",
+                        name: "MACD",
+                        line: { width: 2, color: "yellow" }
+                    }, {
+                        x: xarray,
+                        y: MACDsignal,
+                        mode: "lines",
+                        type: "scatter",
+                        name: "MACDsignals",
+                        line: { width: 2, color: "blue" }
+                    }, {
+                        x: xarray,
+                        y: MACDhistogramabove,
+                        type: "bar",
+                        name: "MACDhistogramabove",
+                        marker: { color: "green" }
+                    }, {
+                        x: xarray,
+                        y: MACDhistogrambelow,
+                        type: "bar",
+                        name: "MACDhistogrambelow",
+                        marker: { color: "red" }
+                    }]);
 
 
-                macdTraces = [
-                    myplot.data.length - 4,
-                    myplot.data.length - 3,
-                    myplot.data.length - 2,
-                    myplot.data.length - 1
-                ];
-                macd.textContent = "Remove MACD";
-                macdVisible = true;
-            }
-        });
-    } else {
-        Plotly.deleteTraces("myplot", macdTraces);
-        macd.textContent = "Add MACD";
-        macdVisible = false;
-    }
+                    macdTraces = [
+                        myplot.data.length - 4,
+                        myplot.data.length - 3,
+                        myplot.data.length - 2,
+                        myplot.data.length - 1
+                    ];
+                    macd.textContent = "Remove MACD";
+                    macdVisible = true;
+                }
+            });
+        } else {
+            Plotly.deleteTraces("myplot", macdTraces);
+            macd.textContent = "Add MACD";
+            macdVisible = false;
+        }
+    }, 100)
 });
 //----------------------------------------------------------------------------------------------------------------------
 
@@ -977,7 +983,7 @@ closeDisclosure.addEventListener('click', () => {
 
 const compadvance = document.getElementById('compadvance')
 const compadvanceprice = document.getElementById('compadvanceprice')
-const aapl=document.getElementById('aapl')
+const aapl = document.getElementById('aapl')
 
 //connecting the data wiht json file like comany name
 let val = '';
@@ -997,7 +1003,7 @@ async function companaming() {
         const sign = priceChange >= 0 ? '+' : '-';
         priceChangeElement.innerText = `(${sign}$${Math.abs(priceChange).toFixed(2)})`;
         priceChangeElement.style.color = priceChange >= 0 ? 'green' : 'red';
-        aapl.innerText="Predict "+data.symbol
+        aapl.innerText = "Predict " + data.symbol
         console.log(data.shortName)
     } catch (error) {
         console.log(error)
@@ -1265,7 +1271,7 @@ const loading = document.getElementById('loading')
 const myplot = document.getElementById('myplot')
 const threemonth = document.getElementById('threemonth')
 threemonth.addEventListener('click', async () => {
-
+    console.log(date.getTime());
     const dates = new Date()
     let month = dates.getMonth()
     let months = dates.getMonth() + 1
