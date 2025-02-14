@@ -82,19 +82,19 @@ class StockDataVisualizer:
 
         stock_data = []
         for ticker in tickers:
+            stock_data_ticker = yf.download(ticker, start=datetime.datetime.now() - datetime.timedelta(days=5), end=datetime.datetime.now())
             stock = yf.Ticker(ticker)
             info = stock.info
-            
             current_price = info.get("currentPrice")
             if info.get("quoteType") == "CRYPTOCURRENCY":
                 current_price = info.get("dayLow")
             
-            regular_market_open = info.get("regularMarketPreviousClose")
-            previous_close = info.get("dayLow")
+            close_price=stock_data_ticker["Close"].iloc[-1]
+            previous_close=stock_data_ticker["Close"].iloc[-2]
 
-            if regular_market_open and previous_close:
-                change = round(regular_market_open - previous_close, 4)
-                change_percent = round(((regular_market_open - previous_close) / previous_close) * 100, 4)
+            if close_price and previous_close:
+                change = round(close_price - previous_close, 4)
+                change_percent = round(((close_price - previous_close) / previous_close)*100, 2)
             else:
                 change = None
                 change_percent = None
