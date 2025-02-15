@@ -1,3 +1,0 @@
-rented
-owned
-norent_noown
