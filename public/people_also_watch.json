@@ -1,0 +1,72 @@
+[
+    {
+        "Ticker": "META",
+        "Price": 714.52,
+        "Change": 0.24,
+        "Change %": 0.0337,
+        "Company_Name": "Meta Platforms, Inc."
+    },
+    {
+        "Ticker": "SPOT",
+        "Price": 622.99,
+        "Change": 5.18,
+        "Change %": 0.8346,
+        "Company_Name": "Spotify Technology S.A."
+    },
+    {
+        "Ticker": "SNAP",
+        "Price": 10.92,
+        "Change": 0.09,
+        "Change %": 0.8491,
+        "Company_Name": "Snap Inc."
+    },
+    {
+        "Ticker": "PINS",
+        "Price": 40.0,
+        "Change": -5.26,
+        "Change %": -13.5393,
+        "Company_Name": "Pinterest, Inc."
+    },
+    {
+        "Ticker": "RDDT",
+        "Price": 225.23,
+        "Change": -1.6901,
+        "Change %": -0.7746,
+        "Company_Name": "Reddit, Inc."
+    },
+    {
+        "Ticker": "DJT",
+        "Price": 31.19,
+        "Change": 1.45,
+        "Change %": 4.688,
+        "Company_Name": "Trump Media & Technology Group Corp."
+    },
+    {
+        "Ticker": "NBIS",
+        "Price": 38.13,
+        "Change": -0.36,
+        "Change %": -1.0312,
+        "Company_Name": null
+    },
+    {
+        "Ticker": "BIDU",
+        "Price": 89.32,
+        "Change": -0.0153,
+        "Change %": -0.0172,
+        "Company_Name": "Baidu, Inc."
+    },
+    {
+        "Ticker": "DASH",
+        "Price": 195.54,
+        "Change": 1.25,
+        "Change %": 0.6404,
+        "Company_Name": "DoorDash, Inc."
+    },
+    {
+        "Ticker": "MTCH",
+        "Price": 33.8,
+        "Change": 1.19,
+        "Change %": 3.5629,
+        "Company_Name": "Match Group, Inc."
+    }
+]

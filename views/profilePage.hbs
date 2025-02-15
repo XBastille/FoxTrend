@@ -1,0 +1,1371 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Profile_Page</title>
+    <script src='https://cdn.plot.ly/plotly-2.32.0.min.js'></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.3.0/papaparse.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="/public/graphProfiless.css">
+    <link rel="icon" type="image/x-icon" href="public/Media/favicon.ico">
+    <link rel="icon" type="image/x-icon" href="public/Media/favicon.ico">
+    <style>
+        :root {
+            --accent-color: #9f1c7e;
+            --cube-edge-color: #FFFFFF;
+            --cube-dotted-color: rgba(255, 255, 255, 0.5);
+        }
+
+        .loading-container {
+            width: 70vw;
+            height: 75vh;
+            position: absolute;
+            overflow: hidden;
+            display: none;
+            justify-content: center;
+            align-items: center;
+            margin-left: 200px;
+            margin-top: 160px;
+            z-index: 9999;
+        }
+
+        .center-image {
+            width: 80%;
+            height: 80%;
+            object-fit: cover;
+            position: relative;
+        }
+
+        .center-element {
+            position: relative;
+            width: 330px;
+            height: 330px;
+            border-radius: 50%;
+            background: linear-gradient(to right, #600093, #000000);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: white;
+            animation: heartbeat 1.5s ease-in-out infinite;
+        }
+
+        .cube {
+            position: absolute;
+            width: 300px;
+            height: 300px;
+            transform-style: preserve-3d;
+            transform: rotateX(45deg) rotateY(45deg);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .right {
+            transform: rotateY(90deg) translateZ(150px);
+        }
+
+        .left {
+            transform: rotateY(-180deg) translateZ(150px);
+        }
+
+        .top {
+            transform: rotateX(90deg) translateZ(150px);
+        }
+
+        .cube-edge {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            box-sizing: border-box;
+        }
+
+        @keyframes drawDottedLine {
+            0% {
+                opacity: 0;
+                clip-path: polygon(0% 0%, 0% 0%, 0% 0%, 0% 0%);
+            }
+
+            100% {
+                opacity: 1;
+                clip-path: polygon(0% 0%, 100% 0%, 100% 100%, 0% 100%);
+            }
+        }
+
+        @keyframes drawSolidLine {
+            0% {
+                opacity: 0;
+                border: 2px solid var(--cube-edge-color);
+                clip-path: polygon(0% 0%, 0% 0%, 0% 0%, 0% 0%);
+            }
+
+            100% {
+                opacity: 1;
+                border: 2px solid var(--cube-edge-color);
+                clip-path: polygon(0% 0%, 100% 0%, 100% 100%, 0% 100%);
+            }
+        }
+
+        @keyframes disappearSolidLine {
+            0% {
+                opacity: 1;
+                clip-path: polygon(0% 0%, 100% 0%, 100% 100%, 0% 100%);
+            }
+
+            100% {
+                opacity: 0;
+                clip-path: polygon(100% 0%, 100% 100%, 0% 100%, 0% 0%);
+            }
+        }
+
+        @keyframes disappearDottedLine {
+            0% {
+                opacity: 1;
+                clip-path: polygon(0% 0%, 100% 0%, 100% 100%, 0% 100%);
+            }
+
+            100% {
+                opacity: 0;
+                clip-path: polygon(100% 0%, 100% 100%, 0% 100%, 0% 0%);
+            }
+        }
+
+        .cube-edge::before,
+        .cube-edge::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            box-sizing: border-box;
+        }
+
+        .cube-edge::before {
+            border: 2px dotted var(--cube-dotted-color);
+            opacity: 0;
+            animation:
+                drawDottedLine 2s ease-in-out forwards,
+                disappearDottedLine 2s 8s ease-in-out forwards;
+        }
+
+        .cube-edge::after {
+            border: 2px solid var(--cube-edge-color);
+            opacity: 0;
+            animation:
+                drawSolidLine 2s 2s ease-in-out forwards,
+                disappearSolidLine 2s 6s ease-in-out forwards;
+        }
+
+        @keyframes heartbeat {
+
+            0%,
+            100% {
+                transform: scale(1);
+            }
+
+            50% {
+                transform: scale(1.1);
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="loading-container" id="loading">
+
+        <div class="grid"></div>
+        <div class="snake snake-horizontal"></div>
+        <div class="snake snake-horizontal"></div>
+        <div class="snake snake-vertical"></div>
+        <div class="snake snake-vertical"></div>
+        <div class="snake snake-horizontal"></div>
+        <div class="snake snake-vertical"></div>
+        <div class="snake snake-top"></div>
+        <div class="snake snake-diagonal-right"></div>
+        <div class="center-element">
+            <img src="https://github.com/XBastille/FoxTrend/blob/NSA/media/fox.jpg?raw=true" alt="Your Image"
+                class="center-image">
+        </div>
+        <div class="cube">
+            <div class="cube-edge top"></div>
+            <div class="cube-edge right"></div>
+            <div class="cube-edge left"></div>
+        </div>
+    </div>
+    <div id="background">
+        <div class="prediction-popup">
+            <div class="disclaimer">
+                <h3>Stock Prediction Disclaimer</h3>
+                <p>While our Machine Learning model has been extensively trained on historical market data and patterns,
+                    please note that stock market predictions inherently involve uncertainty. Our model provides
+                    data-driven
+                    insights based on past trends, but market conditions can change rapidly due to various external
+                    factors.
+                    We recommend using these predictions as one of many tools in your investment decision-making
+                    process.
+                </p>
+            </div>
+            <div class="input-container">
+                <div class="input-group">
+                    <label for="trials">Number of Trials</label>
+                    <input type="number" id="trials" min="1" max="100" value="10">
+                    <i class="fas fa-info-circle info-icon"></i>
+                    <div class="info-tooltip">More trials lead to better prediction accuracy but increase processing
+                        time.
+                    </div>
+                </div>
+                <div class="input-group">
+                    <label for="days">Days to Predict</label>
+                    <input type="number" id="days" min="1" max="30" value="7">
+                    <i class="fas fa-info-circle info-icon"></i>
+                    <div class="info-tooltip">Longer prediction periods may reduce accuracy due to increasing market
+                        uncertainties. Recommended: 1-14 days.</div>
+                </div>
+            </div>
+            <div class="buttons">
+                <button class="cancel-btn">Cancel</button>
+                <button class="predict-btn" id="future_prediction">Predict</button>
+            </div>
+        </div>
+        <ul class="icons open">
+            <a href="#" class="fox-icon-link">
+                <img src="public/Media/fox.jpg" alt="Fox Icon" class="logo">
+            </a>
+            <a href="/dashboard">
+                <li class="Icon-items" data-name="Home">
+                    <img src="public/Media/home.jpg" id="item1" />
+                    <button><span class="icon-name">Home</span></button>
+                </li>
+            </a>
+            <li class="Icon-items" data-name="Watch">
+                <img src="public/Media/recent_watch.jpg" id="item2">
+                <button id="wats"><span class="icon-name">Watch</span></button>
+            </li>
+            <li class="Icon-items" data-name="Lists">
+                <img src="public/Media/list.jpg" id="item3">
+                <button id="liss"><span class="icon-name">Lists</span></button>
+            </li>
+            <a href="https://github.com/XBastille/FoxTrend/blob/main/.github/FUNDING.yml" target="_blank" style="text-decoration: none;">
+            <li class="Icon-items" data-name="Donate">
+                <img src="public/Media/donate.jpg" id="item4">
+                <span class="icon-name">Donate</span>
+            </li>
+            </a>
+            <li class="Icon-items" data-name="Profile">
+                <img src="public/Media/account.jpg" id="item5">
+                <button id="pros"><span class="icon-name">Profile</span></button>
+            </li>
+            <li class="Arrow">
+                <img src="public/Media/arrow-right.jpg">
+            </li>
+        </ul>
+        <div class="search-container">
+            <input type="text" class="search-bar" id="searching" placeholder="Search Ticker">
+            <i class="search-icon fas fa-search"></i>
+            <div class="magnifying-glass">
+                <i class="fa-solid fa-magnifying-glass"></i>
+            </div>
+            <div class="navigationBar">
+                <a href="#" class="serv">
+                    Services
+                    <svg width="20" height="20" viewBox="0 -4 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M5 7.5L10 12.5L15 7.5" stroke="currentColor" stroke-width="1.67" stroke-linecap="round"
+                            stroke-linejoin="round"></path>
+                    </svg>
+                </a>
+                <a href="#" class="comp">
+                    Project
+                    <svg width="20" height="20" viewBox="0 -4 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M5 7.5L10 12.5L15 7.5" stroke="currentColor" stroke-width="1.67" stroke-linecap="round"
+                            stroke-linejoin="round"></path>
+                    </svg>
+                </a>
+                <a href="https://github.com/XBastille/FoxTrend" target="_blank" class="blog">Github</a>
+                <a href="https://mail.google.com/mail/?view=cm&fs=1&to=eziopuhan825@gmail.com" target="_blank"
+                    class="port">Contact Us</a>
+                <div class="services-dropdown">
+                    <div class="services-dropdown-content">
+                        <div class="services-label">
+                            <h1>Services</h1>
+                        </div>
+                        <div class="services-dropdown-column">
+                            <div class="primary-section">
+                                <h2>Primary <span class="arrow">→</span></h2>
+                                <div class="primary-elements">
+                                    <a href="#">Stock Market Prediction</a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="services-dropdown-column">
+                            <div class="secondary-section">
+                                <h3>Secondary <span class="arrow">→</span></h3>
+                                <div class="secondary-elements">
+                                    <a href="/selectcar">Used Car Prediction</a>
+                                    <a href="/selecthouse">Housing Prediction</a>
+                                    <a href="/selectloan">Loan Approval Prediction</a>
+                                </div>
+                            </div>
+                        </div>
+                        <img src="public/Media/services.jpg" alt="Your Alt Text" class="service-image">
+                    </div>
+                </div>
+                <div class="company-dropdown">
+                    <div class="company-dropdown-content">
+                        <div class="company-label">
+                            <h1>Project</h1>
+                        </div>
+                        <div class="company-dropdown-column">
+                            <h2>MORE ABOUT US</h2>
+                            <a href="/#about-section">About Us</a>
+                            <a href="https://github.com/XBastille/FoxTrend" target="_blank">Github</a>
+                            <a href="#">Privacy Policy</a>
+                            <a href="#">License</a>
+                        </div>
+                        <div class="company-dropdown-column">
+                            <h2>SOCIAL</h2>
+                            <a href="/social" target="_blank">LinkedIn</a>
+                            <a href="/social" target="_blank">Instagram</a>
+                            <a href="/social" target="_blank">X</a>
+                        </div>
+                        <div class="company-dropdown-column">
+                            <h2>Project</h2>
+                            <a href="https://github.com/XBastille/FoxTrend/blob/main/.github/FUNDING.yml" target="_blank">Donate</a>
+                            <a href="https://mail.google.com/mail/?view=cm&fs=1&to=eziopuhan825@gmail.com"
+                                target="_blank">Mail Us</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+
+
+        <div class="rightBox" style="float: right;">
+            <ul>
+                <button id="aapl"></button><br>
+                <div class="data">
+                    <a class="sum" href="summary">Summary</a><br /><br />
+                    <a class="cha" href="chartPage"> Chart</a><br /><br />
+                    <a class="histo" href="historicdata"> Historical Data</a><br /><br />
+                    <a class="stat" href="statsPage">Statistics</a><br /><br />
+                    <a class="pro">Profile</a><br /><br />
+                </div>
+                <button id="Add"> Add To Lists</button>
+            </ul>
+        </div>
+        <div class="desc" style="margin-left: 200px;">
+            <h1 id="compyname"></h1>
+            <h1 id="currprice">$220.30</h1>
+            <span id="dollar"></span>
+            <span id="percent"></span>
+        </div>
+
+        <style>
+            ul {
+                list-style-type: none;
+                padding-inline-start: 0;
+            }
+        </style>
+        <div class="container">
+            <div class="key-executives">
+                <div class="table">
+                    <h2>Key Executives</h2>
+                    <p>Amounts are as of December 31, 2023 and compensation values are for the last fiscal year ending
+                        on
+                        that
+                        date. Pay is salary, bonuses, etc. Exercised is the value of options exercised during the fiscal
+                        year.
+                        Currency in USD.</p>
+                    <table>
+                        <tr>
+                            <th>Name</th>
+                            <th>Title</th>
+                            <th>Pay</th>
+                            <th>Exercised</th>
+                            <th>Year Born</th>
+
+                        </tr>
+
+                        <tr>
+                            <td id="name1"></td>
+                            <td id="post1"></td>
+                            <td id="pay1"></td>
+                            <td id="ex1">--</td>
+                            <td id="year1"></td>
+
+                        </tr>
+
+                        <tr>
+                            <td id="name2"></td>
+                            <td id="post2"></td>
+                            <td id="pay2"></td>
+                            <td id="ex2">--</td>
+                            <td id="year2"></td>
+
+                        </tr>
+
+                        <tr>
+                            <td id="name3"></td>
+                            <td id="post3"></td>
+                            <td id="pay3"></td>
+                            <td id="ex3">--</td>
+                            <td id="year3"></td>
+
+                        </tr>
+
+                        <tr>
+                            <td id="name4"></td>
+                            <td id="post4"></td>
+                            <td id="pay4"></td>
+                            <td id="ex4">--</td>
+                            <td id="year4"></td>
+
+                        </tr>
+
+                        <tr>
+                            <td id="name5"></td>
+                            <td id="post5"></td>
+                            <td id="pay5"></td>
+                            <td id="ex5">--</td>
+                            <td id="year5"></td>
+
+                        </tr>
+
+                        <tr>
+                            <td id="name6"></td>
+                            <td id="post6"></td>
+                            <td id="pay6">--</td>
+                            <td id="ex6">--</td>
+                            <td id="year6">--</td>
+
+                        </tr>
+
+                        <tr>
+                            <td id="name7"></td>
+                            <td id="post7"></td>
+                            <td id="pay7">--</td>
+                            <td id="ex7">--</td>
+                            <td id="year7">--</td>
+
+                        </tr>
+
+                        <tr>
+                            <td id="name8"></td>
+                            <td id="post8"></td>
+                            <td id="pay8">--</td>
+                            <td id="ex8">--</td>
+                            <td id="year8">--</td>
+
+                        </tr>
+
+                        <tr>
+                            <td id="name9"></td>
+                            <td id="post9"></td>
+                            <td id="pay9">--</td>
+                            <td id="ex9">--</td>
+                            <td id="year9">--</td>
+
+                        </tr>
+
+                        <tr>
+                            <td id="name10"></td>
+                            <td id="post10"></td>
+                            <td id="pay10">--</td>
+                            <td id="ex10">--</td>
+                            <td id="year10"></td>
+
+                        </tr>
+                    </table>
+                </div>
+
+                <div class="inc">
+                    <h2 id="hello"></h2>
+                    <p id="address"></p>
+                    <a href="#" id="phn"><b></b></a>
+                    <br>
+                    <a href="#"><b id="web"></b></a>
+
+                    <p>
+                        Sector: <b id="sector">Technology</b>
+                        <br>
+                        Industry: <b id="industry">Consumer Electronics</b>
+                        <br>
+                        Full Time Employees: <b id="fulltime">161,000</b>
+
+                    </p>
+                </div>
+            </div>
+            <div class="apple-inc">
+                <div class="description-governance">
+                    <div class="description">
+                        <h2>Description</h2>
+                        <p id="descp"></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+
+
+
+
+        <div class="PeopleAlsoWatch">
+            <h2 id="people">People Also Watch</h2>
+
+            <div class="slider-container">
+                <div class="company-container" id="slider1">
+                    <div class="company-box">
+                        <b id="prcomptic1"></b>
+                        <p id="prcompname1"></p>
+                        <p class="company-price" id="prcompprice1"></p>
+                        <a class="company-percent" id="prcomppercent1"></a>
+                    </div>
+                    <div class="company-box">
+                        <b id="prcomptic2"></b>
+                        <p id="prcompname2"></p>
+                        <p class="company-price" id="prcompprice2"></p>
+                        <a class="company-percent" id="prcomppercent2"></a>
+                    </div>
+                    <div class="company-box">
+                        <b id="prcomptic3"></b>
+                        <p id="prcompname3"></p>
+                        <p class="company-price" id="prcompprice3"></p>
+                        <a class="company-percent" id="prcomppercent3"></a>
+                    </div>
+                    <div class="company-box">
+                        <b id="prcomptic4"></b>
+                        <p id="prcompname4"></p>
+                        <p class="company-price" id="prcompprice4"></p>
+                        <a class="company-percent" id="prcomppercent4"></a>
+                    </div>
+                    <div class="company-box">
+                        <b id="prcomptic5"></b>
+                        <p id="prcompname5"></p>
+                        <p class="company-price" id="prcompprice5"></p>
+                        <a class="company-percent" id="prcomppercent5"></a>
+                    </div>
+                    <div class="company-box">
+                        <b id="prcomptic6"></b>
+                        <p id="prcompname6"></p>
+                        <p class="company-price" id="prcompprice6"></p>
+                        <a class="company-percent" id="prcomppercent6"></a>
+                    </div>
+                    <div class="company-box">
+                        <b id="prcomptic7"></b>
+                        <p id="prcompname7"></p>
+                        <p class="company-price" id="prcompprice7"></p>
+                        <a class="company-percent" id="prcomppercent7"></a>
+                    </div>
+                    <div class="company-box">
+                        <b id="prcomptic8"></b>
+                        <p id="prcompname8"></p>
+                        <p class="company-price" id="prcompprice8"></p>
+                        <a class="company-percent" id="prcomppercent8"></a>
+                    </div>
+                    <div class="company-box">
+                        <b id="prcomptic9"></b>
+                        <p id="prcompname9"></p>
+                        <p class="company-price" id="prcompprice9"></p>
+                        <a class="company-percent" id="prcomppercent9"></a>
+                    </div>
+                    <div class="company-box">
+                        <b id="prcomptic10"></b>
+                        <p id="prcompname10"></p>
+                        <p class="company-price" id="prcompprice10"></p>
+                        <a class="company-percent" id="prcomppercent10"></a>
+                    </div>
+                </div>
+
+                <div id="SliderBtns">
+                    <span class="slider-btn next" onclick="slide(1)">
+                        <img src="public/Media/arrow-right.jpg" />
+                    </span>
+
+                    <span class="slider-btn prev" onclick="slide(-1)">
+                        <img src="public/Media/arrow-left.jpg" />
+                    </span>
+                </div>
+            </div>
+        </div>
+        <footer>
+            <div class="footer-links">
+                <img src="public/Media/website_logo.jpg" class="foot-logo" />
+                <div class="footer-block">
+                    <div class="footer-title" id="Comp">Project</div>
+                    <li><a style="text-decoration: none;" class="links"
+                            href="https://mail.google.com/mail/?view=cm&fs=1&to=eziopuhan825@gmail.com" target="_blank"
+                            id="mail">Mail us</a></li>
+                    <li><a href="https://github.com/XBastille/FoxTrend" style="text-decoration: none;" target="_blank"
+                            class="links" id="SERV">Github</a></li>
+                    <li><a href="https://github.com/XBastille/FoxTrend/blob/main/.github/FUNDING.yml" style="text-decoration: none;" target="_blank" class="links" id="SERV">Donate</a>
+                    </li>
+                </div>
+
+                <div class="footer-block">
+                    <div class="footer-title" id="more">More</div>
+                    <li><a class="links" id="career">License</a></li>
+                    <li><a class="links" id="privacy">Privacy Policy</a></li>
+                </div>
+
+                <div class="footer-block">
+                    <div class="footer-title" id="social">Social</div>
+                    <li><a class="links" style="text-decoration: none;" href="/social" target="_blank"
+                            id="linkedin">LinkedIn</a></li>
+                    <li><a class="links" style="text-decoration: none;" href="/social" target="_blank"
+                            id="yt">Instagram</a></li>
+                    <li><a class="links" style="text-decoration: none;" href="/social" target="_blank" id="tw">X</a>
+                    </li>
+                </div>
+            </div>
+        </footer>
+    </div>
+    <script>
+
+        class SearchDropdown {
+            constructor(inputId) {
+                this.input = document.getElementById(inputId);
+                this.dropdownMenu = document.createElement('div');
+                this.dropdownMenu.className = 'search-dropdown-menu';
+                this.optionsContainer = document.createElement('div');
+                this.optionsContainer.className = 'search-dropdown-options';
+                this.dropdownMenu.appendChild(this.optionsContainer);
+                this.input.parentElement.appendChild(this.dropdownMenu);
+                this.setupDropdown();
+            }
+
+            setupDropdown() {
+                this.input.addEventListener('click', () => {
+                    this.dropdownMenu.classList.add('active');
+                    this.loadOptions('');
+                });
+
+                document.addEventListener('click', (e) => {
+                    if (!this.input.contains(e.target) && !this.dropdownMenu.contains(e.target)) {
+                        this.dropdownMenu.classList.remove('active');
+                    }
+                });
+
+                this.input.addEventListener('input', (e) => {
+                    const searchTerm = e.target.value.toLowerCase();
+                    this.loadOptions(searchTerm);
+                });
+            }
+
+            async loadOptions(searchTerm) {
+                try {
+                    const response = await fetch('/public/textfile/all_ticker.txt');
+                    const text = await response.text();
+                    const options = text.split('\n').filter(option => option.trim());
+
+                    const filteredOptions = options
+                        .filter(option => option.toLowerCase().startsWith(searchTerm.toLowerCase()))
+                        .slice(0, 6);
+
+                    this.optionsContainer.innerHTML = '';
+                    filteredOptions.forEach(option => {
+                        const optionElement = document.createElement('div');
+                        optionElement.className = 'search-dropdown-option';
+                        optionElement.textContent = option;
+                        optionElement.addEventListener('click', () => {
+                            this.input.value = option;
+                            this.dropdownMenu.classList.remove('active');
+                            const enterEvent = new KeyboardEvent('keypress', {
+                                key: 'Enter',
+                                code: 'Enter',
+                                keyCode: 13,
+                                which: 13,
+                                bubbles: true
+                            });
+                            this.input.dispatchEvent(enterEvent);
+                        });
+                        this.optionsContainer.appendChild(optionElement);
+                    });
+                } catch (error) {
+                    console.error('Error loading options:', error);
+                }
+            }
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            new SearchDropdown('searching');
+        });
+
+        function restartCubeAnimation() {
+            const cube = document.querySelector('.cube');
+            const cubeEdges = cube.querySelectorAll('.cube-edge');
+            cubeEdges.forEach(edge => {
+                const clone = edge.cloneNode(true);
+                edge.parentNode.replaceChild(clone, edge);
+            });
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            setInterval(restartCubeAnimation, 11600);
+        });
+
+        const wats = document.getElementById('wats')
+        wats.addEventListener('click', () => {
+            window.location.href = '/watch'
+        })
+
+        const liss = document.getElementById('liss')
+        liss.addEventListener('click', () => {
+            window.location.href = '/yourList'
+        })
+
+        const pros = document.getElementById('pros')
+        pros.addEventListener('click', () => {
+            window.location.href = '/userprofile'
+        })
+        //searching
+        //------------------------------------------------------------------------------------------
+        let val;
+        const loading = document.getElementById('loading')
+        const searching = document.getElementById('searching')
+        const background = document.getElementById('background')
+        searching.addEventListener('keypress', async (e) => {
+            if (e.key === 'Enter') {
+                val = searching.value
+                searching.value = '';
+                const dates = new Date()
+                const month = dates.getMonth()
+                const months = dates.getMonth() + 1
+                let day = dates.getDate()
+                let year = dates.getFullYear()
+                if (month === 0) {
+                    year = year - 1;
+                    month = 12
+                    months = 1;
+                }
+                const start = day + "-" + month + "-" + year
+                const end = day + "-" + months + "-" + year
+                loading.style.display = 'flex'
+                loading.style.zIndex = '9999'
+                background.style.zIndex = '-999'
+                background.style.filter = 'blur(20px)'
+
+                try {
+                    const response = await fetch('/summary', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                        },
+                        body: JSON.stringify({ val, start, end })
+                    });
+                    const data = await response.json();
+                    console.log(data)
+                    if (data.sucess === 'true') {
+                        loading.style.display = 'none'
+                        loading.style.zIndex = '-999'
+                        background.style.zIndex = '999'
+                        background.style.filter = 'none'
+                        document.body.style.filter = 'none';
+                        document.body.style.pointerEvents = 'auto'; // Re-enable interaction
+                        window.location.href = '/summary';
+                    }
+                } catch (error) {
+                    console.error('Error:', error);
+                }
+            }
+        })
+    </script>
+    <script>
+        document.getElementById('aapl').addEventListener('click', () => {
+            const popup = document.querySelector('.prediction-popup');
+            popup.style.display = 'block';
+            setTimeout(() => popup.classList.add('show'), 10);
+        });
+
+        document.querySelector('.prediction-popup .cancel-btn').addEventListener('click', () => {
+            const popup = document.querySelector('.prediction-popup');
+            popup.classList.remove('show');
+            setTimeout(() => popup.style.display = 'none', 300);
+        });
+        const aapl = document.getElementById('aapl')
+        const compyname = document.getElementById('compyname')
+        const currprice = document.getElementById('currprice')
+        const name1 = document.getElementById('name1')
+        const post1 = document.getElementById('post1')
+        const pay1 = document.getElementById('pay1')
+        const ex1 = document.getElementById('ex1')
+        const year1 = document.getElementById('year1')
+
+        const name2 = document.getElementById('name2')
+        const post2 = document.getElementById('post2')
+        const pay2 = document.getElementById('pay2')
+        const ex2 = document.getElementById('ex2')
+        const year2 = document.getElementById('year2')
+
+        const name3 = document.getElementById('name3')
+        const post3 = document.getElementById('post3')
+        const pay3 = document.getElementById('pay3')
+        const ex3 = document.getElementById('ex3')
+        const year3 = document.getElementById('year3')
+
+        const name4 = document.getElementById('name4')
+        const post4 = document.getElementById('post4')
+        const pay4 = document.getElementById('pay4')
+        const ex4 = document.getElementById('ex4')
+        const year4 = document.getElementById('year4')
+
+        const name5 = document.getElementById('name5')
+        const post5 = document.getElementById('post5')
+        const pay5 = document.getElementById('pay5')
+        const ex5 = document.getElementById('ex5')
+        const year5 = document.getElementById('year5')
+
+        const name6 = document.getElementById('name6')
+        const post6 = document.getElementById('post6')
+        const pay6 = document.getElementById('pay6')
+        const ex6 = document.getElementById('ex6')
+        const year6 = document.getElementById('year6')
+
+        const name7 = document.getElementById('name7')
+        const post7 = document.getElementById('post7')
+        const pay7 = document.getElementById('pay7')
+        const ex7 = document.getElementById('ex7')
+        const year7 = document.getElementById('year7')
+
+        const name8 = document.getElementById('name8')
+        const post8 = document.getElementById('post8')
+        const pay8 = document.getElementById('pay8')
+        const ex8 = document.getElementById('ex8')
+        const year8 = document.getElementById('year8')
+
+        const name9 = document.getElementById('name9')
+        const post9 = document.getElementById('post9')
+        const pay9 = document.getElementById('pay9')
+        const ex9 = document.getElementById('ex9')
+        const year9 = document.getElementById('year9')
+
+        const name10 = document.getElementById('name10')
+        const post10 = document.getElementById('post10')
+        const pay10 = document.getElementById('pay10')
+        const ex10 = document.getElementById('ex10')
+        const year10 = document.getElementById('year10')
+
+        const descp = document.getElementById('descp')
+        const hello = document.getElementById('hello')
+        const address = document.getElementById('address')
+        const phn = document.getElementById('phn')
+        const web = document.getElementById('web')
+        const sector = document.getElementById('sector')
+        const industry = document.getElementById('industry')
+        const fulltime = document.getElementById('fulltime')
+        const dollar = document.getElementById('dollar')
+        const percent = document.getElementById('percent')
+        let values = '';
+        async function fetchjson() {
+            try {
+                const res = await fetch('/public/graph.json');
+                console.log("Response status:", res.status);
+                if (!res.ok) throw new Error("Failed to fetch data");
+                const data = await res.json();
+                values = data.symbol;
+                aapl.innerText = "Predict " + values
+                compyname.innerText = data.symbol
+                currprice.innerText = "$ " + data.currentPrice
+                name1.innerText = data.companyOfficers[0].name
+                post1.innerText = data.companyOfficers[0].title
+                let payss1 = (data.companyOfficers[0].totalPay)
+                if (payss1 === undefined) {
+                    pay1.innerText = '- - -'
+                }
+                else {
+                    let pays1 = ((data.companyOfficers[0].totalPay) / 1000000).toFixed(2)
+                    pay1.innerText = pays1 + "M"
+                }
+                ex1.innerText = data.companyOfficers[0].exercisedValue
+                let years1 = data.companyOfficers[0].yearBorn
+                if (years1 === undefined) {
+                    year1.innerText = data.companyOfficers[0].yearBorn
+                }
+                else {
+                    year1.innerText = data.companyOfficers[0].yearBorn
+                }
+
+                name2.innerText = data.companyOfficers[1].name
+                post2.innerText = data.companyOfficers[1].title
+                let payss2 = (data.companyOfficers[1].totalPay)
+                if (payss2 === undefined) {
+                    pay2.innerText = '- - -'
+                }
+                else {
+                    let pays2 = ((data.companyOfficers[1].totalPay) / 100000).toFixed(2)
+                    pay2.innerText = pays2 + "M"
+                }
+                ex2.innerText = data.companyOfficers[1].exercisedValue
+                let years2 = data.companyOfficers[1].yearBorn
+                if (years2 === undefined) {
+                    year2.innerText = '- - -'
+                }
+                else {
+                    year2.innerText = data.companyOfficers[1].yearBorn
+
+                }
+
+                name3.innerText = data.companyOfficers[2].name
+                post3.innerText = data.companyOfficers[2].title
+                let payss3 = (data.companyOfficers[2].totalPay)
+                if (payss3 === undefined) {
+                    pay3.innerText = '- - -'
+                }
+                else {
+                    let pays3 = ((data.companyOfficers[2].totalPay) / 100000).toFixed(2)
+                    pay3.innerText = pays3 + "M"
+                }
+                ex3.innerText = data.companyOfficers[2].exercisedValue
+                let years3 = data.companyOfficers[2].yearBorn
+                if (years3 === undefined) {
+                    year3.innerText = '- - -'
+                }
+                else {
+                    year3.innerText = data.companyOfficers[2].yearBorn
+                }
+
+                name4.innerText = data.companyOfficers[3].name
+                post4.innerText = data.companyOfficers[3].title
+                let payss4 = (data.companyOfficers[3].totalPay)
+                if (payss4 === undefined) {
+                    pay4.innerText = '- - -'
+                }
+                else {
+                    let pays4 = ((data.companyOfficers[3].totalPay) / 100000).toFixed(2)
+                    pay4.innerText = pays4 + "M"
+                }
+                ex4.innerText = data.companyOfficers[3].exercisedValue
+                let years4 = data.companyOfficers[3].yearBorn
+                if (years4 === undefined) {
+                    year4.innerText = '- - -'
+                }
+                else {
+                    year4.innerText = data.companyOfficers[3].yearBorn
+                }
+
+                name5.innerText = data.companyOfficers[4].name
+                post5.innerText = data.companyOfficers[4].title
+                let payss5 = (data.companyOfficers[4].totalPay)
+                if (payss5 === undefined) {
+                    pay5.innerText = '- - -'
+                }
+                else {
+                    let pays5 = ((data.companyOfficers[4].totalPay) / 100000).toFixed(2)
+                    pay5.innerText = pays5 + "M"
+                }
+                ex5.innerText = data.companyOfficers[4].exercisedValue
+                let years5 = data.companyOfficers[4].yearBorn
+                if (years5 === undefined) {
+                    year5.innerText = '- - -'
+                }
+                else {
+                    year5.innerText = data.companyOfficers[4].yearBorn
+                }
+
+                name6.innerText = data.companyOfficers[5].name
+                post6.innerText = data.companyOfficers[5].title
+                let payss6 = (data.companyOfficers[5].totalPay)
+                if (payss6 === undefined) {
+                    pay6.innerText = '- - -'
+                }
+                else {
+                    let pays6 = ((data.companyOfficers[5].totalPay) / 100000).toFixed(2)
+                    pay6.innerText = pays6 + "M"
+                }
+                ex6.innerText = data.companyOfficers[5].exercisedValue
+                let years6 = data.companyOfficers[5].yearBorn
+                if (years6 === undefined) {
+                    year6.innerText = '- - -'
+                }
+                else {
+                    year6.innerText = data.companyOfficers[5].yearBorn
+                }
+                name7.innerText = data.companyOfficers[6].name
+                post7.innerText = data.companyOfficers[6].title
+                let payss7 = (data.companyOfficers[6].totalPay)
+                if (payss7 === undefined) {
+                    pay7.innerText = '- - -'
+                }
+                else {
+                    let pays7 = ((data.companyOfficers[6].totalPay) / 100000).toFixed(2)
+                    pay7.innerText = pays7 + "M"
+                }
+                ex7.innerText = data.companyOfficers[6].exercisedValue
+                let years7 = data.companyOfficers[6].yearBorn
+                if (years7 === undefined) {
+                    year7.innerText = '- - -'
+                }
+                else {
+                    year7.innerText = data.companyOfficers[6].yearBorn
+                }
+
+                name8.innerText = data.companyOfficers[7].name
+                post8.innerText = data.companyOfficers[7].title
+                let payss8 = data.companyOfficers[7].totalPay
+                if (payss8 === undefined) {
+                    pay8.innerText = '- - -'
+                }
+                else {
+                    let pays8 = ((data.companyOfficers[7].totalPay) / 100000).toFixed(2)
+                    pay8.innerText = pays8 + "M"
+                }
+                ex8.innerText = data.companyOfficers[7].exercisedValue
+                let years8 = data.companyOfficers[7].yearBorn
+                if (years8 === undefined) {
+                    year8.innerText = '- - -'
+                }
+                else {
+                    year8.innerText = data.companyOfficers[7].yearBorn
+                }
+
+                name9.innerText = data.companyOfficers[8].name
+                post9.innerText = data.companyOfficers[8].title
+                let payss9 = data.companyOfficers[8].totalPay
+                if (payss9 === undefined) {
+                    pay9.innerText = '- - -'
+                }
+                else {
+                    let pays9 = ((data.companyOfficers[8].totalPay) / 100000).toFixed(2)
+                    pay9.innerText = pays9 + "M"
+                }
+                ex9.innerText = data.companyOfficers[8].exercisedValue
+                let years9 = data.companyOfficers[8].yearBorn
+                if (years9 === undefined) {
+                    year9.innerText = '- - -'
+                }
+                else {
+                    year9.innerText = data.companyOfficers[8].yearBorn
+                }
+
+                name10.innerText = data.companyOfficers[9].name
+                post10.innerText = data.companyOfficers[9].title
+
+                let payss = data.companyOfficers[9].totalPay
+                console.log(payss)
+                if (payss === undefined) {
+                    pay10.innerText = "- - -"
+                }
+                else {
+                    let pays10 = ((data.companyOfficers[9].totalPay) / 100000).toFixed(2)
+                    pay10.innerText = pays10 + "M"
+                }
+
+                ex10.innerText = data.companyOfficers[9].exercisedValue
+
+                let years10 = data.companyOfficers[9].yearBorn
+                console.log(years10)
+                if (years10 === undefined) {
+                    year10.innerText = '- - -'
+
+                }
+                else {
+                    year10.innerText = data.companyOfficers[9].yearBorn
+                }
+
+                descp.innerText = data.longBusinessSummary
+                hello.innerText = data.shortName
+                let add = (data.address1)
+                let cit = data.city
+                let stat = data.state
+                let final = add + " ," + cit + " " + stat
+                address.innerText = final
+
+                phn.innerText = data.phone
+                web.innerText = data.website
+
+                sector.innerText = data.sector
+                industry.innerText = data.sectorKey
+                fulltime.innerText = data.sectorDisp
+
+                const currPrice = data.currentPrice;
+                const prevPrice = data.previousClose;
+
+                const priceChange = currPrice - prevPrice
+                const percentChange = (priceChange / prevPrice) * 100;
+
+                const sign = priceChange >= 0 ? '+' : '-';
+                dollar.innerText = `${sign}$${Math.abs(priceChange).toFixed(2)}`;
+                percent.innerText = `(${sign}${Math.abs(percentChange).toFixed(2)}%)`;
+
+                dollar.style.color = priceChange >= 0 ? 'green' : 'red'
+                percent.style.color = priceChange >= 0 ? 'green' : 'red'
+
+            } catch (err) {
+                console.error("Error fetching JSON:", err);
+                return null;
+            }
+            return values
+        }
+        document.addEventListener('DOMContentLoaded', async function () {
+            const val = await fetchjson();
+            const loads = document.getElementById('loading')
+            const backs = document.getElementById('background')
+            const future_prediction = document.getElementById('future_prediction')
+            future_prediction.addEventListener('click', async () => {
+                //val is the comapany setting
+                const days = document.getElementById('days').value
+                const trails = document.getElementById('trials').value
+                console.log(val, trails, days)
+                loads.style.display = 'flex'
+                loads.style.zIndex = '999'
+                backs.style.zIndex = '-999'
+                backs.style.filter = 'blur(30px)'
+                try {
+                    const response = await fetch('/predict', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                        },
+                        body: JSON.stringify({ val, days, trails })
+                    });
+                    const data = await response.json();
+                    console.log(data)
+                    if (data.sucess === 'true') {
+                        loads.style.display = 'none'
+                        loads.style.zIndex = '-999'
+                        backs.style.zIndex = '999'
+                        backs.style.filter = 'none'
+                        window.location.href = 'predict'
+                    }
+                } catch (error) {
+                    console.error('Error:', error);
+                }
+            })
+        });
+
+        //people also watch
+
+        const prcomptic1 = document.getElementById('prcomptic1')
+        const prcompname1 = document.getElementById('prcompname1')
+        const prcomprice1 = document.getElementById('prcompprice1')
+        const prcomppercent1 = document.getElementById('prcomppercent1')
+
+        const prcomptic2 = document.getElementById('prcomptic2')
+        const prcompname2 = document.getElementById('prcompname2')
+        const prcomprice2 = document.getElementById('prcompprice2')
+        const prcomppercent2 = document.getElementById('prcomppercent2')
+
+        const prcomptic3 = document.getElementById('prcomptic3')
+        const prcompname3 = document.getElementById('prcompname3')
+        const prcomprice3 = document.getElementById('prcompprice3')
+        const prcomppercent3 = document.getElementById('prcomppercent3')
+
+        const prcomptic4 = document.getElementById('prcomptic4')
+        const prcompname4 = document.getElementById('prcompname4')
+        const prcomprice4 = document.getElementById('prcompprice4')
+        const prcomppercent4 = document.getElementById('prcomppercent4')
+
+        const prcomptic5 = document.getElementById('prcomptic5')
+        const prcompname5 = document.getElementById('prcompname5')
+        const prcomprice5 = document.getElementById('prcompprice5')
+        const prcomppercent5 = document.getElementById('prcomppercent5')
+
+        const prcomptic6 = document.getElementById('prcomptic6')
+        const prcompname6 = document.getElementById('prcompname6')
+        const prcomprice6 = document.getElementById('prcompprice6')
+        const prcomppercent6 = document.getElementById('prcomppercent6')
+
+        const prcomptic7 = document.getElementById('prcomptic7')
+        const prcompname7 = document.getElementById('prcompname7')
+        const prcomprice7 = document.getElementById('prcompprice7')
+        const prcomppercent7 = document.getElementById('prcomppercent7')
+
+        const prcomptic8 = document.getElementById('prcomptic8')
+        const prcompname8 = document.getElementById('prcompname8')
+        const prcomprice8 = document.getElementById('prcompprice8')
+        const prcomppercent8 = document.getElementById('prcomppercent8')
+
+        const prcomptic9 = document.getElementById('prcomptic9')
+        const prcompname9 = document.getElementById('prcompname9')
+        const prcomprice9 = document.getElementById('prcompprice9')
+        const prcomppercent9 = document.getElementById('prcomppercent9')
+
+        const prcomptic10 = document.getElementById('prcomptic10')
+        const prcompname10 = document.getElementById('prcompname10')
+        const prcomprice10 = document.getElementById('prcompprice10')
+        const prcomppercent10 = document.getElementById('prcomppercent10')
+
+        function peoplealsowatch() {
+            fetch("/public/people_also_watch.json")
+                .then((res) => {
+                    if (!res.ok) {
+                        console.log(res.status);
+                    }
+                    return res.json();
+                })
+                .then((data) => {
+                    prcomptic1.innerText = data[0].Ticker
+                    prcompname1.innerText = data[0].Company_Name
+                    prcomprice1.innerText = "$" + data[0].Price
+                    const r1price1 = String(data[0].Price)
+                    if (r1price1.substring(0, 1) === '-') {
+                        prcomprice1.style.color = 'red'
+                    }
+
+                    const r1percent1 = String(data[0]['Change %'])
+                    if (r1percent1.substring(0, 1) === '-') {
+                        prcomppercent1.style.color = 'red'
+                    }
+                    prcomppercent1.innerText = String(data[0]['Change %'].toFixed(2)) + "%"
+
+                    prcomptic2.innerText = data[1].Ticker
+                    prcompname2.innerText = data[1].Company_Name
+                    prcomprice2.innerText = "$" + data[1].Price
+                    const r2price2 = String(data[1].Price)
+                    if (r2price2.substring(0, 1) === '-') {
+                        prcomprice2.style.color = 'red'
+                    }
+
+                    const r2percent2 = String(data[1]['Change %'])
+                    if (r2percent2.substring(0, 1) === '-') {
+                        prcomppercent2.style.color = 'red'
+                    }
+                    prcomppercent2.innerText = String(data[1]['Change %'].toFixed(2)) + "%"
+
+                    prcomptic3.innerText = data[2].Ticker
+                    prcompname3.innerText = data[2].Company_Name
+                    prcomprice3.innerText = "$" + data[2].Price
+                    const r3price3 = String(data[2].Price)
+                    if (r3price3.substring(0, 1) === '-') {
+                        prcomprice3.style.color = 'red'
+                    }
+
+                    const r3percent3 = String(data[2]['Change %'])
+                    if (r3percent3.substring(0, 1) === '-') {
+                        prcomppercent3.style.color = 'red'
+                    }
+                    prcomppercent3.innerText = String(data[2]['Change %'].toFixed(2)) + "%"
+
+                    prcomptic4.innerText = data[3].Ticker
+                    prcompname4.innerText = data[3].Company_Name
+                    prcomprice4.innerText = "$" + data[3].Price
+                    const r4price4 = String(data[3].Price)
+                    if (r4price4.substring(0, 1) === '-') {
+                        prcomprice4.style.color = 'red'
+                    }
+
+                    const r4percent4 = String(data[3]['Change %'])
+                    if (r4percent4.substring(0, 1) === '-') {
+                        prcomppercent4.style.color = 'red'
+                    }
+                    prcomppercent4.innerText = String(data[3]['Change %'].toFixed(2)) + "%"
+
+                    prcomptic5.innerText = data[4].Ticker
+                    prcompname5.innerText = data[4].Company_Name
+                    prcomprice5.innerText = "$" + data[4].Price
+                    const r5price5 = String(data[4].Price)
+                    if (r5price5.substring(0, 1) === '-') {
+                        prcomprice5.style.color = 'red'
+                    }
+
+                    const r5percent5 = String(data[4]['Change %'])
+                    if (r5percent5.substring(0, 1) === '-') {
+                        prcomppercent5.style.color = 'red'
+                    }
+                    prcomppercent5.innerText = String(data[4]['Change %'].toFixed(2)) + "%"
+
+                    prcomptic6.innerText = data[5].Ticker
+                    prcompname6.innerText = data[5].Company_Name
+                    prcomprice6.innerText = "$" + data[5].Price
+                    const r6price6 = String(data[5].Price)
+                    if (r6price6.substring(0, 1) === '-') {
+                        prcomprice6.style.color = 'red'
+                    }
+
+                    const r6percent6 = String(data[5]['Change %'])
+                    if (r6percent6.substring(0, 1) === '-') {
+                        prcomppercent6.style.color = 'red'
+                    }
+                    prcomppercent6.innerText = String(data[5]['Change %'].toFixed(2)) + "%"
+
+                    prcomptic7.innerText = data[6].Ticker
+                    prcompname7.innerText = data[6].Company_Name
+                    prcomprice7.innerText = "$" + data[6].Price
+                    const r7price7 = String(data[6].Price)
+                    if (r7price7.substring(0, 1) === '-') {
+                        prcomprice7.style.color = 'red'
+                    }
+
+                    const r7percent7 = String(data[6]['Change %'])
+                    if (r7percent7.substring(0, 1) === '-') {
+                        prcomppercent7.style.color = 'red'
+                    }
+                    prcomppercent7.innerText = String(data[6]['Change %'].toFixed(2)) + "%"
+
+                    prcomptic8.innerText = data[7].Ticker
+                    prcompname8.innerText = data[7].Company_Name
+                    prcomprice8.innerText = "$" + data[7].Price
+                    const r8price8 = String(data[7].Price)
+                    if (r8price8.substring(0, 1) === '-') {
+                        prcomprice8.style.color = 'red'
+                    }
+
+                    const r8percent8 = String(data[7]['Change %'])
+                    if (r8percent8.substring(0, 1) === '-') {
+                        prcomppercent8.style.color = 'red'
+                    }
+                    prcomppercent8.innerText = String(data[7]['Change %'].toFixed(2)) + "%"
+
+                    prcomptic9.innerText = data[8].Ticker
+                    prcompname9.innerText = data[8].Company_Name
+                    prcomprice9.innerText = "$" + data[8].Price
+                    const r9price9 = String(data[8].Price)
+                    if (r9price9.substring(0, 1) === '-') {
+                        prcomprice9.style.color = 'red'
+                    }
+
+                    const r9percent9 = String(data[8]['Change %'])
+                    if (r9percent9.substring(0, 1) === '-') {
+                        prcomppercent9.style.color = 'red'
+                    }
+                    prcomppercent9.innerText = String(data[8]['Change %'].toFixed(2)) + "%"
+
+                    prcomptic10.innerText = data[9].Ticker
+                    prcompname10.innerText = data[9].Company_Name
+                    prcomprice10.innerText = "$" + data[9].Price
+                    const r10price10 = String(data[9].Price)
+                    if (r10price10.substring(0, 1) === '-') {
+                        prcomprice10.style.color = 'red'
+                    }
+
+                    const r10percent10 = String(data[9]['Change %'])
+                    if (r10percent10.substring(0, 1) === '-') {
+                        prcomppercent10.style.color = 'red'
+                    }
+                    prcomppercent10.innerText = String(data[9]['Change %'].toFixed(2)) + "%"
+                })
+                .catch((err) => {
+                    console.log(err);
+                });
+        }
+        document.addEventListener("DOMContentLoaded", function () {
+            peoplealsowatch();
+        });
+
+        let currentSlide = 0;
+        const slideWidth = 210;
+        const visibleSlides = 5;
+        const totalSlides = document.querySelectorAll('.company-box').length;
+        const slider1 = document.getElementById('slider1');
+
+        function slide(direction) {
+            currentSlide += direction;
+            const maxSlide = totalSlides - visibleSlides;
+
+            if (currentSlide < 0) {
+                currentSlide = 0;
+            }
+            if (currentSlide > maxSlide) {
+                currentSlide = maxSlide;
+            }
+            slider1.style.transform = `translateX(${-currentSlide * slideWidth}px)`;
+        }
+    </script>
+    <script src="/public/Stockspage.js"></script>
+</body>
+
+</html>

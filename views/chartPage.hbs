@@ -1,0 +1,1115 @@
+<button><a href="/user/logout">logout</a></button>
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Chart_Page</title>
+    <script src="https://cdn.plot.ly/plotly-2.32.0.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.3.0/papaparse.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="/public/graphChartss.css" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Protest+Guerrilla&display=swap" rel="stylesheet" />
+    <link rel="icon" type="image/x-icon" href="public/Media/favicon.ico">
+    <style>
+        :root {
+            --accent-color: #9f1c7e;
+            --cube-edge-color: #FFFFFF;
+            --cube-dotted-color: rgba(255, 255, 255, 0.5);
+        }
+
+        .loading-container {
+            width: 70vw;
+            height: 75vh;
+            position: absolute;
+            overflow: hidden;
+            display: none;
+            justify-content: center;
+            align-items: center;
+            margin-left: 200px;
+            margin-top: 160px;
+        }
+
+        .center-image {
+            width: 80%;
+            height: 80%;
+            object-fit: cover;
+            position: relative;
+        }
+
+        .center-element {
+            position: relative;
+            width: 330px;
+            height: 330px;
+            border-radius: 50%;
+            background: linear-gradient(to right, #600093, #000000);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: white;
+            animation: heartbeat 1.5s ease-in-out infinite;
+        }
+
+        .cube {
+            position: absolute;
+            width: 300px;
+            height: 300px;
+            transform-style: preserve-3d;
+            transform: rotateX(45deg) rotateY(45deg);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .right {
+            transform: rotateY(90deg) translateZ(150px);
+        }
+
+        .left {
+            transform: rotateY(-180deg) translateZ(150px);
+        }
+
+        .top {
+            transform: rotateX(90deg) translateZ(150px);
+        }
+
+        .cube-edge {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            box-sizing: border-box;
+        }
+
+        @keyframes drawDottedLine {
+            0% {
+                opacity: 0;
+                clip-path: polygon(0% 0%, 0% 0%, 0% 0%, 0% 0%);
+            }
+
+            100% {
+                opacity: 1;
+                clip-path: polygon(0% 0%, 100% 0%, 100% 100%, 0% 100%);
+            }
+        }
+
+        @keyframes drawSolidLine {
+            0% {
+                opacity: 0;
+                border: 2px solid var(--cube-edge-color);
+                clip-path: polygon(0% 0%, 0% 0%, 0% 0%, 0% 0%);
+            }
+
+            100% {
+                opacity: 1;
+                border: 2px solid var(--cube-edge-color);
+                clip-path: polygon(0% 0%, 100% 0%, 100% 100%, 0% 100%);
+            }
+        }
+
+        @keyframes disappearSolidLine {
+            0% {
+                opacity: 1;
+                clip-path: polygon(0% 0%, 100% 0%, 100% 100%, 0% 100%);
+            }
+
+            100% {
+                opacity: 0;
+                clip-path: polygon(100% 0%, 100% 100%, 0% 100%, 0% 0%);
+            }
+        }
+
+        @keyframes disappearDottedLine {
+            0% {
+                opacity: 1;
+                clip-path: polygon(0% 0%, 100% 0%, 100% 100%, 0% 100%);
+            }
+
+            100% {
+                opacity: 0;
+                clip-path: polygon(100% 0%, 100% 100%, 0% 100%, 0% 0%);
+            }
+        }
+
+        .cube-edge::before,
+        .cube-edge::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            box-sizing: border-box;
+        }
+
+        .cube-edge::before {
+            border: 2px dotted var(--cube-dotted-color);
+            opacity: 0;
+            animation:
+                drawDottedLine 2s ease-in-out forwards,
+                disappearDottedLine 2s 8s ease-in-out forwards;
+        }
+
+        .cube-edge::after {
+            border: 2px solid var(--cube-edge-color);
+            opacity: 0;
+            animation:
+                drawSolidLine 2s 2s ease-in-out forwards,
+                disappearSolidLine 2s 6s ease-in-out forwards;
+        }
+
+        @keyframes heartbeat {
+
+            0%,
+            100% {
+                transform: scale(1);
+            }
+
+            50% {
+                transform: scale(1.1);
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="loading-container" id="loading">
+
+        <div class="grid"></div>
+        <div class="snake snake-horizontal"></div>
+        <div class="snake snake-horizontal"></div>
+        <div class="snake snake-vertical"></div>
+        <div class="snake snake-vertical"></div>
+        <div class="snake snake-horizontal"></div>
+        <div class="snake snake-vertical"></div>
+        <div class="snake snake-top"></div>
+        <div class="snake snake-diagonal-right"></div>
+        <div class="center-element">
+            <img src="/public/Media/fox.jpg" alt="Your Image" class="center-image">
+        </div>
+        <div class="cube">
+            <div class="cube-edge top"></div>
+            <div class="cube-edge right"></div>
+            <div class="cube-edge left"></div>
+        </div>
+    </div>
+    <div id="background">
+        <div class="prediction-popup">
+            <div class="disclaimer">
+                <h3>Stock Prediction Disclaimer</h3>
+                <p>While our Machine Learning model has been extensively trained on historical market data and patterns,
+                    please note that stock market predictions inherently involve uncertainty. Our model provides
+                    data-driven insights based on past trends, but market conditions can change rapidly due to various
+                    external factors. We recommend using these predictions as one of many tools in your investment
+                    decision-making process.</p>
+            </div>
+            <div class="input-container">
+                <div class="input-group">
+                    <label for="trials">Number of Trials</label>
+                    <input type="number" id="trials" min="1" max="100" value="10">
+                    <i class="fas fa-info-circle info-icon"></i>
+                    <div class="info-tooltip">More trials lead to better prediction accuracy but increase processing
+                        time.</div>
+                </div>
+                <div class="input-group">
+                    <label for="days">Days to Predict</label>
+                    <input type="number" id="days" min="1" max="30" value="7">
+                    <i class="fas fa-info-circle info-icon"></i>
+                    <div class="info-tooltip">Longer prediction periods may reduce accuracy due to increasing market
+                        uncertainties. Recommended: 1-14 days.</div>
+                </div>
+            </div>
+            <div class="buttons">
+                <button class="cancel-btn">Cancel</button>
+                <button class="predict-btn" id="future_prediction">Predict</button>
+            </div>
+        </div>
+        <ul class="icons open">
+            <a href="#" class="fox-icon-link">
+                <img src="/public/Media/fox.jpg" alt="Fox Icon" class="logo" />
+            </a>
+            <a href="/dashboard">
+                <li class="Icon-items" data-name="Home">
+                    <img src="public/Media/home.jpg" id="item1" />
+                    <button><span class="icon-name">Home</span></button>
+                </li>
+            </a>
+            <li class="Icon-items" data-name="Watch">
+                <img src="/public/Media/recent_watch.jpg" id="item2" />
+                <button id="watch"><span class="icon-name">Watch</span></button>
+            </li>
+            <li class="Icon-items" data-name="Lists">
+                <img src="/public/Media/list.jpg" id="item3" />
+                <button id="lists"><span class="icon-name">Lists</span></button>
+            </li>
+            <a href="https://github.com/XBastille/FoxTrend/blob/main/.github/FUNDING.yml" target="_blank" style="text-decoration: none;">
+            <li class="Icon-items" data-name="Donate">
+                <img src="/public/Media/donate.jpg" id="item4" />
+                <span class="icon-name">Donate</span>
+            </li>
+            </a>
+            <li class="Icon-items" data-name="Profile">
+                <img src="/public/Media/account.jpg" id="item5" />
+                <button id="profile"><span class="icon-name">Profile</span></button>
+            </li>
+            <li class="Arrow">
+                <img src="/public/Media/arrow-right.jpg" />
+            </li>
+        </ul>
+        <div class="search-container">
+            <input type="text" class="search-bar" id="searching" placeholder="Search Ticker" />
+            <i class="search-icon fas fa-search"></i>
+            <div class="magnifying-glass">
+                <i class="fa-solid fa-magnifying-glass"></i>
+            </div>
+            <div class="navigationBar">
+                <a href="#" class="serv">
+                    Services
+                    <svg width="20" height="20" viewBox="0 -4 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M5 7.5L10 12.5L15 7.5" stroke="currentColor" stroke-width="1.67" stroke-linecap="round"
+                            stroke-linejoin="round"></path>
+                    </svg>
+                </a>
+                <a href="#" class="comp">
+                    Project
+                    <svg width="20" height="20" viewBox="0 -4 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M5 7.5L10 12.5L15 7.5" stroke="currentColor" stroke-width="1.67" stroke-linecap="round"
+                            stroke-linejoin="round"></path>
+                    </svg>
+                </a>
+                <a href="https://github.com/XBastille/FoxTrend" target="_blank" class="blog">Github</a>
+                <a href="https://mail.google.com/mail/?view=cm&fs=1&to=eziopuhan825@gmail.com"
+                    target="_blank" class="port">Contact Us</a>
+                <div class="services-dropdown">
+                    <div class="services-dropdown-content">
+                        <div class="services-label">
+                            <h1>Services</h1>
+                        </div>
+                        <div class="services-dropdown-column">
+                            <div class="primary-section">
+                                <h2>Primary <span class="arrow">→</span></h2>
+                                <div class="primary-elements">
+                                    <a href="#">Stock Market Prediction</a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="services-dropdown-column">
+                            <div class="secondary-section">
+                                <h3>Secondary <span class="arrow">→</span></h3>
+                                <div class="secondary-elements">
+                                    <a href="/selectcar">Used Car Prediction</a>
+                                    <a href="/selecthouse">Housing Prediction</a>
+                                    <a href="/selectloan">Loan Approval Prediction</a>
+                                </div>
+                            </div>
+                        </div>
+                        <img src="public/Media/services.jpg" alt="Your Alt Text" class="service-image">
+                    </div>
+                </div>
+                <div class="company-dropdown">
+                    <div class="company-dropdown-content">
+                        <div class="company-label">
+                            <h1>Project</h1>
+                        </div>
+                        <div class="company-dropdown-column">
+                            <h2>MORE ABOUT US</h2>
+                            <a href="/#about-section">About Us</a>
+                            <a href="https://github.com/XBastille/FoxTrend" target="_blank">Github</a>
+                            <a href="#">Privacy Policy</a>
+                            <a href="#">License</a>
+                        </div>
+                        <div class="company-dropdown-column">
+                            <h2>SOCIAL</h2>
+                            <a href="/social" target="_blank">LinkedIn</a>
+                            <a href="/social" target="_blank">Instagram</a>
+                            <a href="/social" target="_blank">X</a>
+                        </div>
+                        <div class="company-dropdown-column">
+                            <h2>CONTACTS</h2>
+                            <a href="https://github.com/XBastille/FoxTrend/blob/main/.github/FUNDING.yml" target="_blank">Donate</a>
+                            <a href="https://mail.google.com/mail/?view=cm&fs=1&to=eziopuhan825@gmail.com"
+                                target="_blank">Mail Us</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="rightBox" style="float: right">
+            <ul>
+                <button id="aapl"></button><br />
+                <div class="data">
+                    <a class="sum" href="summary">Summary</a><br /><br />
+                    <a class="cha"> Chart</a><br /><br />
+                    <a class="histo" href="historicdata"> Historical Data</a><br /><br />
+                    <a class="stat" href="statsPage">Statistics</a><br /><br />
+                    <a class="pro" href="profilePage">Profile</a><br /><br />
+                </div>
+                <button id="Add">Add To Lists</button>
+            </ul>
+        </div>
+
+        <button id="advanced-btn">
+            <i style="font-size: 24px" class="fas">&#xf065;</i> <a href="Advance"
+                style="color: white; text-decoration: none;" target="_blank">Advanced</a>
+        </button>
+        <div class="desc" style="margin-left: 200px">
+            <h1 id="Company_title"></h1>
+            <h1 id="Company_price"></h1>
+            <span id="dollar">-$2.51 </span>
+            <span id="percent">(-1.13%)</span>
+            <br><br><br>
+            <br>
+        </div>
+
+        <style>
+            ul {
+                list-style-type: none;
+                padding-inline-start: 0;
+            }
+        </style>
+
+
+        <div id="myplot" style="
+        width: 1100px;
+        height: 400px;
+        margin-left: 160px;
+        margin-bottom: 0px;
+      ">
+            <div class="calender">
+                <button id="stp">Show Full Graph</button>
+                <div class="date-range-container">
+                    <button class="date-range-button" id="oneday">1D</button>
+                    <button class="date-range-button" id="oneweek">1W</button>
+                    <button class="date-range-button active" id="onemonth">1M</button>
+                    <button class="date-range-button" id="threemonth">3M</button>
+                    <button class="date-range-button" id="yeartodate">YTD</button>
+                    <button class="date-range-button" id="oneyear">1Y</button>
+                    <button class="date-range-button" id="fiveyear">5Y</button>
+                    <button class="date-range-button" id="maxdate">MAX</button>
+                </div>
+                <div class="date-selection">
+                    <button id="date-range-btn" class="date-btn">Select Date Range</button>
+                    <div id="calendar-popup" class="calendar-popup">
+                        <div class="calendar-container">
+                            <div class="from-calendar">
+                                <h3>From</h3>
+                                <div class="calendar-header">
+                                    <select class="month-select"></select>
+                                    <select class="year-select"></select>
+                                </div>
+                                <div class="weekdays">
+                                    <span>Sun</span>
+                                    <span>Mon</span>
+                                    <span>Tue</span>
+                                    <span>Wed</span>
+                                    <span>Thu</span>
+                                    <span>Fri</span>
+                                    <span>Sat</span>
+                                </div>
+                                <div class="calendar-body"></div>
+                            </div>
+                            <div class="to-calendar">
+                                <h3>To</h3>
+                                <div class="calendar-header">
+                                    <select class="month-select"></select>
+                                    <select class="year-select"></select>
+                                </div>
+                                <div class="weekdays">
+                                    <span>Sun</span>
+                                    <span>Mon</span>
+                                    <span>Tue</span>
+                                    <span>Wed</span>
+                                    <span>Thu</span>
+                                    <span>Fri</span>
+                                    <span>Sat</span>
+                                </div>
+                                <div class="calendar-body"></div>
+                            </div>
+                        </div>
+                        <div class="calendar-footer">
+                            <button class="apply-btn">Apply</button>
+                            <button class="cancel-btn">Cancel</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+        <div class="PeopleAlsoWatch">
+            <h2 id="people">People Also Watch</h2>
+
+            <div class="slider-container">
+                <div class="company-container" id="slider">
+                    <div class="company-box">
+                        <b id="pcomptic1"></b>
+                        <p id="pcompname1"></p>
+                        <p class="company-price" id="pcompprice1"></p>
+                        <a class="company-percent" id="pcomppercent1"></a>
+                    </div>
+                    <div class="company-box">
+                        <b id="pcomptic2"></b>
+                        <p id="pcompname2"></p>
+                        <p class="company-price" id="pcompprice2"></p>
+                        <a class="company-percent" id="pcomppercent2"></a>
+                    </div>
+                    <div class="company-box">
+                        <b id="pcomptic3"></b>
+                        <p id="pcompname3"></p>
+                        <p class="company-price" id="pcompprice3"></p>
+                        <a class="company-percent" id="pcomppercent3"></a>
+                    </div>
+                    <div class="company-box">
+                        <b id="pcomptic4"></b>
+                        <p id="pcompname4"></p>
+                        <p class="company-price" id="pcompprice4"></p>
+                        <a class="company-percent" id="pcomppercent4"></a>
+                    </div>
+                    <div class="company-box">
+                        <b id="pcomptic5"></b>
+                        <p id="pcompname5"></p>
+                        <p class="company-price" id="pcompprice5"></p>
+                        <a class="company-percent" id="pcomppercent5"></a>
+                    </div>
+                    <div class="company-box">
+                        <b id="pcomptic6"></b>
+                        <p id="pcompname6"></p>
+                        <p class="company-price" id="pcompprice6"></p>
+                        <a class="company-percent" id="pcomppercent6"></a>
+                    </div>
+                    <div class="company-box">
+                        <b id="pcomptic7"></b>
+                        <p id="pcompname7"></p>
+                        <p class="company-price" id="pcompprice7"></p>
+                        <a class="company-percent" id="pcomppercent7"></a>
+                    </div>
+                    <div class="company-box">
+                        <b id="pcomptic8"></b>
+                        <p id="pcompname8"></p>
+                        <p class="company-price" id="pcompprice8"></p>
+                        <a class="company-percent" id="pcomppercent8"></a>
+                    </div>
+                    <div class="company-box">
+                        <b id="pcomptic9"></b>
+                        <p id="pcompname9"></p>
+                        <p class="company-price" id="pcompprice9"></p>
+                        <a class="company-percent" id="pcomppercent9"></a>
+                    </div>
+                    <div class="company-box">
+                        <b id="pcomptic10"></b>
+                        <p id="pcompname10"></p>
+                        <p class="company-price" id="pcompprice10"></p>
+                        <a class="company-percent" id="pcomppercent10"></a>
+                    </div>
+                </div>
+
+                <div id="SliderBtns">
+                    <span class="slider-btn next" onclick="slide(1)">
+                        <img src="public/Media/arrow-right.jpg" />
+                    </span>
+
+                    <span class="slider-btn prev" onclick="slide(-1)">
+                        <img src="public/Media/arrow-left.jpg" />
+                    </span>
+                </div>
+            </div>
+        </div>
+
+        <footer>
+            <div class="footer-links">
+                <img src="public/Media/website_logo.jpg" class="foot-logo" />
+                <div class="footer-block">
+                    <div class="footer-title" id="Comp">Project</div>
+                    <li><a style="text-decoration: none;" class="links"
+                            href="https://mail.google.com/mail/?view=cm&fs=1&to=eziopuhan825@gmail.com"
+                            target="_blank" id="mail">Mail us</a></li>
+                    <li><a href="https://github.com/XBastille/FoxTrend" style="text-decoration: none;" target="_blank"
+                            class="links" id="SERV">Github</a></li>
+                    <li><a href="https://github.com/XBastille/FoxTrend/blob/main/.github/FUNDING.yml" style="text-decoration: none;" target="_blank" class="links" id="SERV">Donate</a>
+                    </li>
+                </div>
+
+                <div class="footer-block">
+                    <div class="footer-title" id="more">More</div>
+                    <li><a class="links" id="career">License</a></li>
+                    <li><a class="links" id="privacy">Privacy Policy</a></li>
+                </div>
+
+                <div class="footer-block">
+                    <div class="footer-title" id="social">Social</div>
+                    <li><a class="links" style="text-decoration: none;" href="/social" target="_blank" id="linkedin">LinkedIn</a></li>
+                    <li><a class="links" style="text-decoration: none;" href="/social" target="_blank" id="yt">Instagram</a></li>
+                    <li><a class="links" style="text-decoration: none;" href="/social" target="_blank" id="tw">X</a></li>
+                </div>
+            </div>
+        </footer>
+    </div>
+    </div>
+
+    <script src="public/Stockspage.js"></script>
+    <script>
+        function restartCubeAnimation() {
+            const cube = document.querySelector('.cube');
+            const cubeEdges = cube.querySelectorAll('.cube-edge');
+            cubeEdges.forEach(edge => {
+                const clone = edge.cloneNode(true);
+                edge.parentNode.replaceChild(clone, edge);
+            });
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            setInterval(restartCubeAnimation, 11600);
+        });
+
+        //ONE-WEEK
+        const oneweek = document.getElementById('oneweek')
+        oneweek.addEventListener('click', async () => {
+            //starting Date----------------------------------------------------------------------------------
+            var endsmonth;
+            var currentDate = new Date();
+            var last = new Date(currentDate.setDate(currentDate.getDate() - currentDate.getDay())).toUTCString();
+            var first = new Date(currentDate.setDate(currentDate.getDate() - currentDate.getDay() - 6)).toUTCString();
+            const monthly = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
+            var firstsday = first.substring(5, 7)
+            var month = first.substring(8, 11)
+            for (let i = 0; i < monthly.length; i++) {
+                if (monthly[i] === month) {
+                    firstsmonth = (i + 1);
+                }
+            }
+            var firstsyear = first.substring(12, 16)
+            const start = (firstsday + '-' + firstsmonth + '-' + firstsyear);
+            console.log(start)
+            //ending Date----------------------------------------------------------------------------------------
+            var endsday = last.substring(5, 7)
+            var enmonth = last.substring(8, 11)
+            for (let i = 0; i < monthly.length; i++) {
+                if (monthly[i] === enmonth) {
+                    endsmonth = (i + 1);
+                }
+            }
+            var endsyear = first.substring(12, 16)
+            const end = (endsday + '-' + endsmonth + '-' + endsyear);
+            console.log(end)
+            loading.style.display = 'flex'
+            loading.style.zIndex = '999'
+            myplot.style.zIndex = '-999'
+            myplot.style.filter = 'blur(30px)'
+            try {
+                const response = await fetch('/chartPage', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({ val, start, end })
+                });
+                const data = await response.json();
+                console.log(data)
+                if (data.sucess === 'true') {
+                    loading.style.display = 'none'
+                    loading.style.zIndex = '-999'
+                    myplot.style.zIndex = '999'
+                    myplot.style.filter = 'none'
+                    graphing();
+                }
+            } catch (error) {
+                console.error('Error:', error);
+            }
+
+        })
+        //---------------------------------------------------------------------------------------------------------
+
+        //onemonth (Done--------------------------)
+        const onemonth = document.getElementById('onemonth')
+        onemonth.addEventListener('click', async () => {
+            const dates = new Date()
+            const month = dates.getMonth()
+            const months = dates.getMonth() + 1
+            let day = dates.getDate()
+            let year = dates.getFullYear()
+            if (month === 0) {
+                year = year - 1;
+                month = 12
+                months = 1;
+            }
+            console.log(day + "-" + month + "-" + year)
+            console.log(day + "-" + months + "-" + year)
+            const start = day + "-" + month + "-" + year
+            const end = day + "-" + months + "-" + year
+            loading.style.display = 'flex'
+            loading.style.zIndex = '999'
+            myplot.style.zIndex = '-999'
+            myplot.style.filter = 'blur(30px)'
+            try {
+                const response = await fetch('/chartPage', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({ val, start, end })
+                });
+                const data = await response.json();
+                console.log(data)
+                if (data.sucess === 'true') {
+                    loading.style.display = 'none'
+                    loading.style.zIndex = '-999'
+                    myplot.style.zIndex = '999'
+                    myplot.style.filter = 'none'
+                    graphing();
+                }
+            } catch (error) {
+                console.error('Error:', error);
+            }
+
+        })
+        //--------------------------------------------------------------------------------------
+
+        //three month(DONE)---------------------------------------------------------------------
+        const loading = document.getElementById('loading')
+        const myplot = document.getElementById('myplot')
+        const threemonth = document.getElementById('threemonth')
+        threemonth.addEventListener('click', async () => {
+
+            const dates = new Date()
+            let month = dates.getMonth()
+            let months = dates.getMonth() + 1
+            let day = dates.getDate()
+            let year = dates.getFullYear()
+            if (month === 0) {
+                year = year - 1;
+            }
+            month -= 2;
+            console.log(day + "-" + month + "-" + year)
+            console.log(day + "-" + months + "-" + year)
+            const start = day + "-" + month + "-" + year
+            const end = day + "-" + months + "-" + year
+            loading.style.display = 'flex'
+            loading.style.zIndex = '999'
+            myplot.style.zIndex = '-999'
+            myplot.style.filter = 'blur(30px)'
+            try {
+                const response = await fetch('/chartPage', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({ val, start, end })
+                });
+                const data = await response.json();
+                if (data.sucess === 'true') {
+                    loading.style.display = 'none'
+                    loading.style.zIndex = '-999'
+                    myplot.style.zIndex = '999'
+                    myplot.style.filter = 'none'
+                    graphing();
+                }
+            } catch (error) {
+                console.error('Error:', error);
+            }
+
+        })
+        //----------------------------------------------------------------------------------------------
+
+        //year to date(DONE)------------------------------------------------------
+        const yeartodate = document.getElementById('yeartodate')
+        yeartodate.addEventListener('click', async () => {
+            console.log("chud gaye guru")
+            const dates = new Date();
+            let day = dates.getDate();
+            let months = dates.getMonth() + 1
+            let year = dates.getFullYear();
+            console.log(1 + "-" + 1 + "-" + year)
+            console.log(day + "-" + months + "-" + year)
+            const start = 1 + "-" + 1 + "-" + year
+            const end = day + "-" + months + "-" + year
+            loading.style.display = 'flex'
+            loading.style.zIndex = '999'
+            myplot.style.zIndex = '-999'
+            myplot.style.filter = 'blur(30px)'
+            try {
+                const response = await fetch('/chartPage', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({ val, start, end })
+                });
+                const data = await response.json();
+                if (data.sucess === 'true') {
+                    loading.style.display = 'none'
+                    loading.style.zIndex = '-999'
+                    myplot.style.zIndex = '999'
+                    myplot.style.filter = 'none'
+                    graphing();
+                }
+            } catch (error) {
+                console.error('Error:', error);
+            }
+        })
+        //----------------------------------------------------------------------------------------------------
+
+        //oneyear(DONE)-----------------------------------------------------------------------------------------
+        const oneyear = document.getElementById('oneyear')
+        oneyear.addEventListener('click', async () => {
+            const dates = new Date();
+            let months = dates.getMonth() + 1
+            let day = dates.getDate()
+            let year = dates.getFullYear() - 1
+            let years = dates.getFullYear()
+            console.log(day + "-" + months + "-" + year)
+            console.log(day + "-" + months + "-" + years)
+            const start = day + "-" + months + "-" + year
+            const end = day + "-" + months + "-" + years
+            loading.style.display = 'flex'
+            loading.style.zIndex = '999'
+            myplot.style.zIndex = '-999'
+            myplot.style.filter = 'blur(30px)'
+            try {
+                const response = await fetch('/chartPage', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({ val, start, end })
+                });
+                const data = await response.json();
+                if (data.sucess === 'true') {
+                    loading.style.display = 'none'
+                    loading.style.zIndex = '-999'
+                    myplot.style.zIndex = '999'
+                    myplot.style.filter = 'none'
+                    graphing();
+                }
+            } catch (error) {
+                console.error('Error:', error);
+            }
+        })
+        //-------------------------------------------------------------------------------------
+
+        //FIVE-YEAR(DONE)-------------------------------------------------------------------------
+        const fiveyear = document.getElementById('fiveyear')
+        fiveyear.addEventListener('click', async () => {
+            const dates = new Date();
+            let months = dates.getMonth() + 1
+            let day = dates.getDate()
+            let year = dates.getFullYear() - 5
+            let years = dates.getFullYear()
+            console.log(day + "-" + months + "-" + year)
+            console.log(day + "-" + months + "-" + years)
+            const start = day + "-" + months + "-" + year
+            const end = day + "-" + months + "-" + years
+            loading.style.display = 'flex'
+            loading.style.zIndex = '999'
+            myplot.style.zIndex = '-999'
+            myplot.style.filter = 'blur(30px)'
+            try {
+                const response = await fetch('/chartPage', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({ val, start, end })
+                });
+                const data = await response.json();
+                if (data.sucess === 'true') {
+                    loading.style.display = 'none'
+                    loading.style.zIndex = '-999'
+                    myplot.style.zIndex = '999'
+                    myplot.style.filter = 'none'
+                    graphing();
+                }
+            } catch (error) {
+                console.error('Error:', error);
+            }
+        })
+        //----------------------------------------------------------------------------------------------
+        //MAX-DATE(DONE)---------------------------------------------------------------------------------
+        const maxdate = document.getElementById('maxdate')
+        maxdate.addEventListener('click', async () => {
+            const dates = new Date();
+            let months = dates.getMonth() + 1
+            let day = dates.getDate()
+            let year = dates.getFullYear() - 5
+            let years = dates.getFullYear()
+            console.log(day + "-" + months + "-" + 1950)
+            console.log(day + "-" + months + "-" + years)
+            const start = day + "-" + months + "-" + 1950
+            const end = day + "-" + months + "-" + years
+            loading.style.display = 'flex'
+            loading.style.zIndex = '999'
+            myplot.style.zIndex = '-999'
+            myplot.style.filter = 'blur(30px)'
+            try {
+                const response = await fetch('/chartPage', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({ val, start, end })
+                });
+                const data = await response.json();
+                if (data.sucess === 'true') {
+                    loading.style.display = 'none'
+                    loading.style.zIndex = '-999'
+                    myplot.style.zIndex = '999'
+                    myplot.style.filter = 'none'
+                    graphing();
+                }
+            } catch (error) {
+                console.error('Error:', error);
+            }
+        })
+        //-------------------------------------------------------------------------
+
+        //calender
+        document.addEventListener('DOMContentLoaded', function () {
+            const dateRangeBtn = document.getElementById('date-range-btn');
+            const calendarPopup = document.getElementById('calendar-popup');
+
+            const months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
+            const currentYear = new Date().getFullYear();
+            const yearRange = Array.from({ length: currentYear - 1979 }, (_, i) => 1980 + i);
+
+            function initializeCalendar(calendar) {
+                const monthSelect = calendar.querySelector('.month-select');
+                const yearSelect = calendar.querySelector('.year-select');
+
+                months.forEach((month, i) => {
+                    const option = document.createElement('option');
+                    option.value = i;
+                    option.textContent = month;
+                    monthSelect.appendChild(option);
+                });
+
+                yearRange.forEach(year => {
+                    const option = document.createElement('option');
+                    option.value = year;
+                    option.textContent = year;
+                    yearSelect.appendChild(option);
+                });
+            }
+
+            initializeCalendar(document.querySelector('.from-calendar'));
+            initializeCalendar(document.querySelector('.to-calendar'));
+
+            dateRangeBtn.addEventListener('click', () => {
+                calendarPopup.style.display = calendarPopup.style.display === 'none' ? 'block' : 'none';
+            });
+
+            document.querySelector('.apply-btn').addEventListener('click', async () => {
+                const fromMonth = document.querySelector('.from-calendar .month-select').value;
+                const fromYear = document.querySelector('.from-calendar .year-select').value;
+                const fromDay = document.querySelector('.from-calendar .calendar-body .selected')?.textContent;
+
+                const toMonth = document.querySelector('.to-calendar .month-select').value;
+                const toYear = document.querySelector('.to-calendar .year-select').value;
+                const toDay = document.querySelector('.to-calendar .calendar-body .selected')?.textContent;
+
+                if (fromDay && toDay) {
+                    const fromDate = new Date(fromYear, fromMonth, fromDay);
+                    const toDate = new Date(toYear, toMonth, toDay);
+
+                    if (fromDate <= toDate) {
+                        dateRangeBtn.textContent = `${fromDay}/${Number(fromMonth) + 1}/${fromYear} - ${toDay}/${Number(toMonth) + 1}/${toYear}`;
+                        calendarPopup.style.display = 'none';
+                        //calender code
+                        const startingmonth = fromMonth + 1;
+                        const endingmonth = toMonth + 1;
+                        const start = fromDay + '-' + startingmonth + '-' + fromYear
+                        const end = toDay + '-' + endingmonth + '-' + toYear
+                        console.log(start, end)
+                        loading.style.display = 'flex'
+                        loading.style.zIndex = '999'
+                        myplot.style.zIndex = '-999'
+                        myplot.style.filter = 'blur(30px)'
+                        try {
+                            const response = await fetch('/chartPage', {
+                                method: 'POST',
+                                headers: {
+                                    'Content-Type': 'application/json',
+                                },
+                                body: JSON.stringify({ val, start, end })
+                            });
+                            const data = await response.json();
+                            console.log(data)
+                            if (data.sucess === 'true') {
+                                loading.style.display = 'none'
+                                loading.style.zIndex = '-999'
+                                myplot.style.zIndex = '999'
+                                myplot.style.filter = 'none'
+                                graphing();
+                            }
+                        } catch (error) {
+                            console.error('Error:', error);
+                        }
+                        updateGraph(fromDate, toDate);
+                    }
+                }
+            });
+
+            document.querySelector('.cancel-btn').addEventListener('click', () => {
+                calendarPopup.style.display = 'none';
+            });
+        });
+
+        document.querySelector('.apply-btn').addEventListener('click', () => {
+            const fromMonth = document.querySelector('.from-calendar .month-select').value;
+            const fromYear = document.querySelector('.from-calendar .year-select').value;
+            const fromDay = document.querySelector('.from-calendar .calendar-body .selected')?.textContent;
+
+            const toMonth = document.querySelector('.to-calendar .month-select').value;
+            const toYear = document.querySelector('.to-calendar .year-select').value;
+            const toDay = document.querySelector('.to-calendar .calendar-body .selected')?.textContent;
+
+            if (fromDay && toDay) {
+                const fromDate = new Date(fromYear, fromMonth, fromDay);
+                const toDate = new Date(toYear, toMonth, toDay);
+
+                if (fromDate <= toDate) {
+                    dateRangeBtn.textContent = `${fromDay}/${Number(fromMonth) + 1}/${fromYear} - ${toDay}/${Number(toMonth) + 1}/${toYear}`;
+                    calendarPopup.style.display = 'none';
+
+                    updateGraph(fromDate, toDate);
+                }
+            }
+        });
+
+        function updateCalendarBody(calendar, month, year) {
+            const calendarBody = calendar.querySelector('.calendar-body');
+            calendarBody.innerHTML = '';
+
+            const firstDay = new Date(year, month, 1).getDay();
+            const daysInMonth = new Date(year, month + 1, 0).getDate();
+            const today = new Date();
+
+            for (let i = 0; i < firstDay; i++) {
+                const emptyCell = document.createElement('button');
+                emptyCell.disabled = true;
+                calendarBody.appendChild(emptyCell);
+            }
+
+            for (let day = 1; day <= daysInMonth; day++) {
+                const dayButton = document.createElement('button');
+                dayButton.textContent = day;
+
+                const currentDate = new Date(year, month, day);
+                if (currentDate > today) {
+                    dayButton.disabled = true;
+                    dayButton.style.opacity = "0.3";
+                } else {
+                    dayButton.addEventListener('click', (e) => {
+                        calendar.querySelectorAll('.calendar-body button').forEach(btn => btn.classList.remove('selected'));
+                        e.target.classList.add('selected');
+                    });
+                }
+
+                calendarBody.appendChild(dayButton);
+            }
+        }
+
+
+        document.querySelectorAll('.month-select, .year-select').forEach(select => {
+            select.addEventListener('change', (e) => {
+                const calendar = e.target.closest('.from-calendar, .to-calendar');
+                const month = calendar.querySelector('.month-select').value;
+                const year = calendar.querySelector('.year-select').value;
+                updateCalendarBody(calendar, parseInt(month), parseInt(year));
+            });
+        });
+
+        const now = new Date();
+        document.querySelectorAll('.from-calendar, .to-calendar').forEach(calendar => {
+            calendar.querySelector('.month-select').value = now.getMonth();
+            calendar.querySelector('.year-select').value = now.getFullYear();
+            updateCalendarBody(calendar, now.getMonth(), now.getFullYear());
+        });
+
+        //search bar
+        //----------------------------------------------------------------------------------
+        let val;
+        const searching = document.getElementById('searching')
+        const background = document.getElementById('background')
+        searching.addEventListener('keypress', async (e) => {
+            if (e.key === 'Enter') {
+                val = searching.value
+                searching.value = '';
+                const dates = new Date()
+                const month = dates.getMonth()
+                const months = dates.getMonth() + 1
+                let day = dates.getDate()
+                let year = dates.getFullYear()
+                if (month === 0) {
+                    year = year - 1;
+                    month = 12
+                    months = 1;
+                }
+                const start = day + "-" + month + "-" + year
+                const end = day + "-" + months + "-" + year
+                loading.style.display = 'flex'
+                loading.style.zIndex = '9999'
+                background.style.zIndex = '-999'
+                background.style.filter = 'blur(20px)'
+
+                try {
+                    const response = await fetch('/chartPage', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                        },
+                        body: JSON.stringify({ val, start, end })
+                    });
+                    const data = await response.json();
+                    console.log(data)
+                    if (data.sucess === 'true') {
+                        loading.style.display = 'none'
+                        loading.style.zIndex = '-999'
+                        background.style.zIndex = '999'
+                        background.style.filter = 'none'
+                        document.body.style.filter = 'none';
+                        document.body.style.pointerEvents = 'auto'; // Re-enable interaction
+                        window.location.href = '/summary';
+                    }
+                } catch (error) {
+                    console.error('Error:', error);
+                }
+            }
+        })
+
+        const future_prediction = document.getElementById('future_prediction')
+        future_prediction.addEventListener('click', async () => {
+            //val is the comapany setting
+            const days = document.getElementById('days').value
+            const trails = document.getElementById('trials').value
+            console.log(val, trails, days)
+            loading.style.display = 'flex'
+            loading.style.zIndex = '999'
+            background.style.zIndex = '-999'
+            background.style.filter = 'blur(30px)'
+            try {
+                const response = await fetch('/predict', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({ val, days, trails })
+                });
+                const data = await response.json();
+                console.log(data)
+                if (data.sucess === 'true') {
+                    loading.style.display = 'none'
+                    loading.style.zIndex = '-999'
+                    background.style.zIndex = '999'
+                    background.style.filter = 'none'
+                    window.location.href = 'predict'
+                }
+            } catch (error) {
+                console.error('Error:', error);
+            }
+        })
+    </script>
+</body>
+
+</html>
