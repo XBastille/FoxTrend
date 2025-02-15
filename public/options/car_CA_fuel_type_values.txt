@@ -1,0 +1,27 @@
+Electric / Premium Unleaded
+E85
+E85 / Unleaded; Unleaded
+Unleaded / E85
+Unleaded / Unleaded
+E85 / Unleaded; Unleaded / Unleaded
+Premium Unleaded; Unleaded
+Premium Unleaded / Unleaded
+Compressed Natural Gas / Lpg
+Compressed Natural Gas / Unleaded
+Biodiesel
+E85 / Premium Unleaded
+Electric / E85
+Compressed Natural Gas
+Compressed Natural Gas; Unleaded
+Unleaded / Premium Unleaded
+Unleaded / Electric
+Electric / Hydrogen
+Premium Unleaded / Natural Gas
+Diesel / Premium Unleaded
+nan
+Diesel
+Electric
+Unleaded
+E85 / Unleaded
+Premium Unleaded
+Electric / Unleaded

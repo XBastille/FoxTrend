@@ -1,0 +1,4 @@
+nan
+other
+automatic
+manual

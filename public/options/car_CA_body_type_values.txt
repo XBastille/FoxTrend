@@ -1,0 +1,22 @@
+Coupe
+Sedan
+Convertible
+Pickup
+SUV
+Hatchback
+Targa
+Passenger Van
+Cargo Van
+Chassis Cab
+Minivan
+Mini Mpv
+Crossover
+Wagon
+nan
+Cutaway
+Van
+Combi
+Micro Car
+Commercial Wagon
+Car Van
+Roadster
