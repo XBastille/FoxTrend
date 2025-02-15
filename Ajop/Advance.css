@@ -1,0 +1,411 @@
+*{
+   
+    font-family: 'Gilroy', sans-serif;
+    
+}
+body{
+    background-color: black;
+    color: white;
+    height: 400px;
+}
+
+body.blurred{
+  filter: blur(5px); 
+  pointer-events: none;
+}
+
+header{
+   display: flex;
+   justify-content: space-around;
+   flex-direction: row;
+  
+}
+
+hr{
+   margin-top: -10px;
+}
+
+section{
+    margin: 22.44px;
+}
+
+#aapl{
+    border-radius: 4px;
+    min-width: 160px;
+    min-height: 48px;
+    padding: 0 48px;
+    white-space: nowrap;
+    cursor: pointer;
+    border: 1px solid transparent;
+    background :  rgb(96, 0, 147);
+    color: white;
+    border: rgb(134, 2, 205);
+ }
+
+ #aapl:hover{
+   background: rgb(134, 2, 205 , 1);
+ }
+
+ .view-cont{
+    display: none;
+    overflow: scroll;
+    height: 360px;
+    width: 402px;
+    padding-top: 16px;
+    padding:24px;
+ }
+
+ .calender {
+    padding-bottom: 20px;
+    margin-right: 70px;
+    margin-left: 750px;
+    margin-top: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    gap: 20px;
+  }
+  
+  .date-range-container {
+    display: flex;
+    gap: 10px;
+  }
+  
+  .date-range-button {
+    background-color: transparent;
+    border: none;
+    color: #fff;
+    cursor: pointer;
+    font-size: 14px;
+    padding: 5px 10px;
+    transition: color 0.3s ease;
+  }
+  
+  .date-range-button:hover,
+  .date-range-button.active {
+    color: rgb(96, 0, 147);
+  }
+  
+  .date-range-button.active {
+    position: relative;
+  }
+  
+  .date-range-button.active::after {
+    content: "";
+    display: block;
+    width: 100%;
+    height: 2px;
+    background-color: rgb(96, 0, 147);
+    margin-top: 2px;
+  }
+  
+  .date-selection {
+    display: flex;
+    gap: 10px;
+  }
+  
+  #stp {
+    background-color: #000000;
+    color: #fffefe;
+    border: 1px solid white;
+    cursor: pointer;
+    padding: 5px 10px;
+    transition: color 0.3s ease;
+  }
+  
+  #stp:hover {
+    color: rgb(121, 2, 185);
+  }
+  
+  .calendar-popup {
+    display: none;
+    position: absolute;
+    background: #000;
+    border: 1px solid #333;
+    width: 500px;
+    left: 900px;
+    top: 180px;
+    padding: 20px;
+    z-index: 1000;
+  }
+  
+  .weekdays {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    text-align: center;
+    color: #fff;
+    margin: 10px 0;
+    font-size: 14px;
+  }
+  
+  .calendar-container {
+    display: flex;
+    gap: 20px;
+  }
+  
+  .calendar-header select {
+    background: #000;
+    color: #fff;
+    border: 1px solid #333;
+    padding: 5px;
+    margin: 5px;
+  }
+  
+  .calendar-header select:hover {
+    background: rgb(96, 0, 147);
+  }
+  
+  .calendar-body button {
+    background: #000;
+    color: #fff;
+    border: 1px solid #333;
+    padding: 8px;
+    margin: 2px;
+    width: 35px;
+    transition: all 0.3s;
+  }
+  
+  .calendar-body button:hover {
+    background: rgb(96, 0, 147);
+  }
+  
+  .calendar-footer {
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
+    margin-top: 15px;
+  }
+  
+  .calendar-footer button {
+    background: #000;
+    color: #fff;
+    border: 1px solid #333;
+    padding: 8px 15px;
+  }
+  
+  .calendar-footer button:hover {
+    background: rgb(96, 0, 147);
+  }
+  
+  .from-calendar h3, .to-calendar h3 {
+    color: #fff;
+    text-align: center;
+    margin-bottom: 15px;
+    font-family: "Gilroy", sans-serif;
+  }
+  
+  .from-calendar h3 {
+    margin-left: -180px;
+  }
+  .to-calendar h3 {
+    margin-left: -200px;
+  }
+  
+  .calendar-body button.selected {
+    background: rgb(96, 0, 147);
+    color: white;
+  }
+  
+  .cancel-btn {
+    border-radius: 25px;
+  }
+  
+  .cancel-btn {
+    border-radius: 25px;
+    transition: all 0.3s ;
+  }
+  
+  .cancel-btn:hover {
+    background-color: white !important;
+    color: black;
+  }
+  
+  .apply-btn {
+    border-radius: 25px !important;
+    min-height: 48px !important;
+    min-width: 180px !important;
+    border: 3px solid transparent !important;
+    background:
+      linear-gradient(#000000, #000000) padding-box,
+      linear-gradient(60deg, rgb(96, 0, 147), rgb(255, 255, 255)) border-box !important;
+    color: #fffefe !important;
+  }
+  
+  
+  
+  .calendar-body button.selected {
+    background: rgb(96, 0, 147);
+    color: white;
+    transition: all 0.3s;
+  }
+  
+  .calendar-body button.selected:hover {
+    background: rgb(96, 0, 147);
+  }
+  
+  #date-range-btn {
+    background: #000;
+    color: #fff;
+    border: 1px solid #fff;
+    padding: 8px 15px;
+  }
+  
+  #date-range-btn:hover {
+    color: rgb(121, 2, 185);
+  }
+
+  .graph-stats{
+    display:flex;
+    flex-direction: row;
+  }
+
+  li i{
+    height: 50px;
+    width: 50px;
+  }
+  /* add button*/
+  .addBtn{
+      color: #fff;
+      position: relative;
+      background-color: #000000;
+      border-radius: 20px;
+      cursor: pointer;
+      width: 100px;
+      padding: 8px 16px;
+      display: flex;
+      justify-content: center;
+      border: 1px solid rgb(255, 255, 255);
+      box-sizing: border-box;
+  }
+
+  /*add button dropdown*/
+
+  .addSection {
+    position: relative;
+    display: inline-block;
+}
+
+.dropdown {
+    position: absolute;
+    top: -80px;
+    right: -350px;
+    width: 330px;  
+    background-color: black;
+    border: 1px solid gray;
+    color: white;
+    padding: 10px;
+    border-radius: 5px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    list-style-type: none;
+    display: none;
+    z-index: 10;
+}
+
+.dropdown li {
+    padding: 8px 15px;
+    cursor: pointer;
+}
+
+.dropdown li:last-child {
+    border-bottom: none;
+}
+
+#second{
+  color: #fff;
+  font-weight: bolder;
+ background-color: #000000;
+ border-radius: 20px;
+  cursor: pointer;
+  width: 100px;
+ padding: 8px 16px;
+display: flex;
+justify-content: center;
+border: 1px solid rgb(255, 255, 255);
+box-sizing: border-box;
+}
+
+#boilenger{
+  color: #fff;
+  background-color: #000000;
+  border-radius: 20px;
+  font-weight: bolder;
+  cursor: pointer;
+  width: 100px;
+  padding: 8px 16px;
+  display: flex;
+  justify-content: center;
+  border: 1px solid rgb(255, 255, 255);
+  box-sizing: border-box;
+}
+
+#macd{
+  color: #fff;
+  background-color: #000000;
+  border-radius: 20px;
+  font-weight: bolder;
+  cursor: pointer;
+  width: 100px;
+  padding: 8px 16px;
+  text-align: center;
+  display: flex;
+  justify-content: center;
+  border: 1px solid rgb(255, 255, 255);
+  box-sizing: border-box;
+}
+
+#rsi{
+  color: #fff;
+  background-color: #000000;
+  border-radius: 20px;
+  font-weight: bolder;
+  cursor: pointer;
+  width: 100px;
+  padding: 8px 16px;
+  display: flex;
+  justify-content: center;
+  border: 1px solid rgb(255, 255, 255);
+  box-sizing: border-box;
+ 
+}
+
+/*dropdown of info*/
+
+.dropdownmenuinfo{
+  
+  position: absolute;
+  top: -80px;
+  right: -350px;
+  background-color: black;
+  border: 1px solid gray;
+  color: white;
+  padding: 10px;
+  border-radius: 5px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  list-style-type: none;
+  display: none;
+  z-index: 10;
+}
+
+/*view disclousre */
+
+.viewcont{
+  position: fixed; /* Fixed position to center the container */
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  height: 402px;
+  width: 360px;
+  overflow-y: scroll;
+  border: 1px solid gray;
+  padding: 16px 24px;
+  background-color: #000;
+  color: #fff;
+  z-index: 1000;
+}
+
+
+
+
+
+
+
