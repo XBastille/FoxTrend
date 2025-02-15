@@ -1,0 +1,39 @@
+version: '3.8'
+services:
+  db:
+    image: mysql:8.0
+    environment:
+      MYSQL_ROOT_PASSWORD: your_password
+    ports:
+      - "3308:3306"
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
+      interval: 20s
+      retries: 10
+
+  java-app:
+    build: .
+    depends_on:
+      db:
+        condition: service_healthy
+    environment:
+      DB_URL: jdbc:mysql://db:3308/
+
+  mongo:
+    image: mongo:latest
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: your_username
+      MONGO_INITDB_ROOT_PASSWORD: your_password
+    ports:
+      - "27017:27017"
+
+  node-app:
+    build: .
+    depends_on:
+      - mongo
+      - java-app 
+    ports:
+      - "3000:3000"
+    environment:
+      MONGO_URL: mongodb://mongo:27017/
+      JAVA_APP_URL: "http://java-app"
