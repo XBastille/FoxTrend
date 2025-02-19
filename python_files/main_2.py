@@ -34,7 +34,7 @@ class StockDataVisualizer:
     def download_stock_data(self):
         end_date=datetime.datetime.now()
         start_date=end_date-datetime.timedelta(days=25*365)
-        stock_data=yf.download(self.company_name, start=start_date, end=end_date)
+        stock_data=yf.download(self.company_name, start=start_date, end=end_date, progress=False, auto_adjust=True)
         if isinstance(stock_data.columns, pd.MultiIndex):
             stock_data.columns = stock_data.columns.get_level_values(0)
         stock_info = yf.Ticker(self.company_name).info
