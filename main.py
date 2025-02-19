@@ -7,6 +7,8 @@ import ta
 import json
 import requests
 from bs4 import BeautifulSoup
+from requests.adapters import HTTPAdapter
+from requests.packages.urllib3.util.retry import Retry
 
 class StockDataVisualizer:
     def __init__(self, company_name, index):
@@ -29,6 +31,8 @@ class StockDataVisualizer:
             end_date = datetime.datetime.now()
             start_date = end_date - datetime.timedelta(days=25*365)
             stock_data = yf.download(self.company_name, start=start_date, end=end_date)
+            if isinstance(stock_data.columns, pd.MultiIndex):
+                stock_data.columns = stock_data.columns.get_level_values(0)
             stock_info = yf.Ticker(self.company_name).info
             if not stock_info:
                 stock_info = {}
@@ -67,7 +71,21 @@ class StockDataVisualizer:
         print("csvfile is created")
 
     def get_related_stocks(self):
-        headers = {'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_10_1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/39.0.2171.95 Safari/537.36'}
+        retry_strategy = Retry(
+            total=3,
+            backoff_factor=1,
+            status_forcelist=[429, 500, 502, 503, 504],
+        )
+        adapter = HTTPAdapter(max_retries=retry_strategy)
+        session = requests.Session()
+        session.mount("https://", adapter)
+        session.mount("http://", adapter)
+        headers = {
+        'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36',
+        'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8',
+        'Accept-Language': 'en-US,en;q=0.5',
+        'Connection': 'keep-alive',
+    }
         url = f"https://finance.yahoo.com/quote/{self.company_name}/chart"
         r = requests.get(url, headers=headers)
         soup = BeautifulSoup(r.text, "lxml")
@@ -82,7 +100,9 @@ class StockDataVisualizer:
 
         stock_data = []
         for ticker in tickers:
-            stock_data_ticker = yf.download(ticker, start=datetime.datetime.now() - datetime.timedelta(days=5), end=datetime.datetime.now())
+            stock_data_ticker = yf.download(ticker, period="5d")
+            if isinstance(stock_data_ticker.columns, pd.MultiIndex):
+                stock_data_ticker.columns = stock_data_ticker.columns.get_level_values(0)
             stock = yf.Ticker(ticker)
             info = stock.info
             current_price = info.get("currentPrice")

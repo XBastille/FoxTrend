@@ -23,6 +23,8 @@ class StockDataVisualizer:
         end_date=datetime.datetime.now()
         start_date=end_date - datetime.timedelta(days=25*365)
         stock_data=yf.download(self.company_name, start=start_date, end=end_date)
+        if isinstance(stock_data.columns, pd.MultiIndex):
+            stock_data.columns = stock_data.columns.get_level_values(0)
         stock_info = yf.Ticker(self.company_name).info
         with open('public/graph.json', 'w') as json_file:
             json.dump(stock_info, json_file, indent=4)
@@ -119,5 +121,5 @@ if __name__ == "__main__":
     if end_date:
         end_date = datetime.datetime.strptime(end_date, "%d-%m-%Y").strftime("%d-%m-%Y")
     for i, company_name in enumerate(companies, start=1):
-        visualizer=StockDataVisualizer(company_name, i)
+        visualizer=StockDataVisualizer(company_name)
         visualizer.run(start_date, end_date)
