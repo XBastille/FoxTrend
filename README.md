@@ -27,11 +27,31 @@ FoxTrend is now fully operational and accessible to everyone!
 - AWS Elastic Beanstalk: [http://foxtrend.ap-south-1.elasticbeanstalk.com/](http://foxtrend.ap-south-1.elasticbeanstalk.com/) (valid till the month of May)
 - Render: [https://foxtrend.onrender.com](https://foxtrend.onrender.com) (takes 1-2 minutes to load)
 
-## 📺 Demo
-### Website Preview
-[screenshot]
+## 📸 Project Showcase
 
-### Video Walkthrough
+### Screenshots
+
+<p align="center">
+    <img src="public/Media/readme_img_1.jpg" alt="FoxTrend Screenshot 1" width="800px"/>
+</p>
+
+<p align="center">
+    <img src="public/Media/readme_img_2.jpg" alt="FoxTrend Screenshot 2" width="800px"/>
+</p>
+
+<p align="center">
+    <img src="public/Media/readme_img_3.jpg" alt="FoxTrend Screenshot 3" width="800px"/>
+</p>
+
+<p align="center">
+    <img src="public/Media/readme_img_4.jpg" alt="FoxTrend Screenshot 4" width="800px"/>
+</p>
+
+<p align="center">
+    <img src="public/Media/readme_img_5.jpg" alt="FoxTrend Screenshot 5" width="800px"/>
+</p>
+
+### Video
 [video demo]
 
 ## 🎯 What is FoxTrend?
