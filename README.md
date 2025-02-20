@@ -2,9 +2,21 @@
 
 <img src="public/Media/website_logo.jpg" alt="FoxTrend Logo" height="400">
 
-# 🚀 DEVELOPMENT STAGE RELEASED! 🎉
-We are thrilled to announce that FoxTrend has officially entered the development stage, marking an exciting milestone in its journey. 🎉
+# 🎉 NOW LIVE AND FULLY RELEASED! 🚀
+FoxTrend is now fully operational and accessible to everyone! Experience the power of intelligent stock analysis and predictions.
 
+## 🌐 Live Deployments
+- AWS Elastic Beanstalk: [http://foxtrend.ap-south-1.elasticbeanstalk.com/](http://foxtrend.ap-south-1.elasticbeanstalk.com/) (valid till the month of May)
+- Render: [https://foxtrend.onrender.com](https://foxtrend.onrender.com) (takes 1-2 minutes to load)
+
+## 📺 Demo
+### Website Preview
+[Insert screenshot here]
+
+### Video Walkthrough
+[Insert video demo here]
+
+## 🎯 What is FoxTrend?
 FoxTrend is a comprehensive platform designed to provide detailed stock price information, predictions, and company insights for every company in existence, including cryptocurrencies. With an emphasis on data-driven decision-making, our platform enables users to track stock prices and forecast future trends with accuracy and ease. 📊💡
 
 ## Features
@@ -12,12 +24,12 @@ FoxTrend is a comprehensive platform designed to provide detailed stock price in
 - 📈 **Stock Price Display**: Access stock prices and information for all companies, including cryptocurrencies.
 - 🤖 **Stock Price Prediction**: Utilize advanced machine learning models to predict future stock prices.
 - 🏢 **Company Information**: Retrieve detailed company information alongside stock prices and predictions.
+- 📊 **Interactive Charts**: Visual representation of stock trends and predictions
 
-### More Features
-These additional tools are available as secondary features:
-- 🚗 **Used Car Price Prediction**: Estimate the market value of used vehicles.
-- 💳 **Loan Approval Prediction**: Assess the likelihood of loan approval for applicants.
-- 🏠 **Housing Price Prediction**: Predict residential property selling prices.
+### 🛠 Additional Tools
+- 🚗 **Used Car Price Prediction**: Smart market value estimation for vehicles
+- 💳 **Loan Approval Prediction**: Intelligent loan approval probability assessment
+- 🏠 **Housing Price Prediction**: Data-driven property price forecasting
 
 ## Status
 
@@ -37,15 +49,24 @@ After cloning, initialize the project by running the following commands:
 cd FoxTrend
 npm init
 npm i bcryptjs body-parser express express-session hbs passport passport-local node-cron csv-parser mongoose aws-sdk winston cluster
+pip install -r requirements.txt
 ```
 
 Ensure you configure the project with your own SQL password and MongoDB URL by updating the respective configuration files. Add your MongoDB key in `key.js` and your SQL password in the relevant Java files.
 
-Please note that FoxTrend is currently in the development phase. Images and videos are not yet connected, and the design is still a work in progress to meet our expectations.
+## 💻 Tech Stack
+- Frontend: HTML, CSS, JavaScript
+- Backend: Node.js, Express
+- Database: MongoDB, SQL
+- Cloud: AWS Elastic Beanstalk, Render
+- ML models: Python
 
-## Contact
+## 📱 Platform Compatibility
+- 💻 Desktop/Laptop
 
-📧 For questions or inquiries, please contact me at [eziopuhan825@gmail.com](mailto:eziopuhan825@gmail.com).
+## 📞 Contact & Support
+- 📧 Email: [eziopuhan825@gmail.com](mailto:eziopuhan825@gmail.com)
+- 💬 Issues: GitHub [Issues](https://github.com/XBastille/FoxTrend/issues)
 
 Thank you for your interest in FoxTrend! 🙏🚀
 
