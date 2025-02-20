@@ -2,8 +2,10 @@
 
 <img src="public/Media/website_logo.jpg" alt="FoxTrend Logo" height="400">
 
+<img src="https://img.shields.io/github/stars/XBastille/FoxTrend?style=social" alt="GitHub stars">
+
 # 🎉 NOW LIVE AND FULLY RELEASED! 🚀
-FoxTrend is now fully operational and accessible to everyone! Experience the power of intelligent stock analysis and predictions.
+FoxTrend is now fully operational and accessible to everyone!
 
 ## 🌐 Live Deployments
 - AWS Elastic Beanstalk: [http://foxtrend.ap-south-1.elasticbeanstalk.com/](http://foxtrend.ap-south-1.elasticbeanstalk.com/) (valid till the month of May)
@@ -11,13 +13,15 @@ FoxTrend is now fully operational and accessible to everyone! Experience the pow
 
 ## 📺 Demo
 ### Website Preview
-[Insert screenshot here]
+[screenshot]
 
 ### Video Walkthrough
-[Insert video demo here]
+[video demo]
 
 ## 🎯 What is FoxTrend?
 FoxTrend is a comprehensive platform designed to provide detailed stock price information, predictions, and company insights for every company in existence, including cryptocurrencies. With an emphasis on data-driven decision-making, our platform enables users to track stock prices and forecast future trends with accuracy and ease. 📊💡
+
+## Love FoxTrend? Give us a ⭐ to show your support
 
 ## Features
 
