@@ -1,8 +1,24 @@
-# FoxTrend
-
-<img src="public/Media/website_logo.jpg" alt="FoxTrend Logo" height="400">
-
-<img src="https://img.shields.io/github/stars/XBastille/FoxTrend?style=social" alt="GitHub stars">
+<p align="center">
+    <img width="400px" src="public/Media/fox.jpg" align="center" alt="FoxTrend Logo" />
+    <h2 align="center">FoxTrend</h2>
+    <p align="center">Your Ultimate Stock Analysis & Prediction Platform</p>
+</p>
+<p align="center">
+    <a href="https://github.com/XBastille/FoxTrend/issues">
+        <img alt="Issues" src="https://img.shields.io/github/issues/XBastille/FoxTrend?color=0088ff" />
+    </a>
+    <a href="https://github.com/XBastille/FoxTrend/pulls">
+        <img alt="GitHub pull requests" src="https://img.shields.io/github/issues-pr/XBastille/FoxTrend?color=0088ff" />
+    </a>
+    <a href="https://github.com/XBastille/FoxTrend/stargazers">
+        <img alt="Stars" src="https://img.shields.io/github/stars/XBastille/FoxTrend?style=social" />
+    </a>
+    <a href="https://github.com/XBastille/FoxTrend/graphs/contributors">
+        <img alt="Contributors" src="https://img.shields.io/github/contributors/XBastille/FoxTrend" />
+    </a>
+    <br />
+    <br />
+</p>
 
 # 🎉 NOW LIVE AND FULLY RELEASED! 🚀
 FoxTrend is now fully operational and accessible to everyone!
