@@ -59,7 +59,7 @@ Ensure you configure the project with your own SQL password and MongoDB URL by u
 - Backend: Node.js, Express
 - Database: MongoDB, SQL
 - Cloud: AWS Elastic Beanstalk, Render
-- ML models: Python
+- ML models & Data scraping: Python
 
 ## 📱 Platform Compatibility
 - 💻 Desktop/Laptop
@@ -67,6 +67,13 @@ Ensure you configure the project with your own SQL password and MongoDB URL by u
 ## 📞 Contact & Support
 - 📧 Email: [eziopuhan825@gmail.com](mailto:eziopuhan825@gmail.com)
 - 💬 Issues: GitHub [Issues](https://github.com/XBastille/FoxTrend/issues)
+
+## ☕ Support & Donate
+
+If you find FoxTrend helpful, consider buying me a coffee! It would motivate us to make more amazing projects in the future.
+
+<a href="https://buymeacoffee.com/xbastille" target="_blank"><img src="https://www.buymeacoffee.com/assets/img/custom_images/orange_img.png" alt="Buy Me A Coffee" style="height: 41px !important;width: 174px !important;box-shadow: 0px 3px 2px 0px rgba(190, 190, 190, 0.5) !important;-webkit-box-shadow: 0px 3px 2px 0px rgba(190, 190, 190, 0.5) !important;" ></a>
+
 
 Thank you for your interest in FoxTrend! 🙏🚀
 
