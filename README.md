@@ -6,7 +6,7 @@
 FoxTrend is now fully operational and accessible to everyone! Experience the power of intelligent stock analysis and predictions.
 
 ## 🌐 Live Deployments
-- AWS Elastic Beanstalk: [http://foxtrend.ap-south-1.elasticbeanstalk.com/](http://foxtrend.ap-south-1.elasticbeanstalk.com/) (valid till the month of May)
+- AWS Elastic Beanstalk: [http://foxtrend.ap-south-1.elasticbeanstalk.com/](http://foxtrend.ap-south-1.elasticbeanstalk.com/) (available till the month of May)
 - Render: [https://foxtrend.onrender.com](https://foxtrend.onrender.com) (takes 1-2 minutes to load)
 
 ## 📺 Demo
