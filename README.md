@@ -32,8 +32,7 @@ FoxTrend is a comprehensive platform designed to provide detailed stock price in
 - 🏠 **Housing Price Prediction**: Data-driven property price forecasting
 
 ## Status
-
-FoxTrend has officially entered the development stage, which marks a huge milestone in its journey. 🎉✨ The platform’s stock-related features are the primary focus, and we are actively enhancing functionality. Stay tuned for exciting updates! 🔧📅
+FoxTrend is finally deployed 🔥
 
 ## Getting Started
 
