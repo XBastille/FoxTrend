@@ -6,7 +6,7 @@
 FoxTrend is now fully operational and accessible to everyone! Experience the power of intelligent stock analysis and predictions.
 
 ## 🌐 Live Deployments
-- AWS Elastic Beanstalk: [http://foxtrend.ap-south-1.elasticbeanstalk.com/](http://foxtrend.ap-south-1.elasticbeanstalk.com/) (available till the month of May)
+- AWS Elastic Beanstalk: [http://foxtrend.ap-south-1.elasticbeanstalk.com/](http://foxtrend.ap-south-1.elasticbeanstalk.com/) (valid till the month of May)
 - Render: [https://foxtrend.onrender.com](https://foxtrend.onrender.com) (takes 1-2 minutes to load)
 
 ## 📺 Demo
@@ -31,8 +31,16 @@ FoxTrend is a comprehensive platform designed to provide detailed stock price in
 - 💳 **Loan Approval Prediction**: Intelligent loan approval probability assessment
 - 🏠 **Housing Price Prediction**: Data-driven property price forecasting
 
-## Status
-FoxTrend is finally deployed 🔥
+## 👥 Meet the Team
+
+Special thanks to our amazing collaborators who helped make FoxTrend possible:
+
+- [Abhinab Sharma](https://github.com/Abhinab04) - FullStack Developer
+- [Subha Archita](https://github.com/SubhaArchita) - FullStack Developer
+- [Ayush Kumar Jha](https://github.com/Ayush10761op) - FullStack Developer
+
+Their dedication and expertise were instrumental in bringing FoxTrend to life! 🌟
+
 
 ## Getting Started
 
