@@ -114,7 +114,7 @@ Ensure you configure the project with your own SQL password and MongoDB URL by u
 - 📧 Email: [eziopuhan825@gmail.com](mailto:eziopuhan825@gmail.com)
 - 💬 Issues: GitHub [Issues](https://github.com/XBastille/FoxTrend/issues)
 
-## ☕ Support & Donate
+## ☕ Support
 
 If you find FoxTrend helpful, consider buying me a coffee! It would motivate us to make more amazing projects in the future.
 
@@ -124,4 +124,5 @@ If you find FoxTrend helpful, consider buying me a coffee! It would motivate us 
 Thank you for your interest in FoxTrend! 🙏🚀
 
 ---
+
 
